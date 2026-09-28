@@ -120,14 +120,16 @@ struct Alloc {
 // j-th unpinned expert, in launch order - lands in host buffer j % kRing, which is free again once the DMA of job
 // j - kRing (recorded by the launching thread, `issued`) is done.
 struct Stager {
-    // D-5: the pinned ring's depth (STRATA_STAGER_RING, default 16) - how far the host copies can run ahead of the
-    // DMAs of the unpinned experts' blobs
-    int kRing = 16;
+    static constexpr int kRingMax = 48;
+    int kRing = 16;   // 48 when the experts stream from the SSD (TieredExpertSource): 16 kept too few reads in flight
     struct Job { const uint8_t* src; size_t bytes; };
-    std::vector<uint8_t*> buf;
-    std::vector<char> pinned;
+    /// set only for a source that streams from the SSD: it reads a cold expert with one O_DIRECT pread instead of
+    /// ~400 page faults through the mapping.  Null = memcpy.
+    const strata::core::ExpertSource* source = nullptr;
+    uint8_t* buf[kRingMax] = {};
+    bool pinned[kRingMax] = {};
     std::vector<std::vector<uint8_t>> pageable;   // the fallback when no more RAM can be pinned
-    std::vector<cudaEvent_t> dma_done;
+    cudaEvent_t dma_done[kRingMax] = {};
     std::vector<Job> jobs;
     std::unique_ptr<std::atomic<int>[]> ready;
     size_t ready_cap = 0;
@@ -142,11 +144,9 @@ struct Stager {
     std::vector<std::thread> threads;
     int device = 0;
 
-    bool init(size_t blob_bytes, int nthreads) {
-        if (const char* v = std::getenv("STRATA_STAGER_RING")) kRing = std::clamp(std::atoi(v), 2, 256);
-        buf.assign((size_t) kRing, nullptr);
-        pinned.assign((size_t) kRing, 0);
-        dma_done.assign((size_t) kRing, nullptr);
+    bool init(size_t blob_bytes, int nthreads, int ring) {
+        if (const char* v = std::getenv("STRATA_STAGER_RING")) ring = std::atoi(v);
+        kRing = std::max(1, std::min(ring, kRingMax));
         pageable.resize(kRing);
         for (int i = 0; i < kRing; ++i) {
             pinned[i] = cudaHostAlloc((void**) &buf[i], blob_bytes, cudaHostAllocDefault) == cudaSuccess;
@@ -190,7 +190,8 @@ struct Stager {
                     while (issued.load(std::memory_order_acquire) <= j - kRing) std::this_thread::yield();
                     cudaEventSynchronize(dma_done[b]);
                 }
-                std::memcpy(buf[b], jobs[(size_t) j].src, jobs[(size_t) j].bytes);
+                if (source != nullptr) source->read_into(jobs[(size_t) j].src, buf[b], jobs[(size_t) j].bytes);
+                else std::memcpy(buf[b], jobs[(size_t) j].src, jobs[(size_t) j].bytes);
                 ready[(size_t) j].store(1, std::memory_order_release);
                 active.fetch_sub(1, std::memory_order_acq_rel);
             }
@@ -484,9 +485,14 @@ bool Prefill::init(const core::WeightTable& wt, const core::ModelGeometry& g, co
     if (!m.stager) {
         m.stager = std::make_unique<Stager>();
         const int hw = (int) std::thread::hardware_concurrency();
-        const char* stv = std::getenv("STRATA_STAGER_THREADS");   // D-5: the host copy threads of unpinned blobs
-        if (!m.stager->init((size_t) MAXBLOB(), stv ? std::clamp(std::atoi(stv), 1, 32) : std::max(2, std::min(4, hw / 4))))
-            ok = false;
+        // STRATA_STAGER_THREADS: reading cold experts from the SSD, the threads wait on the device rather than burn
+        // CPU, and more of them keep more reads in flight (the NVMe does ~6.5 GB/s with several streams)
+        const bool ssd = src != nullptr && src->streams_from_ssd();
+        const char* st_env = std::getenv("STRATA_STAGER_THREADS");
+        const int st_threads = st_env ? std::clamp(std::atoi(st_env), 1, 32)
+                                      : (ssd ? std::max(2, std::min(8, hw / 2)) : std::max(2, std::min(4, hw / 4)));
+        if (!m.stager->init((size_t) MAXBLOB(), st_threads, ssd ? Stager::kRingMax : 16)) ok = false;
+        if (ssd) m.stager->source = src;
     }
     m.steps_host.resize(T * strata::kernels::kStepCount);
     m.ids_host.resize(T * K); m.slot_host.resize(T * K); m.src_host.resize(T * K); m.cnt.resize(m.g->n_expert); m.off.resize(m.g->n_expert + 1);
