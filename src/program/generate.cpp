@@ -1754,19 +1754,16 @@ int main(int argc, char** argv) {
     if (o.tiered_experts) {
         tiered_src.set_gguf(o.native_preset);
         if (!tiered_src.open(o.pack, g.n_layers, g.n_expert, err)) {
-            std::fprintf(stderr, "strata generate: %s
-", err.c_str());
+            std::fprintf(stderr, "strata generate: %s\n", err.c_str());
             return 1;
         }
-        std::fprintf(stderr, "strata generate: experts via the tiered source (%s); tiers are set after the cache fill
-",
+        std::fprintf(stderr, "strata generate: experts via the tiered source (%s); tiers are set after the cache fill\n",
                      tiered_src.note().c_str());
         srcp = &tiered_src;
     } else if (o.mmap_experts) {
         if (native_pack) {   // FileExpertSource maps the canonical pack's experts.bin; a native pack has none
             std::fprintf(stderr, "strata generate: --mmap-experts needs a canonical pack (experts.bin); %s is a native "
-                                 "(IQ) pack, whose experts are loaded into the arena
-", o.pack.c_str());
+                                 "(IQ) pack, whose experts are loaded into the arena\n", o.pack.c_str());
             return 2;
         }
         if (!src.open(o.pack, g.n_layers, g.n_expert, err)) {
@@ -3387,8 +3384,7 @@ int main(int argc, char** argv) {
                 if (slot < 0 || b == nullptr ||
                     !(gs ? gs->cache : xcache).fill_slot(slot, b, gs ? gs->adapt_stream : adapt_stream, ferr,
                                                          (int64_t) strata::kernels::cpu::expert_layout().blob_bytes(s.layer))) {
-                    if (!ferr.empty()) std::fprintf(stderr, "strata serve: %s
-", ferr.c_str());
+                    if (!ferr.empty()) std::fprintf(stderr, "strata serve: %s\n", ferr.c_str());
                     return false;
                 }
                 if (gs) gs->adapt_live = true;
