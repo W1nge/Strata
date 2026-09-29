@@ -618,3 +618,12 @@ if(STRATA_BUILD_TESTS)
     add_subdirectory(tests)
   endif()
 endif()
+
+# ---- the tiered source test (this fork: the Windows port needs a runnable check that does not
+# need model weights; harmless everywhere, builds only when asked for) ----
+option(STRATA_TIERED_TEST "build the tiered expert source test" OFF)
+if(STRATA_TIERED_TEST AND STRATA_ENABLE_CUDA)
+  add_executable(tiered_test_win src/core/tiered_test_win.cpp)
+  target_link_libraries(tiered_test_win PRIVATE strata_engine strata_kernels_cpu strata_core CUDA::cudart)
+  target_include_directories(tiered_test_win PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+endif()

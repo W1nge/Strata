@@ -117,25 +117,22 @@ bool TieredExpertSource::open(const std::string& pack_dir, int64_t n_layers, int
         err = buf;
         return false;
     }
-    // The reservation covers the file plus one largest blob: a mapped read past the file's last page would raise
-    // an access fault where Linux zero-fills, so the tail is left inaccessible on purpose (no blob reads reach it;
-    // if one ever does, the crash is the honest report).
-    const uint64_t pg = win_page_size();
+    // A plain system-chosen view.  (The Linux version reserves a max-blob anonymous tail so reads past the
+    // file zero-fill; here a read past the view would fault, which is the same honest outcome - and no blob
+    // read reaches that far by construction.)
     file_bytes_ = lay.total;
-    map_bytes_ = (lay.total + lay.max_blob + pg - 1) / pg * pg;
-    uint8_t* res = (uint8_t*) VirtualAlloc(nullptr, (SIZE_T) map_bytes_, MEM_RESERVE, PAGE_NOACCESS);
-    if (res == nullptr) { CloseHandle(f); err = "TieredExpertSource: the address reservation failed"; return false; }
     HANDLE m = CreateFileMappingA(f, nullptr, PAGE_READONLY, (DWORD) (((uint64_t) file_bytes_) >> 32),
                                   (DWORD) ((uint64_t) file_bytes_ & 0xffffffffu), nullptr);
-    if (m == nullptr) { VirtualFree(res, 0, MEM_RELEASE); CloseHandle(f); err = "TieredExpertSource: CreateFileMapping failed"; return false; }
-    if (MapViewOfFileEx(m, FILE_MAP_READ, 0, 0, (SIZE_T) file_bytes_, res) == nullptr) {
-        CloseHandle(m); VirtualFree(res, 0, MEM_RELEASE); CloseHandle(f);
-        err = "TieredExpertSource: MapViewOfFileEx failed on " + path;
+    if (m == nullptr) { CloseHandle(f); err = "TieredExpertSource: CreateFileMapping failed"; return false; }
+    void* view = MapViewOfFile(m, FILE_MAP_READ, 0, 0, 0);
+    if (view == nullptr) {
+        CloseHandle(m); CloseHandle(f);
+        err = "TieredExpertSource: MapViewOfFile failed on " + path;
         return false;
     }
     hFile_ = (void*) f;
     hMap_ = (void*) m;
-    base_ = res;
+    base_ = (const uint8_t*) view;
     n_layers_ = n_layers;
     n_expert_ = n_expert;
     // Until `settle` runs every expert is cold: the cache fill reads through the mapping like any other reader.
@@ -230,7 +227,6 @@ bool TieredExpertSource::settle(const ExpertCache* cache, const std::vector<std:
             (void) cudaGetLastError();
             pin_arena_ = nullptr;
         } else {
-            VirtualProtect(pin_arena_, (SIZE_T) pinned_bytes, PAGE_READONLY, nullptr);
             std::atomic<size_t> next{0};
             std::vector<int64_t> order;
             order.reserve((size_t) n_pinned);
@@ -250,6 +246,7 @@ bool TieredExpertSource::settle(const ExpertCache* cache, const std::vector<std:
             for (int i = 1; i < std::max(threads, 1); ++i) pool.emplace_back(worker);
             worker();
             for (auto& t : pool) t.join();
+            VirtualProtect(pin_arena_, (SIZE_T) pinned_bytes, PAGE_READONLY, nullptr);   // kernels only read
         }
     }
     if (pin_arena_ == nullptr && n_pinned > 0) {
