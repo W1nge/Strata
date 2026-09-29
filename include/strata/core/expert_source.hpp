@@ -447,6 +447,18 @@ private:
     std::string note_;
     std::string gguf_;
     const int32_t* res_ = nullptr;
+#ifdef _WIN32
+    // The Windows tiers: the pinned tier lives in its own cudaHostAlloc arena (the NT kernel has no in-place
+    // page surgery), and the file is a view over an address reservation.
+    void* hFile_ = nullptr;          ///< HANDLE: experts.bin (cached reads, positioned)
+    void* hMap_ = nullptr;           ///< HANDLE: the file mapping object
+    void* hDirect_ = nullptr;        ///< HANDLE: FILE_FLAG_NO_BUFFERING handle for streamed reads (read_into)
+    uint8_t* pin_arena_ = nullptr;   ///< the PINNED tier, one cudaHostAlloc arena
+    std::vector<uint64_t> pin_off_;  ///< per (layer, expert): the arena offset of a pinned blob
+    int64_t n_pinned_ = 0;
+    uint64_t sector_ = 4096;         ///< the direct-I/O alignment
+    void prefetch_range(const uint8_t* p, uint64_t n) const;  ///< warm a view range into standby
+#endif
 };
 
 }  // namespace strata::core

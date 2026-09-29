@@ -27,24 +27,389 @@
 #endif
 
 #if defined(_WIN32)
-// The tiers use mmap / madvise / O_DIRECT; on Windows the class exists so the engine links, and refuses to open.
+// The Windows tiered source.  Same three tiers as the Linux one, with the parts the NT kernel does differently:
+//
+//   - The PINNED tier cannot be carved out of the file mapping in place (no MAP_FIXED page surgery), so it lives
+//     in a separate `cudaHostAlloc` arena and `blob()` dispatches on the tier table.  One branch per routed
+//     expert, against a 1.4 MB blob read - nothing.
+//   - MADV_DONTNEED has no equivalent for a mapped view; the VRAM tier's file pages fall to the standby list,
+//     which Windows itself counts as available memory.  `settle` measures with that in mind and skips the drop.
+//   - Prefetch is `PrefetchVirtualMemory` (standby warm-up), streamed reads are `FILE_FLAG_NO_BUFFERING` on a
+//     second handle, with the aligned-superset bounce buffer the O_DIRECT path uses on Linux.
+#define NOMINMAX
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <memoryapi.h>
+#include <malloc.h>
+
 namespace strata::core {
-TieredExpertSource::~TieredExpertSource() = default;
-bool TieredExpertSource::open(const std::string&, int64_t, int64_t, std::string& err) {
-    err = "--tiered-experts is not available on Windows";
-    return false;
+
+// expert_source.cpp: the arena's loader from shard 1 (not in a header; the arena was its only caller)
+LoadStats load_experts_gguf(const std::string& gguf, uint8_t* dst, const strata::kernels::cpu::ExpertLayout& lay,
+                            int threads);
+
+namespace {
+
+uint64_t win_page_size() {
+    static const uint64_t p = [] {
+        SYSTEM_INFO si{};
+        GetSystemInfo(&si);
+        return (uint64_t) si.dwPageSize;
+    }();
+    return p;
 }
-bool TieredExpertSource::settle(const ExpertCache*, const std::vector<std::pair<int32_t, int32_t>>&, int64_t, int64_t,
-                                int, std::string& err) {
-    err = "--tiered-experts is not available on Windows";
-    return false;
+
+// A native pack: the experts in the layout's blob order, written once to experts.bin (one-time conversion).
+bool write_experts_bin_win(const std::string& gguf, const std::string& path, std::string& err) {
+    const strata::kernels::cpu::ExpertLayout& lay = strata::kernels::cpu::expert_layout();
+    const std::string part = path + ".part";
+    HANDLE f = CreateFileA(part.c_str(), GENERIC_WRITE | GENERIC_READ, 0, nullptr, CREATE_ALWAYS,
+                           FILE_ATTRIBUTE_NORMAL, nullptr);
+    if (f == INVALID_HANDLE_VALUE) { err = "TieredExpertSource: cannot create " + part; return false; }
+    HANDLE m = CreateFileMappingA(f, nullptr, PAGE_READWRITE, (DWORD) (((uint64_t) lay.total) >> 32),
+                                  (DWORD) ((uint64_t) lay.total & 0xffffffffu), nullptr);
+    if (m == nullptr) { CloseHandle(f); err = "TieredExpertSource: cannot map " + part; return false; }
+    uint8_t* dst = (uint8_t*) MapViewOfFile(m, FILE_MAP_WRITE, 0, 0, 0);
+    if (dst == nullptr) { CloseHandle(m); CloseHandle(f); err = "TieredExpertSource: cannot view " + part; return false; }
+    std::fprintf(stderr, "strata generate: writing %s from %s (%.2f GiB, one time) ...\n", path.c_str(), gguf.c_str(),
+                 (double) lay.total / 1073741824.0);
+    const LoadStats st = load_experts_gguf(gguf, dst, lay, /*threads=*/6);
+    const bool ok = st.seconds >= 0 && FlushViewOfFile(dst, 0) != 0;
+    UnmapViewOfFile(dst);
+    CloseHandle(m);
+    CloseHandle(f);
+    if (!ok || MoveFileExA(part.c_str(), path.c_str(), MOVEFILE_REPLACE_EXISTING) == 0) {
+        err = "TieredExpertSource: writing " + path + " failed";
+        return false;
+    }
+    std::fprintf(stderr, "strata generate: wrote %s in %.0f s\n", path.c_str(), st.seconds);
+    return true;
 }
-void TieredExpertSource::close() {}
-const uint8_t* TieredExpertSource::blob(int64_t, int64_t) { return nullptr; }
-bool TieredExpertSource::pinned(int64_t, int64_t) const { return false; }
-const uint8_t* TieredExpertSource::device_alias(int64_t, int64_t) const { return nullptr; }
-void TieredExpertSource::begin_layer(int64_t, const int32_t*, int64_t) {}
-void TieredExpertSource::read_into(const uint8_t* src, uint8_t* dst, size_t n) const { std::memcpy(dst, src, n); }
+
+}  // namespace
+
+TieredExpertSource::~TieredExpertSource() { close(); }
+
+bool TieredExpertSource::open(const std::string& pack_dir, int64_t n_layers, int64_t n_expert, std::string& err) {
+    close();
+    const strata::kernels::cpu::ExpertLayout& lay = strata::kernels::cpu::expert_layout();
+    if (lay.n_layers != n_layers || lay.n_expert != n_expert) {
+        err = "TieredExpertSource: the expert layout was loaded for a different geometry";
+        return false;
+    }
+    const std::string path = pack_dir + "/experts.bin";
+    if (lay.native && !gguf_.empty() && !std::ifstream(path.c_str(), std::ios::binary) &&
+        !write_experts_bin_win(gguf_, path, err))
+        return false;
+
+    HANDLE f = CreateFileA(path.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL,
+                           nullptr);
+    if (f == INVALID_HANDLE_VALUE) {
+        err = "TieredExpertSource: cannot open " + path + " (the tiered source needs a pack with experts.bin)";
+        return false;
+    }
+    LARGE_INTEGER sz{};
+    if (!GetFileSizeEx(f, &sz) || (uint64_t) sz.QuadPart != lay.total) {
+        char buf[400];
+        std::snprintf(buf, sizeof buf, "TieredExpertSource: %s is %lld B but the layout makes %llu B", path.c_str(),
+                      (long long) sz.QuadPart, (unsigned long long) lay.total);
+        CloseHandle(f);
+        err = buf;
+        return false;
+    }
+    // The reservation covers the file plus one largest blob: a mapped read past the file's last page would raise
+    // an access fault where Linux zero-fills, so the tail is left inaccessible on purpose (no blob reads reach it;
+    // if one ever does, the crash is the honest report).
+    const uint64_t pg = win_page_size();
+    file_bytes_ = lay.total;
+    map_bytes_ = (lay.total + lay.max_blob + pg - 1) / pg * pg;
+    uint8_t* res = (uint8_t*) VirtualAlloc(nullptr, (SIZE_T) map_bytes_, MEM_RESERVE, PAGE_NOACCESS);
+    if (res == nullptr) { CloseHandle(f); err = "TieredExpertSource: the address reservation failed"; return false; }
+    HANDLE m = CreateFileMappingA(f, nullptr, PAGE_READONLY, (DWORD) (((uint64_t) file_bytes_) >> 32),
+                                  (DWORD) ((uint64_t) file_bytes_ & 0xffffffffu), nullptr);
+    if (m == nullptr) { VirtualFree(res, 0, MEM_RELEASE); CloseHandle(f); err = "TieredExpertSource: CreateFileMapping failed"; return false; }
+    if (MapViewOfFileEx(m, FILE_MAP_READ, 0, 0, (SIZE_T) file_bytes_, res) == nullptr) {
+        CloseHandle(m); VirtualFree(res, 0, MEM_RELEASE); CloseHandle(f);
+        err = "TieredExpertSource: MapViewOfFileEx failed on " + path;
+        return false;
+    }
+    hFile_ = (void*) f;
+    hMap_ = (void*) m;
+    base_ = res;
+    n_layers_ = n_layers;
+    n_expert_ = n_expert;
+    // Until `settle` runs every expert is cold: the cache fill reads through the mapping like any other reader.
+    tier_.assign((size_t) (n_layers * n_expert), (uint8_t) kCold);
+    pin_off_.assign((size_t) (n_layers * n_expert), 0);
+    note_ = "mapped " + path;
+
+    // A second handle with the file cache bypassed, for streamed reads (read_into).  Direct I/O wants aligned
+    // everything; the bounce buffer in read_into handles that.
+    if (!std::getenv("STRATA_NO_DIRECT_STREAM")) {
+        HANDLE d = CreateFileA(path.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING,
+                               FILE_FLAG_NO_BUFFERING, nullptr);
+        if (d != INVALID_HANDLE_VALUE) hDirect_ = (void*) d;
+    }
+    pf_stop_ = false;
+    for (int i = 0; i < 4; ++i)
+        pf_threads_.emplace_back([this] {
+            for (;;) {
+                std::pair<uint64_t, uint64_t> r;
+                {
+                    std::unique_lock<std::mutex> lk(pf_mu_);
+                    pf_cv_.wait(lk, [&] { return pf_stop_ || !pf_q_.empty(); });
+                    if (pf_stop_) return;
+                    r = pf_q_.front();
+                    pf_q_.pop_front();
+                }
+                prefetch_range(base_ + r.first, r.second);
+            }
+        });
+    return true;
+}
+
+void TieredExpertSource::prefetch_range(const uint8_t* p, uint64_t n) const {
+    if (p == nullptr || n == 0) return;
+    WIN32_MEMORY_RANGE_ENTRY e{const_cast<uint8_t*>(p), (SIZE_T) n};
+    PrefetchVirtualMemory(GetCurrentProcess(), 1, &e, 0);
+}
+
+bool TieredExpertSource::settle(const ExpertCache* cache, const std::vector<std::pair<int32_t, int32_t>>& profile,
+                                int64_t budget_bytes, int64_t reserve_bytes, int threads, std::string& err) {
+    if (base_ == nullptr) { err = "TieredExpertSource::settle: not open"; return false; }
+    const strata::kernels::cpu::ExpertLayout& lay = strata::kernels::cpu::expert_layout();
+    const auto t0 = std::chrono::steady_clock::now();
+
+    // ---- 1. the VRAM tier: mark it.  Its file pages are not dropped (no Windows equivalent of MADV_DONTNEED for
+    // a view); they fall to the standby list, which GlobalMemoryStatusEx already counts as available.
+    uint64_t vram_bytes = 0;
+    int64_t n_vram = 0;
+    for (int64_t l = 0; l < n_layers_; ++l)
+        for (int64_t e = 0; e < n_expert_; ++e) {
+            if (cache == nullptr || cache->slot_of(l, e) == kNotResident) continue;
+            tier_[(size_t) (l * n_expert_ + e)] = kVram;
+            vram_bytes += lay.blob_bytes(l);
+            ++n_vram;
+        }
+
+    // ---- 2. the budget: what the system reports as available, above the reserve.  Standby pages (the cold and
+    // VRAM tiers among them) are counted as available, which is the honest reading of what this process may take.
+    if (budget_bytes < 0) {
+        MEMORYSTATUSEX ms{};
+        ms.dwLength = sizeof ms;
+        GlobalMemoryStatusEx(&ms);
+        const int64_t avail = (int64_t) ms.ullAvailPhys;
+        budget_bytes = avail > reserve_bytes ? avail - reserve_bytes : 0;
+    }
+
+    // ---- 3. the PINNED tier: the profile's order past the cache, while the budget lasts.  A pair missing from
+    // the profile is never routed in the profiling traces, so it is the right one to leave cold.
+    uint64_t pinned_bytes = 0;
+    int64_t n_pinned = 0;
+    for (const auto& pr : profile) {
+        const int64_t l = pr.first, e = pr.second;
+        if (l < 0 || l >= n_layers_ || e < 0 || e >= n_expert_) continue;
+        uint8_t& t = tier_[(size_t) (l * n_expert_ + e)];
+        if (t != kCold) continue;
+        const uint64_t n = lay.blob_bytes(l);
+        if (pinned_bytes + n > (uint64_t) budget_bytes) break;
+        pin_off_[(size_t) (l * n_expert_ + e)] = pinned_bytes;
+        t = kPinned;
+        pinned_bytes += n;
+        ++n_pinned;
+    }
+    n_pinned_ = n_pinned;
+
+    // ---- 4. the pinned arena: `cudaHostAlloc` is pinned by construction, so there is no registration step and
+    // no run merging - each blob is contiguous in the arena at the offset step 3 recorded.  One allocation for
+    // the whole tier (the arena was always one block; the driver refuses nothing here that a smaller one would
+    // pass).  On failure every pinned expert is demoted to cold: the machine simply has less than it claimed.
+    if (pinned_bytes > 0) {
+        if (cudaHostAlloc((void**) &pin_arena_, (size_t) pinned_bytes,
+                          cudaHostAllocPortable | cudaHostAllocMapped) != cudaSuccess) {
+            (void) cudaGetLastError();
+            pin_arena_ = nullptr;
+        } else {
+            VirtualProtect(pin_arena_, (SIZE_T) pinned_bytes, PAGE_READONLY, nullptr);
+            std::atomic<size_t> next{0};
+            std::vector<int64_t> order;
+            order.reserve((size_t) n_pinned);
+            for (int64_t l = 0; l < n_layers_; ++l)
+                for (int64_t e = 0; e < n_expert_; ++e)
+                    if (tier_[(size_t) (l * n_expert_ + e)] == kPinned) order.push_back(l * n_expert_ + e);
+            auto worker = [&]() {
+                for (;;) {
+                    const size_t i = next.fetch_add(1);
+                    if (i >= order.size()) return;
+                    const int64_t idx = order[i];
+                    std::memcpy(pin_arena_ + pin_off_[(size_t) idx], base_ + lay.blob_offset(idx / n_expert_, idx % n_expert_),
+                                lay.blob_bytes(idx / n_expert_));
+                }
+            };
+            std::vector<std::thread> pool;
+            for (int i = 1; i < std::max(threads, 1); ++i) pool.emplace_back(worker);
+            worker();
+            for (auto& t : pool) t.join();
+        }
+    }
+    if (pin_arena_ == nullptr && n_pinned > 0) {
+        for (int64_t l = 0; l < n_layers_; ++l)
+            for (int64_t e = 0; e < n_expert_; ++e)
+                if (tier_[(size_t) (l * n_expert_ + e)] == kPinned) tier_[(size_t) (l * n_expert_ + e)] = kCold;
+        pinned_bytes = 0;
+        n_pinned = 0;
+        n_pinned_ = 0;
+    }
+
+    uint64_t cold_bytes = 0;
+    int64_t n_cold = 0;
+    for (int64_t l = 0; l < n_layers_; ++l)
+        for (int64_t e = 0; e < n_expert_; ++e)
+            if (tier_[(size_t) (l * n_expert_ + e)] == kCold) {
+                cold_bytes += lay.blob_bytes(l);
+                ++n_cold;
+            }
+
+    const double secs = std::chrono::duration<double>(std::chrono::steady_clock::now() - t0).count();
+    auto gib = [](uint64_t b) { return (double) b / 1073741824.0; };
+    char buf[600];
+    std::snprintf(buf, sizeof buf,
+                  "tiers: VRAM %lld experts (%.2f GiB, standby; the GPU holds the only live copy) | PINNED %lld "
+                  "(%.2f GiB, cudaHostAlloc arena) | COLD %lld (%.2f GiB, paged from SSD) | budget %.2f GiB | %.1f s",
+                  (long long) n_vram, gib(vram_bytes), (long long) n_pinned, gib(pinned_bytes), (long long) n_cold,
+                  gib(cold_bytes), gib((uint64_t) budget_bytes), secs);
+    note_ = buf;
+    return true;
+}
+
+void TieredExpertSource::close() {
+    {
+        std::lock_guard<std::mutex> lk(pf_mu_);
+        pf_stop_ = true;
+        pf_q_.clear();
+    }
+    pf_cv_.notify_all();
+    for (auto& t : pf_threads_) t.join();
+    pf_threads_.clear();
+    if (pin_arena_ != nullptr) cudaFreeHost(pin_arena_);
+    pin_arena_ = nullptr;
+    if (base_ != nullptr) UnmapViewOfFile(base_);
+    base_ = nullptr;
+    if (hMap_ != nullptr) CloseHandle((HANDLE) hMap_);
+    hMap_ = nullptr;
+    if (hFile_ != nullptr) CloseHandle((HANDLE) hFile_);
+    hFile_ = nullptr;
+    if (hDirect_ != nullptr) CloseHandle((HANDLE) hDirect_);
+    hDirect_ = nullptr;
+    tier_.clear();
+    pin_off_.clear();
+}
+
+const uint8_t* TieredExpertSource::blob(int64_t layer, int64_t expert) {
+    if (base_ == nullptr || layer < 0 || layer >= n_layers_ || expert < 0 || expert >= n_expert_) return nullptr;
+    ++reads_;
+    const size_t idx = (size_t) (layer * n_expert_ + expert);
+    if (tier_[idx] == kPinned && pin_arena_ != nullptr) return pin_arena_ + pin_off_[idx];
+    return base_ + strata::kernels::cpu::expert_layout().blob_offset(layer, expert);
+}
+
+bool TieredExpertSource::pinned(int64_t layer, int64_t expert) const {
+    if (base_ == nullptr || layer < 0 || layer >= n_layers_ || expert < 0 || expert >= n_expert_) return false;
+    // The arena is pinned end to end by cudaHostAlloc; a tier bit is the whole question (unlike the Linux runs).
+    return pin_arena_ != nullptr && tier_[(size_t) (layer * n_expert_ + expert)] == kPinned;
+}
+
+const uint8_t* TieredExpertSource::device_alias(int64_t layer, int64_t expert) const {
+    if (!pinned(layer, expert)) return nullptr;
+    const uint8_t* h = pin_arena_ + pin_off_[(size_t) (layer * n_expert_ + expert)];
+    void* d = nullptr;
+    if (cudaHostGetDevicePointer(&d, (void*) h, 0) != cudaSuccess) {
+        (void) cudaGetLastError();
+        return nullptr;
+    }
+    return (const uint8_t*) d;
+}
+
+void TieredExpertSource::read_into(const uint8_t* src, uint8_t* dst, size_t n) const {
+    // A file-backed blob (the source pointer is inside the view and not the arena): one positioned read instead
+    // of ~400 page faults.  Pinned bytes live in the arena, outside the view: memcpy.
+    if (base_ != nullptr && src >= base_ && src + n <= base_ + file_bytes_) {
+        const uint64_t off = (uint64_t) (src - base_);
+        if (hDirect_ != nullptr) {
+            // Direct I/O wants the offset, length and buffer aligned to the volume sector: the aligned superset
+            // lands in a per-thread buffer and the blob is copied out.
+            const uint64_t pg = sector_;
+            const uint64_t a = off / pg * pg, b = std::min<uint64_t>((off + n + pg - 1) / pg * pg,
+                                                                     (file_bytes_ + pg - 1) / pg * pg);
+            thread_local uint8_t* bounce = nullptr;
+            thread_local size_t cap = 0;
+            if (cap < b - a) {
+                _aligned_free(bounce);
+                bounce = (uint8_t*) _aligned_malloc((size_t) (b - a), pg);
+                cap = bounce ? (size_t) (b - a) : 0;
+            }
+            size_t done = 0;
+            while (bounce != nullptr && done < b - a) {
+                OVERLAPPED ov{};
+                ov.Offset = (DWORD) ((a + done) & 0xffffffffu);
+                ov.OffsetHigh = (DWORD) ((a + done) >> 32);
+                DWORD got = 0;
+                if (!ReadFile((HANDLE) hDirect_, bounce + done, (DWORD) ((b - a) - done), &got, &ov) || got == 0) break;
+                done += got;
+            }
+            if (bounce != nullptr && done >= off - a + n) {
+                std::memcpy(dst, bounce + (off - a), n);
+                return;
+            }
+        }
+        // Fallback: positioned reads through the cached handle (a streamed expert is read once per prompt chunk;
+        // the page-cache cost is the price of a failed direct read, not the default).
+        size_t done = 0;
+        while (done < n) {
+            OVERLAPPED ov{};
+            ov.Offset = (DWORD) ((off + done) & 0xffffffffu);
+            ov.OffsetHigh = (DWORD) ((off + done) >> 32);
+            DWORD got = 0;
+            if (!ReadFile((HANDLE) hFile_, dst + done, (DWORD) (n - done), &got, &ov) || got == 0) break;
+            done += got;
+        }
+        if (done == n) return;
+    }
+    std::memcpy(dst, src, n);
+}
+
+void TieredExpertSource::begin_layer(int64_t layer, const int32_t* ids, int64_t k) {
+    if (base_ == nullptr || ids == nullptr || layer < 0 || layer >= n_layers_) return;
+    static const bool off = std::getenv("STRATA_NO_COLD_PREFETCH") != nullptr;   // the A/B arm
+    if (off) return;
+    const auto& lay = strata::kernels::cpu::expert_layout();
+    for (int64_t i = 0; i < k; ++i) {
+        const int64_t e = ids[i];
+        if (e < 0 || e >= n_expert_) continue;
+        const size_t idx = (size_t) (layer * n_expert_ + e);
+        const uint8_t t = tier_[idx];
+        if (t == kPinned) continue;
+        // a VRAM-tier expert has no RAM copy; it needs one only once the adaptive swap has evicted it
+        if (t == kVram && (res_ == nullptr || res_[idx] >= 0)) continue;
+        // One read for the whole blob instead of ~340 page faults in the pool.  Asynchronous: it overlaps the
+        // pool's work on the experts already in RAM.
+        const uint64_t off = lay.blob_offset(layer, e);
+        const uint64_t a = off / win_page_size() * win_page_size();
+        const uint64_t b = (off + lay.blob_bytes(layer) + win_page_size() - 1) / win_page_size() * win_page_size();
+        ++cold_prefetches_;
+        static const bool sync_pf = std::getenv("STRATA_SYNC_PREFETCH") != nullptr;
+        if (sync_pf) {
+            prefetch_range(base_ + a, b - a);
+            continue;
+        }
+        {
+            std::lock_guard<std::mutex> lk(pf_mu_);
+            pf_q_.push_back({a, b - a});
+        }
+        pf_cv_.notify_one();
+    }
+}
+
 }  // namespace strata::core
 #else
 namespace strata::core {
