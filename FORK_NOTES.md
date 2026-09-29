@@ -67,3 +67,22 @@
 - `--host-budget-gib` / `--host-reserve-gib`：10–14GiB 起扫（#80 作者建议）
 - `--pcie-frac`：上游 #44 自动探测，验证即可
 - `--spec 2` vs `4` 差异小（#137），默认 4
+
+
+## 6. M2 首跑记录（2026-09-30）
+
+- **机械目标达成**：完整端到端在 2080 Ti 22GB + 32GB + Windows 上运行：解码 38.2 tok/s（首跑冷启动）
+  ～53.3 tok/s（无 MTP），三层驻留 VRAM 11221 (15.04 GiB) / PINNED 8901 (12 GiB) / COLD 4454 (5.98 GiB)，
+  MTP 草稿 + 自适应层交换 + PLE direct I/O + PCIe 自动探针（3.1 GB/s → pcie_frac 0.00）全部工作。
+- **AVX-512 缺失被优雅接住**：启动即走 AVX2 多 token i-quant 内核（#43）。
+- **遗留正确性 bug**：贪婪解码输出恒为 token 0（"!"）——logits 疑似 NaN（argmax 遇 NaN 恒取首索引）。
+  llama.cpp（CPU 金标准，同一 GGUF 同模板）输出连贯 → 权重/量化/分片无问题，是本引擎 sm_75 原生内核的数值 bug。
+  二分进展：MTP 无辜；qsa 单独禁用无效；gr/gdn/bf16/indexer 被 fused verify window 冻结无法经旗标隔离
+  （禁用即拒绝启动）；canonical 回退组合在生成阶段挂起。
+- **调试基础设施**：`STRATA_DISABLE_NATIVE=gdn,qsa,router,...`（逗号分隔，按名禁用原生路径回退 canonical）
+  已加入 generate.cpp；`tiered_test_win.exe` 单元测试（STRATA_TIERED_TEST=ON）。
+- **下一步**：① 构建 v0.1.22 + #87（Adamyno 验证过的组合）+ Coder IQ1_M（23GB 塞得进 32GB）做版本二分；
+  ② 或逐层 NaN 探针定位第一个产生 NaN 的层；③ llama.cpp logits 对照定位首个发散位置。
+- **重要教训：分片 1（GGUF）是运行时必需**（--native 路径读其 BF16 稠密投影），打包完成后不可删除。
+- 便携 CUDA 12.4 运行时与 560.94 驱动兼容良好；`CMAKE_CUDA_RUNTIME_LIBRARY=Shared` 必须（否则 Windows
+  链接器多重定义冲突）。

@@ -1222,6 +1222,23 @@ int main(int argc, char** argv) {
         o.native_bf16 = o.native_bf16_extra = true;
         o.native_ple_key = o.native_moe_combine = o.native_gdn = o.native_router = true;
         o.native_qsa = o.native_qsa_indexer = o.native_rope = o.native_ple_postops = true;
+        // BISECT (this fork): STRATA_DISABLE_NATIVE=gdn,qsa,router,... forces named native paths back to
+        // their canonical implementations - the Turing-port debugging lever (sm_75 fallbacks are young).
+        if (const char* dis = std::getenv("STRATA_DISABLE_NATIVE")) {
+            const std::string_view list(dis);
+            auto has = [&list](const char* k) { return list.find(k) != std::string_view::npos; };
+            if (has("gr")) o.gr_native_mmvf = false;
+            if (has("bf16")) o.native_bf16 = o.native_bf16_extra = false;
+            if (has("plekey")) o.native_ple_key = false;
+            if (has("moe")) o.native_moe_combine = false;
+            if (has("gdn")) o.native_gdn = false;
+            if (has("router")) o.native_router = false;
+            if (has("qsa")) o.native_qsa = false;
+            if (has("indexer")) o.native_qsa_indexer = false;
+            if (has("rope")) o.native_rope = false;
+            if (has("plepost")) o.native_ple_postops = false;
+            std::fprintf(stderr, "strata generate: STRATA_DISABLE_NATIVE=%s applied\n", dis);
+        }
         if (o.native_head_gguf.empty()) o.native_head_gguf = o.native_preset;
         if (o.native_dense_gguf.empty()) {
             // every shard of the model (<name>-0000N-of-0000M.gguf beside --native), then the PLE shard: a split
