@@ -86,3 +86,17 @@
 - **重要教训：分片 1（GGUF）是运行时必需**（--native 路径读其 BF16 稠密投影），打包完成后不可删除。
 - 便携 CUDA 12.4 运行时与 560.94 驱动兼容良好；`CMAKE_CUDA_RUNTIME_LIBRARY=Shared` 必须（否则 Windows
   链接器多重定义冲突）。
+
+
+## 7. 等待期工作与用户脚本（C:\strata-models\）
+
+- `run-iq2xs.bat` 日常启动（serve 服务器，装载 2-4 分钟，浏览器 http://127.0.0.1:8080/ 或 chat.py）
+- `probe.bat` + `analyze_layers.py` NaN 层定位探针（机器空闲时跑，--dump-layers 逐层残差转储）
+- `bench-m2.py` 基准矩阵（中文×3 / 英文 / 代码×2，真实提示词测速）
+- `first-run.bat` 直连引擎冒烟；`strata-iq2xs.json` 服务器配置（lib_dirs 指向便携 CUDA）
+- Coder IQ1_M 分片 1（27.58GB）下载中：版本二分（0.1.22+#87 对照）与编码场景双用途；
+  Coder 的 shard 2 与 IQ2_XS 完全相同（26.82GB Engram 表），无需重下
+- **显存竞争注意**：用户占用显存时 prefill 8192-token 块放不下（"device buffers do not fit"），
+  用 `--prefill 1024`；且两个引擎实例不能并存（第二个的 verify staging 分配失败）
+- 首跑关键数据（用户占用机器时的保守值）：38.2-53.3 tok/s 解码、服务器实测 38-41 tok/s
+  @ 命中率 96.5-100%、专家缓存 auto=11221 槽 (15.04 GiB)、settle 52.2s、TTFT ~19s（含装载）
