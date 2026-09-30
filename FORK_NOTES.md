@@ -100,3 +100,15 @@
   用 `--prefill 1024`；且两个引擎实例不能并存（第二个的 verify staging 分配失败）
 - 首跑关键数据（用户占用机器时的保守值）：38.2-53.3 tok/s 解码、服务器实测 38-41 tok/s
   @ 命中率 96.5-100%、专家缓存 auto=11221 槽 (15.04 GiB)、settle 52.2s、TTFT ~19s（含装载）
+
+
+## 8. 版本二分准备（0.1.22 对照树）
+
+- `../Strata-bisect-0122`（worktree @ 6a772da + cherry-pick #87），分支 `bisect-0122-turing`，sm_75 构建成功。
+- **发现**：0.1.22 的 `qsa_prompt_attn.cu` 用裸 cp.async/m16n8k16，sm_75 编译失败（PR #87 从未编译过 0.1.22，
+  Adamyno 的端到端是 0.1.20）。已在对照树加构建期守卫 `STRATA_NO_SM80_QSA_PROMPT`（经 CMAKE_CUDA_FLAGS 传入，
+  sm_75 分支回退解码注意力内核）。守卫曾把 #if 方向写反（#ifdef→应为 #ifndef），已修。
+- **主线 0.1.24 无此问题**：上游已给 qsa_prompt_attn 加了 `STRATA_PA_SM80` 宏 + 运行时 cc_major 门控
+  （"compile them to a trap; qsa_prompt_attn_batch refuses such a device"）→ **预填充注意力路径正式无罪**。
+- NaN 嫌疑收窄至：{gdn native, bf16 投影, indexer} 的 fused verify window 组合，或更深的调度问题。
+- Coder IQ1_M 分片 1 下载完成后：0.1.22 对照引擎用经典 arena（23.4GB）跑 Coder 做正确性对照。
