@@ -189,6 +189,8 @@ ExpertPool::ExpertPool(int n_workers, bool pin, bool host_works) : host_works_(h
     const std::vector<int> cores = physical_cores(true);
     n_ = n_workers > 0 ? n_workers : (int) cores.size();
     if (n_ < 1) n_ = 1;
+    profile_on_ = std::getenv("STRATA_CPU_PROFILE") != nullptr;
+    if (profile_on_) profile_cells_.assign((size_t) n_ + 1, std::vector<ProfileCell>(kProfileCells));
     scratch_.resize((size_t) n_);
     wstate_.reset(new std::atomic<int32_t>[(size_t) n_]);
     for (int i = 0; i < n_; ++i) wstate_[(size_t) i].store(kParked);
@@ -373,6 +375,8 @@ void ExpertPool::drain(int id, ExpertScratch& scratch, uint32_t epoch) {
                 const int e = (int) (r / per), r0 = (int) (r % per);
                 const int r1 = (int) std::min<int64_t>(per, r0 + (g1 - r));
                 SplitBufMulti& sb = split_multi_[(size_t) e];
+                const auto profile_start = profile_on_ ? std::chrono::steady_clock::now()
+                                                       : std::chrono::steady_clock::time_point{};
                 if (mode_ == 5 && nfmt_->gu_type == 42) {
                     // a native Q2_0 pack: gate and up rows on the Q2_0 kernels, then SwiGLU
                     thread_local float gbuf[MAXT][FF], ubuf[MAXT][FF];
@@ -399,6 +403,20 @@ void ExpertPool::drain(int id, ExpertScratch& scratch, uint32_t epoch) {
                     const void* hq[MAXT];
                     for (int t = 0; t < mjobs_[e].nt; ++t) hq[t] = sb.hq[t];
                     native_down_rows(*nfmt_, mjobs_[e].blob, hq, mjobs_[e].nt, mjobs_[e].out, r0, r1);
+                }
+                if (profile_on_) {
+                    const double ns = std::chrono::duration<double, std::nano>(
+                        std::chrono::steady_clock::now() - profile_start).count();
+                    const int type = mode_ == 5 ? nfmt_->gu_type : nfmt_->d_type;
+                    const int nt = (std::clamp)(mjobs_[e].nt, 0, MAXT);
+                    const int source = (std::clamp)(mjobs_[e].profile_source, 0, 2);
+                    if (type >= 0 && type < kProfileTypes) {
+                        const int index = (((mode_ - 5) * kProfileTypes + type) * 3 + source) * (MAXT + 1) + nt;
+                        auto& cell = profile_cells_[(size_t) (id < 0 ? n_ : id)][(size_t) index];
+                        cell.ns += ns;
+                        ++cell.calls;
+                        cell.rows += (uint64_t) (r1 - r0);
+                    }
                 }
                 r += r1 - r0;
             }
@@ -427,13 +445,26 @@ void ExpertPool::drain(int id, ExpertScratch& scratch, uint32_t epoch) {
 }
 
 void ExpertPool::run_phase(int mode, int n_tasks) {
+    using Clock = std::chrono::steady_clock;
+    const auto p0 = profile_on_ ? Clock::now() : Clock::time_point{};
     wait_parked("before a phase");
+    const auto p1 = profile_on_ ? Clock::now() : Clock::time_point{};
     mode_ = mode;
     njobs_ = n_tasks;
     const uint32_t e = begin_batch(n_tasks);
     if (host_works_) drain(-1, host_scratch_, e);
+    const auto p2 = profile_on_ ? Clock::now() : Clock::time_point{};
     wait_done(n_tasks);
+    const auto p3 = profile_on_ ? Clock::now() : Clock::time_point{};
     wait_parked("after a phase");
+    if (profile_on_) {
+        const auto p4 = Clock::now();
+        auto ms = [](auto a, auto b) { return std::chrono::duration<double, std::milli>(b - a).count(); };
+        profile_prepark_ += ms(p0, p1);
+        profile_host_work_ += ms(p1, p2);
+        profile_tail_ += ms(p2, p3);
+        profile_repark_ += ms(p3, p4);
+    }
     hstate_.store(kIdle, std::memory_order_relaxed);
     hstate_ms_.store(now_ms(), std::memory_order_relaxed);
 }
@@ -493,7 +524,7 @@ void ExpertPool::run_split_multi(ExpertJobMulti* jobs, int n) {
     ms_drain_ += std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - t0).count();
 }
 
-void ExpertPool::run_split_multi_native(const NativeFmt& f, ExpertJobMulti* jobs, int n) {
+void ExpertPool::run_split_multi_native(const NativeFmt& f, ExpertJobMulti* jobs, int n, int64_t layer) {
     if (n <= 0) return;
     const auto t0 = std::chrono::steady_clock::now();
     // more distinct experts than buffers: run them in batches
@@ -518,10 +549,47 @@ void ExpertPool::run_split_multi_native(const NativeFmt& f, ExpertJobMulti* jobs
         ms_multi_gu += std::chrono::duration<double, std::milli>(b - a).count();
         ms_multi_q += std::chrono::duration<double, std::milli>(c - b).count();
         ms_multi_down += std::chrono::duration<double, std::milli>(d - c).count();
+        if (profile_on_) {
+            auto& p = profile_layers_[layer];
+            p.gu_type = f.gu_type; p.down_type = f.d_type;
+            ++p.calls; p.experts += nb;
+            for (int e = 0; e < nb; ++e) p.entries += mjobs_[e].nt;
+            p.gu += std::chrono::duration<double, std::milli>(b - a).count();
+            p.quant += std::chrono::duration<double, std::milli>(c - b).count();
+            p.down += std::chrono::duration<double, std::milli>(d - c).count();
+        }
     }
     multi_bytes += (int64_t) n * (int64_t) f.bytes;
     mode_ = 0;
     ms_drain_ += std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - t0).count();
+}
+
+void ExpertPool::profile_report(std::FILE* stream) {
+    if (!profile_on_) return;
+    if (stream) {
+        std::fprintf(stream, "strata CPU profile phases: prepark %.3f host-work-and-publish %.3f tail %.3f repark %.3f ms\n",
+                     profile_prepark_, profile_host_work_, profile_tail_, profile_repark_);
+        for (const auto& [layer, p] : profile_layers_)
+            std::fprintf(stream, "strata CPU profile layer: %lld types %d/%d calls %llu experts %llu entries %llu gu %.3f quant %.3f down %.3f ms\n",
+                         (long long) layer, p.gu_type, p.down_type, (unsigned long long) p.calls,
+                         (unsigned long long) p.experts, (unsigned long long) p.entries, p.gu, p.quant, p.down);
+    }
+    for (int i = 0; i < kProfileCells; ++i) {
+        ProfileCell sum;
+        for (auto& worker : profile_cells_) {
+            auto& p = worker[(size_t) i];
+            sum.ns += p.ns; sum.calls += p.calls; sum.rows += p.rows;
+            p = {};
+        }
+        if (!stream || sum.calls == 0) continue;
+        const int nt = i % (MAXT + 1), source = i / (MAXT + 1) % 3;
+        const int type = i / (MAXT + 1) / 3 % kProfileTypes, phase = i / (MAXT + 1) / 3 / kProfileTypes;
+        std::fprintf(stream, "strata CPU profile rows: %s type %d source %s nt %d slices %llu rows %llu worker-ms %.3f\n",
+                     phase == 0 ? "gu" : "down", type, source == 1 ? "pinned" : source == 2 ? "file" : "other",
+                     nt, (unsigned long long) sum.calls, (unsigned long long) sum.rows, sum.ns / 1e6);
+    }
+    profile_layers_.clear();
+    profile_prepark_ = profile_host_work_ = profile_tail_ = profile_repark_ = 0;
 }
 
 void ExpertPool::run(ExpertJob* jobs, int n) {

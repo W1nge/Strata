@@ -338,3 +338,35 @@ prefill 主机侧流式 37.3s → 22.7s（CPU 解锁同时加速了拷贝/调度
 - 最终构建复查：tiered-source 测试全过；Paris 冒烟与 Fibonacci 五个输入全过；4.8K/16K
   上下文、10/50/90% 深度的 needle 再次 6/6 通过。新题组输出达到上限时按 length 结束，未将其
   当成完整答案质量评测。36 次速度请求共 5875 token / 124.8743 s，汇总 47.047 tok/s。
+
+## 19. GPU/CPU 联合剖析与空 PCIe 图试验（2026-10-02）
+
+- 新增 `STRATA_CPU_PROFILE=1`：按层记录 native pool gate/up、quant、down 墙钟时间，按格式、
+  pinned/file/other 来源和 NT 记录各 worker 的行片段耗时、行数及片段数。worker 写独立计数区，
+  不在热循环增加共享原子；默认关闭。file 代表 pageable file view，不等于每次都发生 SSD 读取。
+  worker-ms 是并行 worker 的时间之和，不能当作关键路径墙钟时间。
+- CPU/GPU profile 在 decode 开始处清零，排除 prefill 的验证窗口。此前 GPU 的报告会混入这部分。
+  原六题两轮共 372 decode windows；各请求 GPU profile 窗口数完全匹配，gu/down 的总行数分别
+  等于 expert groups × 640/2560（24 项核对通过）。诊断开销不作为正常性能比较的基准。
+- 约 76% CPU 专家组 NT=1；热态 gate/up 中 IQ3_S 占 35.4%。文件来源 gu 累计 worker 时间首轮
+  54.34 s、第二轮 10.23 s，pinned 来源 15.05/14.93 s。未用 ETW 等独立拆分硬缺页，不能把差值
+  全算作磁盘等待。热态 host tail 占行阶段约 22.5%，prepark/repark 合计仅约 2.2 ms/六题。
+- 热态 GPU stage：VRAM experts 9.22 ms/window，hc-read1+router 5.19，head 1.76；waitCPU 6.78
+  与 CPU 工作重叠。未将 GPU 计时再次加到 CPU 时间上。
+- 五种实际 gu 格式、各八个专家的 NT=1 微基准：自有 IQ256 路径并非处处比 ggml 快，P/E 核上
+  结果还可能相反（IQ2_XS、IQ3_S）；IQ2_S 两类核心都更慢。因此没有全局切换 NT=1 分派。
+- 实验图在 PCIe 专家分配为零时省略七个空节点/层，48 层共 336 个节点。独立缓存两种图，
+  支持逐请求 pcie_frac 切换。`STRATA_VERIFY_SKIP_EMPTY_PCIE=1` 才启用；默认保持原图。
+  对小比例先算候选数，再调用 dma_capable，避免候选数已为零时仍查询 CUDA alias。
+- 同进程对照：两组共十二题，每题最多 128 token；每图十二次预热，正式两轮每图 24 请求。
+  full 的 pcie_num=1，skip 的 pcie_num=0，nmiss<=80 使两者的实际 PCIe 专家数都为零，日志验证。
+  正式 full 2482 token/47.3754 s = 52.390 tok/s；skip 2486/54.0809 = 45.968 tok/s。
+  两轮 full 53.048/51.748，skip 50.164/42.410；候选出现 CPU 长停顿。包含预热共 36 对输出，
+  29 对文本相同。没有独立隔离内存状态，也没有完成文本差异归因；不能证明全部降速由删节点
+  导致，但不足以将候选默认启用。首次探索对照含额外 CUDA 查询，未拿来认定最终收益。
+- 新增 native_pool_test：profile 开/关、混合 NT、Q2_0/IQ4_NL down、来源标签和清零，
+  614400 项串行/并行逐值及 sentinel 检查通过；四个 Q2 分派 CTest 和 Windows tiered 测试通过。
+  实验图零/非零 pcie_frac 参数五次切换正确返回 Paris，15039-token 中部 needle 通过；切换请求
+  实际 PCIe 专家数仍为零，未覆盖真实 DMA 工作量。不把这些冒烟检查当完整模型质量评测。
+- 当前量化、权重、top-k、32K 上下文和正常配置未改变。详细 profiling 和空路径实验默认关闭，
+  VNNI 仍默认关闭。本轮未取得可部署的稳定整机提速。

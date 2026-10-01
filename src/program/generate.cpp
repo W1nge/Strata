@@ -3959,6 +3959,9 @@ int main(int argc, char** argv) {
             for (int st = 0; st < split_drive.n; ++st)
                 split_drive.pcie_num[st] = (st == 0 || split_same || req_pcie_frac != o.pcie_frac)
                                                ? drive.d.pcie_num : pcie_num_of(stages[(size_t) st - 1]->pcie_frac);
+            ver.set_pcie_enabled(drive.d.pcie_num > 0);
+            for (int st = 0; st < split_drive.n; ++st)
+                stage_ver(st).set_pcie_enabled(split_drive.pcie_num[st] > 0);
             const int hist_n = std::min(req_sp.penalty_last_n, kPenaltyWindowCap);
             ver.set_history(hist_n > 0 ? d_hist : nullptr, hist_n);
             bool cancelled = false;
@@ -4060,6 +4063,8 @@ int main(int argc, char** argv) {
                                tiered_src.cold_prefetches()};
             };
             const DecSnap ds0 = dec_snap();
+            pool.profile_report(nullptr);   // exclude prefill and prior requests from the optional CPU profile
+            (void) ver.profile_report();    // prefill may also have run verification windows
             double dt_run = 0, dt_commit = 0, dt_draft = 0, dt_join = 0;
             int64_t dec_windows = 0, dec_T = 0;
             const int64_t decode_hits0 = drive.d.cache_hits;
@@ -4186,6 +4191,7 @@ int main(int argc, char** argv) {
                              dt_join / w, (d1.prefetches - ds0.prefetches) / (w * L));
                 if (!pr.empty()) std::fprintf(stderr, "strata decode GPU stages (ms/window):%s\n", pr.c_str());
             }
+            pool.profile_report(stderr);
             if (!cancelled) {
                 // a prompt stopped halfway leaves the session somewhere between two chunks: nothing to continue from
                 // (the checkpoints taken while reading it are still good)
@@ -4704,6 +4710,7 @@ int main(int argc, char** argv) {
         drive.d.pcie_num = (int) (o.pcie_frac * 256.0 + 0.5);
         if (drive.d.pcie_num < 0) drive.d.pcie_num = 0;
         if (drive.d.pcie_num > 256) drive.d.pcie_num = 256;
+        ver.set_pcie_enabled(drive.d.pcie_num > 0);
         const int64_t pcie0 = drive.d.pcie_experts;
         if (o.adapt_every > 0 && o.adapt_swaps > 0) drive.d.usage.assign((size_t) (g.n_layers * g.n_expert), 0.0f);
         int64_t swaps_total = 0;

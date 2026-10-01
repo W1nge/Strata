@@ -323,8 +323,10 @@ void expert_pool_dispatch_multi(ExpertDispatch& d, const float* x_f, const int32
                 if (e >= 0 && e < d.n_expert && d.host_res[(size_t) d.layers * (size_t) d.n_expert + (size_t) e] < 0) ++nmiss;
             }
         }
-        const bool pcie_ok = d.pcie_num > 0 && d.src->dma_capable(d.layers);
-        const int m = pcie_ok ? (nmiss * d.pcie_num) >> 8 : 0;
+        // A small share can round to zero. Avoid querying a CUDA host alias when
+        // no expert could be assigned, including diagnostic full-graph A/Bs.
+        const int requested_pcie = (nmiss * d.pcie_num) >> 8;
+        const int m = requested_pcie > 0 && d.src->dma_capable(d.layers) ? requested_pcie : 0;
         int miss_rank = 0, groups = 0, entries = 0, fetches = 0;
         GpuPlanSink& P = *d.plan;
         const uint8_t* dma_src[64];
@@ -449,6 +451,8 @@ void expert_pool_dispatch_multi(ExpertDispatch& d, const float* x_f, const int32
                 ExpertJobMulti& nj = d.jobs_multi[(size_t) jo];
                 nj.blob = b;
                 nj.nt = 0;
+                if (d.pool->profile_enabled())
+                    nj.profile_source = d.src->pinned(d.layers, e) ? 1 : d.src->streams_from_ssd() ? 2 : 0;
             }
             ExpertJobMulti& jb = d.jobs_multi[(size_t) jo];
             jb.act[jb.nt] = &d.act_multi[(size_t) t];
@@ -459,7 +463,7 @@ void expert_pool_dispatch_multi(ExpertDispatch& d, const float* x_f, const int32
         }
     const auto c3 = std::chrono::steady_clock::now();
     pt("run", njobs);
-    if (native) d.pool->run_split_multi_native(lay.fmt[(size_t) d.layers], d.jobs_multi.data(), njobs);
+    if (native) d.pool->run_split_multi_native(lay.fmt[(size_t) d.layers], d.jobs_multi.data(), njobs, d.layers);
     else d.pool->run_split_multi(d.jobs_multi.data(), njobs);
     if (d.remote_count > 0) {
         static thread_local std::string remote_error;

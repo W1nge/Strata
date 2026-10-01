@@ -125,7 +125,10 @@ public:
     /// arena directly, 2 = a copy kernel stages it inside the graph (no API calls on the pool's thread; best when
     /// the CPU is RAM-bound, Q2_0).  Set before the first `run`.
     void set_pcie_mode(int mode) { sink_.pcie_mode = mode; }
-    /// the pool never plans a PCIe share (--pcie-frac 0): the window skips that path.  Before the first run.
+    /// When the dispatcher cannot assign PCIe experts, omit its empty GPU kernels.
+    /// Experimental: requires STRATA_VERIFY_SKIP_EMPTY_PCIE=1. Call between requests;
+    /// both graph variants are cached for per-request tuning.
+    void set_pcie_enabled(bool enabled);
 
     double ms_wait = 0, ms_pool = 0, ms_host = 0, ms_commit = 0;
     int64_t windows = 0;
@@ -174,7 +177,8 @@ private:
     int32_t last_tokens_[8] = {};
     int64_t n_vocab_ = 0;
     cudaStream_t cs_ = nullptr;
-    cudaGraphExec_t exec_[9] = {};
+    bool pcie_enabled_ = true;  // conservative for callers that do not provide dispatch information
+    cudaGraphExec_t exec_[2][9] = {}; // [PCIe enabled][window size]
     cudaGraphExec_t commit_exec_ = nullptr;
 
     // mapped staging (host pointer, device alias)

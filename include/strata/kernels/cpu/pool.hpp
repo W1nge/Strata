@@ -39,6 +39,7 @@
 #include <mutex>
 #include <thread>
 #include <vector>
+#include <map>
 
 namespace strata::kernels::cpu {
 
@@ -61,6 +62,9 @@ struct ExpertJobMulti {
     float* out[MAXT] = {};
     /// Plan v0.3 P6: a native pack's activations (the layer's `vec_dot_type`), one per token.
     const void* nact[MAXT] = {};
+    // Diagnostic source class only: 0 unknown/RAM, 1 pinned, 2 pageable file view.
+    // A file view may already be cached; this does not assert an SSD read.
+    int profile_source = 0;
 };
 
 /// One logical processor per PHYSICAL core, so a worker is never scheduled onto an SMT sibling of another
@@ -127,7 +131,10 @@ public:
     /// read once for all of its tokens.
     void run_split_multi(ExpertJobMulti* jobs, int n);
     /// Plan v0.3 P6: the same for a native pack's layer (ggml-cpu arithmetic, `nact` activations).
-    void run_split_multi_native(const NativeFmt& f, ExpertJobMulti* jobs, int n);
+    void run_split_multi_native(const NativeFmt& f, ExpertJobMulti* jobs, int n, int64_t layer = -1);
+    bool profile_enabled() const { return profile_on_; }
+    // Call only on the host between batches. A null stream resets without printing.
+    void profile_report(std::FILE* stream);
     static constexpr int kMaxSplitMulti = 96;
     /// run_split_multi's phases, accumulated ms: gate/up rows, the intermediate quantization, down rows.
     double ms_multi_gu = 0, ms_multi_q = 0, ms_multi_down = 0;
@@ -179,6 +186,22 @@ private:
 
     int n_ = 0;
     bool host_works_ = true;
+    bool profile_on_ = false;
+    struct ProfileCell {
+        double ns = 0;
+        uint64_t calls = 0, rows = 0;
+    };
+    static constexpr int kProfileTypes = 64;
+    static constexpr int kProfileCells = 2 * kProfileTypes * 3 * (MAXT + 1);
+    // One disjoint slice per worker, plus the host; never shared atomic counters.
+    std::vector<std::vector<ProfileCell>> profile_cells_;
+    struct ProfileLayer {
+        int gu_type = 0, down_type = 0;
+        uint64_t calls = 0, experts = 0, entries = 0;
+        double gu = 0, quant = 0, down = 0;
+    };
+    std::map<int64_t, ProfileLayer> profile_layers_;
+    double profile_prepark_ = 0, profile_host_work_ = 0, profile_tail_ = 0, profile_repark_ = 0;
     ExpertJob* jobs_ = nullptr;
     int njobs_ = 0;
     /// The host's own scratch when `host_works_`.  A separate object rather than a share of `scratch_[i]`,

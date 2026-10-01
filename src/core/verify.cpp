@@ -122,8 +122,9 @@ Verifier::~Verifier() {
     const Verifier* self = this;
     g_diag_verifier.compare_exchange_strong(self, nullptr);
     if (cs_) cudaStreamSynchronize(cs_);
-    for (auto& e : exec_)
-        if (e) cudaGraphExecDestroy(e);
+    for (auto& variant : exec_)
+        for (auto& e : variant)
+            if (e) cudaGraphExecDestroy(e);
     if (commit_exec_) cudaGraphExecDestroy(commit_exec_);
     if (cs_) cudaStreamDestroy(cs_);
     if (copy_) { cudaStreamSynchronize(copy_); cudaStreamDestroy(copy_); }
@@ -690,16 +691,18 @@ bool Verifier::record_window(int T, cudaStream_t cs, std::string& err) {
         };
         grouped(p_ptr, p_start, p_counts);
         stamp(l, 20, grp);
-        if (device_plan_) wait_flag_ge_or(m_flagB_, ring, skip_ + grp, cs);
-        else wait_flag_ge(m_flagB_, ring, cs);                 // the PCIe share is in staging (DMA) or mapped
-        if (sink_.pcie_mode == 2) {                            // stage it with a copy kernel, then point at staging
+        if (pcie_enabled_) {
+            if (device_plan_) wait_flag_ge_or(m_flagB_, ring, skip_ + grp, cs);
+            else wait_flag_ge(m_flagB_, ring, cs);             // the PCIe share is in staging (DMA) or mapped
+        }
+        if (pcie_enabled_ && sink_.pcie_mode == 2) {           // stage it with a copy kernel, then point at staging
             const int64_t per = G == 2 ? kStagingBlobs / 2 : kStagingBlobs;
             uint8_t* stage = staging_ + (size_t) (grp * per) * lay.max_blob;
             fetch_blobs(p_ptr2, p_counts + 2, stage, (int64_t) lay.blob_bytes(l), (int) per, cs);
             rebase_ptrs((unsigned long long*) p_ptr2, p_counts + 2, stage, (int64_t) lay.blob_bytes(l), cs);
         }
         stamp(l, 21, grp);
-        grouped(p_ptr2, p_start2, p_counts + 2);
+        if (pcie_enabled_) grouped(p_ptr2, p_start2, p_counts + 2);
         stamp(l, 22, grp);
         if (device_plan_) {   // no CPU share when the device planned the group: its rows are zeros
             wait_flag_ge_or(m_flag_, ring, skip_ + grp, cs);
@@ -814,8 +817,19 @@ std::string Verifier::profile_report() {
     return out;
 }
 
+void Verifier::set_pcie_enabled(bool enabled) {
+    // Fewer graph nodes did not yield a consistent end-to-end improvement on the
+    // measured Turing/AVX2 system. Keep the established graph unless opted in.
+    static const bool skip_empty = [] {
+        const char* value = std::getenv("STRATA_VERIFY_SKIP_EMPTY_PCIE");
+        return value != nullptr && value[0] == '1';
+    }();
+    pcie_enabled_ = enabled || !skip_empty;
+}
+
 bool Verifier::capture(int T, std::string& err) {
-    if (exec_[T] != nullptr) return true;
+    auto& executable = exec_[pcie_enabled_ ? 1 : 0][T];
+    if (executable != nullptr) return true;
     if (cudaStreamBeginCapture(cs_, cudaStreamCaptureModeThreadLocal) != cudaSuccess) {
         err = "verify: begin capture failed";
         return false;
@@ -860,16 +874,16 @@ bool Verifier::capture(int T, std::string& err) {
         for (size_t i = 0; i < v.size() && i < 40; ++i) std::fprintf(stderr, " %d x %.60s;", v[i].first, v[i].second.c_str());
         std::fprintf(stderr, "\n");
     }
-    const cudaError_t ie = cudaGraphInstantiate(&exec_[T], graph, 0);
+    const cudaError_t ie = cudaGraphInstantiate(&executable, graph, 0);
     cudaGraphDestroy(graph);
     if (ie != cudaSuccess) {
         err = std::string("verify: instantiate: ") + cudaGetErrorString(ie);
         return false;
     }
-    const cudaError_t ue = cudaGraphUpload(exec_[T], cs_);
+    const cudaError_t ue = cudaGraphUpload(executable, cs_);
     const cudaError_t us = cudaStreamSynchronize(cs_);
-    std::fprintf(stderr, "strata verify: captured the %d-token window (upload %s, sync %s)\n", T,
-                 cudaGetErrorString(ue), cudaGetErrorString(us));
+    std::fprintf(stderr, "strata verify: captured the %d-token window (PCIe %s, upload %s, sync %s)\n", T,
+                 pcie_enabled_ ? "enabled" : "omitted", cudaGetErrorString(ue), cudaGetErrorString(us));
     return true;
 }
 
@@ -980,7 +994,7 @@ bool Verifier::run(int T, const int32_t* tokens, int64_t pos0, PoolMultiFn pool,
     for (int t = 0; t < T; ++t) last_tokens_[t] = tokens[t];
     ms_host += ms_since(t0);
     VDBG("staged; launching\n");
-    const cudaError_t le = cudaGraphLaunch(exec_[T], cs_);
+    const cudaError_t le = cudaGraphLaunch(exec_[pcie_enabled_ ? 1 : 0][T], cs_);
     if (le != cudaSuccess) { err = std::string("verify: launch: ") + cudaGetErrorString(le); return false; }
     (void) cudaStreamQuery(cs_);
     VDBG("launched\n");
