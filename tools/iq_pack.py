@@ -304,12 +304,13 @@ def main() -> int:
         print("the routers disagree on the expert count; a per-layer pruned model cannot be packed")
         return 1
     layout, offset = [], 0
-    # (this fork) REQUANT: the GSQ-RCO IQ2_XS file stores three layers' gate/up as IQ1_M and their down as
-    # Q2_0.  ggml-cpu's row kernels for those two types are broken on the x86/MSVC build - iq1_m faults
-    # outside the CPU backend's repack, q2_0 returns 0.0 for every row (proven with a hand-crafted block) -
-    # and the GPU MMQ has no iq1_m instance.  Up-quant them to Q8_0 (gate/up and down): supported
-    # by the AVX-2 multi-token kernels and the GPU MMQ alike, no quality loss beyond the source's own, and
-    # +~1.2 GiB of experts.bin across the three layers.
+    # (this fork) REQUANT: up-quant the release's Q2_0 down / IQ1_M gate to Q4_0/Q8_0.  Introduced 2026-09 on
+    # the belief that ggml-cpu's x86 row kernels for those two types were broken (a probe returned 0.0 / SEGV);
+    # the 2026-10 re-test (tools/../strata-kernel-test, calling the traits table exactly as native_expert.cpp
+    # does, WITH ggml_cpu_init) proved both beliefs wrong for q2_0 - the kernel computes fine.  IQ1_M's x86
+    # SIMD kernel still reads repacked scales, so IQ1_M packs keep requanting.  STRATA_NO_REQUANT=1 packs the
+    # release's own types: -33% pack size for IQ2_XS / -9% for IQ3_XXS, same tier geometry otherwise.
+    no_requant = bool(os.environ.get("STRATA_NO_REQUANT"))
     REQUANT_GU = {"IQ1_M": ("Q8_0", 32, 34)}
     REQUANT_D = {"Q2_0": ("Q4_0", 32, 18)}
     from gguf import GGMLQuantizationType as _Q
@@ -318,7 +319,8 @@ def main() -> int:
         if ts[0].type_name != ts[1].type_name:
             print("layer %d: gate and up differ in type" % l)
             return 1
-        targets = [REQUANT_GU.get(ts[0].type_name), REQUANT_GU.get(ts[1].type_name), REQUANT_D.get(ts[2].type_name)]
+        targets = [None, None, None] if no_requant else [
+            REQUANT_GU.get(ts[0].type_name), REQUANT_GU.get(ts[1].type_name), REQUANT_D.get(ts[2].type_name)]
         per = []
         for t, rq in zip(ts, targets):
             if rq is None:

@@ -114,30 +114,50 @@
 - Coder IQ1_M 分片 1 下载完成后：0.1.22 对照引擎用经典 arena（23.4GB）跑 Coder 做正确性对照。
 
 
-## 9. NaN 根因与修复（2026-10-01，重大突破）
+## 9. NaN 根因与修复（2026-10-01，重大突破；同日晚间复核修正结论）
 
-**根因链（全部实证）**：
+### 9.1 当时的结论（**部分作废**，保留原记录）
+
+**根因链（当时认为全部实证）**：
 1. GSQ-RCO IQ2_XS 发布的层 8/13/37 gate/up 为 IQ1_M，且全部 48 层 down 为 Q2_0。
-2. ggml-cpu 的 x86/MSVC 内核对这两个类型是坏的：Q2_0 vec_dot 全 0（手工块判定，期望 12800 得 0）、
-   IQ1_M vec_dot SEGV（需要 CPU 后端的 repack 前置）。iq_avx2/iq_avx512 均不覆盖（作者前提
-   "no shipped model has IQ1_M expert rows" 被该发布打破）。CPU misses（~37%）→ NaN 污染。
+2. ~~ggml-cpu 的 x86/MSVC 内核对这两个类型是坏的~~（**见 9.2 复核：Q2_0 内核其实是好的**）。
 3. llama.cpp 自身（含 dequant+scalar dot）读同一 GGUF 正常 → 权重无辜。
 4. 0.1.22 与 0.1.24 同病 → 非版本回归。
 
-**修复（打包时升量化，零内核风险）**：
-- `tools/iq_pack.py`：REQUANT_GU IQ1_M gate/up → Q8_0；REQUANT_D 全部 Q2_0 down → Q4_0
-  （gguf-py 可量化、CPU 是 llama.cpp 基础内核、GPU 有现成路径）。体积 33→47.5 GiB。
-- `tools/requant_gsq.py`：手写 Q2_0/IQ1_M dequantizer（精确镜像 ggml-quants.c，含 iq1s_grid 生成表
-  `_iq1s_grid.py`）——gguf-py 连 Q2_0 的 dequantize 都没有。
-- `src/kernels/cuda/iq_kernels.cu`：GPU 侧补 Q8_0 与 Q4_0 支持——is_iq/iq_row_bytes/dq_dispatch 加
-  case 8 与 case 2；Fmt<8>/Fmt<2> 特化（q8_1 dot）；native_expert_grouped 的 gu/down switch 加 case 8/2。
+### 9.2 复核（2026-10-01 深夜）：内核从未坏，坏的是当时的探针
 
-**验收**：贪婪解码输出从全 '!'（token 0，NaN 特征）恢复为真实文本
-（"The capital of France is" → " a landlocked country in Central Asia, ... as part of the, ..."——
-连贯英文，无 NaN 特征；质量调优留给后续）。
+- 重写的手工块测试（`tools/test_q2_0.cpp`，**先调 `ggml_cpu_init()`**，走引擎同款 traits 表路径，
+  并带 Q4_0 对照组）：Q2_0 得 12803/期望 12800（偏差=激活量化舍入），Q4_0 对照同过。
+  旧探针 0.0 全零的极大概率成因：**没调 ggml_cpu_init()，fp16 查找表全零 → 缩放 d 读成 0**。
+- 真实块双端验证（`tools/rowprobe.cpp` + `tools/probe_check.py`）：从原生包 experts.bin 取全部 8 种类型
+  的真实数据行（gate/up/down × 首尾行，48 层 × 6 探针 = 288 个），ggml-cpu vec_dot 值 vs
+  gguf-py/requant_gsq 反量化基准，**0 失败，最大误差 = 量化误差上界的 0.117**。
+- GPU 侧 Q2_0 内核（dq_q2_0 / Fmt<42> / MMQ q2_0 实例）逐行读码核对，语义与 llama.cpp 一致；
+  needle 8K/32K × 3 深度全中 → 长上下文 prefill（含 GPU Q2_0 MMQ）无恙。
+- **教训**：手造块测试必须先 `ggml_cpu_init()`；单探针结论必须再用独立路径（真实块 + 反量化基准）复核
+  才能作为工程决策依据。requant 的尺寸代价（IQ2 +33% / IQ3 +11%）原本可以不付。
 
-**遗留**：
-- Q4_0 down 层 prefill 走 f16 GEMM fallback（MMQ 不支持 Q4_0）→ prefill 慢（28s/4tok，机器占用时）。
-  后续：per-layer MMQ 或把 MMQ 加 q4_0 模板。
-- requant 打包路径慢（Python 逐专家 dequant+requant，~90 分钟）→ 可向量化或 C++ 化。
-- decode 速度受 E 盘冷层页入 + 机器占用影响，需空闲复测。
+### 9.3 修复与现状
+
+- **当时真正治好 NaN 的是同批修复的打包逐专家尺寸 bug（per-row → per-expert）+ 升位包 + GPU case 补齐**；
+  Q2_0 CPU 内核自始至终是好的。
+- requant 机制保留：含 IQ1_M 的包（IQ2_XS 发布的层 8/13/37、Coder）仍需升位——x86 iq1_m 的 SIMD 内核
+  读 repack 过的 scales，原生 raw 块在该路径未验证。`STRATA_NO_REQUANT=1` 让 iq_pack 按发布版原类型
+  打包（IQ3_XXS 发布即用此模式）；默认维持 requant 行为。
+- 原生 IQ3_XXS 包成为新主线（见 §10）。
+
+## 10. 性能优化日志（2026-10-01，原生包 + 画像重建）
+
+1. **Q4_0/Q8_0 进 MMQ**（`src/prefill/moe_mmq.cu` 两个 switch + `CMakeLists.txt` 的
+   `template-instances` 列表加 q4_0/q8_0）：requant 层的 prefill 从 f16 GEMM 回退切回 int8 MMQ。
+2. **原生 IQ3_XXS 包转正**（`STRATA_NO_REQUANT=1` 打包，42.8 GiB）：显存层 7704 → **8981 专家（+17%）**，
+   同预算下命中率直接受益。启动配置 `strata-iq3xxs-native.json` / `run-iq3xxs-native.bat`。
+3. **画像重建**：`tools/make_profile.py` 加 `--trace-first`（基础画像覆盖全部 24576 对时，原合并逻辑
+   无法重排——轨迹永远"补充"不"改序"）。服务器模式 `--dump-routing` 累积 11 个部署形态请求
+   （真实代码文件上下文 + 中文写作 + 多轮，`C:\strata-models\trace_workload.py`）→
+   `expert-profile-user.bin`。**expert cache 命中率 58.4% → 平均 75.6%（峰值 93.8%）**。
+4. **测速**（2080 Ti 22G / DDR4-4000 双通道 / AVX2，机器空闲）：bench 六提示词平均
+   **10.1 → 11.8 tok/s**（中文对话类 9.7-11.9 → 14.0-14.9）；冒烟 40-token 贪心 decode
+   **5.78 → 10.60 tok/s**；32K prefill ~344 tok/s；needle 6/6。
+   CPU i-quant 吞吐 ~3.5 GB/s 是 AVX2 算力受限（计算瓶颈，不是内存带宽），AVX-512 机型不可直接比。
+5. 待办：MTP min-p/spec 扫描、`--host-budget-gib` 扫描、Q2（原生 35.5 GiB 版）需先验证 iq1_m raw 块。

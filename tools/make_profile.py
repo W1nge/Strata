@@ -67,6 +67,10 @@ def main():
     ap.add_argument("--no-base", action="store_true", help="rank by the traces only")
     ap.add_argument("--out", default=str(ROOT / "data" / "expert-profile.bin"))
     ap.add_argument("--n-expert", type=int, default=N_EXPERT, help="experts per layer (default 512)")
+    ap.add_argument("--trace-first", action="store_true",
+                    help="rank the traced pairs by frequency FIRST (hot experts into the VRAM tier), then the "
+                         "base's ranking fills the rest.  Without it the base - if it ranks all 24576 pairs, as "
+                         "the shipped one does - can never be reordered, and the traces contribute nothing.")
     a = ap.parse_args()
 
     ranked, seen = [], set()
@@ -79,15 +83,19 @@ def main():
                 ranked.append(p)
 
     ne = a.n_expert
-    if not a.no_base:
-        take(read_profile(a.base, ne))
-    n_base = len(ranked)
     freq = defaultdict(int)
     for t in a.traces:
         for p, c in read_trace(t, ne).items():
             freq[p] += c
+
+    n_base = 0
+    if not a.trace_first and not a.no_base:
+        take(read_profile(a.base, ne))          # upstream behavior: the base's order first, traces fill in
+        n_base = len(ranked)
     take(p for p, _ in sorted(freq.items(), key=lambda kv: (-kv[1], kv[0])))
     n_trace = len(ranked) - n_base
+    if a.trace_first and not a.no_base:
+        take(read_profile(a.base, ne))          # trace-first: hot pairs into the VRAM tier, the base fills the rest
     take((layer, e) for e in range(ne) for layer in range(N_LAYER))   # the rest, across the layers
     write_profile(a.out, ranked, ne)
     assert read_profile(a.out, ne) == ranked, "the profile did not survive the round trip"
