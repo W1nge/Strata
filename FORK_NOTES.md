@@ -243,13 +243,14 @@ prefill 主机侧流式 37.3s → 22.7s（CPU 解锁同时加速了拷贝/调度
 ## 15. "CPU 优化"排查补记（2026-10-02）
 
 - 尝试为 Q2_0 down 写多 token AVX2 内核（native_down_rows 分派）：奇偶校验通过后，端到端 A/B
-  **零差异**（down 20.8 vs 20.5 ms/轮）——池的 Q2_0 down 走的是 canonical 时代就有的
-  `s2_expert_down_rows_multi`（expert.cpp，AVX-VNNI dpbusd），native_down_rows 的 Q2_0 分支对
-  pool miss 不可达。已撤销死代码。CPU 侧剩余的真实杠杆只有：
+  **零差异**（down 20.8 vs 20.5 ms/轮）。后续源码与反汇编复核更正：native 池实际走
+  `q2_rows_any` → `q2_0_gguf_rows_multi_avx2`，已有多 token 摊销，但没有 AVX-VNNI；
+  `native_down_rows` 的 Q2_0 分支对 pool miss 不可达。已撤销的死代码不能排除 AVX-VNNI 收益（见 §17）。
+  其他可继续评估的杠杆：
   ① **v2 混合量化**（冷专家 IQ2 化：miss 字节 -30% → decode 约 +12%，需引擎支持按专家混合类型）；
   ② profile 语料继续扩（+3-5%/轮）。
-- 结论修正：池内核（s2 系 + iq256 系）对混合 P/E 核已经有物理核绑定与多 token 摊销，
-  "CPU 优化"的软件空间基本挖尽，下一档收益都在数据布局（混合量化）与命中率（画像）上。
+- 池内核对混合 P/E 核已有物理核绑定与多 token 摊销；这不等于已用尽 CPU 软件优化空间。
+  后续实测确认了 Q2_0 AVX-VNNI 的局部收益（§17）。
 
 ## 16. 社区经验与 P 核亲和实验（2026-10-02）
 
@@ -271,3 +272,31 @@ prefill 主机侧流式 37.3s → 22.7s（CPU 解锁同时加速了拷贝/调度
   E 核毒化理论在本引擎被否决**：per-layer 动态队列下 E 核做的是有效功，丢 12 个 worker 的损失
   大于屏障平滑的收益。与 llama.cpp 的差异在屏障结构（他们是算子级全线程同步）。
 - 每 worker 吞吐：P 核 ~1.1 GB/s，E 核 ~0.46（2.4 倍比），与拓扑预期一致。
+
+## 17. Native Q2_0 的 AVX-VNNI 分派（2026-10-02）
+
+- 当前机器的 28 个逻辑 CPU 均报告 AVX2 + AVX-VNNI，无 AVX512F。旧 `q2_avx2.cpp.obj` 和
+  `iq_avx2.cpp.obj` 均没有 `vpdpbusd`，不能把硬件支持当成软件已经使用。
+- 增加独立 `q2_avx_vnni.cpp`，以 VEX 编码的 256-bit `vpdpbusd` 替代 Q2 的
+  `maddubs + madd`。与 AVX2 共用解包、缩放和 NT 分块实现，浮点累加顺序不变。
+  编译器能力检测失败时不构建该实现；运行时检查 CPUID 和 OS YMM 状态。
+  AVX-512 路径优先级不变。新路径暂由 `STRATA_Q2_AVX_VNNI=1` 显式开启；
+  `STRATA_NO_AVX_VNNI=1` 或 `STRATA_FORCE_AVX2=1` 可禁用新路径。
+  启动日志明确显示 native Q2_0 实际选择的 ISA。
+- 独立真实权重微基准：IQ3 原生包 layer 1 / expert 0 / Q2_0 down，合成量化激活，
+  NT=1..8 共 92,160 个输出与原 AVX2 完全一致。缓存内单核 NT=4 时，P 核 153.74→136.46µs
+  （1.127×），E 核 424.41→338.75µs（1.253×）。这些不是端到端 tok/s 收益。
+- 新增 `STRATA_Q2_VNNI_TEST=ON`，可独立构建 `q2_vnni_test`；CTest 覆盖启用、默认关闭和两种禁用开关。
+  包含 NT=1..8、1/10/40 个块、非对齐行、子行区间、零/负缩放、极端及变化的整数激活，
+  与 AVX2 精确比较，并检查未请求的 token/行不被写入。
+- 复核归因：`pool multi` 的 GB/s 是逻辑压缩权重字节 / 整个线程池阶段耗时，不是实测 DRAM 带宽。
+  功耗敏感支持 CPU 路径重要，但不能据此排除缓存、访存延迟、页入和同步，也不能证明 AVX2 已到极限。
+- 旧 Q2_0 探针的初始化假说已在当前 ggml 库直接复现：`ggml_cpu_init()` 前表值为零、点积为零；
+  初始化后 FP16 2.0 的表值为 2.0、点积 12803.1875。这不同时解释历史 IQ1_M 崩溃。
+- 端到端试验（六提示词、每题最多 128 token、三轮，共每组 18 请求）：初始驻留服务 AVX2/13 GiB
+  平均 wall 10.22 tok/s；AVX2/10 GiB 20.80；VNNI/10 GiB 16.74；VNNI/8 GiB 20.48。
+  冷热缓存、页入和自适应驻留造成显著波动，不能宣称 VNNI 获得整机加速，也不能把配置差异写成
+  已证明的 2× 提升。因此 VNNI 暂保持 opt-in，本机日常 IQ3 配置仅将 pinned budget 从 13 改为 10 GiB。
+- 最终默认配置检查：四项 CPU CTest 全过；Paris 冒烟正确；生成 Fibonacci 函数的五组输入全过；
+  needle 的 10/50/90% 深度，在实际约 4.8K 和 16K 上下文中 6/6 通过。Windows 可用内存仍可能很低，
+  冷启动/新主题仍有停顿，不能把全部延迟归因到 AVX2。

@@ -51,9 +51,54 @@ bool cpu_avx512_ok() {
     return ok;
 }
 
+bool cpu_avx_vnni_ok() {
+#if defined(STRATA_HAVE_AVX_VNNI)
+    static const bool ok = [] {
+        // Faster in isolated Q2 tests, but full-engine gains depend on paging and
+        // speculation. Keep it opt-in until representative end-to-end A/Bs agree.
+        const char* enable = std::getenv("STRATA_Q2_AVX_VNNI");
+        if (enable == nullptr || enable[0] != '1') return false;
+        for (const char* key : {"STRATA_FORCE_AVX2", "STRATA_NO_AVX_VNNI"})
+            if (const char* f = std::getenv(key); f != nullptr && f[0] == '1') return false;
+        unsigned r[4] = {};
+        auto cpuid = [&](unsigned leaf, unsigned sub) {
+#if defined(_MSC_VER)
+            int x[4];
+            __cpuidex(x, (int) leaf, (int) sub);
+            for (int i = 0; i < 4; ++i) r[i] = (unsigned) x[i];
+#else
+            __cpuid_count(leaf, sub, r[0], r[1], r[2], r[3]);
+#endif
+        };
+        cpuid(0, 0);
+        if (r[0] < 7) return false;
+        cpuid(1, 0);
+        if ((r[2] & ((1u << 27) | (1u << 28))) != ((1u << 27) | (1u << 28))) return false;
+#if defined(_MSC_VER)
+        const unsigned long long xcr0 = _xgetbv(0);
+#else
+        unsigned lo = 0, hi = 0;
+        __asm__ volatile("xgetbv" : "=a"(lo), "=d"(hi) : "c"(0));
+        const unsigned long long xcr0 = ((unsigned long long) hi << 32) | lo;
+#endif
+        if ((xcr0 & 6) != 6) return false;
+        cpuid(7, 0);
+        if (r[0] < 1 || !(r[1] & (1u << 5))) return false;
+        cpuid(7, 1);
+        return (r[0] & (1u << 4)) != 0;
+    }();
+    return ok;
+#else
+    return false;
+#endif
+}
+
 void q2_rows_any(const uint8_t* w, size_t row_bytes, int nblocks, const ActQ* const* a, int nt, float* const* out,
                  int r0, int r1) {
     if (cpu_avx512_ok()) q2_0_gguf_rows_multi(w, row_bytes, nblocks, a, nt, out, r0, r1);
+#if defined(STRATA_HAVE_AVX_VNNI)
+    else if (cpu_avx_vnni_ok()) q2_0_gguf_rows_multi_avx_vnni(w, row_bytes, nblocks, a, nt, out, r0, r1);
+#endif
     else q2_0_gguf_rows_multi_avx2(w, row_bytes, nblocks, a, nt, out, r0, r1);
 }
 

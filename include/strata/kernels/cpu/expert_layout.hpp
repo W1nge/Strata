@@ -41,6 +41,9 @@ struct ExpertLayout {
 /// Plan v0.3 P6: whether this CPU (and its OS) runs the AVX-512 kernels (F, BW, VL, VNNI, VBMI).  Probed in a
 /// file compiled without AVX-512, so asking is safe everywhere; STRATA_FORCE_AVX2=1 answers no (for tests).
 bool cpu_avx512_ok();
+/// Opt-in AVX-VNNI (256-bit VEX): STRATA_Q2_AVX_VNNI=1, OS YMM state and compiler support.
+/// STRATA_NO_AVX_VNNI=1 or STRATA_FORCE_AVX2=1 disables it for A/B tests.
+bool cpu_avx_vnni_ok();
 /// Q2_0 GGUF rows / activation quantizer on the kernels this CPU has.
 void q2_rows_any(const uint8_t* w, size_t row_bytes, int nblocks, const ActQ* const* a, int nt, float* const* out,
                  int r0, int r1);

@@ -493,6 +493,50 @@ endif()
 find_package(Threads REQUIRED)
 target_link_libraries(strata_kernels_cpu PUBLIC Threads::Threads)
 
+# AVX-VNNI is distinct from AVX512-VNNI. Build its 256-bit kernel separately and
+# keep the baseline/dispatcher safe on ordinary AVX2 CPUs and older compilers.
+include(CheckCXXSourceCompiles)
+include(CMakePushCheckState)
+cmake_push_check_state(RESET)
+if(MSVC)
+  set(CMAKE_REQUIRED_FLAGS "/arch:AVX2")
+  set(_strata_vnni_dot "_mm256_dpbusd_avx_epi32")
+else()
+  set(CMAKE_REQUIRED_FLAGS "-mavx2 -mavxvnni")
+  set(_strata_vnni_dot "_mm256_dpbusd_epi32")
+endif()
+check_cxx_source_compiles("#include <immintrin.h>
+int main() { __m256i x = _mm256_set1_epi32(1); x = ${_strata_vnni_dot}(x,x,x); return _mm256_extract_epi32(x,0); }"
+  STRATA_COMPILER_AVX_VNNI)
+cmake_pop_check_state()
+if(STRATA_COMPILER_AVX_VNNI)
+  target_sources(strata_kernels_cpu PRIVATE src/kernels/cpu/q2_avx_vnni.cpp)
+  target_compile_definitions(strata_kernels_cpu PRIVATE STRATA_HAVE_AVX_VNNI=1)
+  if(MSVC)
+    set_source_files_properties(src/kernels/cpu/q2_avx_vnni.cpp PROPERTIES COMPILE_OPTIONS "/arch:AVX2")
+  else()
+    set_source_files_properties(src/kernels/cpu/q2_avx_vnni.cpp PROPERTIES COMPILE_OPTIONS "-mavx2;-mavxvnni;-mfma;-mf16c")
+  endif()
+endif()
+
+option(STRATA_Q2_VNNI_TEST "Build the CPU-only Q2 AVX-VNNI regression test" OFF)
+if(STRATA_BUILD_TESTS OR STRATA_Q2_VNNI_TEST)
+  enable_testing()
+  add_executable(q2_vnni_test src/kernels/cpu/q2_vnni_test.cpp)
+  target_link_libraries(q2_vnni_test PRIVATE strata_kernels_cpu)
+  if(STRATA_COMPILER_AVX_VNNI)
+    target_compile_definitions(q2_vnni_test PRIVATE STRATA_HAVE_AVX_VNNI=1)
+  endif()
+  add_test(NAME q2_vnni_test COMMAND q2_vnni_test)
+  set_tests_properties(q2_vnni_test PROPERTIES ENVIRONMENT "STRATA_Q2_AVX_VNNI=1")
+  add_test(NAME q2_vnni_fallback_test COMMAND q2_vnni_test)
+  set_tests_properties(q2_vnni_fallback_test PROPERTIES ENVIRONMENT "STRATA_Q2_AVX_VNNI=1;STRATA_FORCE_AVX2=1")
+  add_test(NAME q2_vnni_disabled_test COMMAND q2_vnni_test)
+  set_tests_properties(q2_vnni_disabled_test PROPERTIES ENVIRONMENT "STRATA_Q2_AVX_VNNI=1;STRATA_NO_AVX_VNNI=1")
+  add_test(NAME q2_vnni_default_test COMMAND q2_vnni_test)
+  set_tests_properties(q2_vnni_default_test PROPERTIES ENVIRONMENT "STRATA_Q2_AVX_VNNI=0")
+endif()
+
 # ---- plan v0.3 P6: the i-quant models' CPU experts (IQ2_XS / IQ3_XXS files) ----
 #
 # The CPU computes a native expert with ggml-cpu's own dot products (`ggml_get_type_traits_cpu`), so an IQ

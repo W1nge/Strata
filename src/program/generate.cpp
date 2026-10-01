@@ -1366,6 +1366,10 @@ int main(int argc, char** argv) {
         std::fprintf(stderr, "strata generate: this CPU has no AVX-512: the expert kernels run on %s "
                              "(multi-token for the i-quant gate/up rows)\n",
                      std::getenv("STRATA_NO_IQ256") == nullptr ? "AVX-2" : "ggml-cpu vec_dot (STRATA_NO_IQ256 set)");
+    if (native_pack)
+        std::fprintf(stderr, "strata generate: native Q2_0 rows: %s\n",
+                     strata::kernels::cpu::cpu_avx512_ok() ? "AVX-512" :
+                     strata::kernels::cpu::cpu_avx_vnni_ok() ? "AVX-VNNI (256-bit)" : "AVX2");
     strata::core::NativeEmbed native_embed;
     if (native_pack) {
         if (o.native_preset.empty() || o.spec < 2 || o.keep_canonical ||

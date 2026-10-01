@@ -174,6 +174,12 @@ void q2_0_gguf_rows_multi_avx2(const uint8_t* w, size_t row_bytes, int nblocks, 
                                float* const* out, int r0, int r1);
 void act_quant_q8_1_avx2(const float* x, int n, ActQ& a);
 
+/// AVX-VNNI Q2_0 rows; call only when cpu_avx_vnni_ok() is true.
+#if defined(STRATA_HAVE_AVX_VNNI)
+void q2_0_gguf_rows_multi_avx_vnni(const uint8_t* w, size_t row_bytes, int nblocks, const ActQ* const* a, int nt,
+                                   float* const* out, int r0, int r1);
+#endif
+
 void s2_expert_scalar(const uint8_t* blob, const float* x, float* out, bool quant_acts);
 
 }  // namespace strata::kernels::cpu
