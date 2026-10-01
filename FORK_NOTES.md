@@ -300,3 +300,41 @@ prefill 主机侧流式 37.3s → 22.7s（CPU 解锁同时加速了拷贝/调度
 - 最终默认配置检查：四项 CPU CTest 全过；Paris 冒烟正确；生成 Fibonacci 函数的五组输入全过；
   needle 的 10/50/90% 深度，在实际约 4.8K 和 16K 上下文中 6/6 通过。Windows 可用内存仍可能很低，
   冷启动/新主题仍有停顿，不能把全部延迟归因到 AVX2。
+
+## 18. Windows 冗余映射页与固定专家驻留（2026-10-02）
+
+- `begin_layer` 原来只对启动时的 kVram 专家查询实时驻留表；原先 kCold、后来提升到 GPU 的专家
+  仍被预取，同一 verify 窗口的重复专家也重复排队。Windows/Linux 两条路径现均按实时驻留表过滤，
+  并在本次调用中去重。GPU 逐出的专家仍会恢复 CPU 预取。
+- 撤回 Windows “无法移出映射页工作集”的注释。微软明确规定：`VirtualUnlock` 用于未锁定页时，
+  会移出工作集，并返回 FALSE/ERROR_NOT_LOCKED；映射本身仍有效，文件内容不变。
+  https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualunlock
+  启动时在 GPU 副本完成后移出 VRAM 专家的文件页，复制进 pinned arena 后移出相应文件副本；
+  运行期在 CUDA event 确认自适应 H2D 完成后、以及 prefill 借用槽位回填同步完成后提示释放文件副本。
+  范围向内按页对齐，避免影响
+  相邻冷专家的边界页；不对 pinned arena 调用 VirtualUnlock。`STRATA_NO_VIEW_TRIM=1` 可禁用。
+- Windows 回归测试覆盖：重复路由、冷专家提升/逐出、无效 ID、实际工作集驻留位变化，以及移出后
+  重新读取字节完全一致。构建及测试通过。
+- 独立 16 MiB 映射探针：4096 个驻留页 -> VirtualUnlock -> 0 个；重读内容一致。
+  整机同为 10 GiB pinned：修复后加载完约 11.5 GiB 工作集、14.4 GiB 可用 RAM；不能将
+  psutil 的大映射 RSS 数字直接当成完整驻留量，补用 64 位 QueryWorkingSetEx 抽样确认。
+- `STRATA_DECODE_TIMING` 增加 gate/up、激活量化、down、adaptive join 和冷预取统计。
+  动态交换时等待约 10–14 ms/window。采用同一个既有用户画像，关闭交换可减少 PCIe 传输并保留
+  静态 GPU/pinned 分工；它在本机比追求更高的动态 GPU 命中率更快。
+- 六提示词、temperature 0、reasoning none、每题最多 128 token、顺序三轮共 18 请求。
+  指标为总生成 token / 总引擎 decode 秒数，包含第一轮；不是各请求速度的算术平均，也不含 prefill：
+  AVX2/10 GiB 24.88；仅修预取 28.68；加映射页释放 35.24；再设 `--adapt-every 0` 为 **49.83 tok/s**
+  （1419 token / 28.4759 s），三轮 37.03 / 60.20 / 60.28，含 prefill 的 HTTP 总速率 38.78 tok/s。
+  Windows 文件缓存、试验次序和生成文本仍是混杂因素，不能把这些观测写成已证明的各项独立倍数收益。
+- 日常 IQ3 配置保留 host budget 10、spec 4、spec-min-p 0.4，增加 `--adapt-every 0`；VNNI 仍默认关闭。
+  不改变权重、量化档位、专家 top-k 或上下文上限。首轮及其他任务仍可能低于 40；49.83 是指定混合
+  基准的汇总 decode 速度。全词表本来已在使用，上游 #137 的旧 CJK 词表缺失不适用于此部署。
+  #137 的 76.8 -> 87.7 数据来自 RTX 5070 Ti / Ryzen 7700 / 96 GB，不能当成 2080 Ti/Skylake-X 对照。
+- 补齐 prefill 回填后的文件页释放后，重启最终版本重跑原六题：**49.38 tok/s**，三轮
+  36.11 / 60.44 / 60.52。随后六个新增题目（科学、历史、统计、数据库、Python 区间合并、物理），
+  每题最多 256 token、三轮共 18 请求：**46.35 tok/s**，三轮 40.72 / 51.72 / 48.12。
+  新题测试是已加载服务上的连续测试，不是清空 OS 缓存后的独立冷启动。此前长提示后换题的
+  两轮试验只有 34.67（27.08 / 48.20），同样保留，不能把工作负载相关的改善写成最低速度保证。
+- 最终构建复查：tiered-source 测试全过；Paris 冒烟与 Fibonacci 五个输入全过；4.8K/16K
+  上下文、10/50/90% 深度的 needle 再次 6/6 通过。新题组输出达到上限时按 length 结束，未将其
+  当成完整答案质量评测。36 次速度请求共 5875 token / 124.8743 s，汇总 47.047 tok/s。

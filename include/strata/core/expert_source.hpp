@@ -64,6 +64,8 @@ public:
     /// Called once before the first expert of a layer.  A source that reads from disk wants to start the read
     /// here so it overlaps the quantisation, and a prefetching source in Phase 3 wants the ids.
     virtual void begin_layer(int64_t layer, const int32_t* ids, int64_t k) { (void) layer; (void) ids; (void) k; }
+    /// A completed device copy no longer needs its pageable host view resident. Never invalidates the bytes.
+    virtual void release_host_copy(int64_t layer, int64_t expert) { (void) layer; (void) expert; }
     /// Plan v0.3 P6: the DEVICE address of a pinned, mapped blob (the GPU can read it over PCIe), or null.
     virtual const uint8_t* device_alias(int64_t layer, int64_t expert) const { (void) layer; (void) expert; return nullptr; }
     /// Can this layer's misses be read by the GPU over PCIe at all?  Per-expert eligibility is still `pinned()`.
@@ -423,6 +425,9 @@ public:
 
     const std::string& note() const { return note_; }
     int64_t cold_prefetches() const { return cold_prefetches_; }
+#ifdef _WIN32
+    void release_host_copy(int64_t layer, int64_t expert) override;
+#endif
 
     enum Tier : uint8_t { kVram = 0, kPinned = 1, kCold = 2 };
 

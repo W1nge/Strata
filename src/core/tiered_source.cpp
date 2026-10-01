@@ -32,8 +32,8 @@
 //   - The PINNED tier cannot be carved out of the file mapping in place (no MAP_FIXED page surgery), so it lives
 //     in a separate `cudaHostAlloc` arena and `blob()` dispatches on the tier table.  One branch per routed
 //     expert, against a 1.4 MB blob read - nothing.
-//   - MADV_DONTNEED has no equivalent for a mapped view; the VRAM tier's file pages fall to the standby list,
-//     which Windows itself counts as available memory.  `settle` measures with that in mind and skips the drop.
+//   - VirtualUnlock on an unlocked view removes pages from this process's working set (ERROR_NOT_LOCKED is
+//     expected). The clean file bytes remain valid and may stay on standby; do not trim the pinned arena.
 //   - Prefetch is `PrefetchVirtualMemory` (standby warm-up), streamed reads are `FILE_FLAG_NO_BUFFERING` on a
 //     second handle, with the aligned-superset bounce buffer the O_DIRECT path uses on Linux.
 #define NOMINMAX
@@ -177,14 +177,15 @@ bool TieredExpertSource::settle(const ExpertCache* cache, const std::vector<std:
     const strata::kernels::cpu::ExpertLayout& lay = strata::kernels::cpu::expert_layout();
     const auto t0 = std::chrono::steady_clock::now();
 
-    // ---- 1. the VRAM tier: mark it.  Its file pages are not dropped (no Windows equivalent of MADV_DONTNEED for
-    // a view); they fall to the standby list, which GlobalMemoryStatusEx already counts as available.
+    // ---- 1. the completed cache fill owns the live copies. Release the redundant view working-set pages
+    // before budgeting and allocating the pinned tier, so they do not crowd out useful CPU expert pages.
     uint64_t vram_bytes = 0;
     int64_t n_vram = 0;
     for (int64_t l = 0; l < n_layers_; ++l)
         for (int64_t e = 0; e < n_expert_; ++e) {
             if (cache == nullptr || cache->slot_of(l, e) == kNotResident) continue;
             tier_[(size_t) (l * n_expert_ + e)] = kVram;
+            release_host_copy(l, e);
             vram_bytes += lay.blob_bytes(l);
             ++n_vram;
         }
@@ -240,6 +241,7 @@ bool TieredExpertSource::settle(const ExpertCache* cache, const std::vector<std:
                     const int64_t idx = order[i];
                     std::memcpy(pin_arena_ + pin_off_[(size_t) idx], base_ + lay.blob_offset(idx / n_expert_, idx % n_expert_),
                                 lay.blob_bytes(idx / n_expert_));
+                    release_host_copy(idx / n_expert_, idx % n_expert_);
                 }
             };
             std::vector<std::thread> pool;
@@ -271,12 +273,26 @@ bool TieredExpertSource::settle(const ExpertCache* cache, const std::vector<std:
     auto gib = [](uint64_t b) { return (double) b / 1073741824.0; };
     char buf[600];
     std::snprintf(buf, sizeof buf,
-                  "tiers: VRAM %lld experts (%.2f GiB, standby; the GPU holds the only live copy) | PINNED %lld "
+                  "tiers: VRAM %lld experts (%.2f GiB) | PINNED %lld "
                   "(%.2f GiB, cudaHostAlloc arena) | COLD %lld (%.2f GiB, paged from SSD) | budget %.2f GiB | %.1f s",
                   (long long) n_vram, gib(vram_bytes), (long long) n_pinned, gib(pinned_bytes), (long long) n_cold,
                   gib(cold_bytes), gib((uint64_t) budget_bytes), secs);
     note_ = buf;
     return true;
+}
+
+void TieredExpertSource::release_host_copy(int64_t layer, int64_t expert) {
+    static const bool off = std::getenv("STRATA_NO_VIEW_TRIM") != nullptr;
+    if (off || base_ == nullptr || layer < 0 || layer >= n_layers_ || expert < 0 || expert >= n_expert_) return;
+    const auto& lay = strata::kernels::cpu::expert_layout();
+    const uint64_t pg = win_page_size(), off_b = lay.blob_offset(layer, expert);
+    // Round inward: the partial boundary pages may also contain a CPU expert's bytes.
+    const uint64_t a = (off_b + pg - 1) / pg * pg;
+    const uint64_t b = (off_b + lay.blob_bytes(layer)) / pg * pg;
+    if (b <= a || b > file_bytes_) return;
+    // Microsoft documents FALSE/ERROR_NOT_LOCKED as successful removal of unlocked working-set pages.
+    // This is a residency hint: a failed hint is harmless, and the file mapping stays readable.
+    VirtualUnlock(const_cast<uint8_t*>(base_ + a), (SIZE_T) (b - a));
 }
 
 void TieredExpertSource::close() {
@@ -386,8 +402,10 @@ void TieredExpertSource::begin_layer(int64_t layer, const int32_t* ids, int64_t 
         const size_t idx = (size_t) (layer * n_expert_ + e);
         const uint8_t t = tier_[idx];
         if (t == kPinned) continue;
-        // a VRAM-tier expert has no RAM copy; it needs one only once the adaptive swap has evicted it
-        if (t == kVram && (res_ == nullptr || res_[idx] >= 0)) continue;
+        // Residency changes after settle: an originally cold expert may now be on the GPU.
+        // Only actual CPU misses need their file pages, once per distinct routed expert.
+        if (res_ != nullptr ? res_[idx] >= 0 : t == kVram) continue;
+        if (std::find(ids, ids + i, ids[i]) != ids + i) continue;
         // One read for the whole blob instead of ~340 page faults in the pool.  Asynchronous: it overlaps the
         // pool's work on the experts already in RAM.
         const uint64_t off = lay.blob_offset(layer, e);
@@ -803,8 +821,10 @@ void TieredExpertSource::begin_layer(int64_t layer, const int32_t* ids, int64_t 
         const size_t idx = (size_t) (layer * n_expert_ + e);
         const uint8_t t = tier_[idx];
         if (t == kPinned) continue;
-        // a VRAM-tier expert has no RAM copy; it needs one only once the adaptive swap has evicted it
-        if (t == kVram && (res_ == nullptr || res_[idx] >= 0)) continue;
+        // Residency changes after settle: an originally cold expert may now be on the GPU.
+        // Only actual CPU misses need their file pages, once per distinct routed expert.
+        if (res_ != nullptr ? res_[idx] >= 0 : t == kVram) continue;
+        if (std::find(ids, ids + i, ids[i]) != ids + i) continue;
         // One read for the whole blob instead of ~340 page faults in the pool.  Asynchronous: it overlaps the
         // pool's work on the experts already in RAM.
         const uint64_t off = lay.blob_offset(layer, e);

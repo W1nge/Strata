@@ -7,6 +7,9 @@
 #include "strata/kernels/cpu/expert_layout.hpp"
 
 #include <cuda_runtime.h>
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <psapi.h>
 
 #include <cstdio>
 #include <filesystem>
@@ -125,6 +128,17 @@ int main() {
     check_blob(0, 1, "PINNED-tier blob bytes (from the arena)");
     check_blob(3, 6, "COLD-tier blob bytes (through the view)");
 
+    // A working-set hint must remove an interior page without changing the mapped bytes.
+    const uint8_t* view = src.blob(0, 0);
+    PSAPI_WORKING_SET_EX_INFORMATION wi{};
+    wi.VirtualAddress = (void*) (view + 8192);
+    QueryWorkingSetEx(GetCurrentProcess(), &wi, sizeof wi);
+    failures += !expect(wi.VirtualAttributes.Valid != 0, "checked view page is resident");
+    src.release_host_copy(0, 0);
+    QueryWorkingSetEx(GetCurrentProcess(), &wi, sizeof wi);
+    failures += !expect(wi.VirtualAttributes.Valid == 0, "redundant view page removed from working set");
+    check_blob(0, 0, "trimmed view bytes remain intact on reread");
+
     // ---- 7. read_into: the streamed path (a cold blob through FILE_FLAG_NO_BUFFERING) and memcpy (pinned)
     std::printf("== 7. read_into ==\n");
     {
@@ -148,7 +162,19 @@ int main() {
         const int32_t ids[] = {6, 6, 7};
         src.begin_layer(3, ids, 3);
         src.begin_layer(3, ids, 3);   // second pass: the queued range repeats, still must not crash
-        failures += !expect(src.cold_prefetches() >= before + 6, "cold prefetches counted");
+        failures += !expect(src.cold_prefetches() == before + 4, "duplicate expert prefetched once per call");
+        std::vector<int32_t> res((size_t) L * E, kNotResident);
+        for (auto [l, e] : cached) res[(size_t) l * E + e] = 0;
+        res[3 * E + 6] = 1;  // an originally cold expert was promoted by adaptive residency
+        src.set_residency(res.data());
+        const int64_t promoted = src.cold_prefetches();
+        src.begin_layer(3, ids, 3);
+        failures += !expect(src.cold_prefetches() == promoted + 1, "promoted cold expert is not prefetched");
+        res[0] = kNotResident;  // an originally VRAM expert was evicted and now needs CPU pages
+        const int32_t evicted[] = {0, 0, 1, -1, (int32_t) E};
+        src.begin_layer(0, evicted, 5);
+        failures += !expect(src.cold_prefetches() == promoted + 2, "evicted expert prefetched, pinned and invalid skipped");
+        src.set_residency(nullptr);
     }
 
     std::printf("\n%s (%d failures)\n", failures == 0 ? "ALL TIERED-SOURCE TESTS PASSED" : "FAILURES PRESENT",

@@ -3365,7 +3365,10 @@ int main(int argc, char** argv) {
                     else if (cudaEventQuery(st->adapt_ev) != cudaSuccess) return;
                 }
             for (auto& st : stages) st->adapt_live = false;
-            for (const auto& [i, slot] : pending) host_res[(size_t) i] = slot;
+            for (const auto& [i, slot] : pending) {
+                host_res[(size_t) i] = slot;
+                srcp->release_host_copy(i / g.n_expert, i % g.n_expert);
+            }
             pending.clear();
             res_upload();
         };
@@ -3905,6 +3908,8 @@ int main(int argc, char** argv) {
                     host_res[(size_t) i] = slot;
                 }
                 if (!xcache.sync_queued(e)) return false;
+                for (const auto& [i, slot] : lent_now)
+                    srcp->release_host_copy(i / g.n_expert, i % g.n_expert);
                 cudaMemcpy(d_res, host_res.data(), host_res.size() * sizeof(int32_t), cudaMemcpyHostToDevice);
                 lent_now.clear();
                 lent_chunk = 0;
@@ -4045,14 +4050,17 @@ int main(int argc, char** argv) {
             struct DecSnap {
                 double wait, pool, host, plan, actq, jobs, run;
                 int64_t misses, entries, hits, pcie;
+                double gu, quant, down;
+                int64_t prefetches;
             };
             auto dec_snap = [&]() {
                 return DecSnap{ver.ms_wait, ver.ms_pool, ver.ms_host, drive.d.ms_plan, drive.d.ms_actq, drive.d.ms_jobs,
                                drive.d.ms_run, drive.d.multi_misses, drive.d.multi_entries, drive.d.cache_hits,
-                               drive.d.pcie_experts};
+                               drive.d.pcie_experts, pool.ms_multi_gu, pool.ms_multi_q, pool.ms_multi_down,
+                               tiered_src.cold_prefetches()};
             };
             const DecSnap ds0 = dec_snap();
-            double dt_run = 0, dt_commit = 0, dt_draft = 0;
+            double dt_run = 0, dt_commit = 0, dt_draft = 0, dt_join = 0;
             int64_t dec_windows = 0, dec_T = 0;
             const int64_t decode_hits0 = drive.d.cache_hits;
             const int64_t decode_look0 = drive.d.cache_hits + drive.d.cache_admitted + drive.d.cache_refused;
@@ -4139,7 +4147,9 @@ int main(int argc, char** argv) {
                     dt_run += msd(tw0, tw1); dt_commit += msd(tw1, tw2); dt_draft += msd(tw2, tw3);
                     ++dec_windows; dec_T += T;
                 }
+                const Clock::time_point tj0 = Clock::now();
                 if (adapt_thr.joinable()) adapt_thr.join();
+                dt_join += std::chrono::duration<double, std::milli>(Clock::now() - tj0).count();
                 if (!adapt_ok) {
                     std::printf("ERR an adaptive refill failed\n");
                     return 1;
@@ -4170,6 +4180,10 @@ int main(int argc, char** argv) {
                              (d1.host - ds0.host) / w, dt_commit / w, dt_draft / w, (d1.misses - ds0.misses) / (w * L),
                              (d1.entries - ds0.entries) / (w * L), (d1.hits - ds0.hits) / (w * L), (d1.pcie - ds0.pcie) / (w * L));
                 const std::string pr = ver.profile_report();
+                std::fprintf(stderr, "strata decode detail: CPU gate/up %.2f + quant %.2f + down %.2f ms/window; "
+                                     "adaptive join %.2f ms/window; cold prefetches %.2f/layer-window\n",
+                             (d1.gu - ds0.gu) / w, (d1.quant - ds0.quant) / w, (d1.down - ds0.down) / w,
+                             dt_join / w, (d1.prefetches - ds0.prefetches) / (w * L));
                 if (!pr.empty()) std::fprintf(stderr, "strata decode GPU stages (ms/window):%s\n", pr.c_str());
             }
             if (!cancelled) {
@@ -4403,6 +4417,8 @@ int main(int argc, char** argv) {
                 std::fprintf(stderr, "strata generate: refilling the lent slots failed: %s\n", err.c_str());
                 return 1;
             }
+            for (const auto& [i, slot] : lent)
+                srcp->release_host_copy(i / g.n_expert, i % g.n_expert);
             cudaMemcpy(d_res, host_res.data(), host_res.size() * sizeof(int32_t), cudaMemcpyHostToDevice);
             std::fprintf(stderr, "strata generate: %zu lent slots refilled in %.1f ms\n", lent.size(),
                          std::chrono::duration<double, std::milli>(Clock::now() - tr).count());
@@ -4705,7 +4721,10 @@ int main(int argc, char** argv) {
             if (pending.empty()) return;
             if (wait) cudaEventSynchronize(adapt_ev);
             else if (cudaEventQuery(adapt_ev) != cudaSuccess) return;
-            for (const auto& [i, slot] : pending) host_res[(size_t) i] = slot;
+            for (const auto& [i, slot] : pending) {
+                host_res[(size_t) i] = slot;
+                srcp->release_host_copy(i / g.n_expert, i % g.n_expert);
+            }
             pending.clear();
             if (d_res != nullptr)
                 cudaMemcpy(d_res, host_res.data(), host_res.size() * sizeof(int32_t), cudaMemcpyHostToDevice);
