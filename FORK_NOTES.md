@@ -180,3 +180,19 @@
 - profile v2：两轮共 27 个部署形态请求（含 4.3K token 代码上下文）合并重建
   （20,912 热对 + 3,664 基础补齐）；bench 均值与 v1 持平（11.6 vs 11.8，噪声内），
   长代码上下文覆盖率提升。bench 的 Fibonacci/SQL 类提示不在语料中，命中维持 ~60% 属预期。
+
+## 12. iq1_m 复核与 IQ2 速度档（2026-10-02）
+
+- **iq1_m 的"SEGV/需 repack"结论一并撤回**：真实块验证（`tools/test_iq1m.cpp`，IQ2_XS 发布层 8 gate
+  expert0 row0，560B）——canonical 与 `_generic` 内核同值（-1.22456），对 requant_gsq 反量化基准
+  ratio 0.017，PASS。本构建里 canonical iq1_m 就是 raw-block 路径（arch-fallback 把 _generic 编译为正名）。
+- **原生 IQ2_XS 速度档**（`STRATA_NO_REQUANT=1`，experts.bin 33.02 GiB）：显存层 **10,287 专家（13.78 GiB）**
+  vs IQ3 档 8,978；CPU pool 64.8 ms/轮（8.7 GB/s），命中率 ~85%（冒烟提示）。
+  **bench 平均 18.8 tok/s（IQ3 档 11.6 的 +62%）；40-token 贪心 decode 19.24 tok/s（+43%）**。
+  启动配置 `strata-iq2xs-native.json` / `run-iq2xs-native.bat`。质量为 2-bit 档（长文/代码可用，精细推理让位）。
+- 显存 auto 尺寸收缩的坑（`generate.cpp` shrink 级联）：IQ2 包的 auto 规划 10,689 槽在写入后 0 MiB free，
+  两次 `bytes/4` 收缩 + 反复开关分配耗尽 Windows commit → verify 的 cudaHostAlloc(Mapped) 失败。
+  显式 `--expert-cache 9800` 绕开；同一配置重跑即恢复（临时性 commit 压力）。engine 侧的 auto 余量
+  修正（free 读数偏高 ~1GB 的 WDDM 问题）列为后续项。
+- **AVX2 gate/up 内核评估**：`iq_avx2.cpp` 已是精心调优的设计（码本查表每 32 值块一次、keven_signs
+  预计算表、多 token 摊销），无低垂果实；再往上需要 VTune 级微架构工作。

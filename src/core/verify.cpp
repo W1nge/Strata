@@ -68,7 +68,11 @@ struct Bump {
 };
 
 bool mapped(size_t bytes, void** h, void** d) {
-    if (cudaHostAlloc(h, bytes, cudaHostAllocMapped) != cudaSuccess) return false;
+    if (cudaHostAlloc(h, bytes, cudaHostAllocMapped) != cudaSuccess) {
+        std::fprintf(stderr, "verify: cudaHostAlloc(%zu, mapped) failed: %s\n", bytes,
+                     cudaGetErrorString(cudaGetLastError()));
+        return false;
+    }
     std::memset(*h, 0, bytes);
     return cudaHostGetDevicePointer(d, *h, 0) == cudaSuccess;
 }
