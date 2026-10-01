@@ -161,3 +161,22 @@
    **5.78 → 10.60 tok/s**；32K prefill ~344 tok/s；needle 6/6。
    CPU i-quant 吞吐 ~3.5 GB/s 是 AVX2 算力受限（计算瓶颈，不是内存带宽），AVX-512 机型不可直接比。
 5. 待办：MTP min-p/spec 扫描、`--host-budget-gib` 扫描、Q2（原生 35.5 GiB 版）需先验证 iq1_m raw 块。
+
+## 11. Prefill 调优记录（2026-10-01 晚）
+
+31K token 提示的分阶段测量（`--tokens-file` + `tools/bpe_encode.py` 生成）：
+
+- 基线（`--prefill 8192`，4 chunks）：核心 90.6s（342 tok/s）；**专家流式 71,408 次，主机侧 37.3s（41%）**
+  ——每个 chunk 把 pinned+冷层 ~1.78 万专家全部重流，跨 chunk 复用为零。
+- **`--prefill 16384`（2 chunks）：核心 74.7s（415 tok/s，+21%）**，流式降到 39.8K 次 → 已固化为默认。
+  32768 反而劣化（PLE 上传 9.7s + 墙钟 124s）。
+- 已排除的假设：`--pcie-frac 0.55`（prefill 的 DMA 决策独立于它，两跑完全相同）、
+  `STRATA_STAGER_THREADS=32`（stager 非瓶颈，16K 下还略差）。
+- 剩余瓶颈：冷层页入 ~2GB/s（47.6GB/31K 提示）。层间路由依赖（L+1 的路由要等 L 的输出）决定了
+  页入本身就在关键路径上，双缓冲的上限被它锁住；再往上需要冷层读并行深度的内核级改造，
+  收益估计 +20-30%，列为后续项。
+- `--stage-timing` 的使用限制：需要 `--no-capture`，而 `--no-pool` 地板测量会以 100% GPU 空转挂死
+  （native pack 31K 提示实测）——别用。
+- profile v2：两轮共 27 个部署形态请求（含 4.3K token 代码上下文）合并重建
+  （20,912 热对 + 3,664 基础补齐）；bench 均值与 v1 持平（11.6 vs 11.8，噪声内），
+  长代码上下文覆盖率提升。bench 的 Fibonacci/SQL 类提示不在语料中，命中维持 ~60% 属预期。
