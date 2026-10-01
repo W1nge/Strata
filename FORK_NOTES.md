@@ -250,3 +250,24 @@ prefill 主机侧流式 37.3s → 22.7s（CPU 解锁同时加速了拷贝/调度
   ② profile 语料继续扩（+3-5%/轮）。
 - 结论修正：池内核（s2 系 + iq256 系）对混合 P/E 核已经有物理核绑定与多 token 摊销，
   "CPU 优化"的软件空间基本挖尽，下一档收益都在数据布局（混合量化）与命中率（画像）上。
+
+## 16. 社区经验与 P 核亲和实验（2026-10-02）
+
+社区检索（AVX2-only 推理的经验）三条线索：
+1. **ik_llama.cpp**（github.com/ikawrakow/ik_llama.cpp）：手写 SIMD 内核（AVX2/AVX-512/VNNI）+ 重设计的
+   IQ2/IQ3 量化类型（iq2_ks 等），CPU+GPU 混合跑 MoE（DeepSeek/Qwen3）有 5× 提速报告——**内核技法的
+   移植来源，最值得深挖**。
+2. **Intel 混合架构 E 核毒化**（llama.cpp discussion #572 等）：P 核-only 最快三倍——但那是
+   "每算子全线程硬屏障"的结构；**本引擎实测不成立**（见下）。
+3. **BitNet.cpp 的 TL/I2_S LUT 内核**（arxiv 2502.11880）：激活也低比特化后用 PSHUFB 查表做 2-bit
+   乘加，绕过解包税——需要激活量化重构，列未来方向。
+
+**P 核亲和实验**：13850HX = 8P(16线程) + 12E（逻辑 CPU 0-15 为 P）。池现设计 19 worker = 全部物理核
+各一（host 占第一个 P 核）。流程亲和掩码 0xFFFF（P-only）测试：
+- 先踩坑：引擎建 worker 时**无视进程亲和掩码**，19 个 worker 被钉到掩码外的核上 → 调度崩坏
+  （1.87 tok/s）。已修：`pool.cpp` 的 `physical_cores()` 现在按 `GetProcessAffinityMask` 过滤
+  （正确性修复，保留）。
+- 修正后实测：P-only 池（7 worker）**16.41 tok/s** vs 混合池（19 worker）17.6-17.9 —— **慢约 7%，
+  E 核毒化理论在本引擎被否决**：per-layer 动态队列下 E 核做的是有效功，丢 12 个 worker 的损失
+  大于屏障平滑的收益。与 llama.cpp 的差异在屏障结构（他们是算子级全线程同步）。
+- 每 worker 吞吐：P 核 ~1.1 GB/s，E 核 ~0.46（2.4 倍比），与拓扑预期一致。

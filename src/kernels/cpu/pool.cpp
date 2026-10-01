@@ -35,8 +35,14 @@ std::vector<int> physical_cores(bool skip_first) {
     // workers on each physical core and halve the bandwidth the expert kernel is bound by.
     DWORD len = 0;
     GetLogicalProcessorInformationEx(RelationProcessorCore, nullptr, &len);
+    // Only cores the PROCESS may run on: a process-wide affinity mask (start /AFFINITY, taskset, BIOS
+    // E-core disabling) is the user's statement about which cores to use - a worker pinned outside it
+    // either fails to schedule or crowds the allowed ones (measured 8x slower on a hybrid CPU).
+    ULONG_PTR proc_mask = 0, sys_mask = 0;
+    GetProcessAffinityMask(GetCurrentProcess(), &proc_mask, &sys_mask);
     if (len == 0) {
-        for (unsigned i = 0; i < std::thread::hardware_concurrency(); ++i) cores.push_back((int) i);
+        for (unsigned i = 0; i < std::thread::hardware_concurrency(); ++i)
+            if (!proc_mask || (proc_mask >> i) & 1) cores.push_back((int) i);
     } else {
         std::vector<char> buf(len);
         if (GetLogicalProcessorInformationEx(RelationProcessorCore,
@@ -48,7 +54,11 @@ std::vector<int> physical_cores(bool skip_first) {
                 if (e->Relationship == RelationProcessorCore) {
                     const GROUP_AFFINITY& g = e->Processor.GroupMask[0];
                     for (int bit = 0; bit < 64; ++bit)
-                        if (g.Mask & (1ull << bit)) { cores.push_back((int) (g.Group * 64 + bit)); break; }
+                        if (g.Mask & (1ull << bit)) {
+                            const int idx = (int) (g.Group * 64 + bit);
+                            if (!proc_mask || (proc_mask >> (idx % 64)) & 1) cores.push_back(idx);
+                            break;
+                        }
                 }
                 p += e->Size;
             }
