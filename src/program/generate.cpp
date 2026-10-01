@@ -1437,7 +1437,9 @@ int main(int argc, char** argv) {
     strata::core::layer_set_publish_kernel(!o.no_publish_kernel);
     strata::core::layer_set_fused_gdn(!o.no_fused_gdn);
     strata::core::layer_set_fast_select(!o.no_fast_select);
-    strata::core::layer_set_fused_gr(o.gr_native_mmvf && !o.no_fused_gr && !o.gpu_stages && o.dump_layers.empty() &&
+    // (this fork) dump runs keep fused GR: the fusion is bit-identical, and the native verify window
+    // refuses to run without it - so a --dump-layers probe of the native path must keep it on.
+    strata::core::layer_set_fused_gr(o.gr_native_mmvf && !o.no_fused_gr && !o.gpu_stages &&
                                      o.dump_halves.empty() && !o.stage_timing);
     strata::core::layer_set_native_bf16(o.native_bf16);
     strata::core::layer_set_native_flash_attn_short(o.native_flash_attn_short);
@@ -2901,7 +2903,9 @@ int main(int argc, char** argv) {
     int32_t* d_hit_count = nullptr;
     strata::core::TokenHits thits;
     const bool graph_hits = hit_fn != nullptr && !profile.empty() && !o.no_pool;
-    if (graph_hits && !o.no_capture && !o.no_token_graph && layer_dump == nullptr && half_dump == nullptr) {
+    // (this fork) the residency table is staged whenever the hit path exists - including the per-layer dump
+    // runs, which cannot use the one-token graph but still run --spec'd windows that want the table.
+    if (graph_hits && !o.no_token_graph) {
         host_res.assign((size_t) (g.n_layers * g.n_expert), strata::core::kNotResident);
         int64_t resident = 0;
         for (int64_t l = 0; l < g.n_layers; ++l)

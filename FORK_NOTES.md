@@ -112,3 +112,32 @@
   （"compile them to a trap; qsa_prompt_attn_batch refuses such a device"）→ **预填充注意力路径正式无罪**。
 - NaN 嫌疑收窄至：{gdn native, bf16 投影, indexer} 的 fused verify window 组合，或更深的调度问题。
 - Coder IQ1_M 分片 1 下载完成后：0.1.22 对照引擎用经典 arena（23.4GB）跑 Coder 做正确性对照。
+
+
+## 9. NaN 根因与修复（2026-10-01，重大突破）
+
+**根因链（全部实证）**：
+1. GSQ-RCO IQ2_XS 发布的层 8/13/37 gate/up 为 IQ1_M，且全部 48 层 down 为 Q2_0。
+2. ggml-cpu 的 x86/MSVC 内核对这两个类型是坏的：Q2_0 vec_dot 全 0（手工块判定，期望 12800 得 0）、
+   IQ1_M vec_dot SEGV（需要 CPU 后端的 repack 前置）。iq_avx2/iq_avx512 均不覆盖（作者前提
+   "no shipped model has IQ1_M expert rows" 被该发布打破）。CPU misses（~37%）→ NaN 污染。
+3. llama.cpp 自身（含 dequant+scalar dot）读同一 GGUF 正常 → 权重无辜。
+4. 0.1.22 与 0.1.24 同病 → 非版本回归。
+
+**修复（打包时升量化，零内核风险）**：
+- `tools/iq_pack.py`：REQUANT_GU IQ1_M gate/up → Q8_0；REQUANT_D 全部 Q2_0 down → Q4_0
+  （gguf-py 可量化、CPU 是 llama.cpp 基础内核、GPU 有现成路径）。体积 33→47.5 GiB。
+- `tools/requant_gsq.py`：手写 Q2_0/IQ1_M dequantizer（精确镜像 ggml-quants.c，含 iq1s_grid 生成表
+  `_iq1s_grid.py`）——gguf-py 连 Q2_0 的 dequantize 都没有。
+- `src/kernels/cuda/iq_kernels.cu`：GPU 侧补 Q8_0 与 Q4_0 支持——is_iq/iq_row_bytes/dq_dispatch 加
+  case 8 与 case 2；Fmt<8>/Fmt<2> 特化（q8_1 dot）；native_expert_grouped 的 gu/down switch 加 case 8/2。
+
+**验收**：贪婪解码输出从全 '!'（token 0，NaN 特征）恢复为真实文本
+（"The capital of France is" → " a landlocked country in Central Asia, ... as part of the, ..."——
+连贯英文，无 NaN 特征；质量调优留给后续）。
+
+**遗留**：
+- Q4_0 down 层 prefill 走 f16 GEMM fallback（MMQ 不支持 Q4_0）→ prefill 慢（28s/4tok，机器占用时）。
+  后续：per-layer MMQ 或把 MMQ 加 q4_0 模板。
+- requant 打包路径慢（Python 逐专家 dequant+requant，~90 分钟）→ 可向量化或 C++ 化。
+- decode 速度受 E 盘冷层页入 + 机器占用影响，需空闲复测。

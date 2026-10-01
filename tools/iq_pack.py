@@ -38,6 +38,11 @@ import sys
 
 import numpy as np
 
+# (this fork) the Q2_0/IQ1_M types only exist in the pinned gguf-py; the pip gguf predates them.
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from _paths import add_gguf_py as _add_gguf_py
+_add_gguf_py()
+
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import gguf_reader as G  # noqa: E402
@@ -299,20 +304,40 @@ def main() -> int:
         print("the routers disagree on the expert count; a per-layer pruned model cannot be packed")
         return 1
     layout, offset = [], 0
+    # (this fork) REQUANT: the GSQ-RCO IQ2_XS file stores three layers' gate/up as IQ1_M and their down as
+    # Q2_0.  ggml-cpu's row kernels for those two types are broken on the x86/MSVC build - iq1_m faults
+    # outside the CPU backend's repack, q2_0 returns 0.0 for every row (proven with a hand-crafted block) -
+    # and the GPU MMQ has no iq1_m instance.  Up-quant them to Q8_0 (gate/up and down): supported
+    # by the AVX-2 multi-token kernels and the GPU MMQ alike, no quality loss beyond the source's own, and
+    # +~1.2 GiB of experts.bin across the three layers.
+    REQUANT_GU = {"IQ1_M": ("Q8_0", 32, 34)}
+    REQUANT_D = {"Q2_0": ("Q4_0", 32, 18)}
+    from gguf import GGMLQuantizationType as _Q
     for l in range(n_layers):
         ts = [T["blk.%d.ffn_%s_exps.weight" % (l, r)] for r in ROLES]
-        per = [t.expected_bytes() // n_expert for t in ts]
-        if per[0] != per[1] or ts[0].type_name != ts[1].type_name:
+        if ts[0].type_name != ts[1].type_name:
             print("layer %d: gate and up differ in type" % l)
             return 1
+        targets = [REQUANT_GU.get(ts[0].type_name), REQUANT_GU.get(ts[1].type_name), REQUANT_D.get(ts[2].type_name)]
+        per = []
+        for t, rq in zip(ts, targets):
+            if rq is None:
+                per.append(t.expected_bytes() // n_expert)
+            else:
+                _name, blck, tsize = rq
+                n_row = int(t.shape[1])                       # gguf ne1: rows per expert
+                row_bytes = int(t.shape[0]) // blck * tsize   # gguf ne0: values per row -> bytes
+                per.append(n_row * row_bytes)                 # per-expert plane
         blob = per[0] + per[1] + per[2]
-        layout.append((l, ts[0].type_id, ts[2].type_id, offset, blob, ts))
+        gt_id = int(_Q[targets[0][0]]) if targets[0] else ts[0].type_id
+        dt_id = int(_Q[targets[2][0]]) if targets[2] else ts[2].type_id
+        layout.append((l, gt_id, dt_id, offset, blob, ts, targets))
         offset += blob * n_expert
     with open(out / "native_experts.txt", "w", encoding="utf-8", newline="\n") as fo:
         fo.write("# strata native experts v3: layer gu_type d_type offset blob_bytes gate_off up_off down_off [shard] "
                  "(n_expert %d, total %d; absolute offsets in %s, or in the named shard beside it)\n"
                  % (n_expert, offset, src.name))
-        for l, gt, dt, off, blob, ts in layout:
+        for l, gt, dt, off, blob, ts, targets in layout:
             ws = [model.where[t.name] for t in ts]
             if len({w[3] for w in ws}) != 1:
                 print("layer %d: its gate/up/down tensors are in different shards" % l)
@@ -329,13 +354,44 @@ def main() -> int:
         print("experts.bin exists with the right size; not rewritten")
         return 0
     with open(path, "wb") as fo:
-        for l, gt, dt, off, blob, ts in layout:
-            parts = [model.bytes(t.name).reshape(n_expert, -1) for t in ts]
-            chunk = np.concatenate(parts, axis=1)          # (n_expert, blob): gate | up | down per expert
-            assert chunk.shape == (n_expert, blob)
-            fo.write(chunk.tobytes())
+        for l, gt, dt, off, blob, ts, targets in layout:
+            if not any(targets):
+                parts = [model.bytes(t.name).reshape(n_expert, -1) for t in ts]
+                chunk = np.concatenate(parts, axis=1)          # (n_expert, blob): gate | up | down per expert
+                assert chunk.shape == (n_expert, blob)
+                fo.write(chunk.tobytes())
+            else:
+                print("  layer %2d requant: gate %s -> %s, down %s -> %s" % (
+                    l, ts[0].type_name, targets[0][0] if targets[0] else ts[0].type_name,
+                    ts[2].type_name, targets[2][0] if targets[2] else ts[2].type_name), flush=True)
+                # requant path (this fork): dequantize the GGUF's own blocks, re-quantize to the target
+                # type expert by expert (the fp32 intermediate for a whole tensor would be ~3.3 GB).
+                from gguf import GGMLQuantizationType as _Q, quants
+                import requant_gsq
+                typed = [(model.bytes(t.name).reshape(n_expert, -1) if rq else None, t, rq)
+                         for t, rq in zip(ts, targets)]
+                for e in range(n_expert):
+                    row_parts = []
+                    for raw, t, rq in typed:
+                        if rq is None:
+                            row_parts.append(model.bytes(t.name).reshape(n_expert, -1)[e])
+                        else:
+                            name, blck, tsize = rq
+                            n_row = int(t.shape[1])   # gguf ne1 = 行数（每行 ne0 个值）
+                            row_u8 = np.ascontiguousarray(raw[e]).reshape(n_row, len(raw[e]) // n_row)
+                            n_per_row = int(t.shape[0])   # gguf ne0 = 2560: every row decodes this many values
+                            if t.type_name == "Q2_0":
+                                vals = requant_gsq.dequant_q2_0_rows(row_u8, n_row, row_u8.shape[1], n_per_row)
+                            else:   # IQ1_M
+                                vals = requant_gsq.dequant_iq1_m_rows(row_u8, n_row, row_u8.shape[1], n_per_row)
+                            q = quants.quantize(np.ascontiguousarray(vals), _Q[name])
+                            row_parts.append(q.tobytes())
+                    blobrow = b"".join(row_parts)
+                    assert len(blobrow) == blob
+                    fo.write(blobrow)
             if l % 8 == 0:
-                print("  layer %2d  %-8s/%-7s blob %8d  at %.2f GiB" % (l, ts[0].type_name, ts[2].type_name, blob,
+                names = [(rq[0] if rq else t.type_name) for t, rq in zip(ts, targets)]
+                print("  layer %2d  %-8s/%-7s blob %8d  at %.2f GiB" % (l, names[0], names[2], blob,
                                                                         off / 2**30), flush=True)
     print("experts.bin: %d layers, %.2f GiB" % (n_layers, offset / 2**30))
     return 0
