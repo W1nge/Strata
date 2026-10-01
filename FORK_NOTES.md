@@ -239,3 +239,14 @@ prefill 主机侧流式 37.3s → 22.7s（CPU 解锁同时加速了拷贝/调度
   suffix-drafts 路径严重劣化（8.68）——禁用组合。
 - 高验收率（0.96）≠ 高速度：min-p 高 → 提议少 → 验收虚高但 tok/轮低。优化目标是
   tok/轮 × 轮速，不是验收率。
+
+## 15. "CPU 优化"排查补记（2026-10-02）
+
+- 尝试为 Q2_0 down 写多 token AVX2 内核（native_down_rows 分派）：奇偶校验通过后，端到端 A/B
+  **零差异**（down 20.8 vs 20.5 ms/轮）——池的 Q2_0 down 走的是 canonical 时代就有的
+  `s2_expert_down_rows_multi`（expert.cpp，AVX-VNNI dpbusd），native_down_rows 的 Q2_0 分支对
+  pool miss 不可达。已撤销死代码。CPU 侧剩余的真实杠杆只有：
+  ① **v2 混合量化**（冷专家 IQ2 化：miss 字节 -30% → decode 约 +12%，需引擎支持按专家混合类型）；
+  ② profile 语料继续扩（+3-5%/轮）。
+- 结论修正：池内核（s2 系 + iq256 系）对混合 P/E 核已经有物理核绑定与多 token 摊销，
+  "CPU 优化"的软件空间基本挖尽，下一档收益都在数据布局（混合量化）与命中率（画像）上。
