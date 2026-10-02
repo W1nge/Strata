@@ -419,7 +419,15 @@ public:
     bool pinned(int64_t layer, int64_t expert) const override;
     const uint8_t* device_alias(int64_t layer, int64_t expert) const override;
     void begin_layer(int64_t layer, const int32_t* ids, int64_t k) override;
-    bool dma_capable(int64_t layer) const override { (void) layer; return !regs_.empty(); }
+    bool dma_capable(int64_t layer) const override {
+        if (layer < 0 || layer >= n_layers_) return false;
+#ifdef _WIN32
+        // Windows owns a cudaHostAlloc arena, rather than Linux's registered file runs.
+        return pin_arena_ != nullptr;
+#else
+        return !regs_.empty();
+#endif
+    }
     void read_into(const uint8_t* src, uint8_t* dst, size_t n) const override;
     bool streams_from_ssd() const override { return true; }
 

@@ -69,6 +69,7 @@ int main() {
     const bool opened = src.open(pack, L, E, err);
     failures += !expect(opened, (std::string("open: ") + err).c_str());
     failures += !expect(src.blob(0, 0) != nullptr, "blob(0,0) mapped");
+    failures += !expect(!src.dma_capable(0), "unsettled file mapping has no DMA tier");
 
     // ---- 3. the cache fill: three experts resident in VRAM (engine-style startup)
     std::printf("== 3. the cache fill ==\n");
@@ -91,6 +92,9 @@ int main() {
     const bool settled = src.settle(&cache, profile, budget, /*reserve=*/0, /*threads=*/4, err);
     failures += !expect(settled, (std::string("settle: ") + err).c_str());
     std::printf("  note: %s\n", src.note().c_str());
+    for (int64_t l = 0; l < L; ++l)
+        failures += !expect(src.dma_capable(l), "Windows pinned arena enables DMA planning");
+    failures += !expect(!src.dma_capable(-1) && !src.dma_capable(L), "invalid layer cannot plan DMA");
 
     // ---- 5. tier dispatch
     std::printf("== 5. tiers ==\n");
@@ -176,6 +180,12 @@ int main() {
         failures += !expect(src.cold_prefetches() == promoted + 2, "evicted expert prefetched, pinned and invalid skipped");
         src.set_residency(nullptr);
     }
+
+    src.close();
+    failures += !expect(!src.dma_capable(0), "closed arena disables DMA planning");
+    failures += !expect(src.open(pack, L, E, err), "reopen for zero pinned budget");
+    failures += !expect(src.settle(&cache, profile, 0, 0, 4, err), "settle with zero pinned budget");
+    failures += !expect(!src.dma_capable(0), "zero pinned budget leaves DMA disabled");
 
     std::printf("\n%s (%d failures)\n", failures == 0 ? "ALL TIERED-SOURCE TESTS PASSED" : "FAILURES PRESENT",
                 failures);
