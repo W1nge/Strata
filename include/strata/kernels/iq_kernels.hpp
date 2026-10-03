@@ -20,7 +20,7 @@ size_t iq_row_bytes(int ggml_type, int64_t n) noexcept;
 void quantize_q8_1_rows(const float* x, int64_t n_rows, int64_t n_cols, void* y, void* stream);
 
 /// y[c][r] = W[r] . x[c] for `ncols` columns of q8_1 activations (x stride n_in/32 blocks per column).
-void iq_mmvq(int ggml_type, const void* w, const void* x_q8_1, float* y, int n_in, int n_out, int ncols, void* stream);
+void iq_mmvq(int ggml_type, const void* w, const void* x_q8_1, float* y, int n_in, int n_out, int ncols, void* stream, bool interleaved = false);
 
 /// Dequantize `n` contiguous values (n a multiple of 256) to fp16 / fp32.
 void iq_dequant_f16(int ggml_type, const void* src, int64_t n, uint16_t* dst, void* stream);
@@ -52,6 +52,6 @@ size_t native_expert_scratch_bytes(int64_t cap_entries, int64_t n_ff);
 /// and write row ent_dst[e] of `out` (n_embd floats).  Counts are read on the device.
 void native_expert_grouped(const NativeExpertLayout& L, const unsigned long long* grp_ptr, const int32_t* grp_start,
                            const int32_t* n_groups, const int32_t* ent_dst, const int32_t* ent_tok, int64_t cap_groups,
-                           int64_t cap_entries, const void* x_q8_1, void* scratch, float* out, void* stream);
+                           int64_t cap_entries, const void* x_q8_1, void* scratch, float* out, void* stream, bool fuse_activation = false);
 
 }  // namespace strata::kernels

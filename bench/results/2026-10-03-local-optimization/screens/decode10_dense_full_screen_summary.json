@@ -1,0 +1,143 @@
+{
+  "warmup": {
+    "baseline": {
+      "requests": 6,
+      "tokens": 453,
+      "decode_ms": 11747.0,
+      "decode_tps": 38.56303737124372,
+      "wall_s": 13.730438999999024,
+      "min_available_ram_mib": 3671.2734375
+    },
+    "gpu15": {
+      "requests": 6,
+      "tokens": 453,
+      "decode_ms": 8699.3,
+      "decode_tps": 52.073155311346895,
+      "wall_s": 10.1925962000023,
+      "min_available_ram_mib": 3669.7890625
+    },
+    "gpu31": {
+      "requests": 6,
+      "tokens": 453,
+      "decode_ms": 8133.599999999999,
+      "decode_tps": 55.69489524933609,
+      "wall_s": 9.539942000003066,
+      "min_available_ram_mib": 3673.28125
+    }
+  },
+  "measured": {
+    "baseline": {
+      "requests": 18,
+      "tokens": 1359,
+      "decode_ms": 22901.4,
+      "decode_tps": 59.341350310461365,
+      "wall_s": 25.633157300006133,
+      "min_available_ram_mib": 3603.26171875
+    },
+    "gpu15": {
+      "requests": 18,
+      "tokens": 1359,
+      "decode_ms": 22288.2,
+      "decode_tps": 60.97396828815247,
+      "wall_s": 24.977754200015625,
+      "min_available_ram_mib": 3599.9609375
+    },
+    "gpu31": {
+      "requests": 18,
+      "tokens": 1359,
+      "decode_ms": 22244.7,
+      "decode_tps": 61.09320422392749,
+      "wall_s": 24.86386779998429,
+      "min_available_ram_mib": 3602.07421875
+    }
+  },
+  "cycles": [
+    {
+      "baseline": {
+        "requests": 6,
+        "tokens": 453,
+        "decode_ms": 7624.3,
+        "decode_tps": 59.415290584053615,
+        "wall_s": 8.5659278000021,
+        "min_available_ram_mib": 3628.1015625
+      },
+      "gpu15": {
+        "requests": 6,
+        "tokens": 453,
+        "decode_ms": 7422.8,
+        "decode_tps": 61.02818343482244,
+        "wall_s": 8.347307500007446,
+        "min_available_ram_mib": 3628.05078125
+      },
+      "gpu31": {
+        "requests": 6,
+        "tokens": 453,
+        "decode_ms": 7432.6,
+        "decode_tps": 60.947716815111804,
+        "wall_s": 8.240681899987976,
+        "min_available_ram_mib": 3628.3046875
+      }
+    },
+    {
+      "baseline": {
+        "requests": 6,
+        "tokens": 453,
+        "decode_ms": 7636.599999999999,
+        "decode_tps": 59.31959248880392,
+        "wall_s": 8.488262300001225,
+        "min_available_ram_mib": 3609.4296875
+      },
+      "gpu15": {
+        "requests": 6,
+        "tokens": 453,
+        "decode_ms": 7422.6,
+        "decode_tps": 61.029827823134745,
+        "wall_s": 8.352259700011928,
+        "min_available_ram_mib": 3608.859375
+      },
+      "gpu31": {
+        "requests": 6,
+        "tokens": 453,
+        "decode_ms": 7475.7,
+        "decode_tps": 60.596332116056026,
+        "wall_s": 8.380636100002448,
+        "min_available_ram_mib": 3609.00390625
+      }
+    },
+    {
+      "baseline": {
+        "requests": 6,
+        "tokens": 453,
+        "decode_ms": 7640.5,
+        "decode_tps": 59.28931352660166,
+        "wall_s": 8.578967200002808,
+        "min_available_ram_mib": 3603.26171875
+      },
+      "gpu15": {
+        "requests": 6,
+        "tokens": 453,
+        "decode_ms": 7442.8,
+        "decode_tps": 60.86419089589939,
+        "wall_s": 8.278186999996251,
+        "min_available_ram_mib": 3599.9609375
+      },
+      "gpu31": {
+        "requests": 6,
+        "tokens": 453,
+        "decode_ms": 7336.4,
+        "decode_tps": 61.74690583937626,
+        "wall_s": 8.242549799993867,
+        "min_available_ram_mib": 3602.07421875
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/decode10_dense_full_screen.json",
+    "arms": "work/decode10_dense_arms.json",
+    "warmups": 1,
+    "repeats": 3,
+    "max_tokens": 256,
+    "prompts": "work/fresh_prompts_x16.json",
+    "limit": 0
+  }
+}

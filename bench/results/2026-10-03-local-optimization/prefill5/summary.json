@@ -1,0 +1,2087 @@
+{
+  "comparison": [
+    {
+      "label": "32K capacity / 31K first",
+      "old": {
+        "n": 2,
+        "median_s": 44.706399999999995,
+        "min_s": 43.997699999999995,
+        "max_s": 45.415099999999995,
+        "samples_s": [
+          43.997699999999995,
+          45.415099999999995
+        ],
+        "ttft_median_s": 44.83769719999691
+      },
+      "new": {
+        "n": 2,
+        "median_s": 49.7909,
+        "min_s": 38.860800000000005,
+        "max_s": 60.721,
+        "samples_s": [
+          60.721,
+          38.860800000000005
+        ],
+        "ttft_median_s": 49.911762550000276
+      },
+      "time_saved_pct": -11.373091995776896
+    },
+    {
+      "label": "32K capacity / 31K repeated",
+      "old": {
+        "n": 2,
+        "median_s": 35.18385000000001,
+        "min_s": 35.1058,
+        "max_s": 35.261900000000004,
+        "samples_s": [
+          35.261900000000004,
+          35.1058
+        ],
+        "ttft_median_s": 35.28942889999598
+      },
+      "new": {
+        "n": 2,
+        "median_s": 35.652950000000004,
+        "min_s": 34.9333,
+        "max_s": 36.3726,
+        "samples_s": [
+          36.3726,
+          34.9333
+        ],
+        "ttft_median_s": 35.7583614499963
+      },
+      "time_saved_pct": -1.3332821734971967
+    },
+    {
+      "label": "32K capacity / 8K",
+      "old": {
+        "n": 4,
+        "median_s": 15.67905,
+        "min_s": 13.802100000000001,
+        "max_s": 15.7447,
+        "samples_s": [
+          15.7447,
+          15.6878,
+          15.6703,
+          13.802100000000001
+        ],
+        "ttft_median_s": 15.725510249998479
+      },
+      "new": {
+        "n": 4,
+        "median_s": 15.1949,
+        "min_s": 13.899700000000001,
+        "max_s": 16.5265,
+        "samples_s": [
+          14.4685,
+          16.5265,
+          13.899700000000001,
+          15.921299999999999
+        ],
+        "ttft_median_s": 15.242598600001656
+      },
+      "time_saved_pct": 3.0878784110006663
+    },
+    {
+      "label": "256K capacity / 128K",
+      "old": {
+        "n": 2,
+        "median_s": 219.7486,
+        "min_s": 219.2921,
+        "max_s": 220.20510000000002,
+        "samples_s": [
+          219.2921,
+          220.20510000000002
+        ],
+        "ttft_median_s": 220.14916280000034
+      },
+      "new": {
+        "n": 2,
+        "median_s": 204.44580000000002,
+        "min_s": 203.4401,
+        "max_s": 205.4515,
+        "samples_s": [
+          205.4515,
+          203.4401
+        ],
+        "ttft_median_s": 204.8493438000005
+      },
+      "time_saved_pct": 6.96377587843563
+    },
+    {
+      "label": "256K capacity / 256K",
+      "old": {
+        "n": 1,
+        "median_s": 505.483,
+        "min_s": 505.483,
+        "max_s": 505.483,
+        "samples_s": [
+          505.483
+        ],
+        "ttft_median_s": 506.2422283000051
+      },
+      "new": {
+        "n": 1,
+        "median_s": 427.63759999999996,
+        "min_s": 427.63759999999996,
+        "max_s": 427.63759999999996,
+        "samples_s": [
+          427.63759999999996
+        ],
+        "ttft_median_s": 428.365776599996
+      },
+      "time_saved_pct": 15.40020139154038
+    }
+  ],
+  "profiles": {
+    "old": {
+      "raw": "strata prefill timing: 130041 tokens, GPU timeline 241865 ms, wall 242601 ms, host staging 204853 ms: embed+steps 1039 (0.4%) hc norm 2968 (1.2%) gdn 7387 (3.1%) qsa proj 4142 (1.7%) qsa indexer 3 (0.0%) qsa select 22748 (9.4%) qsa attn 13822 (5.7%) router+shared 3328 (1.4%) host grouping 320 (0.1%) gather 1442 (0.6%) wait copy 105589 (43.7%) dequant 2053 (0.8%) gemm gate/up 12575 (5.2%) gemm down 6886 (2.8%) combine 9011 (3.7%) ple 1377 (0.6%) gdn conv+gates 1088 (0.4%) gdn recurrence 5799 (2.4%) gdn out proj 3479 (1.4%) hc down 9211 (3.8%) hc up 9487 (3.9%) hc inject 2004 (0.8%) hc mix 2346 (1.0%) qsa topk 13761 (5.7%)",
+      "gpu_timeline_ms": 241865.0,
+      "batch_wall_ms": 242601.0,
+      "wait copy": 105589.0,
+      "hc down": 9211.0,
+      "hc up": 9487.0,
+      "hc norm": 2968.0,
+      "hc inject": 2004.0,
+      "hc mix": 2346.0,
+      "qsa select": 22748.0,
+      "qsa topk": 13761.0,
+      "qsa attn": 13822.0,
+      "gemm gate/up": 12575.0,
+      "gemm down": 6886.0,
+      "combine": 9011.0,
+      "gdn recurrence": 5799.0
+    },
+    "new": {
+      "raw": "strata prefill timing: 130041 tokens, GPU timeline 189096 ms, wall 189824 ms, host staging 165625 ms: embed+steps 1043 (0.6%) hc norm 2962 (1.6%) gdn 6982 (3.7%) qsa proj 4013 (2.1%) qsa indexer 3 (0.0%) qsa scores 19788 (10.5%) qsa attn 13944 (7.4%) router+shared 3241 (1.7%) host grouping 286 (0.2%) gather 1442 (0.8%) wait copy 75723 (40.0%) dequant 2078 (1.1%) gemm gate/up 12411 (6.6%) gemm down 6810 (3.6%) combine 9275 (4.9%) ple 1427 (0.8%) gdn conv+gates 1092 (0.6%) gdn recurrence 5687 (3.0%) gdn out proj 3436 (1.8%) hc down 4679 (2.5%) hc up 6199 (3.3%) hc inject 1950 (1.0%) hc mix 2343 (1.2%) qsa topk 2281 (1.2%)",
+      "gpu_timeline_ms": 189096.0,
+      "batch_wall_ms": 189824.0,
+      "wait copy": 75723.0,
+      "hc down": 4679.0,
+      "hc up": 6199.0,
+      "hc norm": 2962.0,
+      "hc inject": 1950.0,
+      "hc mix": 2343.0,
+      "qsa scores": 19788.0,
+      "qsa topk": 2281.0,
+      "qsa attn": 13944.0,
+      "gemm gate/up": 12411.0,
+      "gemm down": 6810.0,
+      "combine": 9275.0,
+      "gdn recurrence": 5687.0
+    }
+  },
+  "daily": {
+    "A1": [
+      {
+        "cycle": 0,
+        "length": 32768,
+        "prompt_tokens": 31243,
+        "local_prepare_ms": 83.54839999810793,
+        "headers_ms": 80.03379999718163,
+        "ttft_ms": 44130.49909999245,
+        "wall_ms": 44960.70409999811,
+        "content": "cobalt-willow-32768",
+        "message": {
+          "role": "assistant",
+          "content": "cobalt-willow-32768"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 31243,
+          "prompt_ms": 43997.7,
+          "prompt_per_token_ms": 1.408,
+          "prompt_per_second": 710.1,
+          "predicted_n": 11,
+          "predicted_ms": 876.3,
+          "predicted_per_token_ms": 79.664,
+          "predicted_per_second": 12.6,
+          "draft_n": 10,
+          "draft_n_accepted": 7
+        },
+        "usage": {
+          "prompt_tokens": 31243,
+          "completion_tokens": 11,
+          "total_tokens": 31254,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      },
+      {
+        "cycle": 0,
+        "length": 8192,
+        "prompt_tokens": 8390,
+        "local_prepare_ms": 23.873600002843887,
+        "headers_ms": 20.8656000031624,
+        "ttft_ms": 15798.785799997859,
+        "wall_ms": 16227.757400003611,
+        "content": "cobalt-willow-8192",
+        "message": {
+          "role": "assistant",
+          "content": "cobalt-willow-8192"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 8390,
+          "prompt_ms": 15744.7,
+          "prompt_per_token_ms": 1.877,
+          "prompt_per_second": 532.9,
+          "predicted_n": 10,
+          "predicted_ms": 460.1,
+          "predicted_per_token_ms": 46.01,
+          "predicted_per_second": 21.7,
+          "draft_n": 10,
+          "draft_n_accepted": 6
+        },
+        "usage": {
+          "prompt_tokens": 8390,
+          "completion_tokens": 10,
+          "total_tokens": 8400,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      },
+      {
+        "cycle": 1,
+        "length": 32768,
+        "prompt_tokens": 31243,
+        "local_prepare_ms": 83.8960999972187,
+        "headers_ms": 80.60849999310449,
+        "ttft_ms": 35367.797299986705,
+        "wall_ms": 35570.234499988146,
+        "content": "cobalt-willow-32768",
+        "message": {
+          "role": "assistant",
+          "content": "cobalt-willow-32768"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 31243,
+          "prompt_ms": 35261.9,
+          "prompt_per_token_ms": 1.129,
+          "prompt_per_second": 886.0,
+          "predicted_n": 11,
+          "predicted_ms": 204.5,
+          "predicted_per_token_ms": 18.591,
+          "predicted_per_second": 53.8,
+          "draft_n": 10,
+          "draft_n_accepted": 7
+        },
+        "usage": {
+          "prompt_tokens": 31243,
+          "completion_tokens": 11,
+          "total_tokens": 31254,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      },
+      {
+        "cycle": 1,
+        "length": 8192,
+        "prompt_tokens": 8390,
+        "local_prepare_ms": 21.233099992969073,
+        "headers_ms": 20.66150000609923,
+        "ttft_ms": 15729.530700002215,
+        "wall_ms": 15909.875500001363,
+        "content": "cobalt-willow-8192",
+        "message": {
+          "role": "assistant",
+          "content": "cobalt-willow-8192"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 8390,
+          "prompt_ms": 15687.8,
+          "prompt_per_token_ms": 1.87,
+          "prompt_per_second": 534.8,
+          "predicted_n": 10,
+          "predicted_ms": 197.5,
+          "predicted_per_token_ms": 19.75,
+          "predicted_per_second": 50.6,
+          "draft_n": 10,
+          "draft_n_accepted": 6
+        },
+        "usage": {
+          "prompt_tokens": 8390,
+          "completion_tokens": 10,
+          "total_tokens": 8400,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      }
+    ],
+    "B1": [
+      {
+        "cycle": 0,
+        "length": 32768,
+        "prompt_tokens": 31243,
+        "local_prepare_ms": 82.83420000225306,
+        "headers_ms": 80.77480000793003,
+        "ttft_ms": 60840.81120000337,
+        "wall_ms": 61741.97760000243,
+        "content": "cobalt-willow-32768",
+        "message": {
+          "role": "assistant",
+          "content": "cobalt-willow-32768"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 31243,
+          "prompt_ms": 60721.0,
+          "prompt_per_token_ms": 1.944,
+          "prompt_per_second": 514.5,
+          "predicted_n": 11,
+          "predicted_ms": 933.4,
+          "predicted_per_token_ms": 84.855,
+          "predicted_per_second": 11.8,
+          "draft_n": 10,
+          "draft_n_accepted": 7
+        },
+        "usage": {
+          "prompt_tokens": 31243,
+          "completion_tokens": 11,
+          "total_tokens": 31254,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      },
+      {
+        "cycle": 0,
+        "length": 8192,
+        "prompt_tokens": 8390,
+        "local_prepare_ms": 23.762800003169104,
+        "headers_ms": 20.75880000484176,
+        "ttft_ms": 14521.232500002952,
+        "wall_ms": 14935.186500006239,
+        "content": "cobalt-willow-8192",
+        "message": {
+          "role": "assistant",
+          "content": "cobalt-willow-8192"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 8390,
+          "prompt_ms": 14468.5,
+          "prompt_per_token_ms": 1.724,
+          "prompt_per_second": 579.9,
+          "predicted_n": 10,
+          "predicted_ms": 443.8,
+          "predicted_per_token_ms": 44.38,
+          "predicted_per_second": 22.5,
+          "draft_n": 10,
+          "draft_n_accepted": 6
+        },
+        "usage": {
+          "prompt_tokens": 8390,
+          "completion_tokens": 10,
+          "total_tokens": 8400,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      },
+      {
+        "cycle": 1,
+        "length": 32768,
+        "prompt_tokens": 31243,
+        "local_prepare_ms": 82.83289999235421,
+        "headers_ms": 79.68359999358654,
+        "ttft_ms": 36477.55129999132,
+        "wall_ms": 36666.1185999983,
+        "content": "cobalt-willow-32768",
+        "message": {
+          "role": "assistant",
+          "content": "cobalt-willow-32768"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 31243,
+          "prompt_ms": 36372.6,
+          "prompt_per_token_ms": 1.164,
+          "prompt_per_second": 859.0,
+          "predicted_n": 11,
+          "predicted_ms": 202.9,
+          "predicted_per_token_ms": 18.445,
+          "predicted_per_second": 54.2,
+          "draft_n": 10,
+          "draft_n_accepted": 7
+        },
+        "usage": {
+          "prompt_tokens": 31243,
+          "completion_tokens": 11,
+          "total_tokens": 31254,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      },
+      {
+        "cycle": 1,
+        "length": 8192,
+        "prompt_tokens": 8390,
+        "local_prepare_ms": 23.323799992795102,
+        "headers_ms": 20.65799999400042,
+        "ttft_ms": 16568.382999990718,
+        "wall_ms": 16747.840600000927,
+        "content": "cobalt-willow-8192",
+        "message": {
+          "role": "assistant",
+          "content": "cobalt-willow-8192"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 8390,
+          "prompt_ms": 16526.5,
+          "prompt_per_token_ms": 1.97,
+          "prompt_per_second": 507.7,
+          "predicted_n": 10,
+          "predicted_ms": 198.4,
+          "predicted_per_token_ms": 19.84,
+          "predicted_per_second": 50.4,
+          "draft_n": 10,
+          "draft_n_accepted": 6
+        },
+        "usage": {
+          "prompt_tokens": 8390,
+          "completion_tokens": 10,
+          "total_tokens": 8400,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      }
+    ],
+    "B2": [
+      {
+        "cycle": 0,
+        "length": 32768,
+        "prompt_tokens": 31243,
+        "local_prepare_ms": 82.77549999183975,
+        "headers_ms": 80.31589999154676,
+        "ttft_ms": 38982.71389999718,
+        "wall_ms": 39777.596200001426,
+        "content": "cobalt-willow-32768",
+        "message": {
+          "role": "assistant",
+          "content": "cobalt-willow-32768"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 31243,
+          "prompt_ms": 38860.8,
+          "prompt_per_token_ms": 1.244,
+          "prompt_per_second": 804.0,
+          "predicted_n": 11,
+          "predicted_ms": 829.8,
+          "predicted_per_token_ms": 75.436,
+          "predicted_per_second": 13.3,
+          "draft_n": 10,
+          "draft_n_accepted": 7
+        },
+        "usage": {
+          "prompt_tokens": 31243,
+          "completion_tokens": 11,
+          "total_tokens": 31254,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      },
+      {
+        "cycle": 0,
+        "length": 8192,
+        "prompt_tokens": 8390,
+        "local_prepare_ms": 23.74689999851398,
+        "headers_ms": 20.729199997731484,
+        "ttft_ms": 13957.972100004554,
+        "wall_ms": 14358.453000008012,
+        "content": "cobalt-willow-8192",
+        "message": {
+          "role": "assistant",
+          "content": "cobalt-willow-8192"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 8390,
+          "prompt_ms": 13899.7,
+          "prompt_per_token_ms": 1.657,
+          "prompt_per_second": 603.6,
+          "predicted_n": 10,
+          "predicted_ms": 435.8,
+          "predicted_per_token_ms": 43.58,
+          "predicted_per_second": 22.9,
+          "draft_n": 10,
+          "draft_n_accepted": 6
+        },
+        "usage": {
+          "prompt_tokens": 8390,
+          "completion_tokens": 10,
+          "total_tokens": 8400,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      },
+      {
+        "cycle": 1,
+        "length": 32768,
+        "prompt_tokens": 31243,
+        "local_prepare_ms": 83.79449999483768,
+        "headers_ms": 80.45519998995587,
+        "ttft_ms": 35039.17160000128,
+        "wall_ms": 35226.04539999156,
+        "content": "cobalt-willow-32768",
+        "message": {
+          "role": "assistant",
+          "content": "cobalt-willow-32768"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 31243,
+          "prompt_ms": 34933.3,
+          "prompt_per_token_ms": 1.118,
+          "prompt_per_second": 894.4,
+          "predicted_n": 11,
+          "predicted_ms": 206.1,
+          "predicted_per_token_ms": 18.736,
+          "predicted_per_second": 53.4,
+          "draft_n": 10,
+          "draft_n_accepted": 7
+        },
+        "usage": {
+          "prompt_tokens": 31243,
+          "completion_tokens": 11,
+          "total_tokens": 31254,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      },
+      {
+        "cycle": 1,
+        "length": 8192,
+        "prompt_tokens": 8390,
+        "local_prepare_ms": 24.182199995266274,
+        "headers_ms": 20.998299994971603,
+        "ttft_ms": 15963.96470000036,
+        "wall_ms": 16144.820199988317,
+        "content": "cobalt-willow-8192",
+        "message": {
+          "role": "assistant",
+          "content": "cobalt-willow-8192"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 8390,
+          "prompt_ms": 15921.3,
+          "prompt_per_token_ms": 1.898,
+          "prompt_per_second": 527.0,
+          "predicted_n": 10,
+          "predicted_ms": 200.0,
+          "predicted_per_token_ms": 20.0,
+          "predicted_per_second": 50.0,
+          "draft_n": 10,
+          "draft_n_accepted": 6
+        },
+        "usage": {
+          "prompt_tokens": 8390,
+          "completion_tokens": 10,
+          "total_tokens": 8400,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      }
+    ],
+    "A2": [
+      {
+        "cycle": 0,
+        "length": 32768,
+        "prompt_tokens": 31243,
+        "local_prepare_ms": 83.75220000743866,
+        "headers_ms": 79.87620000494644,
+        "ttft_ms": 45544.89530000137,
+        "wall_ms": 46321.878499991726,
+        "content": "cobalt-willow-32768",
+        "message": {
+          "role": "assistant",
+          "content": "cobalt-willow-32768"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 31243,
+          "prompt_ms": 45415.1,
+          "prompt_per_token_ms": 1.454,
+          "prompt_per_second": 687.9,
+          "predicted_n": 11,
+          "predicted_ms": 817.8,
+          "predicted_per_token_ms": 74.345,
+          "predicted_per_second": 13.5,
+          "draft_n": 10,
+          "draft_n_accepted": 7
+        },
+        "usage": {
+          "prompt_tokens": 31243,
+          "completion_tokens": 11,
+          "total_tokens": 31254,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      },
+      {
+        "cycle": 0,
+        "length": 8192,
+        "prompt_tokens": 8390,
+        "local_prepare_ms": 23.83879999979399,
+        "headers_ms": 20.98889999615494,
+        "ttft_ms": 15721.489799994742,
+        "wall_ms": 16124.18919999618,
+        "content": "cobalt-willow-8192",
+        "message": {
+          "role": "assistant",
+          "content": "cobalt-willow-8192"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 8390,
+          "prompt_ms": 15670.3,
+          "prompt_per_token_ms": 1.868,
+          "prompt_per_second": 535.4,
+          "predicted_n": 10,
+          "predicted_ms": 430.8,
+          "predicted_per_token_ms": 43.08,
+          "predicted_per_second": 23.2,
+          "draft_n": 10,
+          "draft_n_accepted": 6
+        },
+        "usage": {
+          "prompt_tokens": 8390,
+          "completion_tokens": 10,
+          "total_tokens": 8400,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      },
+      {
+        "cycle": 1,
+        "length": 32768,
+        "prompt_tokens": 31243,
+        "local_prepare_ms": 82.49670000805054,
+        "headers_ms": 79.95590000064112,
+        "ttft_ms": 35211.06050000526,
+        "wall_ms": 35400.06300000823,
+        "content": "cobalt-willow-32768",
+        "message": {
+          "role": "assistant",
+          "content": "cobalt-willow-32768"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 31243,
+          "prompt_ms": 35105.8,
+          "prompt_per_token_ms": 1.124,
+          "prompt_per_second": 890.0,
+          "predicted_n": 11,
+          "predicted_ms": 208.1,
+          "predicted_per_token_ms": 18.918,
+          "predicted_per_second": 52.9,
+          "draft_n": 10,
+          "draft_n_accepted": 7
+        },
+        "usage": {
+          "prompt_tokens": 31243,
+          "completion_tokens": 11,
+          "total_tokens": 31254,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      },
+      {
+        "cycle": 1,
+        "length": 8192,
+        "prompt_tokens": 8390,
+        "local_prepare_ms": 23.78560000215657,
+        "headers_ms": 20.87079999910202,
+        "ttft_ms": 13844.054200002574,
+        "wall_ms": 14021.72389999032,
+        "content": "cobalt-willow-8192",
+        "message": {
+          "role": "assistant",
+          "content": "cobalt-willow-8192"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 8390,
+          "prompt_ms": 13802.1,
+          "prompt_per_token_ms": 1.645,
+          "prompt_per_second": 607.9,
+          "predicted_n": 10,
+          "predicted_ms": 196.4,
+          "predicted_per_token_ms": 19.64,
+          "predicted_per_second": 50.9,
+          "draft_n": 10,
+          "draft_n_accepted": 6
+        },
+        "usage": {
+          "prompt_tokens": 8390,
+          "completion_tokens": 10,
+          "total_tokens": 8400,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      }
+    ]
+  },
+  "long": {
+    "A1": [
+      {
+        "case": "prefill",
+        "label": "128k",
+        "expected": [
+          "violet-583107",
+          "copper-942681",
+          "cedar-276439",
+          "quartz-814725",
+          "maple-693258"
+        ],
+        "found": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "prompt_tokens": 130048,
+        "local_prepare_ms": 330.84219999727793,
+        "headers_ms": 340.61100000690203,
+        "ttft_ms": 219696.5743000037,
+        "wall_ms": 224245.2437000029,
+        "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258",
+        "message": {
+          "role": "assistant",
+          "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 130048,
+          "prompt_ms": 219292.1,
+          "prompt_per_token_ms": 1.686,
+          "prompt_per_second": 593.0,
+          "predicted_n": 64,
+          "predicted_ms": 4584.1,
+          "predicted_per_token_ms": 71.627,
+          "predicted_per_second": 14.0,
+          "draft_n": 55,
+          "draft_n_accepted": 45
+        },
+        "usage": {
+          "prompt_tokens": 130048,
+          "completion_tokens": 64,
+          "total_tokens": 130112,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "status": {
+          "service": "strata",
+          "model": "qwen3.8-flash-next",
+          "engine": "0.1.24",
+          "started": 1790985336,
+          "uptime_s": 226,
+          "cache_max_tokens": 262144,
+          "cache": {
+            "state": "resident",
+            "idle_seconds": 180,
+            "expire_seconds": 3600,
+            "disk_bytes": 0,
+            "released_vram_bytes": 0,
+            "released_host_bytes": 0,
+            "tokens": 0,
+            "operation_ms": 0.0
+          },
+          "context": {
+            "native": 262144,
+            "max_positions": 262144
+          },
+          "concurrency": {
+            "serving": 1,
+            "requested": 1
+          },
+          "dialects": [
+            "/v1/chat/completions",
+            "/v1/messages"
+          ],
+          "vision": {
+            "enabled": false,
+            "available": false,
+            "error": null
+          },
+          "activity": {
+            "requests": 2,
+            "in_flight": 0,
+            "last_request_at": 1790985563
+          },
+          "last_timings": {
+            "cache_n": 0,
+            "prompt_n": 130048,
+            "prompt_ms": 219292.1,
+            "prompt_per_token_ms": 1.686,
+            "prompt_per_second": 593.0,
+            "predicted_n": 64,
+            "predicted_ms": 4584.1,
+            "predicted_per_token_ms": 71.627,
+            "predicted_per_second": 14.0,
+            "draft_n": 55,
+            "draft_n_accepted": 45,
+            "at": 1790985563
+          },
+          "machine": {
+            "at": 1790985563,
+            "gpu": {
+              "name": "NVIDIA GeForce RTX 2080 Ti",
+              "used_mib": 22229.0,
+              "total_mib": 22528.0,
+              "util_pct": 99,
+              "temp_c": 65,
+              "power_w": 128.952
+            },
+            "ram": {
+              "used_gib": 28.2,
+              "total_gib": 31.6
+            }
+          }
+        }
+      },
+      {
+        "case": "decode",
+        "label": "128k",
+        "prompt_tokens": 130153,
+        "local_prepare_ms": 336.80819999426603,
+        "headers_ms": 331.60819999466185,
+        "ttft_ms": 2912.1698000089964,
+        "wall_ms": 12144.933400006266,
+        "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for GPU expert caching.\n6. CPU and GPU workloads are designed to run concurrently to maximize throughput.\n7. The engine uses speculative decoding to accelerate token generation.\n8. Prompt processing speed is optimized by increasing chunk sizes in newer engine versions.\n9. KV cache streaming moves data between RAM and VRAM to accommodate larger contexts.\n10. Quantization formats are carefully selected to balance model quality and memory usage.\n11. The system supports multiple model variants tailored for specific tasks like coding.\n12. Fine-tuned models are integrated with specific compatibility notes for quantization.\n13. Installation scripts automate the setup of complex dependencies like CUDA and Python.\n14. Windows-specific optimizations address issues like Task Scheduler throttling.\n15. Linux support includes automatic compilation of the engine if pre-built binaries fail.\n16. The API exposes",
+        "message": {
+          "role": "assistant",
+          "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for GPU expert caching.\n6. CPU and GPU workloads are designed to run concurrently to maximize throughput.\n7. The engine uses speculative decoding to accelerate token generation.\n8. Prompt processing speed is optimized by increasing chunk sizes in newer engine versions.\n9. KV cache streaming moves data between RAM and VRAM to accommodate larger contexts.\n10. Quantization formats are carefully selected to balance model quality and memory usage.\n11. The system supports multiple model variants tailored for specific tasks like coding.\n12. Fine-tuned models are integrated with specific compatibility notes for quantization.\n13. Installation scripts automate the setup of complex dependencies like CUDA and Python.\n14. Windows-specific optimizations address issues like Task Scheduler throttling.\n15. Linux support includes automatic compilation of the engine if pre-built binaries fail.\n16. The API exposes"
+        },
+        "timings": {
+          "cache_n": 130041,
+          "prompt_n": 112,
+          "prompt_ms": 2407.2,
+          "prompt_per_token_ms": 21.493,
+          "prompt_per_second": 46.5,
+          "predicted_n": 256,
+          "predicted_ms": 9253.4,
+          "predicted_per_token_ms": 36.146,
+          "predicted_per_second": 27.7,
+          "draft_n": 142,
+          "draft_n_accepted": 108
+        },
+        "usage": {
+          "prompt_tokens": 130153,
+          "completion_tokens": 256,
+          "total_tokens": 130409,
+          "prompt_tokens_details": {
+            "cached_tokens": 130041
+          }
+        },
+        "status": {
+          "service": "strata",
+          "model": "qwen3.8-flash-next",
+          "engine": "0.1.24",
+          "started": 1790985336,
+          "uptime_s": 238,
+          "cache_max_tokens": 262144,
+          "cache": {
+            "state": "resident",
+            "idle_seconds": 180,
+            "expire_seconds": 3600,
+            "disk_bytes": 0,
+            "released_vram_bytes": 0,
+            "released_host_bytes": 0,
+            "tokens": 0,
+            "operation_ms": 0.0
+          },
+          "context": {
+            "native": 262144,
+            "max_positions": 262144
+          },
+          "concurrency": {
+            "serving": 1,
+            "requested": 1
+          },
+          "dialects": [
+            "/v1/chat/completions",
+            "/v1/messages"
+          ],
+          "vision": {
+            "enabled": false,
+            "available": false,
+            "error": null
+          },
+          "activity": {
+            "requests": 3,
+            "in_flight": 0,
+            "last_request_at": 1790985575
+          },
+          "last_timings": {
+            "cache_n": 130041,
+            "prompt_n": 112,
+            "prompt_ms": 2407.2,
+            "prompt_per_token_ms": 21.493,
+            "prompt_per_second": 46.5,
+            "predicted_n": 256,
+            "predicted_ms": 9253.4,
+            "predicted_per_token_ms": 36.146,
+            "predicted_per_second": 27.7,
+            "draft_n": 142,
+            "draft_n_accepted": 108,
+            "at": 1790985575
+          },
+          "machine": {
+            "at": 1790985575,
+            "gpu": {
+              "name": "NVIDIA GeForce RTX 2080 Ti",
+              "used_mib": 22145.0,
+              "total_mib": 22528.0,
+              "util_pct": 85,
+              "temp_c": 67,
+              "power_w": 185.732
+            },
+            "ram": {
+              "used_gib": 31.1,
+              "total_gib": 31.6
+            }
+          }
+        }
+      },
+      {
+        "case": "prefill",
+        "label": "256k",
+        "expected": [
+          "violet-583107",
+          "copper-942681",
+          "cedar-276439",
+          "quartz-814725",
+          "maple-693258"
+        ],
+        "found": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "prompt_tokens": 261120,
+        "local_prepare_ms": 634.7954000084428,
+        "headers_ms": 668.4408000000985,
+        "ttft_ms": 506242.2283000051,
+        "wall_ms": 508493.06480000087,
+        "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258",
+        "message": {
+          "role": "assistant",
+          "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 261120,
+          "prompt_ms": 505483.0,
+          "prompt_per_token_ms": 1.936,
+          "prompt_per_second": 516.6,
+          "predicted_n": 64,
+          "predicted_ms": 2281.3,
+          "predicted_per_token_ms": 35.645,
+          "predicted_per_second": 28.1,
+          "draft_n": 64,
+          "draft_n_accepted": 44
+        },
+        "usage": {
+          "prompt_tokens": 261120,
+          "completion_tokens": 64,
+          "total_tokens": 261184,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "status": {
+          "service": "strata",
+          "model": "qwen3.8-flash-next",
+          "engine": "0.1.24",
+          "started": 1790985336,
+          "uptime_s": 748,
+          "cache_max_tokens": 262144,
+          "cache": {
+            "state": "resident",
+            "idle_seconds": 180,
+            "expire_seconds": 3600,
+            "disk_bytes": 0,
+            "released_vram_bytes": 0,
+            "released_host_bytes": 0,
+            "tokens": 0,
+            "operation_ms": 0.0
+          },
+          "context": {
+            "native": 262144,
+            "max_positions": 262144
+          },
+          "concurrency": {
+            "serving": 1,
+            "requested": 1
+          },
+          "dialects": [
+            "/v1/chat/completions",
+            "/v1/messages"
+          ],
+          "vision": {
+            "enabled": false,
+            "available": false,
+            "error": null
+          },
+          "activity": {
+            "requests": 5,
+            "in_flight": 0,
+            "last_request_at": 1790986085
+          },
+          "last_timings": {
+            "cache_n": 0,
+            "prompt_n": 261120,
+            "prompt_ms": 505483.0,
+            "prompt_per_token_ms": 1.936,
+            "prompt_per_second": 516.6,
+            "predicted_n": 64,
+            "predicted_ms": 2281.3,
+            "predicted_per_token_ms": 35.645,
+            "predicted_per_second": 28.1,
+            "draft_n": 64,
+            "draft_n_accepted": 44,
+            "at": 1790986085
+          },
+          "machine": {
+            "at": 1790986085,
+            "gpu": {
+              "name": "NVIDIA GeForce RTX 2080 Ti",
+              "used_mib": 22165.0,
+              "total_mib": 22528.0,
+              "util_pct": 99,
+              "temp_c": 72,
+              "power_w": 174.649
+            },
+            "ram": {
+              "used_gib": 31.0,
+              "total_gib": 31.6
+            }
+          }
+        }
+      },
+      {
+        "case": "decode",
+        "label": "256k",
+        "prompt_tokens": 261225,
+        "local_prepare_ms": 631.1948000075063,
+        "headers_ms": 662.7783000003546,
+        "ttft_ms": 2581.853899988346,
+        "wall_ms": 9695.254099991871,
+        "content": "1. The project prioritizes empirical measurement over theoretical assumptions for performance tuning.\n2. Hardware-specific optimizations are implemented for both AVX-512 and AVX2 instruction sets.\n3. Memory management strategies include tiered storage across VRAM, pinned RAM, and SSD.\n4. Expert weights are dynamically cached in VRAM based on usage profiles to minimize CPU overhead.\n5. The engine supports speculative decoding using a dedicated Multi-Token Prediction (MTP) draft layer.\n6. CUDA graph capture is used to reduce kernel launch overhead during token generation.\n7. A \"doorbell\" mechanism synchronizes CPU and GPU expert computation to maximize parallelism.\n8. Quantization formats like Q2_0 and IQ variants are supported with custom dequantization kernels.\n9. The system validates weight loading by checking tensor geometry and byte offsets against manifests.\n10. Idle conversation caches are offloaded to disk to free up VRAM during periods of inactivity.\n11. Layer splitting allows models to run across multiple GPUs using pipeline parallelism.\n12. KV cache streaming moves less frequently accessed context to system RAM to save VRAM.\n13. The engine includes a watchdog mechanism to detect and recover from stalled expert",
+        "message": {
+          "role": "assistant",
+          "content": "1. The project prioritizes empirical measurement over theoretical assumptions for performance tuning.\n2. Hardware-specific optimizations are implemented for both AVX-512 and AVX2 instruction sets.\n3. Memory management strategies include tiered storage across VRAM, pinned RAM, and SSD.\n4. Expert weights are dynamically cached in VRAM based on usage profiles to minimize CPU overhead.\n5. The engine supports speculative decoding using a dedicated Multi-Token Prediction (MTP) draft layer.\n6. CUDA graph capture is used to reduce kernel launch overhead during token generation.\n7. A \"doorbell\" mechanism synchronizes CPU and GPU expert computation to maximize parallelism.\n8. Quantization formats like Q2_0 and IQ variants are supported with custom dequantization kernels.\n9. The system validates weight loading by checking tensor geometry and byte offsets against manifests.\n10. Idle conversation caches are offloaded to disk to free up VRAM during periods of inactivity.\n11. Layer splitting allows models to run across multiple GPUs using pipeline parallelism.\n12. KV cache streaming moves less frequently accessed context to system RAM to save VRAM.\n13. The engine includes a watchdog mechanism to detect and recover from stalled expert"
+        },
+        "timings": {
+          "cache_n": 261113,
+          "prompt_n": 112,
+          "prompt_ms": 1839.1,
+          "prompt_per_token_ms": 16.421,
+          "prompt_per_second": 60.9,
+          "predicted_n": 256,
+          "predicted_ms": 7136.0,
+          "predicted_per_token_ms": 27.875,
+          "predicted_per_second": 35.9,
+          "draft_n": 126,
+          "draft_n_accepted": 107
+        },
+        "usage": {
+          "prompt_tokens": 261225,
+          "completion_tokens": 256,
+          "total_tokens": 261481,
+          "prompt_tokens_details": {
+            "cached_tokens": 261113
+          }
+        },
+        "status": {
+          "service": "strata",
+          "model": "qwen3.8-flash-next",
+          "engine": "0.1.24",
+          "started": 1790985336,
+          "uptime_s": 758,
+          "cache_max_tokens": 262144,
+          "cache": {
+            "state": "resident",
+            "idle_seconds": 180,
+            "expire_seconds": 3600,
+            "disk_bytes": 0,
+            "released_vram_bytes": 0,
+            "released_host_bytes": 0,
+            "tokens": 0,
+            "operation_ms": 0.0
+          },
+          "context": {
+            "native": 262144,
+            "max_positions": 262144
+          },
+          "concurrency": {
+            "serving": 1,
+            "requested": 1
+          },
+          "dialects": [
+            "/v1/chat/completions",
+            "/v1/messages"
+          ],
+          "vision": {
+            "enabled": false,
+            "available": false,
+            "error": null
+          },
+          "activity": {
+            "requests": 6,
+            "in_flight": 0,
+            "last_request_at": 1790986095
+          },
+          "last_timings": {
+            "cache_n": 261113,
+            "prompt_n": 112,
+            "prompt_ms": 1839.1,
+            "prompt_per_token_ms": 16.421,
+            "prompt_per_second": 60.9,
+            "predicted_n": 256,
+            "predicted_ms": 7136.0,
+            "predicted_per_token_ms": 27.875,
+            "predicted_per_second": 35.9,
+            "draft_n": 126,
+            "draft_n_accepted": 107,
+            "at": 1790986095
+          },
+          "machine": {
+            "at": 1790986095,
+            "gpu": {
+              "name": "NVIDIA GeForce RTX 2080 Ti",
+              "used_mib": 22165.0,
+              "total_mib": 22528.0,
+              "util_pct": 97,
+              "temp_c": 74,
+              "power_w": 227.246
+            },
+            "ram": {
+              "used_gib": 31.3,
+              "total_gib": 31.6
+            }
+          }
+        }
+      }
+    ],
+    "B1": [
+      {
+        "case": "prefill",
+        "label": "128k",
+        "expected": [
+          "violet-583107",
+          "copper-942681",
+          "cedar-276439",
+          "quartz-814725",
+          "maple-693258"
+        ],
+        "found": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "prompt_tokens": 130048,
+        "local_prepare_ms": 330.65679999708664,
+        "headers_ms": 328.6402999947313,
+        "ttft_ms": 205862.80540000007,
+        "wall_ms": 210111.27399999532,
+        "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258",
+        "message": {
+          "role": "assistant",
+          "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 130048,
+          "prompt_ms": 205451.5,
+          "prompt_per_token_ms": 1.58,
+          "prompt_per_second": 633.0,
+          "predicted_n": 64,
+          "predicted_ms": 4301.7,
+          "predicted_per_token_ms": 67.214,
+          "predicted_per_second": 14.9,
+          "draft_n": 53,
+          "draft_n_accepted": 43
+        },
+        "usage": {
+          "prompt_tokens": 130048,
+          "completion_tokens": 64,
+          "total_tokens": 130112,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "status": {
+          "service": "strata",
+          "model": "qwen3.8-flash-next",
+          "engine": "0.1.24",
+          "started": 1790986124,
+          "uptime_s": 212,
+          "cache_max_tokens": 262144,
+          "cache": {
+            "state": "resident",
+            "idle_seconds": 180,
+            "expire_seconds": 3600,
+            "disk_bytes": 0,
+            "released_vram_bytes": 0,
+            "released_host_bytes": 0,
+            "tokens": 0,
+            "operation_ms": 0.0
+          },
+          "context": {
+            "native": 262144,
+            "max_positions": 262144
+          },
+          "concurrency": {
+            "serving": 1,
+            "requested": 1
+          },
+          "dialects": [
+            "/v1/chat/completions",
+            "/v1/messages"
+          ],
+          "vision": {
+            "enabled": false,
+            "available": false,
+            "error": null
+          },
+          "activity": {
+            "requests": 2,
+            "in_flight": 0,
+            "last_request_at": 1790986337
+          },
+          "last_timings": {
+            "cache_n": 0,
+            "prompt_n": 130048,
+            "prompt_ms": 205451.5,
+            "prompt_per_token_ms": 1.58,
+            "prompt_per_second": 633.0,
+            "predicted_n": 64,
+            "predicted_ms": 4301.7,
+            "predicted_per_token_ms": 67.214,
+            "predicted_per_second": 14.9,
+            "draft_n": 53,
+            "draft_n_accepted": 43,
+            "at": 1790986337
+          },
+          "machine": {
+            "at": 1790986337,
+            "gpu": {
+              "name": "NVIDIA GeForce RTX 2080 Ti",
+              "used_mib": 22148.0,
+              "total_mib": 22528.0,
+              "util_pct": 99,
+              "temp_c": 65,
+              "power_w": 169.113
+            },
+            "ram": {
+              "used_gib": 27.7,
+              "total_gib": 31.6
+            }
+          }
+        }
+      },
+      {
+        "case": "decode",
+        "label": "128k",
+        "prompt_tokens": 130153,
+        "local_prepare_ms": 325.8338999876287,
+        "headers_ms": 338.5331000026781,
+        "ttft_ms": 1541.7486999940593,
+        "wall_ms": 15352.061199999298,
+        "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for expert streaming.\n6. The system uses speculative decoding to increase output token generation speed.\n7. Expert caching strategies are adapted dynamically based on conversation context.\n8. The engine supports multiple quantization formats like Q2_0, IQ2_XS, and IQ3_XXS.\n9. Model selection recommendations are tailored to available system RAM.\n10. The setup process automates the installation of dependencies and model files.\n11. Windows Task Scheduler configurations are documented to prevent performance throttling.\n12. The API supports both OpenAI and Anthropic compatible endpoints.\n13. Streaming responses are implemented to keep agent connections alive during long prompts.\n14. Conversation caching reuses shared prefixes to reduce prompt processing time.\n15. MCP server integration allows the model to use external tools for file and web access.\n16.",
+        "message": {
+          "role": "assistant",
+          "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for expert streaming.\n6. The system uses speculative decoding to increase output token generation speed.\n7. Expert caching strategies are adapted dynamically based on conversation context.\n8. The engine supports multiple quantization formats like Q2_0, IQ2_XS, and IQ3_XXS.\n9. Model selection recommendations are tailored to available system RAM.\n10. The setup process automates the installation of dependencies and model files.\n11. Windows Task Scheduler configurations are documented to prevent performance throttling.\n12. The API supports both OpenAI and Anthropic compatible endpoints.\n13. Streaming responses are implemented to keep agent connections alive during long prompts.\n14. Conversation caching reuses shared prefixes to reduce prompt processing time.\n15. MCP server integration allows the model to use external tools for file and web access.\n16."
+        },
+        "timings": {
+          "cache_n": 130111,
+          "prompt_n": 42,
+          "prompt_ms": 1153.6,
+          "prompt_per_token_ms": 27.467,
+          "prompt_per_second": 36.4,
+          "predicted_n": 256,
+          "predicted_ms": 13830.3,
+          "predicted_per_token_ms": 54.025,
+          "predicted_per_second": 18.5,
+          "draft_n": 137,
+          "draft_n_accepted": 113
+        },
+        "usage": {
+          "prompt_tokens": 130153,
+          "completion_tokens": 256,
+          "total_tokens": 130409,
+          "prompt_tokens_details": {
+            "cached_tokens": 130111
+          }
+        },
+        "status": {
+          "service": "strata",
+          "model": "qwen3.8-flash-next",
+          "engine": "0.1.24",
+          "started": 1790986124,
+          "uptime_s": 228,
+          "cache_max_tokens": 262144,
+          "cache": {
+            "state": "resident",
+            "idle_seconds": 180,
+            "expire_seconds": 3600,
+            "disk_bytes": 0,
+            "released_vram_bytes": 0,
+            "released_host_bytes": 0,
+            "tokens": 0,
+            "operation_ms": 0.0
+          },
+          "context": {
+            "native": 262144,
+            "max_positions": 262144
+          },
+          "concurrency": {
+            "serving": 1,
+            "requested": 1
+          },
+          "dialects": [
+            "/v1/chat/completions",
+            "/v1/messages"
+          ],
+          "vision": {
+            "enabled": false,
+            "available": false,
+            "error": null
+          },
+          "activity": {
+            "requests": 3,
+            "in_flight": 0,
+            "last_request_at": 1790986352
+          },
+          "last_timings": {
+            "cache_n": 130111,
+            "prompt_n": 42,
+            "prompt_ms": 1153.6,
+            "prompt_per_token_ms": 27.467,
+            "prompt_per_second": 36.4,
+            "predicted_n": 256,
+            "predicted_ms": 13830.3,
+            "predicted_per_token_ms": 54.025,
+            "predicted_per_second": 18.5,
+            "draft_n": 137,
+            "draft_n_accepted": 113,
+            "at": 1790986352
+          },
+          "machine": {
+            "at": 1790986352,
+            "gpu": {
+              "name": "NVIDIA GeForce RTX 2080 Ti",
+              "used_mib": 22162.0,
+              "total_mib": 22528.0,
+              "util_pct": 76,
+              "temp_c": 63,
+              "power_w": 119.916
+            },
+            "ram": {
+              "used_gib": 31.0,
+              "total_gib": 31.6
+            }
+          }
+        }
+      },
+      {
+        "case": "prefill",
+        "label": "256k",
+        "expected": [
+          "violet-583107",
+          "copper-942681",
+          "cedar-276439",
+          "quartz-814725",
+          "maple-693258"
+        ],
+        "found": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "prompt_tokens": 261120,
+        "local_prepare_ms": 633.3684000128414,
+        "headers_ms": 641.4151000062702,
+        "ttft_ms": 428365.776599996,
+        "wall_ms": 430665.17180000665,
+        "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258",
+        "message": {
+          "role": "assistant",
+          "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 261120,
+          "prompt_ms": 427637.6,
+          "prompt_per_token_ms": 1.638,
+          "prompt_per_second": 610.6,
+          "predicted_n": 64,
+          "predicted_ms": 2329.1,
+          "predicted_per_token_ms": 36.392,
+          "predicted_per_second": 27.5,
+          "draft_n": 55,
+          "draft_n_accepted": 41
+        },
+        "usage": {
+          "prompt_tokens": 261120,
+          "completion_tokens": 64,
+          "total_tokens": 261184,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "status": {
+          "service": "strata",
+          "model": "qwen3.8-flash-next",
+          "engine": "0.1.24",
+          "started": 1790986124,
+          "uptime_s": 659,
+          "cache_max_tokens": 262144,
+          "cache": {
+            "state": "resident",
+            "idle_seconds": 180,
+            "expire_seconds": 3600,
+            "disk_bytes": 0,
+            "released_vram_bytes": 0,
+            "released_host_bytes": 0,
+            "tokens": 0,
+            "operation_ms": 0.0
+          },
+          "context": {
+            "native": 262144,
+            "max_positions": 262144
+          },
+          "concurrency": {
+            "serving": 1,
+            "requested": 1
+          },
+          "dialects": [
+            "/v1/chat/completions",
+            "/v1/messages"
+          ],
+          "vision": {
+            "enabled": false,
+            "available": false,
+            "error": null
+          },
+          "activity": {
+            "requests": 5,
+            "in_flight": 0,
+            "last_request_at": 1790986784
+          },
+          "last_timings": {
+            "cache_n": 0,
+            "prompt_n": 261120,
+            "prompt_ms": 427637.6,
+            "prompt_per_token_ms": 1.638,
+            "prompt_per_second": 610.6,
+            "predicted_n": 64,
+            "predicted_ms": 2329.1,
+            "predicted_per_token_ms": 36.392,
+            "predicted_per_second": 27.5,
+            "draft_n": 55,
+            "draft_n_accepted": 41,
+            "at": 1790986784
+          },
+          "machine": {
+            "at": 1790986784,
+            "gpu": {
+              "name": "NVIDIA GeForce RTX 2080 Ti",
+              "used_mib": 22185.0,
+              "total_mib": 22528.0,
+              "util_pct": 99,
+              "temp_c": 69,
+              "power_w": 184.257
+            },
+            "ram": {
+              "used_gib": 31.1,
+              "total_gib": 31.6
+            }
+          }
+        }
+      },
+      {
+        "case": "decode",
+        "label": "256k",
+        "prompt_tokens": 261225,
+        "local_prepare_ms": 631.8363000027603,
+        "headers_ms": 670.9066000039456,
+        "ttft_ms": 1321.7136000021128,
+        "wall_ms": 7669.265799995628,
+        "content": "1. The project prioritizes empirical measurement over theoretical assumptions for performance tuning.\n2. Hardware-specific optimizations are validated against specific GPU and CPU architectures.\n3. Memory bandwidth contention between CPU and GPU paths is explicitly measured to validate concurrency claims.\n4. Expert cache residency is managed dynamically based on profiling data and available VRAM.\n5. Quantization formats are selected based on a trade-off between model quality, speed, and memory footprint.\n6. The engine supports multiple quantization types (Q2_0, IQ2_XS, IQ3_XXS) with distinct performance profiles.\n7. Layer splitting across multiple GPUs is implemented as pipeline parallelism rather than tensor parallelism.\n8. Expert weights are tiered across VRAM, pinned RAM, and SSD to balance speed and capacity.\n9. CPU expert kernels utilize AVX-512 VNNI instructions for maximum throughput on supported hardware.\n10. Fallback kernels for AVX2 and scalar operations ensure compatibility with older CPUs.\n11. Activation quantization contracts are strictly enforced to prevent subtle numerical errors.\n12. BF16 weights require BF16 activations to maintain precision, with fp16 activations explicitly tested as a rival reading.\n",
+        "message": {
+          "role": "assistant",
+          "content": "1. The project prioritizes empirical measurement over theoretical assumptions for performance tuning.\n2. Hardware-specific optimizations are validated against specific GPU and CPU architectures.\n3. Memory bandwidth contention between CPU and GPU paths is explicitly measured to validate concurrency claims.\n4. Expert cache residency is managed dynamically based on profiling data and available VRAM.\n5. Quantization formats are selected based on a trade-off between model quality, speed, and memory footprint.\n6. The engine supports multiple quantization types (Q2_0, IQ2_XS, IQ3_XXS) with distinct performance profiles.\n7. Layer splitting across multiple GPUs is implemented as pipeline parallelism rather than tensor parallelism.\n8. Expert weights are tiered across VRAM, pinned RAM, and SSD to balance speed and capacity.\n9. CPU expert kernels utilize AVX-512 VNNI instructions for maximum throughput on supported hardware.\n10. Fallback kernels for AVX2 and scalar operations ensure compatibility with older CPUs.\n11. Activation quantization contracts are strictly enforced to prevent subtle numerical errors.\n12. BF16 weights require BF16 activations to maintain precision, with fp16 activations explicitly tested as a rival reading.\n"
+        },
+        "timings": {
+          "cache_n": 261183,
+          "prompt_n": 42,
+          "prompt_ms": 571.5,
+          "prompt_per_token_ms": 13.607,
+          "prompt_per_second": 73.5,
+          "predicted_n": 256,
+          "predicted_ms": 6369.9,
+          "predicted_per_token_ms": 24.882,
+          "predicted_per_second": 40.2,
+          "draft_n": 142,
+          "draft_n_accepted": 116
+        },
+        "usage": {
+          "prompt_tokens": 261225,
+          "completion_tokens": 256,
+          "total_tokens": 261481,
+          "prompt_tokens_details": {
+            "cached_tokens": 261183
+          }
+        },
+        "status": {
+          "service": "strata",
+          "model": "qwen3.8-flash-next",
+          "engine": "0.1.24",
+          "started": 1790986124,
+          "uptime_s": 668,
+          "cache_max_tokens": 262144,
+          "cache": {
+            "state": "resident",
+            "idle_seconds": 180,
+            "expire_seconds": 3600,
+            "disk_bytes": 0,
+            "released_vram_bytes": 0,
+            "released_host_bytes": 0,
+            "tokens": 0,
+            "operation_ms": 0.0
+          },
+          "context": {
+            "native": 262144,
+            "max_positions": 262144
+          },
+          "concurrency": {
+            "serving": 1,
+            "requested": 1
+          },
+          "dialects": [
+            "/v1/chat/completions",
+            "/v1/messages"
+          ],
+          "vision": {
+            "enabled": false,
+            "available": false,
+            "error": null
+          },
+          "activity": {
+            "requests": 6,
+            "in_flight": 0,
+            "last_request_at": 1790986792
+          },
+          "last_timings": {
+            "cache_n": 261183,
+            "prompt_n": 42,
+            "prompt_ms": 571.5,
+            "prompt_per_token_ms": 13.607,
+            "prompt_per_second": 73.5,
+            "predicted_n": 256,
+            "predicted_ms": 6369.9,
+            "predicted_per_token_ms": 24.882,
+            "predicted_per_second": 40.2,
+            "draft_n": 142,
+            "draft_n_accepted": 116,
+            "at": 1790986792
+          },
+          "machine": {
+            "at": 1790986792,
+            "gpu": {
+              "name": "NVIDIA GeForce RTX 2080 Ti",
+              "used_mib": 22161.0,
+              "total_mib": 22528.0,
+              "util_pct": 97,
+              "temp_c": 71,
+              "power_w": 221.128
+            },
+            "ram": {
+              "used_gib": 31.3,
+              "total_gib": 31.6
+            }
+          }
+        }
+      }
+    ],
+    "B2": [
+      {
+        "case": "prefill",
+        "label": "128k",
+        "expected": [
+          "violet-583107",
+          "copper-942681",
+          "cedar-276439",
+          "quartz-814725",
+          "maple-693258"
+        ],
+        "found": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "prompt_tokens": 130048,
+        "local_prepare_ms": 332.0930000045337,
+        "headers_ms": 329.2574000079185,
+        "ttft_ms": 203835.88220000092,
+        "wall_ms": 208252.83800000034,
+        "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258",
+        "message": {
+          "role": "assistant",
+          "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 130048,
+          "prompt_ms": 203440.1,
+          "prompt_per_token_ms": 1.564,
+          "prompt_per_second": 639.2,
+          "predicted_n": 64,
+          "predicted_ms": 4454.3,
+          "predicted_per_token_ms": 69.598,
+          "predicted_per_second": 14.4,
+          "draft_n": 53,
+          "draft_n_accepted": 43
+        },
+        "usage": {
+          "prompt_tokens": 130048,
+          "completion_tokens": 64,
+          "total_tokens": 130112,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "status": {
+          "service": "strata",
+          "model": "qwen3.8-flash-next",
+          "engine": "0.1.24",
+          "started": 1790986821,
+          "uptime_s": 210,
+          "cache_max_tokens": 262144,
+          "cache": {
+            "state": "resident",
+            "idle_seconds": 180,
+            "expire_seconds": 3600,
+            "disk_bytes": 0,
+            "released_vram_bytes": 0,
+            "released_host_bytes": 0,
+            "tokens": 0,
+            "operation_ms": 0.0
+          },
+          "context": {
+            "native": 262144,
+            "max_positions": 262144
+          },
+          "concurrency": {
+            "serving": 1,
+            "requested": 1
+          },
+          "dialects": [
+            "/v1/chat/completions",
+            "/v1/messages"
+          ],
+          "vision": {
+            "enabled": false,
+            "available": false,
+            "error": null
+          },
+          "activity": {
+            "requests": 2,
+            "in_flight": 0,
+            "last_request_at": 1790987031
+          },
+          "last_timings": {
+            "cache_n": 0,
+            "prompt_n": 130048,
+            "prompt_ms": 203440.1,
+            "prompt_per_token_ms": 1.564,
+            "prompt_per_second": 639.2,
+            "predicted_n": 64,
+            "predicted_ms": 4454.3,
+            "predicted_per_token_ms": 69.598,
+            "predicted_per_second": 14.4,
+            "draft_n": 53,
+            "draft_n_accepted": 43,
+            "at": 1790987031
+          },
+          "machine": {
+            "at": 1790987031,
+            "gpu": {
+              "name": "NVIDIA GeForce RTX 2080 Ti",
+              "used_mib": 22155.0,
+              "total_mib": 22528.0,
+              "util_pct": 98,
+              "temp_c": 64,
+              "power_w": 161.994
+            },
+            "ram": {
+              "used_gib": 27.4,
+              "total_gib": 31.6
+            }
+          }
+        }
+      },
+      {
+        "case": "decode",
+        "label": "128k",
+        "prompt_tokens": 130153,
+        "local_prepare_ms": 329.29609999700915,
+        "headers_ms": 330.3103999933228,
+        "ttft_ms": 1820.2561999933096,
+        "wall_ms": 18852.963199999067,
+        "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for expert streaming.\n6. The system uses speculative decoding to increase output token generation speed.\n7. Expert caching strategies are adapted dynamically based on conversation context.\n8. The engine supports multiple quantization formats like Q2_0, IQ2_XS, and IQ3_XXS.\n9. Model selection recommendations are tailored to available system RAM.\n10. The setup process automates the installation of dependencies and model files.\n11. Windows Task Scheduler configurations are documented to prevent performance throttling.\n12. The API supports both OpenAI and Anthropic compatible endpoints.\n13. Streaming responses are implemented to keep agent connections alive during long prompts.\n14. Conversation caching reuses shared prefixes to reduce prompt processing time.\n15. MCP server integration allows the model to use external tools for file and web access.\n16.",
+        "message": {
+          "role": "assistant",
+          "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for expert streaming.\n6. The system uses speculative decoding to increase output token generation speed.\n7. Expert caching strategies are adapted dynamically based on conversation context.\n8. The engine supports multiple quantization formats like Q2_0, IQ2_XS, and IQ3_XXS.\n9. Model selection recommendations are tailored to available system RAM.\n10. The setup process automates the installation of dependencies and model files.\n11. Windows Task Scheduler configurations are documented to prevent performance throttling.\n12. The API supports both OpenAI and Anthropic compatible endpoints.\n13. Streaming responses are implemented to keep agent connections alive during long prompts.\n14. Conversation caching reuses shared prefixes to reduce prompt processing time.\n15. MCP server integration allows the model to use external tools for file and web access.\n16."
+        },
+        "timings": {
+          "cache_n": 130111,
+          "prompt_n": 42,
+          "prompt_ms": 1188.4,
+          "prompt_per_token_ms": 28.295,
+          "prompt_per_second": 35.3,
+          "predicted_n": 256,
+          "predicted_ms": 17052.5,
+          "predicted_per_token_ms": 66.611,
+          "predicted_per_second": 15.0,
+          "draft_n": 137,
+          "draft_n_accepted": 113
+        },
+        "usage": {
+          "prompt_tokens": 130153,
+          "completion_tokens": 256,
+          "total_tokens": 130409,
+          "prompt_tokens_details": {
+            "cached_tokens": 130111
+          }
+        },
+        "status": {
+          "service": "strata",
+          "model": "qwen3.8-flash-next",
+          "engine": "0.1.24",
+          "started": 1790986821,
+          "uptime_s": 229,
+          "cache_max_tokens": 262144,
+          "cache": {
+            "state": "resident",
+            "idle_seconds": 180,
+            "expire_seconds": 3600,
+            "disk_bytes": 0,
+            "released_vram_bytes": 0,
+            "released_host_bytes": 0,
+            "tokens": 0,
+            "operation_ms": 0.0
+          },
+          "context": {
+            "native": 262144,
+            "max_positions": 262144
+          },
+          "concurrency": {
+            "serving": 1,
+            "requested": 1
+          },
+          "dialects": [
+            "/v1/chat/completions",
+            "/v1/messages"
+          ],
+          "vision": {
+            "enabled": false,
+            "available": false,
+            "error": null
+          },
+          "activity": {
+            "requests": 3,
+            "in_flight": 0,
+            "last_request_at": 1790987051
+          },
+          "last_timings": {
+            "cache_n": 130111,
+            "prompt_n": 42,
+            "prompt_ms": 1188.4,
+            "prompt_per_token_ms": 28.295,
+            "prompt_per_second": 35.3,
+            "predicted_n": 256,
+            "predicted_ms": 17052.5,
+            "predicted_per_token_ms": 66.611,
+            "predicted_per_second": 15.0,
+            "draft_n": 137,
+            "draft_n_accepted": 113,
+            "at": 1790987051
+          },
+          "machine": {
+            "at": 1790987051,
+            "gpu": {
+              "name": "NVIDIA GeForce RTX 2080 Ti",
+              "used_mib": 22178.0,
+              "total_mib": 22528.0,
+              "util_pct": 75,
+              "temp_c": 61,
+              "power_w": 119.029
+            },
+            "ram": {
+              "used_gib": 31.1,
+              "total_gib": 31.6
+            }
+          }
+        }
+      }
+    ],
+    "A2": [
+      {
+        "case": "prefill",
+        "label": "128k",
+        "expected": [
+          "violet-583107",
+          "copper-942681",
+          "cedar-276439",
+          "quartz-814725",
+          "maple-693258"
+        ],
+        "found": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "prompt_tokens": 130048,
+        "local_prepare_ms": 332.40319999458734,
+        "headers_ms": 328.424699997413,
+        "ttft_ms": 220601.75129999698,
+        "wall_ms": 224834.7669000068,
+        "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258",
+        "message": {
+          "role": "assistant",
+          "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258"
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 130048,
+          "prompt_ms": 220205.1,
+          "prompt_per_token_ms": 1.693,
+          "prompt_per_second": 590.6,
+          "predicted_n": 64,
+          "predicted_ms": 4269.8,
+          "predicted_per_token_ms": 66.716,
+          "predicted_per_second": 15.0,
+          "draft_n": 55,
+          "draft_n_accepted": 43
+        },
+        "usage": {
+          "prompt_tokens": 130048,
+          "completion_tokens": 64,
+          "total_tokens": 130112,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "status": {
+          "service": "strata",
+          "model": "qwen3.8-flash-next",
+          "engine": "0.1.24",
+          "started": 1790987075,
+          "uptime_s": 227,
+          "cache_max_tokens": 262144,
+          "cache": {
+            "state": "resident",
+            "idle_seconds": 180,
+            "expire_seconds": 3600,
+            "disk_bytes": 0,
+            "released_vram_bytes": 0,
+            "released_host_bytes": 0,
+            "tokens": 0,
+            "operation_ms": 0.0
+          },
+          "context": {
+            "native": 262144,
+            "max_positions": 262144
+          },
+          "concurrency": {
+            "serving": 1,
+            "requested": 1
+          },
+          "dialects": [
+            "/v1/chat/completions",
+            "/v1/messages"
+          ],
+          "vision": {
+            "enabled": false,
+            "available": false,
+            "error": null
+          },
+          "activity": {
+            "requests": 2,
+            "in_flight": 0,
+            "last_request_at": 1790987303
+          },
+          "last_timings": {
+            "cache_n": 0,
+            "prompt_n": 130048,
+            "prompt_ms": 220205.1,
+            "prompt_per_token_ms": 1.693,
+            "prompt_per_second": 590.6,
+            "predicted_n": 64,
+            "predicted_ms": 4269.8,
+            "predicted_per_token_ms": 66.716,
+            "predicted_per_second": 15.0,
+            "draft_n": 55,
+            "draft_n_accepted": 43,
+            "at": 1790987303
+          },
+          "machine": {
+            "at": 1790987303,
+            "gpu": {
+              "name": "NVIDIA GeForce RTX 2080 Ti",
+              "used_mib": 22174.0,
+              "total_mib": 22528.0,
+              "util_pct": 98,
+              "temp_c": 67,
+              "power_w": 153.434
+            },
+            "ram": {
+              "used_gib": 27.6,
+              "total_gib": 31.6
+            }
+          }
+        }
+      },
+      {
+        "case": "decode",
+        "label": "128k",
+        "prompt_tokens": 130153,
+        "local_prepare_ms": 325.57810000434984,
+        "headers_ms": 330.46399999875575,
+        "ttft_ms": 1774.196899990784,
+        "wall_ms": 9263.590799993835,
+        "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for GPU expert caching.\n6. CPU and GPU workloads are designed to run concurrently to maximize throughput.\n7. The system uses speculative decoding to accelerate token generation.\n8. Expert routing profiles are generated to optimize which experts reside in VRAM.\n9. KV cache streaming moves less frequently accessed data to system RAM to save VRAM.\n10. Quantization formats are carefully selected to balance memory usage and precision.\n11. The engine supports multiple model variants including original, coder, and fine-tuned versions.\n12. Installation scripts automate the setup of complex dependencies like CUDA and Python environments.\n13. Windows-specific issues like Task Scheduler throttling are documented with specific workarounds.\n14. Linux support includes automatic compilation of the engine if pre-built binaries are unavailable.\n15. The API exposes standard OpenAI and Anthropic compatible",
+        "message": {
+          "role": "assistant",
+          "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for GPU expert caching.\n6. CPU and GPU workloads are designed to run concurrently to maximize throughput.\n7. The system uses speculative decoding to accelerate token generation.\n8. Expert routing profiles are generated to optimize which experts reside in VRAM.\n9. KV cache streaming moves less frequently accessed data to system RAM to save VRAM.\n10. Quantization formats are carefully selected to balance memory usage and precision.\n11. The engine supports multiple model variants including original, coder, and fine-tuned versions.\n12. Installation scripts automate the setup of complex dependencies like CUDA and Python environments.\n13. Windows-specific issues like Task Scheduler throttling are documented with specific workarounds.\n14. Linux support includes automatic compilation of the engine if pre-built binaries are unavailable.\n15. The API exposes standard OpenAI and Anthropic compatible"
+        },
+        "timings": {
+          "cache_n": 130111,
+          "prompt_n": 42,
+          "prompt_ms": 1389.1,
+          "prompt_per_token_ms": 33.074,
+          "prompt_per_second": 30.2,
+          "predicted_n": 256,
+          "predicted_ms": 7510.1,
+          "predicted_per_token_ms": 29.336,
+          "predicted_per_second": 34.1,
+          "draft_n": 145,
+          "draft_n_accepted": 114
+        },
+        "usage": {
+          "prompt_tokens": 130153,
+          "completion_tokens": 256,
+          "total_tokens": 130409,
+          "prompt_tokens_details": {
+            "cached_tokens": 130111
+          }
+        },
+        "status": {
+          "service": "strata",
+          "model": "qwen3.8-flash-next",
+          "engine": "0.1.24",
+          "started": 1790987075,
+          "uptime_s": 237,
+          "cache_max_tokens": 262144,
+          "cache": {
+            "state": "resident",
+            "idle_seconds": 180,
+            "expire_seconds": 3600,
+            "disk_bytes": 0,
+            "released_vram_bytes": 0,
+            "released_host_bytes": 0,
+            "tokens": 0,
+            "operation_ms": 0.0
+          },
+          "context": {
+            "native": 262144,
+            "max_positions": 262144
+          },
+          "concurrency": {
+            "serving": 1,
+            "requested": 1
+          },
+          "dialects": [
+            "/v1/chat/completions",
+            "/v1/messages"
+          ],
+          "vision": {
+            "enabled": false,
+            "available": false,
+            "error": null
+          },
+          "activity": {
+            "requests": 3,
+            "in_flight": 0,
+            "last_request_at": 1790987313
+          },
+          "last_timings": {
+            "cache_n": 130111,
+            "prompt_n": 42,
+            "prompt_ms": 1389.1,
+            "prompt_per_token_ms": 33.074,
+            "prompt_per_second": 30.2,
+            "predicted_n": 256,
+            "predicted_ms": 7510.1,
+            "predicted_per_token_ms": 29.336,
+            "predicted_per_second": 34.1,
+            "draft_n": 145,
+            "draft_n_accepted": 114,
+            "at": 1790987313
+          },
+          "machine": {
+            "at": 1790987313,
+            "gpu": {
+              "name": "NVIDIA GeForce RTX 2080 Ti",
+              "used_mib": 22165.0,
+              "total_mib": 22528.0,
+              "util_pct": 97,
+              "temp_c": 69,
+              "power_w": 213.523
+            },
+            "ram": {
+              "used_gib": 31.2,
+              "total_gib": 31.6
+            }
+          }
+        }
+      }
+    ]
+  },
+  "method": "Separate 32K and 256K capacities; original binary A and frozen candidate B; ABBA for 8K/31K/128K, one A/B full-window pair. Cache misses asserted, single concurrency, diagnostics off in formal measurements. Windows file cache not purged; all slow samples retained."
+}

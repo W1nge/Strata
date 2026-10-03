@@ -39,10 +39,13 @@
 #include "strata/kernels/mrope.hpp"
 #include "strata/kernels/kv_q4.hpp"
 #include "strata/kernels/qsa.hpp"
+#include "strata/kernels/qsa_prompt_attn.hpp"
+#include "strata/kernels/qsa_select.hpp"
 #include "strata/core/native_head.hpp"
 #include "strata/core/verify.hpp"
 #include "strata/core/mtp.hpp"
 #include "strata/prefill/prefill.hpp"
+#include "strata/prefill/gemm.hpp"
 #include "strata/core/native_dense.hpp"
 #include "strata/program/logits_selection.hpp"
 #include "strata/program/conv_cache.hpp"
@@ -175,6 +178,16 @@ struct Options {
     bool graph_only = false;
     bool gpu_only_full = false;   ///< R0.3: pre + post + head, the true per-token GPU floor
     int pool_workers = 0;         ///< R2.2: 0 = "all physical cores minus the host's"; >0 overrides
+    int native_shape = 0;
+    int prefill_io_tuning = 0;
+    int refill_mode = 0;  // 0 legacy, 1 staged source, 2 staged mapped, 3 staged cached reads
+    int prefill_ring = 0;  // 0: environment/automatic; otherwise 16..512 streamed device slots
+    int prefill_ring_large = 0;  // optional override for chunks >= 12288 tokens
+    int commit_async = -1, turing_prompt_attn = -1;  // -1: env/default; otherwise explicit 0/1
+    int turing_bf16_gemm = -1, prefill_topk_wide = -1;
+    int prefill_score_tile = -1;
+    int decode_tuning = 0;        ///< opt-in GPU decode kernel variants, bits 0..4
+    int native_tasks = 3;         ///< row tasks per participating thread for native multi-token experts
     /// R2.2's first half, as an A/B arm.  **ON by default**, because the measurement that justifies it is the
     /// pool's own drain: 33.7 GB/s against 5/6 x 44.14 = 36.8 for five workers, on a machine whose sixth core
     /// is reserved for a host thread that has nothing to do while the drain runs.
@@ -182,6 +195,7 @@ struct Options {
     bool mmap_experts = false;    ///< R2.1: opt OUT of the resident arena, back to MapViewOfFile
     /// VRAM / pinned RAM / SSD tiers (TieredExpertSource): for a machine whose RAM does not hold every expert.
     bool tiered_experts = false;
+    int tiered_direct_load = -1;
     double host_budget_gib = -1.0;   ///< the PINNED tier's size; < 0 = auto (MemAvailable - reserve)
     double host_reserve_gib = 8.0;   ///< auto leaves this much RAM for the cold tier's page cache and the OS
     /// R4: slots of VRAM-resident experts.  **0 = off, and off is the default.**
@@ -258,6 +272,7 @@ struct Options {
     /// pinned arena while the CPU computes the rest (verify windows).
     double pcie_frac = -1.0;   ///< < 0: the model's default (0.2 direct for the Q2_0 pack, 0.55 DMA for native packs)
     std::string pcie_mode = "auto";   ///< auto | dma | kernel | direct
+    bool skip_empty_pcie = false;    ///< omit the unused PCIe graph branch when its share is zero
     /// Plan v0.3 P6: every `adapt_every` rounds, swap up to `adapt_swaps` of the most-routed missing experts into
     /// the VRAM tier in place of the least-routed resident ones (decayed counts).  0 = static residency.
     int adapt_every = 4;
@@ -283,6 +298,8 @@ struct Options {
     /// prompt again, the v0.1.2 behaviour).  One is the GDN recurrence of the 36 layers, the QSA indexer tails and
     /// the PLE history (~118 MB of host RAM); the KV cache itself is positional and stays where it is.
     int prompt_cache = 6;
+    int cache_idle_seconds = 0, cache_expire_seconds = 3600;
+    std::string cache_disk_dir;
     /// --serve: also keep a checkpoint every N freshly read prompt tokens (0 = only at the last turn boundary)
     int64_t prompt_cache_every = 16384;
     /// --serve: a prompt read from token 0 is also checkpointed at its first turn boundary - the end of the system
@@ -324,6 +341,8 @@ void usage() {
                  "                       reads, the table never enters RAM or the file cache; mmap: A/B arm\n"
                  "  --ple-row-cache N    bounded cache of fetched rows, 90 B each (default 1048576; 0 = off)\n"
                  "  --ple-inflight N     outstanding SSD reads (default 64)\n"
+                 "  --prefill-io-tuning N bitmask 0..3: 1 batch gathers, 2 overlap first PLE read (default 0)\n"
+                 "  --tiered-direct-load 0|1  Windows: direct startup reads for expert tiers (default 0)\n"
                  "  --ple-delay-us U     fault injection: each row read completes no earlier than U us\n"
                  "  --ple-sync-submit    A/B arm: submit table reads on the token thread (default: an I/O thread)\n"
                  "  --kv fp16|int8       KV storage (plan v0.3 P7): int8 codes + fp16 scale per 64 values, half the\n"
@@ -371,10 +390,16 @@ void usage() {
                  "  --shared-late        A/B: shared expert after the CPU pool (default: overlapped with it)\n"
                  "  --keep-canonical     A/B: also load canonical copies of natively served tensors (more VRAM)\n"
                  "  --vision             --serve takes images too (GENI requests; embeddings from strata-vision)\n"
+                 "  --cache-idle-seconds N  --serve: save cache to disk and release its arenas after N idle seconds (0 off)\n"
+                 "  --cache-expire-seconds N  discard cache N seconds after the last request finishes (default 3600)\n"
+                 "  --cache-disk-dir DIR  process-local idle snapshots; requires one GPU and no KV streaming\n"
                  "  --prompt-cache N     --serve: keep N conversation checkpoints between requests (default 6, ~118 MB\n"
                  "                       of RAM each; 0 = read every prompt from the start)\n"
                  "  --prompt-cache-every N  --serve: also checkpoint every N fresh prompt tokens (default 16384, 0 = off)\n"
                  "  --turn-token ID      --serve: the token that opens a chat turn (default 248045, <|im_start|>)\n"
+                 "  --refill-mode N      --serve: 0 legacy, 1 staged source, 2 staged mapped, 3 staged cached (default 0)\n"
+                 "  --prefill-ring N     streamed prompt device buffers, 16..512 slots (default: automatic)\n"
+                 "  --prefill-ring-large N  optional 16..512 slots for chunks >= 12288 tokens\n"
                  "  --short-read N       --serve: read at most N fresh text tokens through the decode windows instead\n"
                  "                       of the batched prompt path (default 64, 0 = off)\n"
                  "  --suffix-draft N     prompt lookup: draft from an earlier repeat of the last N+ tokens of context\n"
@@ -387,6 +412,13 @@ void usage() {
                  "  --cvec-dir per-layer|single:L  each layer's own direction (default) or layer L's everywhere (project)\n"
                  "  --no-token-graph     A/B: two graphs per layer (the host launches each) instead of one per token\n"
                  "  --no-fused-gr        A/B: the six-kernel hyper-connection read and a separate write (native)\n"
+                 "  --commit-async N     overlap single-GPU commit with MTP, 0/1 (default off)\n"
+                 "  --turing-prompt-attn N  Turing tensor-core prompt attention, 0/1 (default off)\n"
+                 "  --turing-bf16-gemm N    exact-scaled HC projections on Turing, 0/1 (default off)\n"
+                 "  --prefill-topk-wide N   register Top-K through 256K using active size, 0/1 (default off)\n"
+                 "  --prefill-score-tile N  reuse QSA keys across 4/8 queries, 0 disables (default 0)\n"
+                 "  --native-shape N     native row schedule: uniform=0, shrinking=1, gentle shrinking=2 (default 0)\n"
+                 "  --decode-tuning N    GPU decode variants, 0..31 (default 0): HC single=1, tile=2, expert fuse=4, norm=8, IQ3_S columns=16\n"
                  "  --prefill CHUNK      batched prompt processing in chunks of CHUNK tokens (needs --native); auto =\n"
                  "                       the largest chunk up to 8192 whose buffers the expert cache can lend\n"
                  "  --no-pool            skip the CPU expert pool (the GPU-only floor)\n"
@@ -431,6 +463,8 @@ void usage() {
                  "  --pool-workers N     R2.2: CPU expert pool worker count.  Default 0 = every physical core\n"
                  "                       except the one the host loop spins on.  A sweep is how the pool's\n"
                  "                       deviation from `cpu_s2` is attributed.\n"
+                 "  --native-tasks N     Native expert row tasks per participating thread (1..16, default 3).\n"
+                 "  --skip-empty-pcie    Omit empty PCIe graph work when the PCIe expert share is zero.\n"
                  "  --mmap-experts       R2.1: opt OUT of the resident expert arena, back to MapViewOfFile.\n"
                  "                       The A/B arm: the mmap's rate depends on the OS page cache holding\n"
                  "                       34 GB, and measured 71.97 vs 34.78 ms/token cold vs warm.\n");
@@ -904,6 +938,17 @@ int main(int argc, char** argv) {
             if (i + 1 >= argc) { std::fprintf(stderr, "%s needs a value\n", what); std::exit(2); }
             return argv[++i];
         };
+        if (a == "--cache-disk-dir") { o.cache_disk_dir = next(a.c_str()); continue; }
+        if (a == "--cache-idle-seconds" || a == "--cache-expire-seconds") {
+            const char* value = next(a.c_str()); char* end = nullptr;
+            const long seconds = std::strtol(value, &end, 10);
+            if (end == value || *end || seconds < 0 || seconds > 604800) {
+                std::fprintf(stderr, "%s needs an integer in 0..604800\n", a.c_str()); return 2;
+            }
+            if (a == "--cache-idle-seconds") o.cache_idle_seconds = (int) seconds;
+            else o.cache_expire_seconds = (int) seconds;
+            continue;
+        }
         if (a == "--help" || a == "-h") { usage(); return 0; }
         else if (a == "--pack") o.pack = next("--pack");
         else if (a == "--tokens") {
@@ -979,6 +1024,65 @@ int main(int argc, char** argv) {
         else if (a == "--graph-only") o.graph_only = true;
         else if (a == "--gpu-only-full") o.gpu_only_full = true;
         else if (a == "--pool-workers") o.pool_workers = std::atoi(next("--pool-workers"));
+        else if (a == "--native-tasks") {
+            const char* value = next("--native-tasks");
+            char* tail = nullptr;
+            const long tasks = std::strtol(value, &tail, 10);
+            if (tail == value || *tail != '\0' || tasks < 1 || tasks > 16) {
+                std::fprintf(stderr, "--native-tasks requires an integer from 1 to 16\n"); return 2;
+            }
+            o.native_tasks = (int) tasks;
+        }
+        else if (a == "--commit-async" || a == "--turing-prompt-attn" || a == "--turing-bf16-gemm" ||
+                 a == "--prefill-topk-wide" || a == "--prefill-score-tile") {
+            const char* value = next(a.c_str());
+            char* tail = nullptr;
+            const long mode = std::strtol(value, &tail, 10);
+            const bool score_flag = a == "--prefill-score-tile";
+            if (tail == value || *tail != '\0' || (score_flag ? (mode != 0 && mode != 4 && mode != 8) : (mode < 0 || mode > 1))) {
+                std::fprintf(stderr, "%s requires %s\n", a.c_str(), score_flag ? "0, 4 or 8" : "0 or 1"); return 2;
+            }
+            if (a == "--commit-async") o.commit_async = (int) mode;
+            else if (a == "--turing-prompt-attn") o.turing_prompt_attn = (int) mode;
+            else if (a == "--turing-bf16-gemm") o.turing_bf16_gemm = (int) mode;
+            else if (a == "--prefill-topk-wide") o.prefill_topk_wide = (int) mode;
+            else o.prefill_score_tile = (int) mode;
+        }
+        else if (a == "--tiered-direct-load") {
+            const std::string value = next("--tiered-direct-load");
+            if (value != "0" && value != "1") {
+                std::fprintf(stderr, "--tiered-direct-load requires 0 or 1\n"); return 2;
+            }
+            o.tiered_direct_load = value == "1" ? 1 : 0;
+        }
+        else if (a == "--prefill-io-tuning" || a == "--refill-mode") {
+            const char* value = next(a.c_str());
+            char* tail = nullptr;
+            const long mask = std::strtol(value, &tail, 10);
+            const int limit = 3;
+            if (tail == value || *tail != '\0' || mask < 0 || mask > limit) {
+                std::fprintf(stderr, "%s requires an integer from 0 to %d\n", a.c_str(), limit); return 2;
+            }
+            if (a == "--refill-mode") o.refill_mode = (int) mask;
+            else o.prefill_io_tuning = (int) mask;
+        }
+        else if (a == "--decode-tuning") {
+            const char* value = next("--decode-tuning");
+            char* tail = nullptr;
+            const long tuning = std::strtol(value, &tail, 10);
+            if (tail == value || *tail != '\0' || tuning < 0 || tuning > 31) {
+                std::fprintf(stderr, "--decode-tuning requires an integer from 0 to 31\n"); return 2;
+            }
+            o.decode_tuning = (int) tuning;
+        }
+        else if (a == "--native-shape") {
+            const char* value = next("--native-shape"); char* tail = nullptr;
+            const long shape = std::strtol(value, &tail, 10);
+            if (tail == value || *tail != '\0' || shape < 0 || shape > 2) {
+                std::fprintf(stderr, "--native-shape requires an integer from 0 to 2\n"); return 2;
+            }
+            o.native_shape = (int) shape;
+        }
         else if (a == "--no-host-worker") o.no_host_worker = true;
         else if (a == "--no-ple-prefetch") o.no_ple_prefetch = true;
         else if (a == "--expert-cache") {
@@ -991,8 +1095,19 @@ int main(int argc, char** argv) {
         else if (a == "--expert-cache-remote-placement")
             o.expert_cache_remote_placement = next("--expert-cache-remote-placement");
         else if (a == "--vram-reserve-mib") o.vram_reserve_mib = std::atoi(next("--vram-reserve-mib"));
-        else if (a == "--prefill") {
-            const std::string v = next("--prefill");
+        else if (a == "--prefill" || a == "--prefill-ring" || a == "--prefill-ring-large") {
+            const std::string v = next(a.c_str());
+            if (a != "--prefill") {
+                char* end = nullptr;
+                const long slots = std::strtol(v.c_str(), &end, 10);
+                if (end == v.c_str() || *end != '\0' || slots < 16 || slots > 512) {
+                    std::fprintf(stderr, "strata generate: %s needs an integer from 16 to 512\n", a.c_str());
+                    return 2;
+                }
+                if (a == "--prefill-ring") o.prefill_ring = (int) slots;
+                else o.prefill_ring_large = (int) slots;
+                continue;
+            }
             o.prefill_auto = v == "auto";
             o.prefill_chunk = o.prefill_auto ? 8192 : std::atoll(v.c_str());
         }
@@ -1006,6 +1121,7 @@ int main(int argc, char** argv) {
         else if (a == "--mtp") o.mtp = next("--mtp");
         else if (a == "--mtp-window") o.mtp_window = std::atoll(next("--mtp-window"));
         else if (a == "--pcie-frac") o.pcie_frac = std::atof(next("--pcie-frac"));
+        else if (a == "--skip-empty-pcie") o.skip_empty_pcie = true;
         else if (a == "--adapt-every") o.adapt_every = std::atoi(next("--adapt-every"));
         else if (a == "--spec-min-p") o.spec_min_p = std::atof(next("--spec-min-p"));
         else if (a == "--stop-eos") o.stop_eos = true;
@@ -1141,6 +1257,29 @@ int main(int argc, char** argv) {
         }
     }
     const bool multi_gpu = !split_devs.empty() && !split_same;
+    const auto trial_default = [](int flag, const char* key) {
+        const char* value = std::getenv(key);
+        return flag >= 0 ? flag != 0 : value && std::atoi(value) != 0;
+    };
+    const bool commit_async_default = trial_default(o.commit_async, "STRATA_COMMUNITY_COMMIT_ASYNC");
+    const bool turing_prompt_default = trial_default(o.turing_prompt_attn, "STRATA_TURING_PROMPT_ATTN");
+    const bool turing_bf16_default = trial_default(o.turing_bf16_gemm, "STRATA_TURING_BF16_GEMM");
+    const bool topk_wide_default = trial_default(o.prefill_topk_wide, "STRATA_TOPK_WIDE");
+    strata::prefill::Gemm::set_turing_bf16(turing_bf16_default);
+    strata::kernels::qsa_set_topk_wide(topk_wide_default);
+    const char* score_env = std::getenv("STRATA_QSA_SCORE_TILE");
+    const int score_arg = o.prefill_score_tile >= 0 ? o.prefill_score_tile : score_env ? std::atoi(score_env) : 0;
+    const int score_tile_default = score_arg == 4 || score_arg == 8 ? score_arg : 0;
+    strata::kernels::qsa_set_score_tile(score_tile_default);
+    std::fprintf(stderr, "strata generate: Turing HC BF16 %s; wide prefill Top-K %s; QSA score tile %d\n",
+                 turing_bf16_default ? "on" : "off", topk_wide_default ? "on" : "off", score_tile_default);
+    strata::core::Verifier::set_commit_async(!multi_gpu && commit_async_default);
+    strata::kernels::set_turing_prompt_attn(turing_prompt_default);
+    strata::prefill::set_io_tuning(o.prefill_io_tuning);
+    std::fprintf(stderr, "strata generate: prefill I/O tuning %d\n", o.prefill_io_tuning);
+    std::fprintf(stderr, "strata generate: async commit %s; Turing prompt attention %s\n",
+                 !multi_gpu && commit_async_default && std::getenv("STRATA_COMMIT_SYNC") == nullptr ? "on" : "off",
+                 turing_prompt_default ? "on" : "off");
     // the helper-GPU expert caches (--expert-cache-remote, docs/SECOND_GPU.md): CUDA1..3 on one GPU; with a layer
     // split, the visible GPUs no stage runs on, in order
     int remote_dev[3] = {1, 2, 3};
@@ -1187,6 +1326,20 @@ int main(int argc, char** argv) {
         return 2;
     }
 
+    const bool idle_cache_enabled = o.cache_idle_seconds > 0;
+    if (idle_cache_enabled && (!o.serve || o.cache_disk_dir.empty() || o.cache_expire_seconds <= o.cache_idle_seconds ||
+        o.kv_resident != 0 || !o.layer_split.empty() || o.expert_cache_remote[0] > 0 ||
+        o.expert_cache_remote[1] > 0 || o.expert_cache_remote[2] > 0)) {
+        std::fprintf(stderr, "idle cache requires --serve, --cache-disk-dir, expire > idle, one GPU and no --kv-resident\n");
+        return 2;
+    }
+    strata::core::IdleSnapshot idle_snapshot;
+    if (idle_cache_enabled) {
+        std::string why;
+        if (!idle_snapshot.init(o.cache_disk_dir, o.cache_expire_seconds, why)) {
+            std::fprintf(stderr, "strata cache: %s\n", why.c_str()); return 2;
+        }
+    }
     if ((o.ple_io != "direct" && o.ple_io != "mmap") || o.ple_row_cache < 0 || o.ple_inflight < 1 ||
         o.ple_inflight > 1024 || !(o.ple_delay_us >= 0)) {
         std::fprintf(stderr, "strata generate: invalid --ple-io/--ple-row-cache/--ple-inflight/--ple-delay-us\n");
@@ -1503,11 +1656,12 @@ int main(int argc, char** argv) {
         return 2;
     }
 
-    void* sbuf = nullptr;
-    if (cudaMalloc(&sbuf, strata::core::session_bytes(g, o.max_context, K)) != cudaSuccess) {
-        std::fprintf(stderr, "strata generate: session state allocation failed\n");
+    strata::core::IdleDeviceArena session_memory;
+    if (!session_memory.allocate(strata::core::session_bytes(g, o.max_context, K), idle_cache_enabled, err)) {
+        std::fprintf(stderr, "strata generate: session state allocation failed: %s\n", err.c_str());
         return 1;
     }
+    void* sbuf = session_memory.data();
     strata::core::SessionState ss;
     // **THE ENGINE RAN ON THE LEGACY DEFAULT STREAM, WHICH ON WDDM IS THE SLOW PATH.**  All four session
     // calls - `session_capture`, `session_replay`, `session_token` and `session_loop` - were handed `nullptr`,
@@ -1736,7 +1890,21 @@ int main(int argc, char** argv) {
         static const strata::core::ModelGeometry draft_geometry{};
         // with a layer split across GPUs the drafter reads the last stage's residual: it lives on that device
         const strata::core::OnDevice on_mtp(last_st ? last_st->dev : -1);
+        mtp.set_idle_cache(idle_cache_enabled);
         if (!o.mtp.empty() && !mtp.load(o.mtp, draft_geometry, last_st ? last_st->ss : ss, o.spec, err, o.mtp_window)) { std::fprintf(stderr, "strata generate: %s\n", err.c_str()); return 1; }
+    }
+    if (idle_cache_enabled) {
+        bool ok = true;
+        for (int64_t i = 0; i < g.n_qsa_layers(); ++i) {
+            const auto& q = ss.qsa_states[i];
+            ok = ok && session_memory.remember_constant(q.page_table, (size_t) q.n_pages * sizeof(int32_t), err);
+        }
+        if (g.n_qsa_layers() > 0) {
+            const size_t rope_bytes = (size_t) o.max_context * (size_t) (strata::kernels::qsa_real_shapes().n_rot / 2) * sizeof(float);
+            ok = ok && session_memory.remember_constant(ss.qsa_states[0].cos_tab, rope_bytes, err) &&
+                 session_memory.remember_constant(ss.qsa_states[0].sin_tab, rope_bytes, err);
+        }
+        if (!ok) { std::fprintf(stderr, "strata cache: %s\n", err.c_str()); return 1; }
     }
     // Create the additional contexts after MTP has secured CUDA0 memory, but
     // before the host arena maps its expert pages into their address spaces.
@@ -1776,6 +1944,7 @@ int main(int argc, char** argv) {
     strata::core::ExpertSource* srcp = nullptr;
     if (o.tiered_experts) {
         tiered_src.set_gguf(o.native_preset);
+        if (o.tiered_direct_load >= 0) tiered_src.set_direct_load(o.tiered_direct_load != 0);
         if (!tiered_src.open(o.pack, g.n_layers, g.n_expert, err)) {
             std::fprintf(stderr, "strata generate: %s\n", err.c_str());
             return 1;
@@ -1828,6 +1997,7 @@ int main(int argc, char** argv) {
         srcp = &arena_src;
     }
     strata::kernels::cpu::ExpertPool pool(o.pool_workers, /*pin=*/true, /*host_works=*/!o.no_host_worker);
+    pool.set_native_tuning(o.native_tasks, 0, 0, o.native_shape);
     if (o.no_ple_prefetch) strata::kernels::ple_prefetch_enable(false);
     // ---- R4's slot storage.  Allocated AFTER the weights and the session, so `cudaMemGetInfo` inside `open`
     // sees the memory this process actually has left rather than the card's idle figure - and refuses with both
@@ -2169,10 +2339,18 @@ int main(int argc, char** argv) {
     int64_t prefilled = 0;
     if (!profile.empty() && srcp != nullptr) {
         const int64_t want = std::min<int64_t>((int64_t) profile.size(), xcache.slots());
+        const bool direct_load = o.tiered_experts && tiered_src.direct_load();
+        std::vector<uint8_t> direct_blob;
+        if (direct_load) direct_blob.resize((size_t) strata::kernels::cpu::expert_layout().max_blob);
+        const auto profile_start = std::chrono::steady_clock::now();
         for (int64_t i = 0; i < want; ++i) {
             const int32_t slot = xcache.admit(profile[(size_t) i].first, profile[(size_t) i].second);
             if (slot == strata::core::kNotResident) break;
             const uint8_t* b = srcp->blob(profile[(size_t) i].first, profile[(size_t) i].second);
+            if (b != nullptr && direct_load) {
+                srcp->read_into(b, direct_blob.data(), (size_t) strata::kernels::cpu::expert_layout().blob_bytes(profile[(size_t) i].first));
+                b = direct_blob.data();
+            }
             if (b == nullptr || !xcache.fill_slot_blocking(slot, b, err,
                     (int64_t) strata::kernels::cpu::expert_layout().blob_bytes(profile[(size_t) i].first))) {
                 std::fprintf(stderr, "strata generate: the profile fill failed at pair %lld: %s\n",
@@ -2190,6 +2368,8 @@ int main(int argc, char** argv) {
             std::fprintf(stderr, "strata generate: %s\n", err.c_str());
             return 1;
         }
+        std::fprintf(stderr, "strata generate: profile load mode %s in %.3f s\n", direct_load ? "direct" : "mapped",
+                     std::chrono::duration<double>(std::chrono::steady_clock::now() - profile_start).count());
         mem_mark("the profile fill");
         std::fprintf(stderr, "strata generate: pre-filled %lld of %lld slots from the profile; slot 0 verified\n",
                      (long long) prefilled, (long long) want);
@@ -2996,6 +3176,11 @@ int main(int argc, char** argv) {
     // The expert-cache slots (from the end of the cache) that hold the prompt path's buffers for a chunk, and the
     // bytes from the first of them to the end.
     // the share of expert bytes the arena could pin (sizes the prompt path's streamed ring and its lend cap)
+    strata::prefill::Prefill::set_ring_slots(o.prefill_ring, o.prefill_ring_large);
+    if (o.prefill_ring > 0)
+        std::fprintf(stderr, "strata generate: prefill stream ring override %d slots\n", o.prefill_ring);
+    if (o.prefill_ring_large > 0)
+        std::fprintf(stderr, "strata generate: prefill ring for chunks >= 12288: %d slots\n", o.prefill_ring_large);
     if (srcp != nullptr && o.prefill_chunk > 0) {
         uint64_t pinned = 0, total = 0;
         const auto& lay = strata::kernels::cpu::expert_layout();
@@ -3213,6 +3398,7 @@ int main(int argc, char** argv) {
         void* const win_pool_user = n_stages > 1 ? (void*) &split_drive : (void*) &drive;
         mem_mark("the verifier and the drafter's binding");
         ver.set_split(o.spec_split);
+        ver.set_decode_tuning(o.decode_tuning);
         // auto: the copy kernel for every pack.  DMA (the native packs' default until 0.1.13) has the host call
         // cudaMemcpyAsync + cudaLaunchHostFunc inside a verify window while the GPU spins on the flag they raise;
         // issue #31's thread dumps show the host stuck in that cudaMemcpyAsync on a driver lock for good.  The copy
@@ -3248,7 +3434,10 @@ int main(int argc, char** argv) {
         std::vector<int64_t> part_next(stages.size() + 1, INT64_MAX);
         // a checkpoint of the state after `cur[0, L)`; false only when the copy itself failed.  `parts`: the stages'
         // states saved at L (a split's mid-prompt checkpoint); without, they are read now (everything is at L)
+        const bool prefill_timing = std::getenv("STRATA_PREFILL_TIMING") != nullptr;
         auto checkpoint_at = [&](int64_t L, std::vector<ConvCheckpoint>* parts = nullptr) -> bool {
+            const auto checkpoint_t0 = Clock::now();
+            if (!ver.wait_commit(err)) return false;
             if (o.prompt_cache <= 0 || L < 1) return true;
             for (ConvCheckpoint& c : checks)
                 if ((int64_t) c.ids.size() == L) { c.used = ++check_clock; return true; }
@@ -3280,6 +3469,8 @@ int main(int argc, char** argv) {
                                                                                    o.prompt_cache);
                 checks.erase(checks.begin() + (std::ptrdiff_t) victim);
             }
+            if (prefill_timing) std::fprintf(stderr, "strata prefill outer: checkpoint %lld %.1f ms\n",
+                (long long) L, std::chrono::duration<double, std::milli>(Clock::now() - checkpoint_t0).count());
             return true;
         };
         sp.on_chunk = [&](const float* R_rows, int64_t T, int64_t p0, std::string& e) -> bool {
@@ -3477,13 +3668,125 @@ int main(int argc, char** argv) {
             in_eof = true;
             in_cv.notify_one();
         }).detach();
-        auto next_line = [&](std::string& out) -> bool {
-            std::unique_lock<std::mutex> lk(in_mu);
-            in_cv.wait(lk, [&] { return !in_lines.empty() || in_eof; });
-            if (in_lines.empty()) return false;
-            out = std::move(in_lines.front());
-            in_lines.pop_front();
+        std::vector<strata::core::IdleDeviceArena*> idle_arenas{&session_memory};
+        if (mtp.idle_arena().data()) idle_arenas.push_back(&mtp.idle_arena());
+        Clock::time_point idle_since = Clock::now(), idle_retry = Clock::now();
+        bool idle_seen_request = false, idle_on_disk = false, idle_expired = false;
+        uint64_t idle_host_released = 0;
+        auto idle_hosts = [&]() {
+            std::vector<std::vector<uint8_t>*> hosts;
+            for (auto& c : checks) { hosts.push_back(&c.gdn); hosts.push_back(&c.ple); hosts.push_back(&c.tails); }
+            return hosts;
+        };
+        auto idle_clear = [&]() {
+            live_ok = false;
+            std::vector<int32_t>().swap(live);
+            std::vector<ImgKey>().swap(live_imgs);
+            std::vector<ConvCheckpoint>().swap(checks);
+        };
+        auto idle_report = [&](const char* state, double ms = 0.0) {
+            if (!idle_cache_enabled) return;
+            uint64_t freed = 0;
+            for (auto* a : idle_arenas) if (!a->resident()) freed += a->physical_bytes();
+            std::printf("CACHE state=%s idle_seconds=%d expire_seconds=%d disk_bytes=%llu "
+                        "released_vram_bytes=%llu released_host_bytes=%llu tokens=%zu operation_ms=%.1f\n",
+                        state, o.cache_idle_seconds, o.cache_expire_seconds,
+                        (unsigned long long) idle_snapshot.disk_bytes(), (unsigned long long) freed,
+                        (unsigned long long) idle_host_released, live.size(), ms);
+            std::fflush(stdout);
+        };
+        // Runs only on the engine thread, between requests, after the last async commit.
+        auto idle_tick = [&](bool allow_save) -> bool {
+            if (!idle_cache_enabled || !idle_seen_request) return true;
+            const auto now = Clock::now();
+            const auto age = std::chrono::duration_cast<std::chrono::seconds>(now - idle_since).count();
+            if (age < o.cache_idle_seconds || now < idle_retry) return true;
+            std::string why;
+            if (age >= o.cache_expire_seconds) {
+                if (!idle_expired) {
+                    if (!ver.wait_commit(why) || cudaDeviceSynchronize() != cudaSuccess) return false;
+                    idle_clear();
+                    for (auto* a : idle_arenas) if (!a->unmap(why)) {
+                        std::fprintf(stderr, "strata cache: %s\n", why.c_str()); return false;
+                    }
+                    idle_on_disk = false;
+                    idle_expired = true;
+                }
+                if (!idle_snapshot.erase(why)) {
+                    std::fprintf(stderr, "strata cache: %s; retrying deletion\n", why.c_str());
+                    idle_retry = now + std::chrono::seconds(30);
+                }
+                idle_report("expired");
+                // No periodic traffic once deletion is complete; a new request resets this.
+                if (idle_snapshot.disk_bytes() == 0) idle_seen_request = false;
+                return true;
+            }
+            if (!allow_save || idle_on_disk || idle_expired || (!live_ok && checks.empty())) return true;
+            if (!ver.wait_commit(why) || cudaDeviceSynchronize() != cudaSuccess) return false;
+            auto hosts = idle_hosts();
+            const auto t0 = Clock::now();
+            idle_report("saving");
+            bool saved = false;
+            try { saved = idle_snapshot.save(idle_arenas, hosts, why, o.cache_expire_seconds - (int) age); }
+            catch (const std::exception& e) { why = e.what(); }
+            if (!saved) {
+                // Keep every in-memory byte on write failure; don't retry on every timer tick.
+                std::fprintf(stderr, "strata cache: save failed (%s); memory cache retained\n", why.c_str());
+                idle_retry = now + std::chrono::seconds(30);
+                idle_report("resident");
+                return true;
+            }
+            idle_host_released = idle_snapshot.host_bytes();
+            for (auto* a : idle_arenas) if (!a->unmap(why)) {
+                std::fprintf(stderr, "strata cache: %s\n", why.c_str()); return false;
+            }
+            for (auto* h : hosts) std::vector<uint8_t>().swap(*h);
+            idle_on_disk = true;
+            const double ms = std::chrono::duration<double, std::milli>(Clock::now() - t0).count();
+            std::fprintf(stderr, "strata cache: saved %llu bytes to %s in %.1f ms; model remains resident\n",
+                         (unsigned long long) idle_snapshot.disk_bytes(), idle_snapshot.path().string().c_str(), ms);
+            idle_report("disk", ms);
             return true;
+        };
+        auto idle_wake = [&]() -> bool {
+            if (!idle_cache_enabled || (!idle_on_disk && !idle_expired)) return true;
+            const auto t0 = Clock::now();
+            idle_report("restoring");
+            for (auto* a : idle_arenas) if (!a->map(err)) return false;
+            bool restored = false;
+            if (idle_on_disk) {
+                try { restored = idle_snapshot.restore(idle_arenas, idle_hosts(), err); }
+                catch (const std::exception& e) { err = e.what(); }
+                if (!restored) std::fprintf(stderr, "strata cache: %s; discarding cache and reading prompt again\n", err.c_str());
+            }
+            if (!restored) {
+                idle_clear();
+                for (auto* a : idle_arenas) if (!a->fresh(err)) return false;
+            }
+            std::string why;
+            if (!idle_snapshot.erase(why)) std::fprintf(stderr, "strata cache: %s\n", why.c_str());
+            idle_on_disk = idle_expired = false;
+            idle_host_released = 0;
+            const double ms = std::chrono::duration<double, std::milli>(Clock::now() - t0).count();
+            std::fprintf(stderr, "strata cache: %s in %.1f ms\n", restored ? "restored exactly" : "fresh session", ms);
+            idle_report("resident", ms);
+            return true;
+        };
+        auto next_line = [&](std::string& out) -> bool {
+            for (;;) {
+                std::unique_lock<std::mutex> lk(in_mu);
+                if (!idle_cache_enabled) in_cv.wait(lk, [&] { return !in_lines.empty() || in_eof; });
+                else in_cv.wait_for(lk, std::chrono::seconds(1), [&] { return !in_lines.empty() || in_eof; });
+                if (in_eof && in_lines.empty()) return false;
+                // Expiration also runs when a request arrives after a suspended PC resumes.
+                const bool have_input = !in_lines.empty();
+                lk.unlock();
+                if (!idle_tick(!have_input)) return false;
+                lk.lock();
+                if (!in_lines.empty()) {
+                    out = std::move(in_lines.front()); in_lines.pop_front(); return true;
+                }
+            }
         };
         sp.should_stop = [&] { return stop_req.load(); };
         // STRATA_TRACE=1: one stderr line per step of a request (the log shows where a request stops)
@@ -3556,8 +3859,7 @@ int main(int argc, char** argv) {
         std::string line;
         int64_t rounds = 0;
         const int S = o.spec;
-        const int S_mtp = o.mtp_max_t > 0 ? std::min(o.mtp_max_t, S) : S;   // the MTP's windows; suffixes go up to S
-        if (S_mtp < S) mtp.set_max_drafts(S_mtp - 1);
+        const int default_mtp_t = o.mtp_max_t > 0 ? std::min(o.mtp_max_t, S) : S;
         strata::spec::SuffixDrafter sfx(std::max(1, o.suffix_draft), 64, (size_t) o.max_context + 4096);
         strata::spec::DraftPolicy policy(S);   // MTP or lookup window, learned over the whole process
         // The vision path (--vision): GENI <max_new> <embeddings file> <id,id,...> carries images.  The file is one
@@ -3568,13 +3870,25 @@ int main(int argc, char** argv) {
         bool mrope_identity = true;
         std::vector<float> img_rows;
         std::vector<const float*> row_ptr;
+        idle_report("resident");
         while (next_line(line)) {
             if (line == "QUIT") break;
+            if (!idle_wake()) {
+                std::printf("ERR cannot restore cache: %s\n", err.c_str()); std::fflush(stdout); continue;
+            }
             // the watchdog watches a request from here until this iteration ends, whichever way it ends
             struct BusyScope {
-                BusyScope() { strata::core::progress().busy.store(true); strata::core::progress_at("request"); }
-                ~BusyScope() { strata::core::progress().busy.store(false); strata::core::progress_at("idle"); }
-            } busy_scope;
+                Clock::time_point& since;
+                Clock::time_point& retry;
+                bool& seen;
+                BusyScope(Clock::time_point& s, Clock::time_point& r, bool& b) : since(s), retry(r), seen(b) {
+                    strata::core::progress().busy.store(true); strata::core::progress_at("request");
+                }
+                ~BusyScope() {
+                    since = retry = Clock::now(); seen = true;
+                    strata::core::progress().busy.store(false); strata::core::progress_at("idle");
+                }
+            } busy_scope{idle_since, idle_retry, idle_seen_request};
             stop_req.store(false);   // a STOP that arrived between requests is stale
             const bool geni = line.rfind("GENI ", 0) == 0;
             if (!geni && line.rfind("GEN ", 0) != 0) {
@@ -3595,6 +3909,15 @@ int main(int argc, char** argv) {
             // tuning keys (setup's calibration measures settings without restarting the engine): the PCIe share of
             // the missed experts and the draft-probability floor, for this request only
             double req_pcie_frac = o.pcie_frac, req_spec_min_p = o.spec_min_p;
+            int req_native_tasks = o.native_tasks, req_native_order = 0, req_native_nt1 = 0;
+            int req_mtp_t = default_mtp_t;
+            int req_prefill_io_tuning = o.prefill_io_tuning;
+            int req_refill_mode = o.refill_mode;
+            int64_t req_short_read = o.short_read;
+            int req_decode_tuning = o.decode_tuning;
+            int req_native_shape = o.native_shape;
+            int req_commit_async = commit_async_default ? 1 : 0;
+            int req_turing_prompt_attn = turing_prompt_default ? 1 : 0;
             if (endp != nullptr) {   // GENI takes the same keys (#75: image requests were always greedy); its
                                      // embedding file path is the first token without an =
                 for (;;) {
@@ -3619,6 +3942,24 @@ int main(int argc, char** argv) {
                     else if (key == "seed") req_seed = std::strtoull(tok.c_str() + eq + 1, nullptr, 10);
                     else if (key == "pcie_frac") req_pcie_frac = std::clamp((double) fv, 0.0, 1.0);
                     else if (key == "spec_min_p") req_spec_min_p = std::clamp((double) fv, 0.0, 1.0);
+                    else if (key == "native_tasks" || key == "native_order" || key == "native_nt1" || key == "mtp_t" || key == "decode_tuning" || key == "native_shape" || key == "commit_async" || key == "turing_prompt_attn" || key == "prefill_io_tuning" || key == "short_read" || key == "refill_mode") {
+                        const char* value = tok.c_str() + eq + 1;
+                        char* tail = nullptr;
+                        const long iv = std::strtol(value, &tail, 10);
+                        if (tail != value && *tail == '\0') {
+                            if (key == "native_tasks" && iv >= 1 && iv <= 16) req_native_tasks = (int) iv;
+                            if (key == "native_order" && iv >= 0 && iv <= 3) req_native_order = (int) iv;
+                            if (key == "native_nt1" && iv >= 0 && iv <= 7) req_native_nt1 = (int) iv;
+                            if (key == "mtp_t" && iv >= 2 && iv <= S) req_mtp_t = (int) iv;
+                            if (key == "native_shape" && iv >= 0 && iv <= 2) req_native_shape = (int) iv;
+                            if (key == "commit_async" && iv >= 0 && iv <= 1) req_commit_async = (int) iv;
+                            if (key == "turing_prompt_attn" && iv >= 0 && iv <= 1) req_turing_prompt_attn = (int) iv;
+                            if (key == "prefill_io_tuning" && iv >= 0 && iv <= 3) req_prefill_io_tuning = (int) iv;
+                            if (key == "short_read" && iv >= 0 && iv <= 32768) req_short_read = iv;
+                            if (key == "refill_mode" && iv >= 0 && iv <= 3) req_refill_mode = (int) iv;
+                            if (key == "decode_tuning" && iv >= 0 && iv <= 31) req_decode_tuning = (int) iv;
+                        }
+                    }
                     // unknown keys are skipped: the ids start at the first token without '='
                 }
             }
@@ -3767,6 +4108,7 @@ int main(int argc, char** argv) {
                 }
                 strata::kernels::cvec_set_enabled(want);
             }
+            if (!ver.wait_commit(err)) { std::printf("ERR %s\n", err.c_str()); return 1; }
             int64_t resume = 0;
             bool from_live = false;
             if (o.prompt_cache > 0) {
@@ -3853,7 +4195,7 @@ int main(int argc, char** argv) {
             // STRATA_CKPT_REREAD compares a restored checkpoint with a batched re-read, so it keeps every read batched.
             static const bool no_short = std::getenv("STRATA_CKPT_REREAD") != nullptr;
             auto windows_ok = [&](int64_t a, int64_t b) -> bool {
-                if (no_short || b - a > o.short_read) return false;
+                if (no_short || b - a > req_short_read) return false;
                 if (sp.embd_rows != nullptr)
                     for (int64_t i = a; i < b; ++i)
                         if (sp.embd_rows[i] != nullptr) return false;
@@ -3885,6 +4227,7 @@ int main(int argc, char** argv) {
                     if (!ver.commit(T, e) || !mtp.prefill(ver.final_R_all(), nxt.data(), T, q, e)) return false;
                     q += T;
                 }
+                if (!ver.wait_commit(e)) return false;
                 const double ms = std::chrono::duration<double, std::milli>(Clock::now() - pp_t0).count();
                 std::printf("PP %lld %lld %.0f %.1f\n", (long long) b, (long long) pp_total, ms,
                             ms > 0.0 ? 1000.0 * (double) (b - pp_from) / ms : 0.0);
@@ -3899,18 +4242,43 @@ int main(int argc, char** argv) {
             auto refill = [&](std::string& e) -> bool {
                 if (lent_now.empty()) return true;
                 tr("refill start", (long long) lent_now.size());
+                const auto refill_t0 = Clock::now();
+                int64_t refill_bytes = 0, refill_pinned = 0;
+                std::vector<strata::core::ExpertCache::SlotFill> refill_jobs;
                 for (const auto& [i, slot] : lent_now) {   // D-4: queued, one wait (STRATA_REFILL_BLOCKING=1: each)
                     const uint8_t* b = srcp->blob(i / g.n_expert, i % g.n_expert);
                     const int64_t nb = (int64_t) strata::kernels::cpu::expert_layout().blob_bytes(i / g.n_expert);
-                    if (b == nullptr || !(refill_blocking() ? xcache.fill_slot_blocking(slot, b, e, nb)
-                                                            : xcache.fill_slot_queued(slot, b, e, nb)))
-                        return false;
-                    host_res[(size_t) i] = slot;
+                    refill_bytes += nb;
+                    if (srcp->pinned(i / g.n_expert, i % g.n_expert)) refill_pinned += nb;
+                    if (b == nullptr) { e = "refill: missing source"; return false; }
+                    if (req_refill_mode != 0) refill_jobs.push_back({slot, b, nb});
+                    else if (!(refill_blocking() ? xcache.fill_slot_blocking(slot, b, e, nb)
+                                               : xcache.fill_slot_queued(slot, b, e, nb))) return false;
                 }
+                if (req_refill_mode != 0 &&
+                    !xcache.fill_slots_staged(refill_jobs, *srcp, 4,
+                        req_refill_mode == 2 ? 0 : req_refill_mode == 3 ? 2 : 1, e)) return false;
+                const auto refill_issued = Clock::now();
                 if (!xcache.sync_queued(e)) return false;
+                const auto refill_synced = Clock::now();
+                static const bool verify_refill = std::getenv("STRATA_REFILL_VERIFY") != nullptr;
+                if (verify_refill) {
+                    for (const auto& [i, slot] : lent_now) {
+                        const auto nb = (int64_t) strata::kernels::cpu::expert_layout().blob_bytes(i / g.n_expert);
+                        if (!xcache.verify_slot(slot, srcp->blob(i / g.n_expert, i % g.n_expert), e, nb)) return false;
+                    }
+                    std::fprintf(stderr, "strata refill verify: %zu slots byte-identical\n", lent_now.size());
+                }
+                for (const auto& [i, slot] : lent_now) host_res[(size_t) i] = slot;
                 for (const auto& [i, slot] : lent_now)
                     srcp->release_host_copy(i / g.n_expert, i % g.n_expert);
                 cudaMemcpy(d_res, host_res.data(), host_res.size() * sizeof(int32_t), cudaMemcpyHostToDevice);
+                if (prefill_timing) std::fprintf(stderr,
+                    "strata prefill outer: refill mode %d, %zu slots %.1f MiB (pinned %.1f), issue %.1f ms, sync %.1f ms, release %.1f ms\n",
+                    req_refill_mode, lent_now.size(), refill_bytes / 1048576.0, refill_pinned / 1048576.0,
+                    std::chrono::duration<double, std::milli>(refill_issued - refill_t0).count(),
+                    std::chrono::duration<double, std::milli>(refill_synced - refill_issued).count(),
+                    std::chrono::duration<double, std::milli>(Clock::now() - refill_synced).count());
                 lent_now.clear();
                 lent_chunk = 0;
                 return true;
@@ -3954,14 +4322,23 @@ int main(int argc, char** argv) {
             req_sp.penalty_present = req_penalty_present;
             req_sp.counter = 0;
             ver.set_sampling(req_sp);
+            pool.set_native_tuning(req_native_tasks, req_native_order, req_native_nt1, req_native_shape);
+            const int S_mtp = req_mtp_t;  // bounded by the verifier/MTP buffers allocated at startup
+            mtp.set_max_drafts(S_mtp - 1);
             drive.d.pcie_num = std::max(0, std::min(256, (int) (req_pcie_frac * 256.0 + 0.5)));
             // a layer split: CUDA0's share as asked; a later GPU keeps its own (its link) unless the request sets one
             for (int st = 0; st < split_drive.n; ++st)
                 split_drive.pcie_num[st] = (st == 0 || split_same || req_pcie_frac != o.pcie_frac)
                                                ? drive.d.pcie_num : pcie_num_of(stages[(size_t) st - 1]->pcie_frac);
-            ver.set_pcie_enabled(drive.d.pcie_num > 0);
-            for (int st = 0; st < split_drive.n; ++st)
-                stage_ver(st).set_pcie_enabled(split_drive.pcie_num[st] > 0);
+            strata::core::Verifier::set_commit_async(!multi_gpu && req_commit_async != 0);
+            strata::kernels::set_turing_prompt_attn(req_turing_prompt_attn != 0);
+            strata::prefill::set_io_tuning(req_prefill_io_tuning);
+            ver.set_decode_tuning(req_decode_tuning);
+            ver.set_pcie_enabled(drive.d.pcie_num > 0, o.skip_empty_pcie);
+            for (int st = 0; st < split_drive.n; ++st) {
+                stage_ver(st).set_decode_tuning(req_decode_tuning);
+                stage_ver(st).set_pcie_enabled(split_drive.pcie_num[st] > 0, o.skip_empty_pcie);
+            }
             const int hist_n = std::min(req_sp.penalty_last_n, kPenaltyWindowCap);
             ver.set_history(hist_n > 0 ? d_hist : nullptr, hist_n);
             bool cancelled = false;
@@ -4171,6 +4548,8 @@ int main(int argc, char** argv) {
                 x = outv[(size_t) a];
                 p += a + 1;
             }
+            // Include the final completion wait in reported decode time.
+            if (!ver.wait_commit(err)) { std::printf("ERR %s\n", err.c_str()); return 1; }
             const double decode_ms = std::chrono::duration<double, std::milli>(Clock::now() - d0).count();
             if (dec_timing && dec_windows > 0) {
                 const DecSnap d1 = dec_snap();
@@ -4701,6 +5080,7 @@ int main(int argc, char** argv) {
         mem_mark("the verifier and the drafter's binding");
         ver.set_sampling(sp);   // the CLI's own sampling (until 0.1.19 this loop was always greedy); no penalties here
         ver.set_split(o.spec_split);
+        ver.set_decode_tuning(o.decode_tuning);
         // auto: the copy kernel for every pack.  DMA (the native packs' default until 0.1.13) has the host call
         // cudaMemcpyAsync + cudaLaunchHostFunc inside a verify window while the GPU spins on the flag they raise;
         // issue #31's thread dumps show the host stuck in that cudaMemcpyAsync on a driver lock for good.  The copy
@@ -4710,7 +5090,7 @@ int main(int argc, char** argv) {
         drive.d.pcie_num = (int) (o.pcie_frac * 256.0 + 0.5);
         if (drive.d.pcie_num < 0) drive.d.pcie_num = 0;
         if (drive.d.pcie_num > 256) drive.d.pcie_num = 256;
-        ver.set_pcie_enabled(drive.d.pcie_num > 0);
+        ver.set_pcie_enabled(drive.d.pcie_num > 0, o.skip_empty_pcie);
         const int64_t pcie0 = drive.d.pcie_experts;
         if (o.adapt_every > 0 && o.adapt_swaps > 0) drive.d.usage.assign((size_t) (g.n_layers * g.n_expert), 0.0f);
         int64_t swaps_total = 0;
@@ -4912,6 +5292,7 @@ int main(int argc, char** argv) {
                 std::fprintf(stderr, "strata generate: position %lld, %lld tokens, %lld rounds\n", (long long) p,
                              (long long) produced.size(), (long long) rounds);
         }
+        if (!ver.wait_commit(err)) { std::fprintf(stderr, "strata generate: %s\n", err.c_str()); return 1; }
         std::printf("%-24s %lld rounds of %d, drafts accepted %lld of %lld (%.3f), %.2f tokens per round\n",
                     "speculation", (long long) rounds, o.spec, (long long) drafts_ok, (long long) drafts_total,
                     drafts_total > 0 ? (double) drafts_ok / (double) drafts_total : 0.0,
@@ -5136,7 +5517,7 @@ int main(int argc, char** argv) {
     cudaFree(d_logits);
     cudaFree(d_emb);
     cudaFree(d_parts);
-    cudaFree(sbuf);
+    session_memory.release();
     cudaFree(arena);
     return 0;
 }

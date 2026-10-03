@@ -17,6 +17,8 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <thread>
+#include <atomic>
 
 using namespace strata::core;
 
@@ -157,6 +159,29 @@ int main() {
         src.read_into(src.blob(3, 6) + 12345, got.data(), 777777);
         failures += !expect(std::memcmp(got.data(), want.data() + 12345, 777777) == 0,
                             "read_into(cold, unaligned middle) bounce path");
+    }
+
+    // Both stream and cached reads: all tiers, unaligned partial ranges, and the end of the file.
+    for (int cached_read = 0; cached_read < 2; ++cached_read) {
+        std::vector<const uint8_t*> ptrs;
+        for (int64_t l = 0; l < L; ++l) for (int64_t e = 0; e < E; ++e) ptrs.push_back(src.blob(l, e));
+        std::atomic<bool> good{true};
+        std::vector<std::thread> readers;
+        for (int t = 0; t < 8; ++t) readers.emplace_back([&, t] {
+            std::vector<uint8_t> expected(BLOB), actual(BLOB);
+            for (int i = 0; i < L * E; ++i) {
+                const int at = (i * 7 + t) % (L * E);
+                make_blob(expected.data(), at / E, at % E);
+                const size_t off = i % 3 == 1 ? 12345 : i % 3 == 2 ? BLOB - 101 : 0;
+                const size_t n = i % 3 == 1 ? 777777 : i % 3 == 2 ? 101 : BLOB;
+                if (cached_read) src.read_into_cached(ptrs[(size_t) at] + off, actual.data(), n);
+                else src.read_into(ptrs[(size_t) at] + off, actual.data(), n);
+                if (std::memcmp(actual.data(), expected.data() + off, n)) good.store(false);
+            }
+        });
+        for (auto& t : readers) t.join();
+        failures += !expect(good.load(), cached_read ? "256 concurrent cached full/partial reads, exact bytes"
+                                                   : "256 concurrent stream full/partial reads, exact bytes");
     }
 
     // ---- 8. begin_layer prefetch of cold experts (just: no crash, counter moves)

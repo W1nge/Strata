@@ -1,0 +1,278 @@
+{
+  "warmup": {
+    "full": {
+      "requests": 12,
+      "tokens": 1241,
+      "decode_ms": 26963.4,
+      "decode_tps": 46.02535288576366
+    },
+    "skip": {
+      "requests": 12,
+      "tokens": 1241,
+      "decode_ms": 25795.0,
+      "decode_tps": 48.110098856367514
+    }
+  },
+  "measured": {
+    "full": {
+      "requests": 24,
+      "tokens": 2482,
+      "decode_ms": 47133.7,
+      "decode_tps": 52.65871340463406
+    },
+    "skip": {
+      "requests": 24,
+      "tokens": 2482,
+      "decode_ms": 47352.1,
+      "decode_tps": 52.415837945941156
+    }
+  },
+  "cycle_results": [
+    {
+      "full": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 23534.2,
+        "decode_tps": 52.7317690849912
+      },
+      "skip": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 23981.6,
+        "decode_tps": 51.74800680521734
+      }
+    },
+    {
+      "full": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 23599.5,
+        "decode_tps": 52.5858598699125
+      },
+      "skip": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 23370.5,
+        "decode_tps": 53.10113176868274
+      }
+    }
+  ],
+  "text_pairs": [
+    {
+      "phase": "warmup",
+      "cycle": 0,
+      "name": "zh_moe",
+      "exact_text": true
+    },
+    {
+      "phase": "warmup",
+      "cycle": 0,
+      "name": "zh_prose",
+      "exact_text": true
+    },
+    {
+      "phase": "warmup",
+      "cycle": 0,
+      "name": "zh_translate",
+      "exact_text": true
+    },
+    {
+      "phase": "warmup",
+      "cycle": 0,
+      "name": "en_network",
+      "exact_text": true
+    },
+    {
+      "phase": "warmup",
+      "cycle": 0,
+      "name": "python",
+      "exact_text": true
+    },
+    {
+      "phase": "warmup",
+      "cycle": 0,
+      "name": "sql",
+      "exact_text": true
+    },
+    {
+      "phase": "warmup",
+      "cycle": 0,
+      "name": "zh_science",
+      "exact_text": true
+    },
+    {
+      "phase": "warmup",
+      "cycle": 0,
+      "name": "zh_history",
+      "exact_text": true
+    },
+    {
+      "phase": "warmup",
+      "cycle": 0,
+      "name": "en_systems",
+      "exact_text": true
+    },
+    {
+      "phase": "warmup",
+      "cycle": 0,
+      "name": "python_new",
+      "exact_text": true
+    },
+    {
+      "phase": "warmup",
+      "cycle": 0,
+      "name": "zh_statistics",
+      "exact_text": true
+    },
+    {
+      "phase": "warmup",
+      "cycle": 0,
+      "name": "en_physics",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 0,
+      "name": "zh_moe",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 0,
+      "name": "zh_prose",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 0,
+      "name": "zh_translate",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 0,
+      "name": "en_network",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 0,
+      "name": "python",
+      "exact_text": false
+    },
+    {
+      "phase": "measured",
+      "cycle": 0,
+      "name": "sql",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 0,
+      "name": "zh_science",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 0,
+      "name": "zh_history",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 0,
+      "name": "en_systems",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 0,
+      "name": "python_new",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 0,
+      "name": "zh_statistics",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 0,
+      "name": "en_physics",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 1,
+      "name": "zh_moe",
+      "exact_text": false
+    },
+    {
+      "phase": "measured",
+      "cycle": 1,
+      "name": "zh_prose",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 1,
+      "name": "zh_translate",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 1,
+      "name": "en_network",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 1,
+      "name": "python",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 1,
+      "name": "sql",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 1,
+      "name": "zh_science",
+      "exact_text": false
+    },
+    {
+      "phase": "measured",
+      "cycle": 1,
+      "name": "zh_history",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 1,
+      "name": "en_systems",
+      "exact_text": false
+    },
+    {
+      "phase": "measured",
+      "cycle": 1,
+      "name": "python_new",
+      "exact_text": false
+    },
+    {
+      "phase": "measured",
+      "cycle": 1,
+      "name": "zh_statistics",
+      "exact_text": true
+    },
+    {
+      "phase": "measured",
+      "cycle": 1,
+      "name": "en_physics",
+      "exact_text": true
+    }
+  ]
+}

@@ -265,6 +265,13 @@ class SamplingKeys(unittest.TestCase):
         self.assertIn("penalty_last_n=4096", self.keys(repetition_penalty=1.1, penalty_last_n=4096))
         self.assertFalse([k for k in self.keys(temperature=0.7) if k.startswith("penalty")])
 
+    def test_native_tuning(self):
+        for key, lo, hi in (("native_tasks", 1, 16), ("native_order", 0, 3), ("native_nt1", 0, 7), ("mtp_t", 2, 8), ("decode_tuning", 0, 31), ("native_shape", 0, 2), ("commit_async", 0, 1), ("turing_prompt_attn", 0, 1), ("prefill_io_tuning", 0, 3), ("short_read", 0, 32768), ("refill_mode", 0, 3)):
+            for value in (lo, hi):
+                self.assertIn(f"{key}={value}", self.keys(strata_tune={key: value}))
+            for value in (lo-1, hi+1, True, 2.5, "3", None, float('nan'), float('inf')):
+                self.assertFalse([k for k in self.keys(strata_tune={key: value}) if k.startswith(key+'=')])
+
 
 class GpuChoice(unittest.TestCase):
     """Issue #51: the config's \"gpu\" reaches the engine as CUDA_VISIBLE_DEVICES, numbered like nvidia-smi."""
@@ -812,6 +819,25 @@ class TimingsDrafts(unittest.TestCase):
         self.assertEqual((t["prompt_n"], t["cache_n"]), (20, 4))
         self.assertNotIn("draft_n", request_timings(24, 20, base))
         self.assertIsNone(request_timings(24, 20, {}))
+
+class IdleCacheProtocol(unittest.TestCase):
+    def test_cache_events_do_not_enter_generation_queue(self):
+        import io
+        import queue
+        from types import SimpleNamespace
+        engine = StrataEngine.__new__(StrataEngine)
+        engine.proc = SimpleNamespace(stdout=io.StringIO(
+            "CACHE state=disk idle_seconds=180 expire_seconds=3600 disk_bytes=123 operation_ms=12.5\n"
+            "T 42\nDONE 1 2 3 4 stop 0 0 0 0 0\n"))
+        engine.lines = queue.Queue()
+        engine._pump()
+        self.assertEqual(engine.cache['state'], 'disk')
+        self.assertEqual(engine.cache['idle_seconds'], 180)
+        self.assertEqual(engine.cache['operation_ms'], 12.5)
+        self.assertEqual(engine.lines.get_nowait(), 'T 42\n')
+        self.assertTrue(engine.lines.get_nowait().startswith('DONE '))
+        self.assertIsNone(engine.lines.get_nowait())
+        self.assertTrue(engine.lines.empty())
 
 if __name__ == "__main__":
     unittest.main()

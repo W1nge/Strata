@@ -1,0 +1,53 @@
+{
+  "warmup": {
+    "production": {
+      "requests": 6,
+      "tokens": 446,
+      "decode_ms": 12206.7,
+      "decode_tps": 36.53731147648423,
+      "wall_s": 16.61698310000793,
+      "min_available_ram_mib": 2544.2734375
+    }
+  },
+  "measured": {
+    "production": {
+      "requests": 12,
+      "tokens": 892,
+      "decode_ms": 13579.7,
+      "decode_tps": 65.686281729346,
+      "wall_s": 17.34839800001646,
+      "min_available_ram_mib": 2488.84765625
+    }
+  },
+  "cycles": [
+    {
+      "production": {
+        "requests": 6,
+        "tokens": 446,
+        "decode_ms": 6838.5,
+        "decode_tps": 65.21898077063683,
+        "wall_s": 8.732240700010152,
+        "min_available_ram_mib": 2488.84765625
+      }
+    },
+    {
+      "production": {
+        "requests": 6,
+        "tokens": 446,
+        "decode_ms": 6741.2,
+        "decode_tps": 66.16032753812378,
+        "wall_s": 8.616157300006307,
+        "min_available_ram_mib": 2505.27734375
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/community/control_a.json",
+    "arms": "work/community/arm.json",
+    "warmups": 1,
+    "repeats": 2,
+    "max_tokens": 256,
+    "prompts": "work/fresh_prompts_x16.json",
+    "limit": 0
+  }
+}

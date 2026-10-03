@@ -1,5 +1,6 @@
 // src/core/expert_cache.cpp - R4's slot storage and residency table.  Read the header first.
 #include "strata/core/expert_cache.hpp"
+#include "strata/core/expert_source.hpp"
 
 #include <cuda_runtime.h>
 
@@ -7,6 +8,10 @@
 #include <utility>
 #include <cstring>
 #include <mutex>
+#include <atomic>
+#include <algorithm>
+#include <thread>
+#include <exception>
 
 namespace strata::core {
 
@@ -326,6 +331,86 @@ bool ExpertCache::sync_queued(std::string& err) {
         err = std::string("ExpertCache::sync_queued: ") + cudaGetErrorString(e);
         return false;
     }
+    return true;
+}
+
+bool ExpertCache::fill_slots_staged(const std::vector<SlotFill>& jobs, const ExpertSource& source,
+                                  int workers, int read_mode, std::string& err) {
+    if (read_mode < 0 || read_mode > 2) { err = "staged refill: invalid read mode"; return false; }
+    if (jobs.empty()) return true;
+    size_t cap = 0;
+    std::vector<bool> seen((size_t) slots_, false);
+    for (const auto& j : jobs) {
+        if (j.slot < 0 || j.slot >= slots_ || j.src == nullptr || j.bytes <= 0 || seen[(size_t) j.slot]) {
+            err = "staged refill: invalid or duplicate slot/source"; return false;
+        }
+        const int64_t room = off_.empty() ? blob_ : (int64_t) (off_[j.slot + 1] - off_[j.slot]);
+        if (j.bytes > room) { err = "staged refill: blob exceeds its slot"; return false; }
+        seen[(size_t) j.slot] = true;
+        cap = std::max(cap, (size_t) j.bytes);
+    }
+    int device = 0;
+    if (cudaGetDevice(&device) != cudaSuccess || cudaDeviceSynchronize() != cudaSuccess) {
+        err = "staged refill: waiting for preceding device work failed"; return false;
+    }
+    std::atomic<size_t> next{0};
+    std::atomic<bool> failed{false};
+    std::mutex error_mu;
+    auto fail = [&](const std::string& why) {
+        std::lock_guard<std::mutex> lock(error_mu);
+        if (!failed.load()) err = "staged refill: " + why;
+        failed.store(true);
+    };
+    auto worker = [&] {
+        struct Buffers {
+            uint8_t* host = nullptr;
+            cudaStream_t stream = nullptr;
+            cudaEvent_t ready[2] = {nullptr, nullptr};
+            bool busy[2] = {false, false};
+            ~Buffers() {
+                if (stream) cudaStreamSynchronize(stream);
+                for (auto e : ready) if (e) cudaEventDestroy(e);
+                if (stream) cudaStreamDestroy(stream);
+                if (host) cudaFreeHost(host);
+            }
+        } b;
+        auto check = [&](cudaError_t code) {
+            if (code == cudaSuccess) return true;
+            fail(cudaGetErrorString(code)); return false;
+        };
+        try {
+            if (!check(cudaSetDevice(device)) ||
+                !check(cudaStreamCreateWithFlags(&b.stream, cudaStreamNonBlocking)) ||
+                !check(cudaHostAlloc((void**) &b.host, 2 * cap, cudaHostAllocDefault))) return;
+            for (auto& e : b.ready) if (!check(cudaEventCreateWithFlags(&e, cudaEventDisableTiming))) return;
+            int buffer = 0;
+            while (!failed.load()) {
+                const size_t i = next.fetch_add(1);
+                if (i >= jobs.size()) break;
+                const auto& j = jobs[i];
+                if (b.busy[buffer] && !check(cudaEventSynchronize(b.ready[buffer]))) return;
+                uint8_t* dst = b.host + buffer * cap;
+                if (read_mode == 1) source.read_into(j.src, dst, (size_t) j.bytes);
+                else if (read_mode == 2) source.read_into_cached(j.src, dst, (size_t) j.bytes);
+                else std::memcpy(dst, j.src, (size_t) j.bytes);
+                if (!check(cudaMemcpyAsync(device_slot(j.slot), dst, (size_t) j.bytes,
+                                           cudaMemcpyHostToDevice, b.stream)) ||
+                    !check(cudaEventRecord(b.ready[buffer], b.stream))) return;
+                b.busy[buffer] = true;
+                buffer ^= 1;
+            }
+            check(cudaStreamSynchronize(b.stream));
+        } catch (const std::exception& ex) { fail(ex.what()); }
+        catch (...) { fail("source read failed"); }
+    };
+    std::vector<std::thread> threads;
+    try {
+        const int count = std::min<int>((int) std::min<size_t>(jobs.size(), 8), std::clamp(workers, 1, 8));
+        for (int i = 0; i < count; ++i) threads.emplace_back(worker);
+    } catch (const std::exception& ex) { fail(ex.what()); }
+    for (auto& t : threads) t.join();
+    if (failed.load()) return false;
+    fills_ += (int64_t) jobs.size();
     return true;
 }
 

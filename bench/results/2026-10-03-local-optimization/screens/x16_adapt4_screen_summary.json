@@ -1,0 +1,63 @@
+{
+  "warmup": {
+    "baseline": {
+      "requests": 12,
+      "tokens": 1241,
+      "decode_ms": 36675.3,
+      "decode_tps": 33.83748735524999,
+      "wall_s": 49.13454890000321,
+      "min_available_ram_mib": 3133.41015625
+    }
+  },
+  "measured": {
+    "baseline": {
+      "requests": 36,
+      "tokens": 3745,
+      "decode_ms": 93036.4,
+      "decode_tps": 40.25306224230516,
+      "wall_s": 124.17243319998852,
+      "min_available_ram_mib": 2355.52734375
+    }
+  },
+  "cycles": [
+    {
+      "baseline": {
+        "requests": 12,
+        "tokens": 1247,
+        "decode_ms": 32042.4,
+        "decode_tps": 38.91718473023244,
+        "wall_s": 42.99002879999534,
+        "min_available_ram_mib": 2355.52734375
+      }
+    },
+    {
+      "baseline": {
+        "requests": 12,
+        "tokens": 1249,
+        "decode_ms": 31444.5,
+        "decode_tps": 39.72077787848431,
+        "wall_s": 41.880571199997576,
+        "min_available_ram_mib": 2369.75390625
+      }
+    },
+    {
+      "baseline": {
+        "requests": 12,
+        "tokens": 1249,
+        "decode_ms": 29549.5,
+        "decode_tps": 42.26805868119596,
+        "wall_s": 39.3018331999956,
+        "min_available_ram_mib": 2661.62109375
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/x16_adapt4_screen.json",
+    "arms": "work/x16_best_single_arm.json",
+    "warmups": 1,
+    "repeats": 3,
+    "max_tokens": 128,
+    "prompts": null,
+    "limit": 0
+  }
+}

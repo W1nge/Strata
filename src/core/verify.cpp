@@ -46,6 +46,8 @@
 #include <cstdlib>
 #include <cstring>
 #include <exception>
+#include <memory>
+#include <thread>
 #include <immintrin.h>
 
 namespace strata::core {
@@ -122,17 +124,37 @@ Verifier::~Verifier() {
     const Verifier* self = this;
     g_diag_verifier.compare_exchange_strong(self, nullptr);
     if (cs_) cudaStreamSynchronize(cs_);
-    for (auto& variant : exec_)
-        for (auto& e : variant)
-            if (e) cudaGraphExecDestroy(e);
+    for (auto& tuning : exec_)
+        for (auto& variant : tuning)
+            for (auto& e : variant)
+                if (e) cudaGraphExecDestroy(e);
     if (commit_exec_) cudaGraphExecDestroy(commit_exec_);
     if (cs_) cudaStreamDestroy(cs_);
     if (copy_) { cudaStreamSynchronize(copy_); cudaStreamDestroy(copy_); }
+    if (commit_done_) cudaEventDestroy(commit_done_);
     if (arena_) cudaFree(arena_);
     void* hosts[] = {h_tok_, h_step_, h_pos_, h_commit_, h_ple_, h_out_, h_x_, h_ids_, h_w_, h_seq_, h_flag_, h_ymiss_,
                      h_flagA_, h_plan_, h_flagB_};
     for (void* h : hosts)
         if (h) cudaFreeHost(h);
+    if (prof_mapped_) cudaFreeHost(prof_mapped_);
+    else if (prof_) cudaFree(prof_);
+}
+
+void Verifier::audit_error(const std::string& error) const {
+    if (!prof_mapped_ || !g_) return;
+    const volatile unsigned long long* p = prof_mapped_;
+    int64_t last = -1;
+    for (int64_t l = lb_; l < le_; ++l)
+        for (int i = 0; i < kProfPer; ++i) if (p[l * kProfPer + i]) last = l;
+    std::fprintf(stderr, "strata GPU audit: T %d position %lld: %s; last stamped layer %lld\n",
+                 last_t_, (long long) last_pos0_, error.c_str(), (long long) last);
+    for (int64_t l = std::max(lb_, last - 1); l <= last; ++l) {
+        std::fprintf(stderr, "strata GPU audit: layer %lld stamps", (long long) l);
+        for (int i = 0; i < kProfPer; ++i) if (p[l * kProfPer + i]) std::fprintf(stderr, " %d", i);
+        std::fprintf(stderr, "\n");
+    }
+    std::fflush(stderr);
 }
 
 bool Verifier::init(const WeightTable& wt, const ModelGeometry& g, SessionState& ss, const VerifyHits& hits,
@@ -271,11 +293,18 @@ bool Verifier::init(const WeightTable& wt, const ModelGeometry& g, SessionState&
         return false;
     }
     cudaMemset(arena_, 0, count.used);
-    prof_on_ = std::getenv("STRATA_VERIFY_PROFILE") != nullptr;
+    const bool audit = std::getenv("STRATA_VERIFY_AUDIT") != nullptr;
+    prof_on_ = audit || std::getenv("STRATA_VERIFY_PROFILE") != nullptr;
     if (prof_on_) {
         const size_t np = (size_t) g.n_layers * kProfPer + 4;
-        if (cudaMalloc((void**) &prof_, np * 8) != cudaSuccess) { prof_on_ = false; prof_ = nullptr; cudaGetLastError(); }
-        else { cudaMemset(prof_, 0, np * 8); prof_h_.assign(np, 0); }
+        const bool allocated = audit ? mapped(np * 8, (void**) &prof_mapped_, (void**) &prof_)
+                                     : cudaMalloc((void**) &prof_, np * 8) == cudaSuccess;
+        if (!allocated) { prof_on_ = false; prof_ = nullptr; cudaGetLastError(); }
+        else {
+            if (audit) std::memset(prof_mapped_, 0, np * 8);
+            else cudaMemset(prof_, 0, np * 8);
+            prof_h_.assign(np, 0);
+        }
     }
     Bump real;
     real.base = (uint8_t*) arena_;
@@ -289,6 +318,10 @@ bool Verifier::init(const WeightTable& wt, const ModelGeometry& g, SessionState&
     }
     if (cudaStreamCreateWithFlags(&cs_, cudaStreamNonBlocking) != cudaSuccess) {
         err = "verify: stream create failed";
+        return false;
+    }
+    if (cudaEventCreateWithFlags(&commit_done_, cudaEventDisableTiming) != cudaSuccess) {
+        err = "verify: commit event create failed";
         return false;
     }
     // E-6: a layer whose routed experts are all resident is planned on the device (STRATA_VERIFY_DEVICE_PLAN=1: on;
@@ -439,7 +472,7 @@ bool Verifier::record_window(int T, cudaStream_t cs, std::string& err) {
                 a.inject_out = inj_out + t * HC; a.mixed = mixed_ + t * N;
             }
             fused_gr_read_multi(fa, n, xn_ + (size_t) tb * HC * N, cs, (prof_on_ && grp == 0) ? prof_ : nullptr,
-                                (int) (l * kProfPer + (half == 0 ? 27 : 30)));
+                                (int) (l * kProfPer + (half == 0 ? 27 : 30)), decode_tuning_ & 11);
         };
         gr_read_group(0, pending, inj2_, inj_);
         stamp(l, 1, grp);
@@ -464,7 +497,7 @@ bool Verifier::record_window(int T, cudaStream_t cs, std::string& err) {
                 float* gate = gate_L_ + (size_t) gi * MT * HV;
                 float* beta = beta_L_ + (size_t) gi * MT * HV;
                 native_quantize_q8_1(xm, xq_, (int) N, n, cs);
-                native_mmvq(wqkv->native_type, wqkv->native_data, xq_, qkv + (size_t) tb * C, (int) N, (int) C, n, cs);
+                native_mmvq(wqkv->native_type, wqkv->native_data, xq_, qkv + (size_t) tb * C, (int) N, (int) C, n, cs, (decode_tuning_ & 16) != 0);
                 stamp(l, 2, grp);
                 gdn_conv_l2_multi(conv, qkv, (const float*) wc->data, hb, (int) C, (int) (2 * HK), EPS, n, cs, tb);
                 stamp(l, 3, grp);
@@ -472,14 +505,14 @@ bool Verifier::record_window(int T, cudaStream_t cs, std::string& err) {
                              (const float*) wsa->data, gate + (size_t) tb * HV, beta + (size_t) tb * HV, (int) N, (int) HV,
                              n, cs);
                 stamp(l, 4, grp);
-                native_mmvq(wg->native_type, wg->native_data, xq_, z_ + (size_t) tb * ZV, (int) N, (int) ZV, n, cs);
+                native_mmvq(wg->native_type, wg->native_data, xq_, z_ + (size_t) tb * ZV, (int) N, (int) ZV, n, cs, (decode_tuning_ & 16) != 0);
                 stamp(l, 5, grp);
                 // the recurrence from the untouched state over tokens [0, te); outputs only for this group's
                 gdn_step_norm_multi(state, hb, (int) C, gate, beta, z_, (const float*) wnm->data, EPS, y_, (int) HK,
                                     (int) HV, te, nullptr, cs, tb);
                 stamp(l, 6, grp);
                 native_quantize_q8_1(y_ + (size_t) tb * ZV, xq_, (int) ZV, n, cs);
-                native_mmvq(wout->native_type, wout->native_data, xq_, bo_ + tb * N, (int) ZV, (int) N, n, cs);
+                native_mmvq(wout->native_type, wout->native_data, xq_, bo_ + tb * N, (int) ZV, (int) N, n, cs, (decode_tuning_ & 16) != 0);
             } else {
                 // ======================= QSA =======================
                 const int64_t qi = qsa_idx[(size_t) l];
@@ -508,8 +541,8 @@ bool Verifier::record_window(int T, cudaStream_t cs, std::string& err) {
                 else for (int t = tb; t < te; ++t)
                     bf16_gemv_fp32_mmvf(mixed_ + t * N, (const uint16_t*) wik->data, idx_raw + t * ID, (int) N, (int) ID, cs);
                 stamp(l, 7, grp);
-                native_mmvq(wk->native_type, wk->native_data, xq_, kcur_ + tb * NKV * HD, (int) N, (int) (NKV * HD), n, cs);
-                native_mmvq(wv->native_type, wv->native_data, xq_, vcur_ + tb * NKV * HD, (int) N, (int) (NKV * HD), n, cs);
+                native_mmvq(wk->native_type, wk->native_data, xq_, kcur_ + tb * NKV * HD, (int) N, (int) (NKV * HD), n, cs, (decode_tuning_ & 16) != 0);
+                native_mmvq(wv->native_type, wv->native_data, xq_, vcur_ + tb * NKV * HD, (int) N, (int) (NKV * HD), n, cs, (decode_tuning_ & 16) != 0);
                 if (qb) norm_rope(kcur_ + tb * NKV * HD, wkn, (int) (n * NKV), (int) HD, pos_k + tb * NKV);
                 else for (int t = tb; t < te; ++t) norm_rope(kcur_ + t * NKV * HD, wkn, (int) NKV, (int) HD, pos_ + t * NH);
                 if (st.kv_q4) {   // Q4_0 KV (kv_q4.hpp): K and V rotated before they are stored
@@ -537,7 +570,7 @@ bool Verifier::record_window(int T, cudaStream_t cs, std::string& err) {
                                               (float) qsa_freq_base(), cs);
                 stamp(l, 9, grp);
                 native_mmvq(wq->native_type, wq->native_data, xq_, qfull_ + tb * NH * 2 * HD, (int) N, (int) (NH * 2 * HD),
-                            n, cs);
+                            n, cs, (decode_tuning_ & 16) != 0);
                 if (qb) {
                     if (cudaMemcpy2DAsync(qcur_ + tb * NH * HD, (size_t) HD * 4, qfull_ + tb * NH * 2 * HD, (size_t) HD * 2 * 4,
                                           (size_t) HD * 4, (size_t) (n * NH), cudaMemcpyDeviceToDevice, cs) != cudaSuccess) {
@@ -591,7 +624,7 @@ bool Verifier::record_window(int T, cudaStream_t cs, std::string& err) {
                 }
                 stamp(l, 14, grp);
                 native_quantize_q8_1(attn32_ + tb * NH * HD, xq_, (int) (NH * HD), n, cs);
-                native_mmvq(wo->native_type, wo->native_data, xq_, bo_ + tb * N, (int) (NH * HD), (int) N, n, cs);
+                native_mmvq(wo->native_type, wo->native_data, xq_, bo_ + tb * N, (int) (NH * HD), (int) N, n, cs, (decode_tuning_ & 16) != 0);
             }
         } catch (const std::exception& e) {
             err = "verify layer " + std::to_string(l) + ": " + e.what();
@@ -638,7 +671,7 @@ bool Verifier::record_window(int T, cudaStream_t cs, std::string& err) {
             else for (int t = tb; t < te; ++t) f32_to_bf16_bulk(mixed_ + t * N, sh_bf16_ + t * N, N, cs);
             try {
                 shared_expert_multi(n, xm, sh_bf16_ + tb * N, nsw, (const uint16_t*) wgi->data, sh_gate_ + (size_t) tb * g.n_ff,
-                                    sh_up_ + (size_t) tb * g.n_ff, sh_g_ + tb, shared_ + tb * N, N, g.n_ff, cs);
+                                    sh_up_ + (size_t) tb * g.n_ff, sh_g_ + tb, shared_ + tb * N, N, g.n_ff, cs, (decode_tuning_ & 16) != 0);
             } catch (const std::exception& e) {
                 err = std::string("verify shared expert: ") + e.what();
                 return false;
@@ -683,7 +716,7 @@ bool Verifier::record_window(int T, cudaStream_t cs, std::string& err) {
                 const auto& f = lay.fmt[(size_t) l];
                 const NativeExpertLayout L = native_expert_layout(f.gu_type, f.d_type, f.n_embd, f.n_ff);
                 native_expert_grouped(L, gp, gs, gn, p_dst, p_tok, cap, cap,
-                                      nat_xq_ + (size_t) tb * (N / 32) * 36, hit_scratch_, hit_out, cs);
+                                      nat_xq_ + (size_t) tb * (N / 32) * 36, hit_scratch_, hit_out, cs, (decode_tuning_ & 4) != 0);
             } else {
                 moe_grouped_s2(gp, gs, gn, p_dst, p_tok, cap, cap, hit_xq_ + (size_t) tb * (N / 32) * 34,
                                hit_xs_ + (size_t) tb * (N / 32), hit_scratch_, hit_out, cs);
@@ -773,7 +806,7 @@ bool Verifier::record_window(int T, cudaStream_t cs, std::string& err) {
         if (head_ != nullptr && head_->loaded()) {
             try {
                 native_quantize_q8_1(head_mixed_, xq_, (int) N, T, cs);
-                native_mmvq(head_->type(), head_->weights(), xq_, head_logits_, (int) N, (int) n_vocab_, T, cs);
+                native_mmvq(head_->type(), head_->weights(), xq_, head_logits_, (int) N, (int) n_vocab_, T, cs, (decode_tuning_ & 16) != 0);
             } catch (const std::exception& e) {
                 err = std::string("verify head: ") + e.what();
                 return false;
@@ -817,18 +850,18 @@ std::string Verifier::profile_report() {
     return out;
 }
 
-void Verifier::set_pcie_enabled(bool enabled) {
-    // Fewer graph nodes did not yield a consistent end-to-end improvement on the
-    // measured Turing/AVX2 system. Keep the established graph unless opted in.
-    static const bool skip_empty = [] {
+void Verifier::set_pcie_enabled(bool enabled, bool skip_empty) {
+    // Keep the established graph by default; the benefit depends on the workload
+    // and draft policy. Retain the environment switch for existing A/B scripts.
+    static const bool skip_env = [] {
         const char* value = std::getenv("STRATA_VERIFY_SKIP_EMPTY_PCIE");
         return value != nullptr && value[0] == '1';
     }();
-    pcie_enabled_ = enabled || !skip_empty;
+    pcie_enabled_ = enabled || !(skip_empty || skip_env);
 }
 
 bool Verifier::capture(int T, std::string& err) {
-    auto& executable = exec_[pcie_enabled_ ? 1 : 0][T];
+    auto& executable = exec_[decode_tuning_][pcie_enabled_ ? 1 : 0][T];
     if (executable != nullptr) return true;
     if (cudaStreamBeginCapture(cs_, cudaStreamCaptureModeThreadLocal) != cudaSuccess) {
         err = "verify: begin capture failed";
@@ -882,7 +915,7 @@ bool Verifier::capture(int T, std::string& err) {
     }
     const cudaError_t ue = cudaGraphUpload(executable, cs_);
     const cudaError_t us = cudaStreamSynchronize(cs_);
-    std::fprintf(stderr, "strata verify: captured the %d-token window (PCIe %s, upload %s, sync %s)\n", T,
+    std::fprintf(stderr, "strata verify: captured the %d-token window (tuning %d, PCIe %s, upload %s, sync %s)\n", T, decode_tuning_,
                  pcie_enabled_ ? "enabled" : "omitted", cudaGetErrorString(ue), cudaGetErrorString(us));
     return true;
 }
@@ -988,15 +1021,38 @@ bool Verifier::run(int T, const int32_t* tokens, int64_t pos0, PoolMultiFn pool,
     *(volatile uint32_t*) h_flag_ = 0;
     *(volatile uint32_t*) h_flagA_ = 0;
     *(volatile uint32_t*) h_flagB_ = 0;
+    if (prof_mapped_) std::memset(prof_mapped_, 0, prof_h_.size() * 8);
     std::atomic_thread_fence(std::memory_order_seq_cst);
     last_t_ = T;
     last_pos0_ = pos0;
     for (int t = 0; t < T; ++t) last_tokens_[t] = tokens[t];
     ms_host += ms_since(t0);
     VDBG("staged; launching\n");
-    const cudaError_t le = cudaGraphLaunch(exec_[pcie_enabled_ ? 1 : 0][T], cs_);
-    if (le != cudaSuccess) { err = std::string("verify: launch: ") + cudaGetErrorString(le); return false; }
-    (void) cudaStreamQuery(cs_);
+    // Diagnostic only: Compute Sanitizer on Windows may wait inside cudaGraphLaunch,
+    // while this graph needs the host to serve its layer handshakes. Submit on a
+    // helper so those handshakes can still run. Never use this mode for throughput.
+    static const bool async_launch = std::getenv("STRATA_VERIFY_ASYNC_LAUNCH") != nullptr;
+    std::shared_ptr<std::atomic<int>> launch_status;
+    std::thread launch_thread;
+    struct LaunchScope {
+        std::thread& thread;
+        ~LaunchScope() { if (thread.joinable()) thread.detach(); }
+    } launch_scope{launch_thread};
+    cudaError_t le = cudaSuccess;
+    if (async_launch) {
+        int device = 0;
+        cudaGetDevice(&device);
+        launch_status = std::make_shared<std::atomic<int>>(-1);
+        const auto executable = exec_[decode_tuning_][pcie_enabled_ ? 1 : 0][T];
+        const auto stream = cs_;
+        launch_thread = std::thread([status = launch_status, executable, stream, device] {
+            const auto selected = cudaSetDevice(device);
+            status->store((int) (selected == cudaSuccess ? cudaGraphLaunch(executable, stream) : selected),
+                          std::memory_order_release);
+        });
+    } else le = cudaGraphLaunch(exec_[decode_tuning_][pcie_enabled_ ? 1 : 0][T], cs_);
+    if (le != cudaSuccess) { err = std::string("verify: launch: ") + cudaGetErrorString(le); audit_error(err); return false; }
+    if (!async_launch) (void) cudaStreamQuery(cs_);
     VDBG("launched\n");
     volatile uint32_t* const seq = h_seq_;
     volatile uint32_t* const flag = h_flag_;
@@ -1016,10 +1072,13 @@ bool Verifier::run(int T, const int32_t* tokens, int64_t pos0, PoolMultiFn pool,
             const auto now = Clock::now();
             if (now - last_flush > std::chrono::microseconds(2000)) {
                 last_flush = now;
-                const cudaError_t q = cudaStreamQuery(cs_);
+                const int submitted = async_launch ? launch_status->load(std::memory_order_acquire) : 0;
+                const cudaError_t q = async_launch ? (submitted > 0 ? (cudaError_t) submitted : cudaErrorNotReady)
+                                                    : cudaStreamQuery(cs_);
                 if (q != cudaErrorNotReady && *seq < want) {
                     err = "verify: layer " + std::to_string(l) + " never rang (" +
                           (q == cudaSuccess ? std::string("graph finished") : std::string(cudaGetErrorString(q))) + ")";
+                    audit_error(err);
                     return false;
                 }
             }
@@ -1053,12 +1112,26 @@ bool Verifier::run(int T, const int32_t* tokens, int64_t pos0, PoolMultiFn pool,
         ms_pool += ms_since(b);
     }
     progress_at("verify window: waiting for the GPU to finish the window (flags A/B/M raised)", (int64_t) T);
+    if (async_launch) {
+        const auto wait_start = Clock::now();
+        while (launch_status->load(std::memory_order_acquire) < 0) {
+            if (Clock::now() - wait_start > std::chrono::seconds(20)) {
+                err = "verify: diagnostic launch did not return after all layer handshakes";
+                return false;
+            }
+            std::this_thread::yield();
+        }
+        launch_thread.join();
+        const int submitted = launch_status->load(std::memory_order_acquire);
+        if (submitted != 0) { err = std::string("verify: diagnostic launch: ") + cudaGetErrorString((cudaError_t) submitted); return false; }
+    }
     const cudaError_t se = cudaStreamSynchronize(cs_);
-    if (se != cudaSuccess) { err = std::string("verify: ") + cudaGetErrorString(se); return false; }
+    if (se != cudaSuccess) { err = std::string("verify: ") + cudaGetErrorString(se); audit_error(err); return false; }
     progress_at("verify window: waiting for the expert copies", (int64_t) T);
     cudaStreamSynchronize(copy_);   // no host function of this window may raise flag B in the next one
     if (prof_on_ && G == 1) {       // the window's GPU stage stamps
-        cudaMemcpy(prof_h_.data(), prof_, prof_h_.size() * 8, cudaMemcpyDeviceToHost);
+        if (prof_mapped_) std::memcpy(prof_h_.data(), prof_mapped_, prof_h_.size() * 8);
+        else cudaMemcpy(prof_h_.data(), prof_, prof_h_.size() * 8, cudaMemcpyDeviceToHost);
         const int64_t L = g.n_layers;
         auto at = [&](int64_t l, int i) { return prof_h_[(size_t) (l * kProfPer + i)]; };
         for (int64_t l = 0; l < L; ++l) {
@@ -1176,9 +1249,25 @@ void Verifier::publish_plan(void* ctx) {
     *(volatile uint32_t*) v->h_flagA_ = v->cur_layer_ + 1;
 }
 
+namespace { bool g_commit_async = false; }
+void Verifier::set_commit_async(bool on) {
+    g_commit_async = on && std::getenv("STRATA_COMMIT_SYNC") == nullptr;
+}
+
+bool Verifier::wait_commit(std::string& err) {
+    if (commit_pending_) {
+        const OnDevice on_device(device_);
+        const cudaError_t se = cudaEventSynchronize(commit_done_);
+        if (se != cudaSuccess) { err = std::string("verify: commit: ") + cudaGetErrorString(se); return false; }
+        commit_pending_ = false;
+    }
+    return next_ == nullptr || next_->wait_commit(err);
+}
+
 bool Verifier::commit(int n_keep, std::string& err) {
     const OnDevice on_device(device_);
     if (n_keep < 1 || n_keep > last_t_) { err = "verify: commit count out of range"; return false; }
+    if (!wait_commit(err)) return false;
     const Clock::time_point t0 = Clock::now();
     h_commit_[0] = n_keep;
     h_commit_[1] = n_keep - 1;
@@ -1186,8 +1275,14 @@ bool Verifier::commit(int n_keep, std::string& err) {
     std::atomic_thread_fence(std::memory_order_seq_cst);
     const cudaError_t le = cudaGraphLaunch(commit_exec_, cs_);
     if (le != cudaSuccess) { err = std::string("verify: commit launch: ") + cudaGetErrorString(le); return false; }
-    const cudaError_t se = cudaStreamSynchronize(cs_);
-    if (se != cudaSuccess) { err = std::string("verify: commit: ") + cudaGetErrorString(se); return false; }
+    if (!g_commit_async || next_ != nullptr) {
+        const cudaError_t se = cudaStreamSynchronize(cs_);
+        if (se != cudaSuccess) { err = std::string("verify: commit: ") + cudaGetErrorString(se); return false; }
+    } else {
+        const cudaError_t re = cudaEventRecord(commit_done_, cs_);
+        if (re != cudaSuccess) { err = std::string("verify: commit event: ") + cudaGetErrorString(re); return false; }
+        commit_pending_ = true;
+    }
     if (ple_stage())   // stages that share one session must advance it once
         for (int t = 0; t < n_keep; ++t) {
             ss_->ple_prev[0] = ss_->ple_prev[1];

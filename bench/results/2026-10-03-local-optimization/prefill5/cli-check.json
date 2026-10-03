@@ -1,0 +1,137 @@
+[
+  {
+    "flag": "--turing-bf16-gemm",
+    "value": "0",
+    "returncode": 0
+  },
+  {
+    "flag": "--turing-bf16-gemm",
+    "value": "1",
+    "returncode": 0
+  },
+  {
+    "flag": "--turing-bf16-gemm",
+    "value": "4",
+    "returncode": 2
+  },
+  {
+    "flag": "--turing-bf16-gemm",
+    "value": "8",
+    "returncode": 2
+  },
+  {
+    "flag": "--turing-bf16-gemm",
+    "value": "-1",
+    "returncode": 2
+  },
+  {
+    "flag": "--turing-bf16-gemm",
+    "value": "2",
+    "returncode": 2
+  },
+  {
+    "flag": "--turing-bf16-gemm",
+    "value": "x",
+    "returncode": 2
+  },
+  {
+    "flag": "--turing-bf16-gemm",
+    "value": "0.5",
+    "returncode": 2
+  },
+  {
+    "flag": "--turing-bf16-gemm",
+    "value": "99999999999999999999",
+    "returncode": 2
+  },
+  {
+    "flag": "--prefill-topk-wide",
+    "value": "0",
+    "returncode": 0
+  },
+  {
+    "flag": "--prefill-topk-wide",
+    "value": "1",
+    "returncode": 0
+  },
+  {
+    "flag": "--prefill-topk-wide",
+    "value": "4",
+    "returncode": 2
+  },
+  {
+    "flag": "--prefill-topk-wide",
+    "value": "8",
+    "returncode": 2
+  },
+  {
+    "flag": "--prefill-topk-wide",
+    "value": "-1",
+    "returncode": 2
+  },
+  {
+    "flag": "--prefill-topk-wide",
+    "value": "2",
+    "returncode": 2
+  },
+  {
+    "flag": "--prefill-topk-wide",
+    "value": "x",
+    "returncode": 2
+  },
+  {
+    "flag": "--prefill-topk-wide",
+    "value": "0.5",
+    "returncode": 2
+  },
+  {
+    "flag": "--prefill-topk-wide",
+    "value": "99999999999999999999",
+    "returncode": 2
+  },
+  {
+    "flag": "--prefill-score-tile",
+    "value": "0",
+    "returncode": 0
+  },
+  {
+    "flag": "--prefill-score-tile",
+    "value": "1",
+    "returncode": 2
+  },
+  {
+    "flag": "--prefill-score-tile",
+    "value": "4",
+    "returncode": 0
+  },
+  {
+    "flag": "--prefill-score-tile",
+    "value": "8",
+    "returncode": 0
+  },
+  {
+    "flag": "--prefill-score-tile",
+    "value": "-1",
+    "returncode": 2
+  },
+  {
+    "flag": "--prefill-score-tile",
+    "value": "2",
+    "returncode": 2
+  },
+  {
+    "flag": "--prefill-score-tile",
+    "value": "x",
+    "returncode": 2
+  },
+  {
+    "flag": "--prefill-score-tile",
+    "value": "0.5",
+    "returncode": 2
+  },
+  {
+    "flag": "--prefill-score-tile",
+    "value": "99999999999999999999",
+    "returncode": 2
+  }
+]

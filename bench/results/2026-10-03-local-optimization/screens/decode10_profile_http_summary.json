@@ -1,0 +1,43 @@
+{
+  "warmup": {
+    "baseline": {
+      "requests": 6,
+      "tokens": 473,
+      "decode_ms": 13280.6,
+      "decode_tps": 35.61586072918392,
+      "wall_s": 16.799086899998656,
+      "min_available_ram_mib": 3927.42578125
+    }
+  },
+  "measured": {
+    "baseline": {
+      "requests": 6,
+      "tokens": 473,
+      "decode_ms": 7809.4,
+      "decode_tps": 60.5680333956514,
+      "wall_s": 9.654432900002575,
+      "min_available_ram_mib": 3890.09765625
+    }
+  },
+  "cycles": [
+    {
+      "baseline": {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 7809.4,
+        "decode_tps": 60.5680333956514,
+        "wall_s": 9.654432900002575,
+        "min_available_ram_mib": 3890.09765625
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/decode10_profile_http.json",
+    "arms": "work/x16_best_single_arm.json",
+    "warmups": 1,
+    "repeats": 1,
+    "max_tokens": 128,
+    "prompts": null,
+    "limit": 6
+  }
+}

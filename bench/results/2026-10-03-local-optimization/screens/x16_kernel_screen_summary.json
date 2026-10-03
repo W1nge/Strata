@@ -1,0 +1,213 @@
+{
+  "warmup": {
+    "cpu": {
+      "requests": 0,
+      "tokens": 0,
+      "decode_ms": 0,
+      "decode_tps": null,
+      "wall_s": 0,
+      "min_available_ram_mib": null
+    },
+    "p125": {
+      "requests": 0,
+      "tokens": 0,
+      "decode_ms": 0,
+      "decode_tps": null,
+      "wall_s": 0,
+      "min_available_ram_mib": null
+    },
+    "p25": {
+      "requests": 0,
+      "tokens": 0,
+      "decode_ms": 0,
+      "decode_tps": null,
+      "wall_s": 0,
+      "min_available_ram_mib": null
+    },
+    "p50": {
+      "requests": 0,
+      "tokens": 0,
+      "decode_ms": 0,
+      "decode_tps": null,
+      "wall_s": 0,
+      "min_available_ram_mib": null
+    },
+    "p75": {
+      "requests": 0,
+      "tokens": 0,
+      "decode_ms": 0,
+      "decode_tps": null,
+      "wall_s": 0,
+      "min_available_ram_mib": null
+    },
+    "p100": {
+      "requests": 0,
+      "tokens": 0,
+      "decode_ms": 0,
+      "decode_tps": null,
+      "wall_s": 0,
+      "min_available_ram_mib": null
+    }
+  },
+  "measured": {
+    "cpu": {
+      "requests": 12,
+      "tokens": 946,
+      "decode_ms": 16911.2,
+      "decode_tps": 55.939259189176404,
+      "wall_s": 21.061183899999833,
+      "min_available_ram_mib": 962.23828125
+    },
+    "p125": {
+      "requests": 12,
+      "tokens": 954,
+      "decode_ms": 15565.6,
+      "decode_tps": 61.28899624813692,
+      "wall_s": 16.392747399999962,
+      "min_available_ram_mib": 919.7578125
+    },
+    "p25": {
+      "requests": 12,
+      "tokens": 951,
+      "decode_ms": 18448.7,
+      "decode_tps": 51.54834758004629,
+      "wall_s": 21.97893149999993,
+      "min_available_ram_mib": 924.703125
+    },
+    "p50": {
+      "requests": 12,
+      "tokens": 947,
+      "decode_ms": 18978.7,
+      "decode_tps": 49.898043596242104,
+      "wall_s": 19.898017299999992,
+      "min_available_ram_mib": 946.34765625
+    },
+    "p75": {
+      "requests": 12,
+      "tokens": 946,
+      "decode_ms": 24602.0,
+      "decode_tps": 38.45215836110885,
+      "wall_s": 28.93145260000017,
+      "min_available_ram_mib": 946.32421875
+    },
+    "p100": {
+      "requests": 12,
+      "tokens": 946,
+      "decode_ms": 22637.1,
+      "decode_tps": 41.789805231235455,
+      "wall_s": 23.739475999999627,
+      "min_available_ram_mib": 945.8984375
+    }
+  },
+  "cycles": [
+    {
+      "cpu": {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 9200.8,
+        "decode_tps": 51.40857316755065,
+        "wall_s": 10.675745699999993,
+        "min_available_ram_mib": 1126.19140625
+      },
+      "p125": {
+        "requests": 6,
+        "tokens": 477,
+        "decode_ms": 7718.1,
+        "decode_tps": 61.802775294437744,
+        "wall_s": 8.135272200000031,
+        "min_available_ram_mib": 1176.1640625
+      },
+      "p25": {
+        "requests": 6,
+        "tokens": 475,
+        "decode_ms": 9074.8,
+        "decode_tps": 52.342751355401774,
+        "wall_s": 10.205194100000085,
+        "min_available_ram_mib": 1190.515625
+      },
+      "p50": {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 9248.2,
+        "decode_tps": 51.145087692740205,
+        "wall_s": 9.710709999999949,
+        "min_available_ram_mib": 1173.33984375
+      },
+      "p75": {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 14570.5,
+        "decode_tps": 32.46285302494767,
+        "wall_s": 16.357093700000064,
+        "min_available_ram_mib": 1223.12109375
+      },
+      "p100": {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 11289.3,
+        "decode_tps": 41.89808048328949,
+        "wall_s": 11.833787899999834,
+        "min_available_ram_mib": 1166.31640625
+      }
+    },
+    {
+      "cpu": {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 7710.400000000001,
+        "decode_tps": 61.34571487860551,
+        "wall_s": 10.38543819999984,
+        "min_available_ram_mib": 962.23828125
+      },
+      "p125": {
+        "requests": 6,
+        "tokens": 477,
+        "decode_ms": 7847.5,
+        "decode_tps": 60.78368907295317,
+        "wall_s": 8.25747519999993,
+        "min_available_ram_mib": 919.7578125
+      },
+      "p25": {
+        "requests": 6,
+        "tokens": 476,
+        "decode_ms": 9373.9,
+        "decode_tps": 50.779291436861925,
+        "wall_s": 11.773737399999845,
+        "min_available_ram_mib": 924.703125
+      },
+      "p50": {
+        "requests": 6,
+        "tokens": 474,
+        "decode_ms": 9730.5,
+        "decode_tps": 48.71281023585633,
+        "wall_s": 10.187307300000043,
+        "min_available_ram_mib": 946.34765625
+      },
+      "p75": {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 10031.5,
+        "decode_tps": 47.151472860489456,
+        "wall_s": 12.574358900000107,
+        "min_available_ram_mib": 946.32421875
+      },
+      "p100": {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 11347.8,
+        "decode_tps": 41.68208815805707,
+        "wall_s": 11.905688099999793,
+        "min_available_ram_mib": 945.8984375
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/x16_kernel_screen.json",
+    "arms": "work/x16_pcie_arms.json",
+    "warmups": 0,
+    "repeats": 2,
+    "max_tokens": 128,
+    "prompts": null,
+    "limit": 6
+  }
+}

@@ -1,5 +1,7 @@
 # FORK_NOTES — W1nge/Strata (turing-tiered-win)
 
+> 当前发布分支：`codex/avx-vnni-q2`。截至 2026-10-03 的完整结果、所有尝试方向、采用状态与纠错见 [优化总总结](docs/performance/OPTIMIZATION-SUMMARY.md)。下面第 1–19 节保留历史记录，其中的“当前”、性能归因和待办不一定仍然成立；尤其注意 Q2/IQ1_M 探针纠错、PCIe ×4→×16、GPU 设置调整和最终草稿词表/Prefill 配置。后续采用项及验证边界以总总结为准。
+
 本 fork 的全部偏离上游之处。基准：upstream/main @ 0.1.24 (3ce2523)。
 
 ## 组装的社区 PR

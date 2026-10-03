@@ -1,0 +1,14 @@
+{
+  "gpu_timeline_ms": 31590.0,
+  "batch_wall_ms": 32296.0,
+  "wait_copy_ms": 7391.0,
+  "hc_read_ms": 6274.0,
+  "qsa_attn_ms": 3075.0,
+  "gemm_gate_up_ms": 3077.0,
+  "gemm_down_ms": 1683.0,
+  "raw_lines": [
+    "strata prefill timing: 31236 tokens, GPU timeline 43800 ms, wall 44501 ms, host staging 33679 ms: embed+steps 804 (1.8%) hc read 6751 (15.4%) gdn 2035 (4.6%) qsa proj 1002 (2.3%) qsa indexer 1 (0.0%) qsa select 1307 (3.0%) qsa attn 3052 (7.0%) router+shared 804 (1.8%) host grouping 68 (0.2%) gather 343 (0.8%) wait copy 10848 (24.8%) dequant 565 (1.3%) gemm gate/up 3070 (7.0%) gemm down 1679 (3.8%) combine 8463 (19.3%) ple 515 (1.2%) gdn conv+gates 262 (0.6%) gdn recurrence 1392 (3.2%) gdn out proj 839 (1.9%)",
+    "strata prefill timing: 31236 tokens, GPU timeline 31590 ms, wall 32296 ms, host staging 63450 ms: embed+steps 802 (2.5%) hc read 6274 (19.9%) gdn 1758 (5.6%) qsa proj 1003 (3.2%) qsa indexer 1 (0.0%) qsa select 1317 (4.2%) qsa attn 3075 (9.7%) router+shared 810 (2.6%) host grouping 68 (0.2%) gather 343 (1.1%) wait copy 7391 (23.4%) dequant 576 (1.8%) gemm gate/up 3077 (9.7%) gemm down 1683 (5.3%) combine 652 (2.1%) ple 272 (0.9%) gdn conv+gates 263 (0.8%) gdn recurrence 1380 (4.4%) gdn out proj 843 (2.7%)"
+  ],
+  "warm_refill_ms": 682.6
+}

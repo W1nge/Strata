@@ -1,0 +1,85 @@
+{
+  "warmup": {
+    "baseline": {
+      "requests": 6,
+      "tokens": 453,
+      "decode_ms": 9829.3,
+      "decode_tps": 46.086699968461645,
+      "wall_s": 12.349341799992544,
+      "min_available_ram_mib": 2224.76953125
+    },
+    "gpu15": {
+      "requests": 6,
+      "tokens": 453,
+      "decode_ms": 11331.8,
+      "decode_tps": 39.975996752501814,
+      "wall_s": 13.615194199992402,
+      "min_available_ram_mib": 2227.5859375
+    }
+  },
+  "measured": {
+    "baseline": {
+      "requests": 12,
+      "tokens": 906,
+      "decode_ms": 15370.2,
+      "decode_tps": 58.94523168208611,
+      "wall_s": 17.728903800008993,
+      "min_available_ram_mib": 2193.87890625
+    },
+    "gpu15": {
+      "requests": 12,
+      "tokens": 906,
+      "decode_ms": 14838.6,
+      "decode_tps": 61.05697302980065,
+      "wall_s": 17.181409700002405,
+      "min_available_ram_mib": 2193.8515625
+    }
+  },
+  "cycles": [
+    {
+      "baseline": {
+        "requests": 6,
+        "tokens": 453,
+        "decode_ms": 7752.4,
+        "decode_tps": 58.43351736236521,
+        "wall_s": 8.903607799999008,
+        "min_available_ram_mib": 2199.67578125
+      },
+      "gpu15": {
+        "requests": 6,
+        "tokens": 453,
+        "decode_ms": 7407.1,
+        "decode_tps": 61.157538037828566,
+        "wall_s": 8.644800199996098,
+        "min_available_ram_mib": 2193.98828125
+      }
+    },
+    {
+      "baseline": {
+        "requests": 6,
+        "tokens": 453,
+        "decode_ms": 7617.8,
+        "decode_tps": 59.465987555462206,
+        "wall_s": 8.825296000009985,
+        "min_available_ram_mib": 2193.87890625
+      },
+      "gpu15": {
+        "requests": 6,
+        "tokens": 453,
+        "decode_ms": 7431.5,
+        "decode_tps": 60.95673820897531,
+        "wall_s": 8.536609500006307,
+        "min_available_ram_mib": 2193.8515625
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/decode10_cache_baseA_screen.json",
+    "arms": "work/decode10_baseline_gpu_arms.json",
+    "warmups": 1,
+    "repeats": 2,
+    "max_tokens": 256,
+    "prompts": "work/fresh_prompts_x16.json",
+    "limit": 0
+  }
+}

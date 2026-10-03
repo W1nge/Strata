@@ -1,0 +1,748 @@
+{
+  "note": "Separate process screens, not randomized within-process comparisons. Compare both static controls and confirm apparent gains before adoption. Warmup includes first requests after startup, not a controlled OS-cold-cache measurement.",
+  "cases": {
+    "x16_static_control": {
+      "case": {
+        "name": "x16_static_control",
+        "budget": 10,
+        "warmups": 1,
+        "repeats": 3
+      },
+      "requests": 48,
+      "warmup": {
+        "baseline": {
+          "requests": 12,
+          "tokens": 1241,
+          "decode_ms": 29514.2,
+          "decode_tps": 42.047556769283936,
+          "wall_s": 37.66273910000746,
+          "min_available_ram_mib": 832.3359375
+        }
+      },
+      "measured": {
+        "baseline": {
+          "requests": 36,
+          "tokens": 3723,
+          "decode_ms": 63483.5,
+          "decode_tps": 58.64515976592343,
+          "wall_s": 77.57912479998777,
+          "min_available_ram_mib": 748.43359375
+        }
+      },
+      "cycles": [
+        {
+          "baseline": {
+            "requests": 12,
+            "tokens": 1241,
+            "decode_ms": 21209.9,
+            "decode_tps": 58.51041259034696,
+            "wall_s": 25.892835699996795,
+            "min_available_ram_mib": 748.43359375
+          }
+        },
+        {
+          "baseline": {
+            "requests": 12,
+            "tokens": 1241,
+            "decode_ms": 21122.5,
+            "decode_tps": 58.75251509054326,
+            "wall_s": 25.817740099999355,
+            "min_available_ram_mib": 751.30078125
+          }
+        },
+        {
+          "baseline": {
+            "requests": 12,
+            "tokens": 1241,
+            "decode_ms": 21151.1,
+            "decode_tps": 58.673071376902385,
+            "wall_s": 25.868548999991617,
+            "min_available_ram_mib": 765.39453125
+          }
+        }
+      ],
+      "phases": {
+        "log": "work/x16_static_control-engine.log",
+        "bench": "work/x16_static_control_screen.json",
+        "note": "Light host-side timings. GPU wait is not pure kernel time; CPU includes memory stalls. GU/quant/down are subsets of CPU. Cross-restart comparisons are screening only.",
+        "warmup": {
+          "baseline": {
+            "requests": 12,
+            "decode_tps": 42.047556769283936,
+            "ms_per_window": 45.758449612403105,
+            "tokens_per_window": 1.924031007751938,
+            "phases_ms_window": {
+              "gpu_wait": 16.21496124031008,
+              "cpu": 20.8853488372093,
+              "gu": 16.51227906976744,
+              "quant": 0.10510077519379846,
+              "down": 4.265395348837209,
+              "stage": 2.264201550387597,
+              "draft": 2.826279069767442,
+              "commit": 0.8102945736434108,
+              "join": 0.0
+            },
+            "vram_hit_rate": 0.6633451667776052,
+            "min_ram_mib": 832.3359375,
+            "wall_s": 37.66273910000746,
+            "prefill_ms": 8119.4
+          }
+        },
+        "measured": {
+          "baseline": {
+            "requests": 36,
+            "decode_tps": 58.64515976592343,
+            "ms_per_window": 32.80801033591731,
+            "tokens_per_window": 1.924031007751938,
+            "phases_ms_window": {
+              "gpu_wait": 16.503307493540053,
+              "cpu": 9.924842377260982,
+              "gu": 6.449266149870801,
+              "quant": 0.10558139534883722,
+              "down": 3.3658346253229974,
+              "stage": 0.032175710594315246,
+              "draft": 2.8606718346253226,
+              "commit": 0.8143514211886305,
+              "join": 0.0
+            },
+            "vram_hit_rate": 0.6644030003530875,
+            "min_ram_mib": 748.43359375,
+            "wall_s": 77.57912479998777,
+            "prefill_ms": 14013.6
+          }
+        }
+      }
+    },
+    "x16_budget8": {
+      "case": {
+        "name": "x16_budget8",
+        "budget": 8,
+        "warmups": 1,
+        "repeats": 2
+      },
+      "requests": 36,
+      "warmup": {
+        "baseline": {
+          "requests": 12,
+          "tokens": 1241,
+          "decode_ms": 29830.4,
+          "decode_tps": 41.60185582493027,
+          "wall_s": 38.37740139999369,
+          "min_available_ram_mib": 950.4453125
+        }
+      },
+      "measured": {
+        "baseline": {
+          "requests": 24,
+          "tokens": 2482,
+          "decode_ms": 42493.6,
+          "decode_tps": 58.40879567746673,
+          "wall_s": 51.87963080001646,
+          "min_available_ram_mib": 855.3828125
+        }
+      },
+      "cycles": [
+        {
+          "baseline": {
+            "requests": 12,
+            "tokens": 1241,
+            "decode_ms": 21284.5,
+            "decode_tps": 58.3053395663511,
+            "wall_s": 25.979990800013184,
+            "min_available_ram_mib": 895.6640625
+          }
+        },
+        {
+          "baseline": {
+            "requests": 12,
+            "tokens": 1241,
+            "decode_ms": 21209.1,
+            "decode_tps": 58.512619583103486,
+            "wall_s": 25.899640000003274,
+            "min_available_ram_mib": 855.3828125
+          }
+        }
+      ],
+      "phases": {
+        "log": "work/x16_budget8-engine.log",
+        "bench": "work/x16_budget8_screen.json",
+        "note": "Light host-side timings. GPU wait is not pure kernel time; CPU includes memory stalls. GU/quant/down are subsets of CPU. Cross-restart comparisons are screening only.",
+        "warmup": {
+          "baseline": {
+            "requests": 12,
+            "decode_tps": 41.60185582493027,
+            "ms_per_window": 46.24868217054264,
+            "tokens_per_window": 1.924031007751938,
+            "phases_ms_window": {
+              "gpu_wait": 16.230961240310076,
+              "cpu": 21.846666666666668,
+              "gu": 17.434341085271317,
+              "quant": 0.10489922480620155,
+              "down": 4.304232558139535,
+              "stage": 1.728093023255814,
+              "draft": 2.8553023255813956,
+              "commit": 0.8195348837209303,
+              "join": 0.0
+            },
+            "vram_hit_rate": 0.6633451667776052,
+            "min_ram_mib": 950.4453125,
+            "wall_s": 38.37740139999369,
+            "prefill_ms": 8518.9
+          }
+        },
+        "measured": {
+          "baseline": {
+            "requests": 24,
+            "decode_tps": 58.40879567746673,
+            "ms_per_window": 32.94077519379845,
+            "tokens_per_window": 1.924031007751938,
+            "phases_ms_window": {
+              "gpu_wait": 16.526953488372094,
+              "cpu": 9.985317829457363,
+              "gu": 6.504302325581395,
+              "quant": 0.10585271317829459,
+              "down": 3.369627906976744,
+              "stage": 0.041519379844961235,
+              "draft": 2.8700852713178295,
+              "commit": 0.8156434108527132,
+              "join": 0.0
+            },
+            "vram_hit_rate": 0.6644030003530874,
+            "min_ram_mib": 855.3828125,
+            "wall_s": 51.87963080001646,
+            "prefill_ms": 9334.3
+          }
+        }
+      }
+    },
+    "x16_budget6": {
+      "case": {
+        "name": "x16_budget6",
+        "budget": 6,
+        "warmups": 1,
+        "repeats": 2
+      },
+      "requests": 36,
+      "warmup": {
+        "baseline": {
+          "requests": 12,
+          "tokens": 1241,
+          "decode_ms": 30660.9,
+          "decode_tps": 40.475002364575076,
+          "wall_s": 39.195447599988256,
+          "min_available_ram_mib": 1109.09765625
+        }
+      },
+      "measured": {
+        "baseline": {
+          "requests": 24,
+          "tokens": 2482,
+          "decode_ms": 42521.4,
+          "decode_tps": 58.370608681746134,
+          "wall_s": 51.904532799970184,
+          "min_available_ram_mib": 923.78125
+        }
+      },
+      "cycles": [
+        {
+          "baseline": {
+            "requests": 12,
+            "tokens": 1241,
+            "decode_ms": 21302.9,
+            "decode_tps": 58.254979369006094,
+            "wall_s": 25.989500799980306,
+            "min_available_ram_mib": 973.6484375
+          }
+        },
+        {
+          "baseline": {
+            "requests": 12,
+            "tokens": 1241,
+            "decode_ms": 21218.5,
+            "decode_tps": 58.4866979286943,
+            "wall_s": 25.91503199998988,
+            "min_available_ram_mib": 923.78125
+          }
+        }
+      ],
+      "phases": {
+        "log": "work/x16_budget6-engine.log",
+        "bench": "work/x16_budget6_screen.json",
+        "note": "Light host-side timings. GPU wait is not pure kernel time; CPU includes memory stalls. GU/quant/down are subsets of CPU. Cross-restart comparisons are screening only.",
+        "warmup": {
+          "baseline": {
+            "requests": 12,
+            "decode_tps": 40.475002364575076,
+            "ms_per_window": 47.31620370370371,
+            "tokens_per_window": 1.9151234567901234,
+            "phases_ms_window": {
+              "gpu_wait": 16.25145061728395,
+              "cpu": 22.870679012345676,
+              "gu": 18.38395061728395,
+              "quant": 0.10643518518518519,
+              "down": 4.376666666666667,
+              "stage": 1.7195524691358024,
+              "draft": 2.871774691358025,
+              "commit": 0.8156327160493827,
+              "join": 0.0
+            },
+            "vram_hit_rate": 0.6624586331080392,
+            "min_ram_mib": 1109.09765625,
+            "wall_s": 39.195447599988256,
+            "prefill_ms": 8508.3
+          }
+        },
+        "measured": {
+          "baseline": {
+            "requests": 24,
+            "decode_tps": 58.370608681746134,
+            "ms_per_window": 33.01350931677019,
+            "tokens_per_window": 1.9270186335403727,
+            "phases_ms_window": {
+              "gpu_wait": 16.524495341614905,
+              "cpu": 10.0233850931677,
+              "gu": 6.54472049689441,
+              "quant": 0.10600931677018632,
+              "down": 3.3671816770186336,
+              "stage": 0.07130434782608695,
+              "draft": 2.870077639751553,
+              "commit": 0.8137034161490683,
+              "join": 0.0
+            },
+            "vram_hit_rate": 0.6639059966864551,
+            "min_ram_mib": 923.78125,
+            "wall_s": 51.904532799970184,
+            "prefill_ms": 9333.2
+          }
+        }
+      }
+    },
+    "x16_pf12": {
+      "case": {
+        "name": "x16_pf12",
+        "budget": 10,
+        "env": {
+          "STRATA_COLD_PREFETCH_WORKERS": "12"
+        },
+        "warmups": 1,
+        "repeats": 2
+      },
+      "requests": 36,
+      "warmup": {
+        "baseline": {
+          "requests": 12,
+          "tokens": 1241,
+          "decode_ms": 28538.3,
+          "decode_tps": 43.48542134605075,
+          "wall_s": 36.50823969997873,
+          "min_available_ram_mib": 890.33203125
+        }
+      },
+      "measured": {
+        "baseline": {
+          "requests": 24,
+          "tokens": 2482,
+          "decode_ms": 43095.5,
+          "decode_tps": 57.593020152916196,
+          "wall_s": 52.65729479998117,
+          "min_available_ram_mib": 835.953125
+        }
+      },
+      "cycles": [
+        {
+          "baseline": {
+            "requests": 12,
+            "tokens": 1241,
+            "decode_ms": 21551.6,
+            "decode_tps": 57.58273167653446,
+            "wall_s": 26.348063299978094,
+            "min_available_ram_mib": 835.953125
+          }
+        },
+        {
+          "baseline": {
+            "requests": 12,
+            "tokens": 1241,
+            "decode_ms": 21543.9,
+            "decode_tps": 57.603312306499745,
+            "wall_s": 26.30923150000308,
+            "min_available_ram_mib": 836.12890625
+          }
+        }
+      ],
+      "phases": {
+        "log": "work/x16_pf12-engine.log",
+        "bench": "work/x16_pf12_screen.json",
+        "note": "Light host-side timings. GPU wait is not pure kernel time; CPU includes memory stalls. GU/quant/down are subsets of CPU. Cross-restart comparisons are screening only.",
+        "warmup": {
+          "baseline": {
+            "requests": 12,
+            "decode_tps": 43.48542134605075,
+            "ms_per_window": 44.10865533230294,
+            "tokens_per_window": 1.9180834621329212,
+            "phases_ms_window": {
+              "gpu_wait": 16.275888717156104,
+              "cpu": 19.301530139103555,
+              "gu": 14.910061823802163,
+              "quant": 0.10401854714064915,
+              "down": 4.277851622874807,
+              "stage": 1.7576970633693974,
+              "draft": 2.8365533230293662,
+              "commit": 0.8131684698608964,
+              "join": 0.0
+            },
+            "vram_hit_rate": 0.6643371986491655,
+            "min_ram_mib": 890.33203125,
+            "wall_s": 36.50823969997873,
+            "prefill_ms": 7942.7
+          }
+        },
+        "measured": {
+          "baseline": {
+            "requests": 24,
+            "decode_tps": 57.593020152916196,
+            "ms_per_window": 33.40736434108527,
+            "tokens_per_window": 1.924031007751938,
+            "phases_ms_window": {
+              "gpu_wait": 16.613472868217055,
+              "cpu": 9.971813953488372,
+              "gu": 6.4953643410852715,
+              "quant": 0.10396124031007753,
+              "down": 3.368093023255814,
+              "stage": 0.010488372093023257,
+              "draft": 2.870403100775194,
+              "commit": 0.8137286821705426,
+              "join": 0.0
+            },
+            "vram_hit_rate": 0.6644030003530874,
+            "min_ram_mib": 835.953125,
+            "wall_s": 52.65729479998117,
+            "prefill_ms": 9513.7
+          }
+        }
+      }
+    },
+    "x16_pf16": {
+      "case": {
+        "name": "x16_pf16",
+        "budget": 10,
+        "env": {
+          "STRATA_COLD_PREFETCH_WORKERS": "16"
+        },
+        "warmups": 1,
+        "repeats": 2
+      },
+      "requests": 36,
+      "warmup": {
+        "baseline": {
+          "requests": 12,
+          "tokens": 1241,
+          "decode_ms": 29284.7,
+          "decode_tps": 42.37707744999949,
+          "wall_s": 37.31116559999646,
+          "min_available_ram_mib": 1033.1015625
+        }
+      },
+      "measured": {
+        "baseline": {
+          "requests": 24,
+          "tokens": 2482,
+          "decode_ms": 43270.9,
+          "decode_tps": 57.35956497322681,
+          "wall_s": 52.89844390000508,
+          "min_available_ram_mib": 789.5625
+        }
+      },
+      "cycles": [
+        {
+          "baseline": {
+            "requests": 12,
+            "tokens": 1241,
+            "decode_ms": 21599.1,
+            "decode_tps": 57.456097707774866,
+            "wall_s": 26.365675799999735,
+            "min_available_ram_mib": 864.21484375
+          }
+        },
+        {
+          "baseline": {
+            "requests": 12,
+            "tokens": 1241,
+            "decode_ms": 21671.8,
+            "decode_tps": 57.26335606640888,
+            "wall_s": 26.53276810000534,
+            "min_available_ram_mib": 789.5625
+          }
+        }
+      ],
+      "phases": {
+        "log": "work/x16_pf16-engine.log",
+        "bench": "work/x16_pf16_screen.json",
+        "note": "Light host-side timings. GPU wait is not pure kernel time; CPU includes memory stalls. GU/quant/down are subsets of CPU. Cross-restart comparisons are screening only.",
+        "warmup": {
+          "baseline": {
+            "requests": 12,
+            "decode_tps": 42.37707744999949,
+            "ms_per_window": 45.19243827160494,
+            "tokens_per_window": 1.9151234567901234,
+            "phases_ms_window": {
+              "gpu_wait": 16.247962962962962,
+              "cpu": 20.35783950617284,
+              "gu": 15.897175925925927,
+              "quant": 0.10507716049382716,
+              "down": 4.350354938271606,
+              "stage": 1.784598765432099,
+              "draft": 2.8573456790123455,
+              "commit": 0.8116666666666668,
+              "join": 0.0
+            },
+            "vram_hit_rate": 0.6624586331080392,
+            "min_ram_mib": 1033.1015625,
+            "wall_s": 37.31116559999646,
+            "prefill_ms": 7957.599999999999
+          }
+        },
+        "measured": {
+          "baseline": {
+            "requests": 24,
+            "decode_tps": 57.35956497322681,
+            "ms_per_window": 33.59541925465839,
+            "tokens_per_window": 1.9270186335403727,
+            "phases_ms_window": {
+              "gpu_wait": 16.554611801242235,
+              "cpu": 10.126195652173912,
+              "gu": 6.62222049689441,
+              "quant": 0.10493788819875777,
+              "down": 3.3957686335403725,
+              "stage": 0.08503105590062111,
+              "draft": 2.8762655279503107,
+              "commit": 0.8135326086956521,
+              "join": 0.0
+            },
+            "vram_hit_rate": 0.6639059966864551,
+            "min_ram_mib": 789.5625,
+            "wall_s": 52.89844390000508,
+            "prefill_ms": 9500.6
+          }
+        }
+      }
+    },
+    "x16_pfoff": {
+      "case": {
+        "name": "x16_pfoff",
+        "budget": 10,
+        "env": {
+          "STRATA_NO_COLD_PREFETCH": "1"
+        },
+        "warmups": 1,
+        "repeats": 2
+      },
+      "requests": 36,
+      "warmup": {
+        "baseline": {
+          "requests": 12,
+          "tokens": 1241,
+          "decode_ms": 34491.2,
+          "decode_tps": 35.98019204898641,
+          "wall_s": 44.62257020000834,
+          "min_available_ram_mib": 1017.890625
+        }
+      },
+      "measured": {
+        "baseline": {
+          "requests": 24,
+          "tokens": 2482,
+          "decode_ms": 42055.0,
+          "decode_tps": 59.01795268101296,
+          "wall_s": 51.39628409999568,
+          "min_available_ram_mib": 896.22265625
+        }
+      },
+      "cycles": [
+        {
+          "baseline": {
+            "requests": 12,
+            "tokens": 1241,
+            "decode_ms": 21034.8,
+            "decode_tps": 58.99747085781657,
+            "wall_s": 25.69994859999133,
+            "min_available_ram_mib": 911.703125
+          }
+        },
+        {
+          "baseline": {
+            "requests": 12,
+            "tokens": 1241,
+            "decode_ms": 21020.2,
+            "decode_tps": 59.038448730268975,
+            "wall_s": 25.696335500004352,
+            "min_available_ram_mib": 896.22265625
+          }
+        }
+      ],
+      "phases": {
+        "log": "work/x16_pfoff-engine.log",
+        "bench": "work/x16_pfoff_screen.json",
+        "note": "Light host-side timings. GPU wait is not pure kernel time; CPU includes memory stalls. GU/quant/down are subsets of CPU. Cross-restart comparisons are screening only.",
+        "warmup": {
+          "baseline": {
+            "requests": 12,
+            "decode_tps": 35.98019204898641,
+            "ms_per_window": 53.22716049382716,
+            "tokens_per_window": 1.9151234567901234,
+            "phases_ms_window": {
+              "gpu_wait": 16.25375,
+              "cpu": 28.945941358024694,
+              "gu": 18.34449074074074,
+              "quant": 0.10442901234567901,
+              "down": 10.48986111111111,
+              "stage": 1.7164351851851851,
+              "draft": 2.848780864197531,
+              "commit": 0.816003086419753,
+              "join": 0.0
+            },
+            "vram_hit_rate": 0.6624586331080392,
+            "min_ram_mib": 1017.890625,
+            "wall_s": 44.62257020000834,
+            "prefill_ms": 10103.699999999999
+          }
+        },
+        "measured": {
+          "baseline": {
+            "requests": 24,
+            "decode_tps": 59.01795268101296,
+            "ms_per_window": 32.65139751552795,
+            "tokens_per_window": 1.9270186335403727,
+            "phases_ms_window": {
+              "gpu_wait": 16.565186335403727,
+              "cpu": 9.78945652173913,
+              "gu": 6.281770186335404,
+              "quant": 0.10332298136645963,
+              "down": 3.400527950310559,
+              "stage": 0.061467391304347814,
+              "draft": 2.872771739130435,
+              "commit": 0.8135170807453416,
+              "join": 0.0
+            },
+            "vram_hit_rate": 0.6639059966864551,
+            "min_ram_mib": 896.22265625,
+            "wall_s": 51.39628409999568,
+            "prefill_ms": 9292.0
+          }
+        }
+      }
+    },
+    "x16_static_after": {
+      "case": {
+        "name": "x16_static_after",
+        "budget": 10,
+        "warmups": 1,
+        "repeats": 3
+      },
+      "requests": 48,
+      "warmup": {
+        "baseline": {
+          "requests": 12,
+          "tokens": 1241,
+          "decode_ms": 28603.0,
+          "decode_tps": 43.387057301681644,
+          "wall_s": 36.29030460001377,
+          "min_available_ram_mib": 1009.5859375
+        }
+      },
+      "measured": {
+        "baseline": {
+          "requests": 36,
+          "tokens": 3723,
+          "decode_ms": 63564.2,
+          "decode_tps": 58.570704893635096,
+          "wall_s": 77.88648890003242,
+          "min_available_ram_mib": 928.6640625
+        }
+      },
+      "cycles": [
+        {
+          "baseline": {
+            "requests": 12,
+            "tokens": 1241,
+            "decode_ms": 21148.5,
+            "decode_tps": 58.68028465375795,
+            "wall_s": 26.086470700014615,
+            "min_available_ram_mib": 957.921875
+          }
+        },
+        {
+          "baseline": {
+            "requests": 12,
+            "tokens": 1241,
+            "decode_ms": 21192.5,
+            "decode_tps": 58.55845228264716,
+            "wall_s": 25.852534200013906,
+            "min_available_ram_mib": 944.39453125
+          }
+        },
+        {
+          "baseline": {
+            "requests": 12,
+            "tokens": 1241,
+            "decode_ms": 21223.2,
+            "decode_tps": 58.473745712239435,
+            "wall_s": 25.947484000003897,
+            "min_available_ram_mib": 928.6640625
+          }
+        }
+      ],
+      "phases": {
+        "log": "work/x16_static_after-engine.log",
+        "bench": "work/x16_static_after_screen.json",
+        "note": "Light host-side timings. GPU wait is not pure kernel time; CPU includes memory stalls. GU/quant/down are subsets of CPU. Cross-restart comparisons are screening only.",
+        "warmup": {
+          "baseline": {
+            "requests": 12,
+            "decode_tps": 43.387057301681644,
+            "ms_per_window": 44.345736434108524,
+            "tokens_per_window": 1.924031007751938,
+            "phases_ms_window": {
+              "gpu_wait": 16.212170542635658,
+              "cpu": 19.918558139534884,
+              "gu": 15.376883720930232,
+              "quant": 0.1041705426356589,
+              "down": 4.430403100775194,
+              "stage": 1.8066821705426355,
+              "draft": 2.8468682170542636,
+              "commit": 0.8108527131782945,
+              "join": 0.0
+            },
+            "vram_hit_rate": 0.6633737746948394,
+            "min_ram_mib": 1009.5859375,
+            "wall_s": 36.29030460001377,
+            "prefill_ms": 7659.4
+          }
+        },
+        "measured": {
+          "baseline": {
+            "requests": 36,
+            "decode_tps": 58.570704893635096,
+            "ms_per_window": 32.883704086911536,
+            "tokens_per_window": 1.9260217278841179,
+            "phases_ms_window": {
+              "gpu_wait": 16.555887221934817,
+              "cpu": 9.930098292809106,
+              "gu": 6.463300569063631,
+              "quant": 0.1048991205380238,
+              "down": 3.358003103983445,
+              "stage": 0.03024314536989136,
+              "draft": 2.8793326435592346,
+              "commit": 0.8117175375064666,
+              "join": 0.0
+            },
+            "vram_hit_rate": 0.6640715414500219,
+            "min_ram_mib": 928.6640625,
+            "wall_s": 77.88648890003242,
+            "prefill_ms": 14003.9
+          }
+        }
+      }
+    }
+  }
+}

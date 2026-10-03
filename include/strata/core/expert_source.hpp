@@ -73,6 +73,8 @@ public:
     /// Copy a blob (a pointer `blob()` returned) into `dst`.  The tiered source reads an unpinned one from the file
     /// with one pread; everything else is a memcpy.
     virtual void read_into(const uint8_t* src, uint8_t* dst, size_t n) const { std::memcpy(dst, src, n); }
+    /// Read into caller-owned storage while retaining the OS file-cache policy. Memory sources use memcpy.
+    virtual void read_into_cached(const uint8_t* src, uint8_t* dst, size_t n) const { std::memcpy(dst, src, n); }
     /// True when an unpinned blob costs an SSD read: the prompt path then keeps more of those reads in flight and
     /// reads them with `read_into`.  False for every RAM-resident source.
     virtual bool streams_from_ssd() const { return false; }
@@ -429,10 +431,16 @@ public:
 #endif
     }
     void read_into(const uint8_t* src, uint8_t* dst, size_t n) const override;
+#if defined(_WIN32)
+    void read_into_cached(const uint8_t* src, uint8_t* dst, size_t n) const override;
+#endif
     bool streams_from_ssd() const override { return true; }
 
     const std::string& note() const { return note_; }
     int64_t cold_prefetches() const { return cold_prefetches_; }
+    /// Windows startup: bypass the file cache when filling GPU and pinned expert tiers.
+    void set_direct_load(bool on) { direct_load_ = on ? 1 : 0; }
+    bool direct_load() const { return direct_load_ > 0; }
 #ifdef _WIN32
     void release_host_copy(int64_t layer, int64_t expert) override;
 #endif
@@ -455,6 +463,7 @@ private:
     int64_t n_expert_ = 0;
     int64_t reads_ = 0;
     int64_t cold_prefetches_ = 0;
+    int direct_load_ = -1;  // -1: environment/default; explicit settings take precedence
     std::vector<uint8_t> tier_;                          ///< per (layer, expert)
     std::vector<std::pair<uint8_t*, uint64_t>> regs_;    ///< the page-locked runs
     std::string note_;
@@ -466,6 +475,7 @@ private:
     void* hFile_ = nullptr;          ///< HANDLE: experts.bin (cached reads, positioned)
     void* hMap_ = nullptr;           ///< HANDLE: the file mapping object
     void* hDirect_ = nullptr;        ///< HANDLE: FILE_FLAG_NO_BUFFERING handle for streamed reads (read_into)
+    void* hCachedAsync_ = nullptr;   ///< HANDLE: independent cached reads from refill workers
     uint8_t* pin_arena_ = nullptr;   ///< the PINNED tier, one cudaHostAlloc arena
     std::vector<uint64_t> pin_off_;  ///< per (layer, expert): the arena offset of a pinned blob
     int64_t n_pinned_ = 0;

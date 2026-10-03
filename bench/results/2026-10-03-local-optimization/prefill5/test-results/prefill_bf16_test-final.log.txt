@@ -1,0 +1,14 @@
+PASS down T257 N320 K10240 beta0: diff/scale 1.16e-06; FP64 error/absolute-product-sum old 1.19e-08 new 2.98e-09; fast 1 fallback 0
+PASS up-tail-beta T2051 N10240 K320 beta1: diff/scale 0; FP64 error/absolute-product-sum old 0 new 0; fast 3 fallback 0
+PASS activation-fallback T1027 N320 K10240 beta1: diff/scale 1.4e-06; FP64 error/absolute-product-sum old 2.97e-09 new 0; fast 1 fallback 1
+PASS weight-fallback T128 N320 K10240 beta0: diff/scale 0; FP64 error/absolute-product-sum old 3.67e-08 new 3.67e-08; fast 0 fallback 1
+PASS zero T128 N320 K10240 beta0: diff/scale 0; FP64 error/absolute-product-sum old 0 new 0; fast 1 fallback 0
+PASS nonfinite T128 N320 K10240 beta0: diff/scale 1.11e-06; FP64 error/absolute-product-sum old 3.67e-08 new 2.97e-09; fast 1 fallback 1
+PASS subnormal T128 N320 K10240 beta0: diff/scale 0; FP64 error/absolute-product-sum old 0 new 0; fast 1 fallback 0
+PASS half-subnormal-product T128 N320 K10240 beta0: diff/scale 0; FP64 error/absolute-product-sum old 0 new 0; fast 1 fallback 0
+PASS up-partial-fallback T4097 N10240 K320 beta0: diff/scale 0; FP64 error/absolute-product-sum old 0 new 0; fast 1 fallback 3
+PASS all-row-fallback T128 N320 K10240 beta1: diff/scale 0; FP64 error/absolute-product-sum old 4.26e-08 new 4.26e-08; fast 0 fallback 1
+PASS up-long-tail T16385 N10240 K320 beta0: diff/scale 0; FP64 error/absolute-product-sum old 0 new 0; fast 2 fallback 0
+PASS short-bypass T127 N320 K10240 beta1: diff/scale 0; FP64 error/absolute-product-sum old 1.05e-08 new 1.05e-08; fast 0 fallback 0
+PASS shape-bypass T257 N129 K320 beta0: diff/scale 0; FP64 error/absolute-product-sum old 0 new 0; fast 0 fallback 0
+FAILURES: 0

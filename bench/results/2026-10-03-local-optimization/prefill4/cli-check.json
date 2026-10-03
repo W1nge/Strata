@@ -1,0 +1,56 @@
+[
+  {
+    "value": "15",
+    "valid": false,
+    "returncode": 2,
+    "diagnostic": "strata generate: --prefill-ring-large needs an integer from 16 to 512\n"
+  },
+  {
+    "value": "513",
+    "valid": false,
+    "returncode": 2,
+    "diagnostic": "strata generate: --prefill-ring-large needs an integer from 16 to 512\n"
+  },
+  {
+    "value": "x",
+    "valid": false,
+    "returncode": 2,
+    "diagnostic": "strata generate: --prefill-ring-large needs an integer from 16 to 512\n"
+  },
+  {
+    "value": "1.5",
+    "valid": false,
+    "returncode": 2,
+    "diagnostic": "strata generate: --prefill-ring-large needs an integer from 16 to 512\n"
+  },
+  {
+    "value": "-1",
+    "valid": false,
+    "returncode": 2,
+    "diagnostic": "strata generate: --prefill-ring-large needs an integer from 16 to 512\n"
+  },
+  {
+    "value": "9999999999999999999999999",
+    "valid": false,
+    "returncode": 2,
+    "diagnostic": "strata generate: --prefill-ring-large needs an integer from 16 to 512\n"
+  },
+  {
+    "value": "16",
+    "valid": true,
+    "returncode": 0,
+    "diagnostic": "help accepted"
+  },
+  {
+    "value": "384",
+    "valid": true,
+    "returncode": 0,
+    "diagnostic": "help accepted"
+  },
+  {
+    "value": "512",
+    "valid": true,
+    "returncode": 0,
+    "diagnostic": "help accepted"
+  }
+]

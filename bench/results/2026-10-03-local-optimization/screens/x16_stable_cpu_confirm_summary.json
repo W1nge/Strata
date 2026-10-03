@@ -1,0 +1,157 @@
+{
+  "warmup": {
+    "baseline": {
+      "requests": 12,
+      "tokens": 1241,
+      "decode_ms": 26775.4,
+      "decode_tps": 46.34851393443235,
+      "wall_s": 30.89572589999443,
+      "min_available_ram_mib": 350.51171875
+    },
+    "tasks12": {
+      "requests": 12,
+      "tokens": 1241,
+      "decode_ms": 25657.2,
+      "decode_tps": 48.36848915703974,
+      "wall_s": 30.22798150000017,
+      "min_available_ram_mib": 361.6015625
+    }
+  },
+  "measured": {
+    "baseline": {
+      "requests": 72,
+      "tokens": 7446,
+      "decode_ms": 138580.0,
+      "decode_tps": 53.730697070284315,
+      "wall_s": 155.57728659999157,
+      "min_available_ram_mib": 351.51171875
+    },
+    "tasks12": {
+      "requests": 72,
+      "tokens": 7446,
+      "decode_ms": 135322.6,
+      "decode_tps": 55.024068411337055,
+      "wall_s": 151.93882219999432,
+      "min_available_ram_mib": 349.703125
+    }
+  },
+  "cycles": [
+    {
+      "baseline": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 22895.4,
+        "decode_tps": 54.203027682416554,
+        "wall_s": 25.513864500002455,
+        "min_available_ram_mib": 351.51171875
+      },
+      "tasks12": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 22443.6,
+        "decode_tps": 55.29415958224171,
+        "wall_s": 25.363669699996535,
+        "min_available_ram_mib": 349.703125
+      }
+    },
+    {
+      "baseline": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 22758.2,
+        "decode_tps": 54.52979585380214,
+        "wall_s": 25.843616599995585,
+        "min_available_ram_mib": 518.18359375
+      },
+      "tasks12": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 22123.3,
+        "decode_tps": 56.09470558189782,
+        "wall_s": 24.720826599996144,
+        "min_available_ram_mib": 515.25
+      }
+    },
+    {
+      "baseline": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 22840.6,
+        "decode_tps": 54.333073561990496,
+        "wall_s": 25.445491099997525,
+        "min_available_ram_mib": 526.79296875
+      },
+      "tasks12": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 22240.2,
+        "decode_tps": 55.799857914946806,
+        "wall_s": 25.151093200000105,
+        "min_available_ram_mib": 526.57421875
+      }
+    },
+    {
+      "baseline": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 23078.5,
+        "decode_tps": 53.772992178867774,
+        "wall_s": 26.079238699998314,
+        "min_available_ram_mib": 552.5859375
+      },
+      "tasks12": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 22436.3,
+        "decode_tps": 55.31215039912998,
+        "wall_s": 25.018271000000823,
+        "min_available_ram_mib": 549.61328125
+      }
+    },
+    {
+      "baseline": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 23356.9,
+        "decode_tps": 53.13205091429085,
+        "wall_s": 25.999286400001438,
+        "min_available_ram_mib": 551.5234375
+      },
+      "tasks12": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 22960.9,
+        "decode_tps": 54.04840402597459,
+        "wall_s": 25.91993650000404,
+        "min_available_ram_mib": 555.5390625
+      }
+    },
+    {
+      "baseline": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 23650.4,
+        "decode_tps": 52.47268545140885,
+        "wall_s": 26.69578929999625,
+        "min_available_ram_mib": 522.234375
+      },
+      "tasks12": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 23118.3,
+        "decode_tps": 53.68041767777043,
+        "wall_s": 25.76502519999667,
+        "min_available_ram_mib": 524.1953125
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/x16_stable_cpu_confirm.json",
+    "arms": "work/x16_cpu_confirm_arms.json",
+    "warmups": 1,
+    "repeats": 6,
+    "max_tokens": 128,
+    "prompts": null,
+    "limit": 0
+  }
+}

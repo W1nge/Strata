@@ -1,0 +1,63 @@
+{
+  "warmup": {
+    "gpu31": {
+      "requests": 6,
+      "tokens": 445,
+      "decode_ms": 12368.2,
+      "decode_tps": 35.97936643974062,
+      "wall_s": 16.722199799994996,
+      "min_available_ram_mib": 3949.00390625
+    }
+  },
+  "measured": {
+    "gpu31": {
+      "requests": 18,
+      "tokens": 1335,
+      "decode_ms": 20956.2,
+      "decode_tps": 63.70429753485842,
+      "wall_s": 26.57597160001751,
+      "min_available_ram_mib": 3871.12890625
+    }
+  },
+  "cycles": [
+    {
+      "gpu31": {
+        "requests": 6,
+        "tokens": 445,
+        "decode_ms": 7040.8,
+        "decode_tps": 63.203045108510395,
+        "wall_s": 8.936201400007121,
+        "min_available_ram_mib": 3894.953125
+      }
+    },
+    {
+      "gpu31": {
+        "requests": 6,
+        "tokens": 445,
+        "decode_ms": 7033.7,
+        "decode_tps": 63.2668439086114,
+        "wall_s": 8.900956800011045,
+        "min_available_ram_mib": 3873.30078125
+      }
+    },
+    {
+      "gpu31": {
+        "requests": 6,
+        "tokens": 445,
+        "decode_ms": 6881.7,
+        "decode_tps": 64.66425447200547,
+        "wall_s": 8.738813399999344,
+        "min_available_ram_mib": 3871.12890625
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/decode10_conservative31_screen.json",
+    "arms": "work/decode10_gpu31_arm.json",
+    "warmups": 1,
+    "repeats": 3,
+    "max_tokens": 256,
+    "prompts": "work/fresh_prompts_x16.json",
+    "limit": 0
+  }
+}

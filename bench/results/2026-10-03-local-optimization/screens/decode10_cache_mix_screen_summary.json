@@ -1,0 +1,53 @@
+{
+  "warmup": {
+    "gpu15": {
+      "requests": 6,
+      "tokens": 447,
+      "decode_ms": 15074.6,
+      "decode_tps": 29.652528093614425,
+      "wall_s": 19.526507499991567,
+      "min_available_ram_mib": 2418.125
+    }
+  },
+  "measured": {
+    "gpu15": {
+      "requests": 12,
+      "tokens": 894,
+      "decode_ms": 14562.1,
+      "decode_tps": 61.392244250485845,
+      "wall_s": 18.44109710000339,
+      "min_available_ram_mib": 2302.60546875
+    }
+  },
+  "cycles": [
+    {
+      "gpu15": {
+        "requests": 6,
+        "tokens": 447,
+        "decode_ms": 7291.9,
+        "decode_tps": 61.30089551420069,
+        "wall_s": 9.235502100003941,
+        "min_available_ram_mib": 2361.22265625
+      }
+    },
+    {
+      "gpu15": {
+        "requests": 6,
+        "tokens": 447,
+        "decode_ms": 7270.2,
+        "decode_tps": 61.48386564331105,
+        "wall_s": 9.205594999999448,
+        "min_available_ram_mib": 2302.60546875
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/decode10_cache_mix_screen.json",
+    "arms": "work/decode10_best_single_arm.json",
+    "warmups": 1,
+    "repeats": 2,
+    "max_tokens": 256,
+    "prompts": "work/fresh_prompts_x16.json",
+    "limit": 0
+  }
+}

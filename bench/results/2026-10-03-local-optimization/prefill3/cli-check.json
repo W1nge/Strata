@@ -1,0 +1,58 @@
+[
+  {
+    "flag": "--refill-mode",
+    "value": "4",
+    "valid": false,
+    "returncode": 2,
+    "diagnostic": "--refill-mode requires an integer from 0 to 3\n"
+  },
+  {
+    "flag": "--refill-mode",
+    "value": "1.5",
+    "valid": false,
+    "returncode": 2,
+    "diagnostic": "--refill-mode requires an integer from 0 to 3\n"
+  },
+  {
+    "flag": "--prefill-ring",
+    "value": "15",
+    "valid": false,
+    "returncode": 2,
+    "diagnostic": "strata generate: --prefill-ring needs an integer from 16 to 512\n"
+  },
+  {
+    "flag": "--prefill-ring",
+    "value": "513",
+    "valid": false,
+    "returncode": 2,
+    "diagnostic": "strata generate: --prefill-ring needs an integer from 16 to 512\n"
+  },
+  {
+    "flag": "--prefill-ring",
+    "value": "x",
+    "valid": false,
+    "returncode": 2,
+    "diagnostic": "strata generate: --prefill-ring needs an integer from 16 to 512\n"
+  },
+  {
+    "flag": "--prefill-ring",
+    "value": "16",
+    "valid": true,
+    "returncode": 0,
+    "diagnostic": "help accepted"
+  },
+  {
+    "flag": "--prefill-ring",
+    "value": "512",
+    "valid": true,
+    "returncode": 0,
+    "diagnostic": "help accepted"
+  },
+  {
+    "flag": "--refill-mode",
+    "value": "3",
+    "valid": true,
+    "returncode": 0,
+    "diagnostic": "help accepted"
+  }
+]

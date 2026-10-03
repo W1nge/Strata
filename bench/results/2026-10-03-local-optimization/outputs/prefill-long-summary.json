@@ -1,0 +1,117 @@
+{
+  "method": "Fresh-process ABBA, original executable A vs staged cached refill + ring 192 B; chunk 16384; single request concurrency; cache_n=0; no profiler; OS file cache not purged. 31K is first measured request each process.",
+  "groups": {
+    "8K": {
+      "before": {
+        "n": 4,
+        "prompt_seconds": [
+          16.5688,
+          14.7352,
+          14.8597,
+          14.881
+        ],
+        "median_seconds": 14.87035,
+        "min_seconds": 14.7352,
+        "max_seconds": 16.5688,
+        "median_ttft_seconds": 14.917974399999366
+      },
+      "after": {
+        "n": 4,
+        "prompt_seconds": [
+          13.887,
+          13.8128,
+          13.8344,
+          15.9163
+        ],
+        "median_seconds": 13.860700000000001,
+        "min_seconds": 13.8128,
+        "max_seconds": 15.9163,
+        "median_ttft_seconds": 13.91314935000264
+      },
+      "latency_reduction_percent": 6.789685515135813,
+      "throughput_increase_percent": 7.284264142503627
+    },
+    "16K": {
+      "before": {
+        "n": 4,
+        "prompt_seconds": [
+          20.7258,
+          22.4968,
+          21.375,
+          22.998099999999997
+        ],
+        "median_seconds": 21.9359,
+        "min_seconds": 20.7258,
+        "max_seconds": 22.998099999999997,
+        "median_ttft_seconds": 22.000525950003066
+      },
+      "after": {
+        "n": 4,
+        "prompt_seconds": [
+          17.6642,
+          17.7233,
+          17.6888,
+          17.6904
+        ],
+        "median_seconds": 17.6896,
+        "min_seconds": 17.6642,
+        "max_seconds": 17.7233,
+        "median_ttft_seconds": 17.75175920000038
+      },
+      "latency_reduction_percent": 19.357765124749847,
+      "throughput_increase_percent": 24.004499819102755
+    },
+    "31K_first_in_process": {
+      "before": {
+        "n": 2,
+        "prompt_seconds": [
+          71.3485,
+          69.164
+        ],
+        "median_seconds": 70.25625,
+        "min_seconds": 69.164,
+        "max_seconds": 71.3485,
+        "median_ttft_seconds": 70.38054235000163
+      },
+      "after": {
+        "n": 2,
+        "prompt_seconds": [
+          42.9995,
+          44.8491
+        ],
+        "median_seconds": 43.9243,
+        "min_seconds": 42.9995,
+        "max_seconds": 44.8491,
+        "median_ttft_seconds": 44.04921694999939
+      },
+      "latency_reduction_percent": 37.47986833911573,
+      "throughput_increase_percent": 59.94847954321409
+    },
+    "31K_repeat": {
+      "before": {
+        "n": 2,
+        "prompt_seconds": [
+          43.2853,
+          41.2659
+        ],
+        "median_seconds": 42.2756,
+        "min_seconds": 41.2659,
+        "max_seconds": 43.2853,
+        "median_ttft_seconds": 42.39501095000742
+      },
+      "after": {
+        "n": 2,
+        "prompt_seconds": [
+          36.8762,
+          35.2844
+        ],
+        "median_seconds": 36.080299999999994,
+        "min_seconds": 35.2844,
+        "max_seconds": 36.8762,
+        "median_ttft_seconds": 36.1852416499969
+      },
+      "latency_reduction_percent": 14.654552507829589,
+      "throughput_increase_percent": 17.17086609590277
+    }
+  }
+}

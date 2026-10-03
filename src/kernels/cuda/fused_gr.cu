@@ -179,18 +179,45 @@ __global__ void __launch_bounds__(THREADS) gr_norm_multi_kernel(GrMulti m) {
     for (int i = t; i < D; i += THREADS) xn[i] *= s_rs[i / N];
 }
 
+// Split the four independent streams while retaining the original reduction order.
+__global__ void __launch_bounds__(THREADS) gr_norm_stream_kernel(GrMulti m) {
+    __shared__ float part[WARPS], inv;
+    const FusedGrArgs& a=m.a[blockIdx.x];
+    float* xn=m.xn+(size_t)blockIdx.x*D;
+    const int c=blockIdx.y, t=threadIdx.x, lane=t&31, warp=t>>5;
+    const float gw=a.apply ? 2.0f*sigmoidf_(a.inj_prev[c]/(float)HC) : 0.0f;
+    float ss=0.0f;
+    for(int i=t*4;i<D;i+=THREADS*4) {
+        if(i/N!=c) continue;
+        const int d=i-c*N;
+        float4 r=*reinterpret_cast<const float4*>(a.R+i);
+        if(a.apply){const float4 b=*reinterpret_cast<const float4*>(a.bo_prev+d);r.x=fmaf(b.x,gw,r.x);r.y=fmaf(b.y,gw,r.y);r.z=fmaf(b.z,gw,r.z);r.w=fmaf(b.w,gw,r.w);}
+        const float4 g=*reinterpret_cast<const float4*>(a.w_norm+i);
+        ss+=r.x*r.x+r.y*r.y+r.z*r.z+r.w*r.w;
+        *reinterpret_cast<float4*>(xn+i)=make_float4(r.x*g.x,r.y*g.y,r.z*g.z,r.w*g.w);
+    }
+    ss=warp_sum(ss);if(lane==0)part[warp]=ss;
+    __syncthreads();
+    if(t==0){float s=0.0f;for(int w=0;w<WARPS;++w)s+=part[w];inv=rsqrtf(s/(float)N+a.eps);a.rs[c]=inv;}
+    __syncthreads();
+    for(int d=t;d<N;d+=THREADS)xn[c*N+d]*=inv;
+}
+
 constexpr int TILE = 2560;             // xn floats per token staged at a time: 320 chunks of 8, 10 per lane
 constexpr int TQ = TILE / 8 / 32;      // uint4 weight chunks per lane per tile
 
 // Step 2 of `gr_down_kernel` for T tokens.  One warp per row (so each lane accumulates the same chunks in the
 // same order as the single-token kernel); per tile the lane's 10 weight chunks are loaded BEFORE the activation
 // tile is staged, so the DRAM and L2 traffic are in flight together.
-__global__ void __launch_bounds__(THREADS) gr_down_multi_kernel(GrMulti m) {
+template<int Tile, int DownWarps>
+__global__ void __launch_bounds__(DownWarps * 32) gr_down_multi_kernel(GrMulti m) {
+    constexpr int TILE = Tile, TQ = TILE / 256;
+    constexpr int BLOCK_THREADS = DownWarps * 32, DOWN_ROWS = LR / DownWarps;
     extern __shared__ __align__(16) float tile[];   // [T][TILE]
     const int t = threadIdx.x, lane = t & 31, warp = t >> 5;
     const int T = m.T;
-    const bool inject_block = blockIdx.x == DOWN_BLOCKS;
-    const int row = inject_block ? warp : blockIdx.x * WARPS + warp;
+    const bool inject_block = blockIdx.x == DOWN_ROWS;
+    const int row = inject_block ? warp : blockIdx.x * DownWarps + warp;
     const bool active = !(inject_block && (m.a[0].w_inject == nullptr || warp >= HC));
     const uint16_t* wrow = (inject_block ? m.a[0].w_inject : m.a[0].w_down) + (size_t) (active ? row : 0) * D;
     const uint4* w4 = reinterpret_cast<const uint4*>(wrow);
@@ -206,7 +233,7 @@ __global__ void __launch_bounds__(THREADS) gr_down_multi_kernel(GrMulti m) {
         __syncthreads();                                   // the previous tile is consumed
         const float4* src4 = reinterpret_cast<const float4*>(m.xn);
         float4* tile4 = reinterpret_cast<float4*>(tile);
-        for (int i = t; i < T * (TILE / 4); i += THREADS) {
+        for (int i = t; i < T * (TILE / 4); i += BLOCK_THREADS) {
             const int k = i / (TILE / 4), off = i - k * (TILE / 4);
             tile4[i] = src4[((size_t) k * D + base) / 4 + off];
         }
@@ -297,11 +324,14 @@ __global__ void __launch_bounds__(THREADS) gr_up_multi_kernel(GrMulti m) {
 }  // namespace
 
 void fused_gr_read_multi(const FusedGrArgs* a, int n_tok, float* xn_scratch, void* stream, unsigned long long* stamp_buf,
-                         int stamp_i0) {
+                         int stamp_i0, int tuning) {
     if (n_tok < 1 || n_tok > kFusedGrMaxT || xn_scratch == nullptr) {
         std::fprintf(stderr, "fused_gr_read_multi: invalid arguments\n");
         std::exit(1);
     }
+    // The two-kernel path avoids a separate normalization launch for one token.
+    // Detailed stage profiling keeps the split path so each stamp retains its meaning.
+    if ((tuning & 1) && n_tok == 1 && !stamp_buf) { fused_gr_read(a[0], stream); return; }
     GrMulti m;
     for (int t = 0; t < n_tok; ++t) {
         m.a[t] = a[t];
@@ -316,7 +346,8 @@ void fused_gr_read_multi(const FusedGrArgs* a, int n_tok, float* xn_scratch, voi
     m.xn = xn_scratch;
     m.T = n_tok;
     cudaStream_t st = (cudaStream_t) stream;
-    gr_norm_multi_kernel<<<n_tok, THREADS, 0, st>>>(m);
+    if (tuning & 8) gr_norm_stream_kernel<<<dim3(n_tok, 4), THREADS, 0, st>>>(m);
+    else gr_norm_multi_kernel<<<n_tok, THREADS, 0, st>>>(m);
     if (stamp_buf) gpu_stamp(stamp_buf, stamp_i0, stream);
     // the shared-memory opt-in is a per-DEVICE setting: once per device, not once per process (a layer split
     // runs this kernel on two cards)
@@ -330,7 +361,7 @@ void fused_gr_read_multi(const FusedGrArgs* a, int n_tok, float* xn_scratch, voi
         cudaDeviceGetAttribute(&optin, cudaDevAttrMaxSharedMemoryPerBlockOptin, dev);
         int want = (int) (kFusedGrMaxT * TILE * sizeof(float));
         if (optin > 0 && want > optin) want = optin;
-        cudaFuncSetAttribute(gr_down_multi_kernel, cudaFuncAttributeMaxDynamicSharedMemorySize, want);
+        cudaFuncSetAttribute(gr_down_multi_kernel<2560, 8>, cudaFuncAttributeMaxDynamicSharedMemorySize, want);
         cudaGetLastError();      // drop any error the attempt left behind
         // Turing port: the down kernel stages n_tok*TILE floats of dynamic shared memory - 80 KB at the full
         // 8 tokens.  A card whose opt-in is below that (Turing: 64 KB, so 7+ tokens fail to launch as
@@ -343,8 +374,11 @@ void fused_gr_read_multi(const FusedGrArgs* a, int n_tok, float* xn_scratch, voi
         attr[dev] = true;
     }
     const int chunk_tok = (dev >= 0 && dev < 64 && chunk[dev]) ? chunk[dev] : kFusedGrMaxT;
-    if (chunk_tok >= n_tok) {
-        gr_down_multi_kernel<<<DOWN_BLOCKS + 1, THREADS, (size_t) n_tok * TILE * sizeof(float), st>>>(m);
+    if (tuning & 2) {
+        // 1280 floats/token fit all eight tokens below 48 KiB. Four warps give 81 blocks.
+        gr_down_multi_kernel<1280, 4><<<81, 128, (size_t) n_tok * 1280 * sizeof(float), st>>>(m);
+    } else if (chunk_tok >= n_tok) {
+        gr_down_multi_kernel<2560, 8><<<DOWN_BLOCKS + 1, THREADS, (size_t) n_tok * TILE * sizeof(float), st>>>(m);
     } else {
         for (int c0 = 0; c0 < n_tok; c0 += chunk_tok) {
             const int ct = n_tok - c0 < chunk_tok ? n_tok - c0 : chunk_tok;
@@ -352,7 +386,7 @@ void fused_gr_read_multi(const FusedGrArgs* a, int n_tok, float* xn_scratch, voi
             c.xn = xn_scratch + (size_t) c0 * D;
             c.T = ct;
             for (int k = 0; k < ct; ++k) c.a[k] = a[c0 + k];
-            gr_down_multi_kernel<<<DOWN_BLOCKS + 1, THREADS, (size_t) ct * TILE * sizeof(float), st>>>(c);
+            gr_down_multi_kernel<2560, 8><<<DOWN_BLOCKS + 1, THREADS, (size_t) ct * TILE * sizeof(float), st>>>(c);
         }
     }
     if (stamp_buf) gpu_stamp(stamp_buf, stamp_i0 + 1, stream);

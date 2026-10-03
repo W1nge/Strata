@@ -133,6 +133,16 @@ public:
     /// Plan v0.3 P6: the same for a native pack's layer (ggml-cpu arithmetic, `nact` activations).
     void run_split_multi_native(const NativeFmt& f, ExpertJobMulti* jobs, int n, int64_t layer = -1);
     bool profile_enabled() const { return profile_on_; }
+    // Request-scoped calibration controls; change only on the host between batches.
+    bool set_native_tuning(int tasks, int order, int nt1 = 0, int shape = 0) {
+        if (tasks < 1 || tasks > 16 || order < 0 || order > 3 || nt1 < 0 || nt1 > 7 || shape < 0 || shape > 2) return false;
+        native_tasks_ = tasks;
+        native_order_ = order;
+        native_nt1_ = nt1;
+        native_shape_ = shape;
+        return true;
+    }
+    bool needs_source() const { return profile_on_ || native_order_ == 1 || native_order_ == 3; }
     // Call only on the host between batches. A null stream resets without printing.
     void profile_report(std::FILE* stream);
     static constexpr int kMaxSplitMulti = 96;
@@ -187,6 +197,10 @@ private:
     int n_ = 0;
     bool host_works_ = true;
     bool profile_on_ = false;
+    int native_shape_ = 0; // 0 uniform; 1/2 progressively smaller row ranges
+    int native_tasks_ = 3;
+    int native_order_ = 0;  // 0 routing order, 1 pinned first, 2 NT descending, 3 pinned then NT
+    int native_nt1_ = 0;   // AVX2 NT=1 candidates: bits 0/1/2 select IQ2_XXS/IQ2_XS/IQ3_S
     struct ProfileCell {
         double ns = 0;
         uint64_t calls = 0, rows = 0;
@@ -227,6 +241,8 @@ private:
     // (kIdle, kWaitParked, kWaitDone, or its job), printed by the serve watchdog through `diag`
     static constexpr int32_t kParked = -1, kSleeping = -2, kBetween = -3, kIdle = -10, kWaitParked = -11,
                              kWaitDone = -12;
+    // Constructor-fixed stride: diagnostics otherwise share a cache line across workers.
+    size_t wstate_stride_ = 1;
     std::unique_ptr<std::atomic<int32_t>[]> wstate_;
     std::atomic<int32_t> hstate_{kIdle};
     std::atomic<int64_t> hstate_ms_{0};

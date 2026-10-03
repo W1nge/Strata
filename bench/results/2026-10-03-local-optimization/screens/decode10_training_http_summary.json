@@ -1,0 +1,43 @@
+{
+  "warmup": {
+    "gpu15": {
+      "requests": 0,
+      "tokens": 0,
+      "decode_ms": 0,
+      "decode_tps": null,
+      "wall_s": 0,
+      "min_available_ram_mib": null
+    }
+  },
+  "measured": {
+    "gpu15": {
+      "requests": 16,
+      "tokens": 2982,
+      "decode_ms": 64021.5,
+      "decode_tps": 46.578102668634756,
+      "wall_s": 72.99049750001723,
+      "min_available_ram_mib": 108.59765625
+    }
+  },
+  "cycles": [
+    {
+      "gpu15": {
+        "requests": 16,
+        "tokens": 2982,
+        "decode_ms": 64021.5,
+        "decode_tps": 46.578102668634756,
+        "wall_s": 72.99049750001723,
+        "min_available_ram_mib": 108.59765625
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/decode10_training_http.json",
+    "arms": "work/decode10_best_single_arm.json",
+    "warmups": 0,
+    "repeats": 1,
+    "max_tokens": 192,
+    "prompts": "work/decode10_profile_training.json",
+    "limit": 0
+  }
+}

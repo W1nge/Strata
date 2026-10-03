@@ -1,0 +1,193 @@
+{
+  "warmup": {
+    "baseline": {
+      "requests": 12,
+      "tokens": 1241,
+      "decode_ms": 23184.2,
+      "decode_tps": 53.52783361082116,
+      "wall_s": 26.068559299998014,
+      "min_available_ram_mib": 1552.6484375
+    },
+    "tasks12": {
+      "requests": 12,
+      "tokens": 1241,
+      "decode_ms": 22584.1,
+      "decode_tps": 54.95016405347125,
+      "wall_s": 25.553308799998376,
+      "min_available_ram_mib": 1549.63671875
+    }
+  },
+  "measured": {
+    "baseline": {
+      "requests": 96,
+      "tokens": 9934,
+      "decode_ms": 193502.3,
+      "decode_tps": 51.33789107416295,
+      "wall_s": 216.93401090000134,
+      "min_available_ram_mib": 915.62109375
+    },
+    "tasks12": {
+      "requests": 96,
+      "tokens": 9941,
+      "decode_ms": 190826.3,
+      "decode_tps": 52.094496408513926,
+      "wall_s": 213.95101570000134,
+      "min_available_ram_mib": 915.16015625
+    }
+  },
+  "cycles": [
+    {
+      "baseline": {
+        "requests": 12,
+        "tokens": 1246,
+        "decode_ms": 23171.399999999998,
+        "decode_tps": 53.77318591021691,
+        "wall_s": 25.830414699999892,
+        "min_available_ram_mib": 1119.1640625
+      },
+      "tasks12": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 23423.7,
+        "decode_tps": 52.98052826837775,
+        "wall_s": 26.401643800000784,
+        "min_available_ram_mib": 1213.32421875
+      }
+    },
+    {
+      "baseline": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 23901.6,
+        "decode_tps": 51.92121029554507,
+        "wall_s": 27.010558900001342,
+        "min_available_ram_mib": 1024.05859375
+      },
+      "tasks12": {
+        "requests": 12,
+        "tokens": 1245,
+        "decode_ms": 23139.7,
+        "decode_tps": 53.80363617505845,
+        "wall_s": 25.796538199998395,
+        "min_available_ram_mib": 1021.56640625
+      }
+    },
+    {
+      "baseline": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 24132.6,
+        "decode_tps": 51.42421454795588,
+        "wall_s": 26.85053909999897,
+        "min_available_ram_mib": 1010.6640625
+      },
+      "tasks12": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 23792.2,
+        "decode_tps": 52.15995158077017,
+        "wall_s": 26.861270600000353,
+        "min_available_ram_mib": 1010.00390625
+      }
+    },
+    {
+      "baseline": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 24573.2,
+        "decode_tps": 50.50217309914866,
+        "wall_s": 27.706574400000136,
+        "min_available_ram_mib": 976.4453125
+      },
+      "tasks12": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 23855.4,
+        "decode_tps": 52.021764464230316,
+        "wall_s": 26.54931940000006,
+        "min_available_ram_mib": 975.9296875
+      }
+    },
+    {
+      "baseline": {
+        "requests": 12,
+        "tokens": 1242,
+        "decode_ms": 24048.2,
+        "decode_tps": 51.64627706023735,
+        "wall_s": 26.80616359999931,
+        "min_available_ram_mib": 915.62109375
+      },
+      "tasks12": {
+        "requests": 12,
+        "tokens": 1246,
+        "decode_ms": 23877.5,
+        "decode_tps": 52.18301748508009,
+        "wall_s": 26.9849903000013,
+        "min_available_ram_mib": 915.16015625
+      }
+    },
+    {
+      "baseline": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 24809.6,
+        "decode_tps": 50.020959628530896,
+        "wall_s": 27.939780900000187,
+        "min_available_ram_mib": 956.140625
+      },
+      "tasks12": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 24493.0,
+        "decode_tps": 50.667537663822316,
+        "wall_s": 27.2454287999999,
+        "min_available_ram_mib": 950.08984375
+      }
+    },
+    {
+      "baseline": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 24468.0,
+        "decode_tps": 50.71930684976296,
+        "wall_s": 27.25191950000044,
+        "min_available_ram_mib": 936.83203125
+      },
+      "tasks12": {
+        "requests": 12,
+        "tokens": 1245,
+        "decode_ms": 24191.6,
+        "decode_tps": 51.464144579110105,
+        "wall_s": 27.30601089999982,
+        "min_available_ram_mib": 936.2265625
+      }
+    },
+    {
+      "baseline": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 24397.7,
+        "decode_tps": 50.865450431803,
+        "wall_s": 27.538059800001065,
+        "min_available_ram_mib": 939.1796875
+      },
+      "tasks12": {
+        "requests": 12,
+        "tokens": 1241,
+        "decode_ms": 24053.2,
+        "decode_tps": 51.59396670713252,
+        "wall_s": 26.805813700000726,
+        "min_available_ram_mib": 924.734375
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/x16_plan_audit_pairs.json",
+    "arms": "work/x16_cpu_confirm_arms.json",
+    "warmups": 1,
+    "repeats": 8,
+    "max_tokens": 128,
+    "prompts": null,
+    "limit": 0
+  }
+}

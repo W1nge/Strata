@@ -1,0 +1,526 @@
+[
+  {
+    "name": "avx2_10g_http",
+    "overall": {
+      "requests": 18,
+      "tokens": 1434,
+      "decode_ms": 57629.5,
+      "decode_tps": 24.883089389982562,
+      "wall_tps": 19.63383215206094,
+      "draft_acceptance": 0.7176186645213194,
+      "min_available_ram_mib": 82.3125
+    },
+    "passes": [
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 25914.7,
+        "decode_tps": 18.252188912084648,
+        "wall_tps": 14.591018366919771,
+        "draft_acceptance": 0.7036144578313253,
+        "min_available_ram_mib": 110.9609375
+      },
+      {
+        "requests": 6,
+        "tokens": 474,
+        "decode_ms": 18409.4,
+        "decode_tps": 25.747715840820447,
+        "wall_tps": 19.63651298233239,
+        "draft_acceptance": 0.7142857142857143,
+        "min_available_ram_mib": 82.3125
+      },
+      {
+        "requests": 6,
+        "tokens": 487,
+        "decode_ms": 13305.4,
+        "decode_tps": 36.60168052069085,
+        "wall_tps": 29.548665790976333,
+        "draft_acceptance": 0.7349397590361446,
+        "min_available_ram_mib": 111.08984375
+      }
+    ]
+  },
+  {
+    "name": "baseline_http",
+    "overall": {
+      "requests": 18,
+      "tokens": 1428,
+      "decode_ms": 147672.3,
+      "decode_tps": 9.670059990939398,
+      "wall_tps": 7.770347924298244,
+      "draft_acceptance": 0.7222672064777328,
+      "min_available_ram_mib": null
+    },
+    "passes": [
+      {
+        "requests": 6,
+        "tokens": 477,
+        "decode_ms": 30821.1,
+        "decode_tps": 15.476410640762335,
+        "wall_tps": 12.355320524144574,
+        "draft_acceptance": 0.7364532019704434,
+        "min_available_ram_mib": null
+      },
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 70150.59999999999,
+        "decode_tps": 6.742636556209071,
+        "wall_tps": 5.552290607820211,
+        "draft_acceptance": 0.7153284671532847,
+        "min_available_ram_mib": null
+      },
+      {
+        "requests": 6,
+        "tokens": 478,
+        "decode_ms": 46700.6,
+        "decode_tps": 10.235414534288639,
+        "wall_tps": 7.969503836596587,
+        "draft_acceptance": 0.715311004784689,
+        "min_available_ram_mib": null
+      }
+    ]
+  },
+  {
+    "name": "final_heldout_http",
+    "overall": {
+      "requests": 18,
+      "tokens": 4456,
+      "decode_ms": 96136.1,
+      "decode_tps": 46.35095453216845,
+      "wall_tps": 41.531911296159066,
+      "draft_acceptance": 0.6195238095238095,
+      "min_available_ram_mib": 250.44921875
+    },
+    "passes": [
+      {
+        "requests": 6,
+        "tokens": 1499,
+        "decode_ms": 36814.2,
+        "decode_tps": 40.7179838214602,
+        "wall_tps": 36.22349342546387,
+        "draft_acceptance": 0.6205420827389444,
+        "min_available_ram_mib": 427.8984375
+      },
+      {
+        "requests": 6,
+        "tokens": 1470,
+        "decode_ms": 28419.8,
+        "decode_tps": 51.72450193175181,
+        "wall_tps": 46.29601810026138,
+        "draft_acceptance": 0.6332607116920842,
+        "min_available_ram_mib": 282.04296875
+      },
+      {
+        "requests": 6,
+        "tokens": 1487,
+        "decode_ms": 30902.1,
+        "decode_tps": 48.11970707492371,
+        "wall_tps": 43.534499178816944,
+        "draft_acceptance": 0.6052076002814919,
+        "min_available_ram_mib": 250.44921875
+      }
+    ]
+  },
+  {
+    "name": "final_memory_http",
+    "overall": {
+      "requests": 18,
+      "tokens": 1419,
+      "decode_ms": 28738.2,
+      "decode_tps": 49.376787690251994,
+      "wall_tps": 38.4419535292706,
+      "draft_acceptance": 0.710804224207961,
+      "min_available_ram_mib": 4988.75390625
+    },
+    "passes": [
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 13097.1,
+        "decode_tps": 36.11486512281345,
+        "wall_tps": 27.765092874097824,
+        "draft_acceptance": 0.7087378640776699,
+        "min_available_ram_mib": 5034.13671875
+      },
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 7825.5,
+        "decode_tps": 60.4434221455498,
+        "wall_tps": 47.49132545333443,
+        "draft_acceptance": 0.7114914425427873,
+        "min_available_ram_mib": 4992.15625
+      },
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 7815.6,
+        "decode_tps": 60.519985669686264,
+        "wall_tps": 47.69441757111745,
+        "draft_acceptance": 0.7121951219512195,
+        "min_available_ram_mib": 4988.75390625
+      }
+    ]
+  },
+  {
+    "name": "heldout_static_http",
+    "overall": {
+      "requests": 12,
+      "tokens": 2998,
+      "decode_ms": 86466.1,
+      "decode_tps": 34.672547969666724,
+      "wall_tps": 30.01001205273337,
+      "draft_acceptance": 0.620456165359943,
+      "min_available_ram_mib": 17.24609375
+    },
+    "passes": [
+      {
+        "requests": 6,
+        "tokens": 1499,
+        "decode_ms": 55364.3,
+        "decode_tps": 27.07520911489895,
+        "wall_tps": 23.026288048541183,
+        "draft_acceptance": 0.6236635780470421,
+        "min_available_ram_mib": 17.24609375
+      },
+      {
+        "requests": 6,
+        "tokens": 1499,
+        "decode_ms": 31101.8,
+        "decode_tps": 48.19656740124366,
+        "wall_tps": 43.07411084388615,
+        "draft_acceptance": 0.617248752672844,
+        "min_available_ram_mib": 112.765625
+      }
+    ]
+  },
+  {
+    "name": "prefetch_0g_http",
+    "overall": {
+      "requests": 18,
+      "tokens": 1423,
+      "decode_ms": 61040.4,
+      "decode_tps": 23.312429145287382,
+      "wall_tps": 18.160818460690226,
+      "draft_acceptance": 0.7219950940310711,
+      "min_available_ram_mib": 111.16796875
+    },
+    "passes": [
+      {
+        "requests": 6,
+        "tokens": 477,
+        "decode_ms": 32313.6,
+        "decode_tps": 14.761586452762923,
+        "wall_tps": 11.849437852979408,
+        "draft_acceptance": 0.7388059701492538,
+        "min_available_ram_mib": 111.25390625
+      },
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 16683.2,
+        "decode_tps": 28.35187494005946,
+        "wall_tps": 20.50496960046572,
+        "draft_acceptance": 0.7192118226600985,
+        "min_available_ram_mib": 111.171875
+      },
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 12043.6,
+        "decode_tps": 39.27397123783586,
+        "wall_tps": 31.464433565559776,
+        "draft_acceptance": 0.708433734939759,
+        "min_available_ram_mib": 111.16796875
+      }
+    ]
+  },
+  {
+    "name": "prefetch_10g_http",
+    "overall": {
+      "requests": 18,
+      "tokens": 1423,
+      "decode_ms": 49616.0,
+      "decode_tps": 28.680264430828764,
+      "wall_tps": 22.59872990850778,
+      "draft_acceptance": 0.7224025974025974,
+      "min_available_ram_mib": 99.484375
+    },
+    "passes": [
+      {
+        "requests": 6,
+        "tokens": 477,
+        "decode_ms": 24562.6,
+        "decode_tps": 19.419768265574493,
+        "wall_tps": 15.272001600300532,
+        "draft_acceptance": 0.7333333333333333,
+        "min_available_ram_mib": 99.484375
+      },
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 13469.2,
+        "decode_tps": 35.11715617854067,
+        "wall_tps": 27.123900313675794,
+        "draft_acceptance": 0.7250608272506083,
+        "min_available_ram_mib": 108.52734375
+      },
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 11584.199999999999,
+        "decode_tps": 40.83147735708983,
+        "wall_tps": 33.08613490472511,
+        "draft_acceptance": 0.7091346153846154,
+        "min_available_ram_mib": 111.12109375
+      }
+    ]
+  },
+  {
+    "name": "trim_10g_http",
+    "overall": {
+      "requests": 18,
+      "tokens": 1419,
+      "decode_ms": 40267.2,
+      "decode_tps": 35.23959947550364,
+      "wall_tps": 27.114865702373496,
+      "draft_acceptance": 0.7012882447665056,
+      "min_available_ram_mib": 3474.9921875
+    },
+    "passes": [
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 17339.6,
+        "decode_tps": 27.2785992756465,
+        "wall_tps": 20.9874258164389,
+        "draft_acceptance": 0.6752941176470588,
+        "min_available_ram_mib": 4110.8828125
+      },
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 11606.5,
+        "decode_tps": 40.7530263214578,
+        "wall_tps": 31.02850819300397,
+        "draft_acceptance": 0.7174447174447175,
+        "min_available_ram_mib": 3546.8828125
+      },
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 11321.1,
+        "decode_tps": 41.780392364699544,
+        "wall_tps": 32.505091685497334,
+        "draft_acceptance": 0.7121951219512195,
+        "min_available_ram_mib": 3474.9921875
+      }
+    ]
+  },
+  {
+    "name": "trim_10g_minp0_http",
+    "overall": {
+      "requests": 18,
+      "tokens": 1429,
+      "decode_ms": 37727.7,
+      "decode_tps": 37.87667946893132,
+      "wall_tps": 29.736464423379186,
+      "draft_acceptance": 0.5736137667304015,
+      "min_available_ram_mib": 2810.78125
+    },
+    "passes": [
+      {
+        "requests": 6,
+        "tokens": 472,
+        "decode_ms": 12699.6,
+        "decode_tps": 37.16652492991905,
+        "wall_tps": 28.884735280297097,
+        "draft_acceptance": 0.5741811175337187,
+        "min_available_ram_mib": 3140.67578125
+      },
+      {
+        "requests": 6,
+        "tokens": 478,
+        "decode_ms": 12526.2,
+        "decode_tps": 38.16001660519551,
+        "wall_tps": 30.094003657085658,
+        "draft_acceptance": 0.578544061302682,
+        "min_available_ram_mib": 2810.78125
+      },
+      {
+        "requests": 6,
+        "tokens": 479,
+        "decode_ms": 12501.9,
+        "decode_tps": 38.31417624521073,
+        "wall_tps": 30.256892322698626,
+        "draft_acceptance": 0.5681818181818182,
+        "min_available_ram_mib": 2846.7421875
+      }
+    ]
+  },
+  {
+    "name": "trim_10g_static_http",
+    "overall": {
+      "requests": 18,
+      "tokens": 1419,
+      "decode_ms": 28475.9,
+      "decode_tps": 49.83161199470429,
+      "wall_tps": 38.779120051540104,
+      "draft_acceptance": 0.7116165718927701,
+      "min_available_ram_mib": 4999.4609375
+    },
+    "passes": [
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 12773.1,
+        "decode_tps": 37.03094785134384,
+        "wall_tps": 28.295518128137154,
+        "draft_acceptance": 0.7104622871046229,
+        "min_available_ram_mib": 5090.46875
+      },
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 7856.6,
+        "decode_tps": 60.20415956011506,
+        "wall_tps": 47.51858071945979,
+        "draft_acceptance": 0.7121951219512195,
+        "min_available_ram_mib": 5065.68359375
+      },
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 7846.2,
+        "decode_tps": 60.283959113966,
+        "wall_tps": 47.674592142552946,
+        "draft_acceptance": 0.7121951219512195,
+        "min_available_ram_mib": 4999.4609375
+      }
+    ]
+  },
+  {
+    "name": "vnni_10g_http",
+    "overall": {
+      "requests": 18,
+      "tokens": 1427,
+      "decode_ms": 72149.5,
+      "decode_tps": 19.77837684252836,
+      "wall_tps": 15.351201204222907,
+      "draft_acceptance": 0.7092369477911646,
+      "min_available_ram_mib": 70.6875
+    },
+    "passes": [
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 26460.1,
+        "decode_tps": 17.875971746138525,
+        "wall_tps": 13.890463679829562,
+        "draft_acceptance": 0.6939759036144578,
+        "min_available_ram_mib": 110.9609375
+      },
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 24204.100000000002,
+        "decode_tps": 19.542143686400237,
+        "wall_tps": 14.178089738249374,
+        "draft_acceptance": 0.7036144578313253,
+        "min_available_ram_mib": 71.125
+      },
+      {
+        "requests": 6,
+        "tokens": 481,
+        "decode_ms": 21485.3,
+        "decode_tps": 22.387399757043188,
+        "wall_tps": 18.830680363205666,
+        "draft_acceptance": 0.7301204819277108,
+        "min_available_ram_mib": 70.6875
+      }
+    ]
+  },
+  {
+    "name": "vnni_8g_http",
+    "overall": {
+      "requests": 18,
+      "tokens": 1439,
+      "decode_ms": 74022.6,
+      "decode_tps": 19.44000886215831,
+      "wall_tps": 14.566292355028857,
+      "draft_acceptance": 0.7108626198083067,
+      "min_available_ram_mib": 90.27734375
+    },
+    "passes": [
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 43566.3,
+        "decode_tps": 10.85701562905273,
+        "wall_tps": 7.834653224774585,
+        "draft_acceptance": 0.697841726618705,
+        "min_available_ram_mib": 90.27734375
+      },
+      {
+        "requests": 6,
+        "tokens": 488,
+        "decode_ms": 18682.8,
+        "decode_tps": 26.120281756481898,
+        "wall_tps": 20.369483735103252,
+        "draft_acceptance": 0.7139479905437353,
+        "min_available_ram_mib": 108.9765625
+      },
+      {
+        "requests": 6,
+        "tokens": 478,
+        "decode_ms": 11773.5,
+        "decode_tps": 40.59965176030917,
+        "wall_tps": 33.05782517655666,
+        "draft_acceptance": 0.720873786407767,
+        "min_available_ram_mib": 119.046875
+      }
+    ]
+  },
+  {
+    "name": "warm_current_http",
+    "overall": {
+      "requests": 18,
+      "tokens": 1433,
+      "decode_ms": 49156.5,
+      "decode_tps": 29.151790709265306,
+      "wall_tps": 22.869163314337886,
+      "draft_acceptance": 0.7062101910828026,
+      "min_available_ram_mib": 13.18359375
+    },
+    "passes": [
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 20165.9,
+        "decode_tps": 23.455437148850287,
+        "wall_tps": 17.921573308312663,
+        "draft_acceptance": 0.6903073286052009,
+        "min_available_ram_mib": 111.08203125
+      },
+      {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 16153.0,
+        "decode_tps": 29.282486225468954,
+        "wall_tps": 23.28441581137824,
+        "draft_acceptance": 0.7087378640776699,
+        "min_available_ram_mib": 13.18359375
+      },
+      {
+        "requests": 6,
+        "tokens": 487,
+        "decode_ms": 12837.6,
+        "decode_tps": 37.935439646039754,
+        "wall_tps": 30.525243476897483,
+        "draft_acceptance": 0.7197149643705463,
+        "min_available_ram_mib": 121.625
+      }
+    ]
+  }
+]

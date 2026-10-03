@@ -21,6 +21,7 @@
 
 #include "strata/core/layer.hpp"
 #include "strata/core/session.hpp"
+#include "strata/core/idle_cache.hpp"
 
 #include <cuda_runtime.h>
 
@@ -50,6 +51,8 @@ public:
     uint64_t vram_bytes() const { return vram_; }
     /// The draft layer's K/V state (read-only: --serve's STRATA_STATE_HASH check hashes it)
     const QsaState& kv_state() const { return st_; }
+    void set_idle_cache(bool enabled) { idle_cache_ = enabled; }
+    IdleDeviceArena& idle_arena() { return idle_arena_; }
     /// KV streaming: refill the ring of the drafter's window from its host copy for a sequence that continues at
     /// `upto` (a conversation-cache resume). No-op unless the drafter's K/V is a ring.
     void kv_restore(int64_t upto);
@@ -106,6 +109,8 @@ private:
     uint8_t* dense_ = nullptr;
     uint8_t* experts_ = nullptr;
     void* state_arena_ = nullptr;
+    bool idle_cache_ = false;
+    IdleDeviceArena idle_arena_;
     QsaState st_;
     void* arena_ = nullptr;
 

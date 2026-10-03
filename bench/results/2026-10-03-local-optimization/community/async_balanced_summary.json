@@ -1,0 +1,103 @@
+{
+  "warmup": {
+    "sync": {
+      "requests": 28,
+      "tokens": 2612,
+      "decode_ms": 42928.0,
+      "decode_tps": 60.846067834513605,
+      "wall_s": 52.97659389999171,
+      "min_available_ram_mib": 318.9375
+    },
+    "async": {
+      "requests": 28,
+      "tokens": 2611,
+      "decode_ms": 43357.2,
+      "decode_tps": 60.22067845709594,
+      "wall_s": 52.93763940000645,
+      "min_available_ram_mib": 332.171875
+    }
+  },
+  "measured": {
+    "sync": {
+      "requests": 42,
+      "tokens": 3918,
+      "decode_ms": 59216.9,
+      "decode_tps": 66.1635445286734,
+      "wall_s": 72.00148879997869,
+      "min_available_ram_mib": 356.3828125
+    },
+    "async": {
+      "requests": 42,
+      "tokens": 3918,
+      "decode_ms": 58680.2,
+      "decode_tps": 66.76868858661014,
+      "wall_s": 71.30854509997152,
+      "min_available_ram_mib": 332.65234375
+    }
+  },
+  "cycles": [
+    {
+      "sync": {
+        "requests": 14,
+        "tokens": 1306,
+        "decode_ms": 19640.8,
+        "decode_tps": 66.49423648731212,
+        "wall_s": 23.843292599987763,
+        "min_available_ram_mib": 369.390625
+      },
+      "async": {
+        "requests": 14,
+        "tokens": 1306,
+        "decode_ms": 19525.1,
+        "decode_tps": 66.88826177586799,
+        "wall_s": 23.707915999984834,
+        "min_available_ram_mib": 378.125
+      }
+    },
+    {
+      "sync": {
+        "requests": 14,
+        "tokens": 1306,
+        "decode_ms": 19762.8,
+        "decode_tps": 66.08375331430769,
+        "wall_s": 24.023927200010803,
+        "min_available_ram_mib": 364.19921875
+      },
+      "async": {
+        "requests": 14,
+        "tokens": 1306,
+        "decode_ms": 19505.8,
+        "decode_tps": 66.9544443191256,
+        "wall_s": 23.710630700006732,
+        "min_available_ram_mib": 356.69921875
+      }
+    },
+    {
+      "sync": {
+        "requests": 14,
+        "tokens": 1306,
+        "decode_ms": 19813.3,
+        "decode_tps": 65.91531950760348,
+        "wall_s": 24.134268999980122,
+        "min_available_ram_mib": 356.3828125
+      },
+      "async": {
+        "requests": 14,
+        "tokens": 1306,
+        "decode_ms": 19649.3,
+        "decode_tps": 66.46547205243952,
+        "wall_s": 23.88999839997996,
+        "min_available_ram_mib": 332.65234375
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/community/async_balanced.json",
+    "arms": "work/community/async-arms.json",
+    "warmups": 2,
+    "repeats": 3,
+    "max_tokens": 256,
+    "prompts": "work/community/all14.json",
+    "limit": 0
+  }
+}

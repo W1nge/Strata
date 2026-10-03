@@ -1,0 +1,224 @@
+[
+  {
+    "case": "prefill",
+    "label": "128k",
+    "expected": [
+      "violet-583107",
+      "copper-942681",
+      "cedar-276439",
+      "quartz-814725",
+      "maple-693258"
+    ],
+    "found": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "prompt_tokens": 130048,
+    "local_prepare_ms": 328.1084999907762,
+    "headers_ms": 334.8544999898877,
+    "ttft_ms": 210911.5546999965,
+    "wall_ms": 215436.41809999826,
+    "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258",
+    "message": {
+      "role": "assistant",
+      "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258"
+    },
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 130048,
+      "prompt_ms": 210507.9,
+      "prompt_per_token_ms": 1.619,
+      "prompt_per_second": 617.8,
+      "predicted_n": 64,
+      "predicted_ms": 4557.9,
+      "predicted_per_token_ms": 71.217,
+      "predicted_per_second": 14.0,
+      "draft_n": 55,
+      "draft_n_accepted": 45
+    },
+    "usage": {
+      "prompt_tokens": 130048,
+      "completion_tokens": 64,
+      "total_tokens": 130112,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "status": {
+      "service": "strata",
+      "model": "qwen3.8-flash-next",
+      "engine": "0.1.24",
+      "started": 1790988509,
+      "uptime_s": 217,
+      "cache_max_tokens": 262144,
+      "cache": {
+        "state": "resident",
+        "idle_seconds": 180,
+        "expire_seconds": 3600,
+        "disk_bytes": 0,
+        "released_vram_bytes": 0,
+        "released_host_bytes": 0,
+        "tokens": 0,
+        "operation_ms": 0.0
+      },
+      "context": {
+        "native": 262144,
+        "max_positions": 262144
+      },
+      "concurrency": {
+        "serving": 1,
+        "requested": 1
+      },
+      "dialects": [
+        "/v1/chat/completions",
+        "/v1/messages"
+      ],
+      "vision": {
+        "enabled": false,
+        "available": false,
+        "error": null
+      },
+      "activity": {
+        "requests": 2,
+        "in_flight": 0,
+        "last_request_at": 1790988727
+      },
+      "last_timings": {
+        "cache_n": 0,
+        "prompt_n": 130048,
+        "prompt_ms": 210507.9,
+        "prompt_per_token_ms": 1.619,
+        "prompt_per_second": 617.8,
+        "predicted_n": 64,
+        "predicted_ms": 4557.9,
+        "predicted_per_token_ms": 71.217,
+        "predicted_per_second": 14.0,
+        "draft_n": 55,
+        "draft_n_accepted": 45,
+        "at": 1790988727
+      },
+      "machine": {
+        "at": 1790988727,
+        "gpu": {
+          "name": "NVIDIA GeForce RTX 2080 Ti",
+          "used_mib": 22138.0,
+          "total_mib": 22528.0,
+          "util_pct": 99,
+          "temp_c": 65,
+          "power_w": 167.26
+        },
+        "ram": {
+          "used_gib": 27.8,
+          "total_gib": 31.6
+        }
+      }
+    }
+  },
+  {
+    "case": "decode",
+    "label": "128k",
+    "prompt_tokens": 130153,
+    "local_prepare_ms": 327.5048999930732,
+    "headers_ms": 344.48519999568816,
+    "ttft_ms": 2823.867799990694,
+    "wall_ms": 10540.568199998233,
+    "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for GPU expert caching.\n6. CPU and GPU workloads are designed to run concurrently to maximize throughput.\n7. The engine uses speculative decoding to accelerate token generation.\n8. Prompt processing speed is optimized by increasing chunk sizes for prefill operations.\n9. KV cache streaming moves less frequently accessed data to system RAM to save VRAM.\n10. Quantization formats are carefully selected to balance model quality and memory usage.\n11. The system supports multiple model variants tailored for specific tasks like coding.\n12. Fine-tuned models are integrated with specific compatibility notes for quantization.\n13. Installation scripts automate the setup of complex dependencies like CUDA and Python.\n14. Windows-specific issues like Task Scheduler throttling are documented with workarounds.\n15. Linux support includes automatic compilation of the engine if pre-built binaries fail.\n1",
+    "message": {
+      "role": "assistant",
+      "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for GPU expert caching.\n6. CPU and GPU workloads are designed to run concurrently to maximize throughput.\n7. The engine uses speculative decoding to accelerate token generation.\n8. Prompt processing speed is optimized by increasing chunk sizes for prefill operations.\n9. KV cache streaming moves less frequently accessed data to system RAM to save VRAM.\n10. Quantization formats are carefully selected to balance model quality and memory usage.\n11. The system supports multiple model variants tailored for specific tasks like coding.\n12. Fine-tuned models are integrated with specific compatibility notes for quantization.\n13. Installation scripts automate the setup of complex dependencies like CUDA and Python.\n14. Windows-specific issues like Task Scheduler throttling are documented with workarounds.\n15. Linux support includes automatic compilation of the engine if pre-built binaries fail.\n1"
+    },
+    "timings": {
+      "cache_n": 130041,
+      "prompt_n": 112,
+      "prompt_ms": 2430.4,
+      "prompt_per_token_ms": 21.7,
+      "prompt_per_second": 46.1,
+      "predicted_n": 256,
+      "predicted_ms": 7735.7,
+      "predicted_per_token_ms": 30.218,
+      "predicted_per_second": 33.1,
+      "draft_n": 142,
+      "draft_n_accepted": 111
+    },
+    "usage": {
+      "prompt_tokens": 130153,
+      "completion_tokens": 256,
+      "total_tokens": 130409,
+      "prompt_tokens_details": {
+        "cached_tokens": 130041
+      }
+    },
+    "status": {
+      "service": "strata",
+      "model": "qwen3.8-flash-next",
+      "engine": "0.1.24",
+      "started": 1790988509,
+      "uptime_s": 228,
+      "cache_max_tokens": 262144,
+      "cache": {
+        "state": "resident",
+        "idle_seconds": 180,
+        "expire_seconds": 3600,
+        "disk_bytes": 0,
+        "released_vram_bytes": 0,
+        "released_host_bytes": 0,
+        "tokens": 0,
+        "operation_ms": 0.0
+      },
+      "context": {
+        "native": 262144,
+        "max_positions": 262144
+      },
+      "concurrency": {
+        "serving": 1,
+        "requested": 1
+      },
+      "dialects": [
+        "/v1/chat/completions",
+        "/v1/messages"
+      ],
+      "vision": {
+        "enabled": false,
+        "available": false,
+        "error": null
+      },
+      "activity": {
+        "requests": 3,
+        "in_flight": 0,
+        "last_request_at": 1790988738
+      },
+      "last_timings": {
+        "cache_n": 130041,
+        "prompt_n": 112,
+        "prompt_ms": 2430.4,
+        "prompt_per_token_ms": 21.7,
+        "prompt_per_second": 46.1,
+        "predicted_n": 256,
+        "predicted_ms": 7735.7,
+        "predicted_per_token_ms": 30.218,
+        "predicted_per_second": 33.1,
+        "draft_n": 142,
+        "draft_n_accepted": 111,
+        "at": 1790988738
+      },
+      "machine": {
+        "at": 1790988738,
+        "gpu": {
+          "name": "NVIDIA GeForce RTX 2080 Ti",
+          "used_mib": 22130.0,
+          "total_mib": 22528.0,
+          "util_pct": 97,
+          "temp_c": 67,
+          "power_w": 198.282
+        },
+        "ram": {
+          "used_gib": 31.1,
+          "total_gib": 31.6
+        }
+      }
+    }
+  }
+]

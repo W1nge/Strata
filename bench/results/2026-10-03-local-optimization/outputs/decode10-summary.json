@@ -1,0 +1,1029 @@
+{
+  "date": "2026-10-02T22:07:25.490905",
+  "objective_achieved": true,
+  "single_request_concurrency": 1,
+  "performance": {
+    "original6": {
+      "baseline": {
+        "requests": 18,
+        "tokens": 1359,
+        "decode_ms": 23091.5,
+        "decode_tps": 58.85282463244051
+      },
+      "candidate": {
+        "requests": 18,
+        "tokens": 1338,
+        "decode_ms": 20234.899999999998,
+        "decode_tps": 66.12338089143016
+      },
+      "gain": 0.12353793219607034,
+      "prompt_bootstrap_gain_95": [
+        0.07577424626141749,
+        0.18189349008134115
+      ],
+      "cycles": [
+        {
+          "baseline": {
+            "requests": 6,
+            "tokens": 453,
+            "decode_ms": 7724.2,
+            "decode_tps": 58.64685015923979
+          },
+          "candidate": {
+            "requests": 6,
+            "tokens": 446,
+            "decode_ms": 6762.5,
+            "decode_tps": 65.95194085027727
+          },
+          "gain": 0.12456066559759749
+        },
+        {
+          "baseline": {
+            "requests": 6,
+            "tokens": 453,
+            "decode_ms": 7634.6,
+            "decode_tps": 59.335132161475386
+          },
+          "candidate": {
+            "requests": 6,
+            "tokens": 446,
+            "decode_ms": 6741.9,
+            "decode_tps": 66.1534582239428
+          },
+          "gain": 0.11491212396581396
+        },
+        {
+          "baseline": {
+            "requests": 6,
+            "tokens": 453,
+            "decode_ms": 7732.7,
+            "decode_tps": 58.58238390212992
+          },
+          "candidate": {
+            "requests": 6,
+            "tokens": 446,
+            "decode_ms": 6730.5,
+            "decode_tps": 66.26550776316768
+          },
+          "gain": 0.13115075470253124
+        }
+      ],
+      "identical_outputs": 15,
+      "prompts": {
+        "en_dns": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 237,
+            "decode_ms": 4162.5,
+            "decode_tps": 56.93693693693694
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 237,
+            "decode_ms": 3674.8,
+            "decode_tps": 64.4933057581365
+          },
+          "gain": 0.13271470556220755
+        },
+        "python_search": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 390,
+            "decode_ms": 6406.5,
+            "decode_tps": 60.87567314446265
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 390,
+            "decode_ms": 5569.2,
+            "decode_tps": 70.0280112044818
+          },
+          "gain": 0.1503447532859299
+        },
+        "sql_rank": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 132,
+            "decode_ms": 2202.5,
+            "decode_tps": 59.93189557321226
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 132,
+            "decode_ms": 1700.0,
+            "decode_tps": 77.6470588235294
+          },
+          "gain": 0.2955882352941175
+        },
+        "zh_leaves": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 243,
+            "decode_ms": 4196.1,
+            "decode_tps": 57.91091728033173
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 243,
+            "decode_ms": 4024.8999999999996,
+            "decode_tps": 60.374170786851856
+          },
+          "gain": 0.042535218266292585
+        },
+        "zh_queue": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 306,
+            "decode_ms": 5257.3,
+            "decode_tps": 58.204781922279494
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 285,
+            "decode_ms": 4473.3,
+            "decode_tps": 63.711354033934676
+          },
+          "gain": 0.09460686785164962
+        },
+        "zh_translate_new": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 51,
+            "decode_ms": 866.5999999999999,
+            "decode_tps": 58.85068082160167
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 51,
+            "decode_ms": 792.7,
+            "decode_tps": 64.33707581682856
+          },
+          "gain": 0.09322568436987488
+        }
+      }
+    },
+    "independent8": {
+      "baseline": {
+        "requests": 24,
+        "tokens": 2562,
+        "decode_ms": 41818.4,
+        "decode_tps": 61.26489774835957
+      },
+      "candidate": {
+        "requests": 24,
+        "tokens": 2532,
+        "decode_ms": 37413.2,
+        "decode_tps": 67.67664888328184
+      },
+      "gain": 0.10465619580820973,
+      "prompt_bootstrap_gain_95": [
+        0.07741374979326787,
+        0.14730699383652102
+      ],
+      "cycles": [
+        {
+          "baseline": {
+            "requests": 8,
+            "tokens": 854,
+            "decode_ms": 13976.6,
+            "decode_tps": 61.10212784225062
+          },
+          "candidate": {
+            "requests": 8,
+            "tokens": 844,
+            "decode_ms": 12450.7,
+            "decode_tps": 67.78735332149999
+          },
+          "gain": 0.10941068200617887
+        },
+        {
+          "baseline": {
+            "requests": 8,
+            "tokens": 854,
+            "decode_ms": 13911.5,
+            "decode_tps": 61.38806023793265
+          },
+          "candidate": {
+            "requests": 8,
+            "tokens": 844,
+            "decode_ms": 12540.5,
+            "decode_tps": 67.30194170886328
+          },
+          "gain": 0.09633602117429918
+        },
+        {
+          "baseline": {
+            "requests": 8,
+            "tokens": 854,
+            "decode_ms": 13930.3,
+            "decode_tps": 61.30521237877146
+          },
+          "candidate": {
+            "requests": 8,
+            "tokens": 844,
+            "decode_ms": 12422.0,
+            "decode_tps": 67.94397037514088
+          },
+          "gain": 0.10829026992602442
+        }
+      ],
+      "identical_outputs": 15,
+      "prompts": {
+        "new_en_os": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 240,
+            "decode_ms": 4327.1,
+            "decode_tps": 55.464398789027285
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 207,
+            "decode_ms": 3207.8999999999996,
+            "decode_tps": 64.5281960160853
+          },
+          "gain": 0.16341648742167814
+        },
+        "new_en_sort": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 663,
+            "decode_ms": 9668.2,
+            "decode_tps": 68.57532943050413
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 666,
+            "decode_ms": 8957.6,
+            "decode_tps": 74.35027239439135
+          },
+          "gain": 0.08421312754668842
+        },
+        "new_py_rotate": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 147,
+            "decode_ms": 2481.1,
+            "decode_tps": 59.247914231590826
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 147,
+            "decode_ms": 2179.6,
+            "decode_tps": 67.44356762708755
+          },
+          "gain": 0.13832813360249596
+        },
+        "new_sql_latest": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 138,
+            "decode_ms": 2223.0,
+            "decode_tps": 62.07827260458839
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 138,
+            "decode_ms": 1898.5,
+            "decode_tps": 72.6889649723466
+          },
+          "gain": 0.1709244140110615
+        },
+        "new_zh_database": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 294,
+            "decode_ms": 4798.1,
+            "decode_tps": 61.27425439236364
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 294,
+            "decode_ms": 4148.1,
+            "decode_tps": 70.8758226657988
+          },
+          "gain": 0.15669824739037153
+        },
+        "new_zh_probability": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 768,
+            "decode_ms": 12833.9,
+            "decode_tps": 59.84151349161206
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 768,
+            "decode_ms": 11692.9,
+            "decode_tps": 65.68088327104482
+          },
+          "gain": 0.09758058308888296
+        },
+        "new_zh_scene": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 255,
+            "decode_ms": 4553.0,
+            "decode_tps": 56.00702833296727
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 255,
+            "decode_ms": 4458.2,
+            "decode_tps": 57.19797227580638
+          },
+          "gain": 0.021264187340182206
+        },
+        "new_zh_translation": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 57,
+            "decode_ms": 934.0,
+            "decode_tps": 61.02783725910064
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 57,
+            "decode_ms": 870.4,
+            "decode_tps": 65.48713235294117
+          },
+          "gain": 0.0730698529411764
+        }
+      }
+    },
+    "all14": {
+      "baseline": {
+        "requests": 42,
+        "tokens": 3921,
+        "decode_ms": 64909.9,
+        "decode_tps": 60.406810055168776
+      },
+      "candidate": {
+        "requests": 42,
+        "tokens": 3870,
+        "decode_ms": 57648.1,
+        "decode_tps": 67.13144058520575
+      },
+      "gain": 0.11132239103331987,
+      "prompt_bootstrap_gain_95": [
+        0.08619517538721277,
+        0.14271716079947683
+      ],
+      "cycles": [
+        {
+          "baseline": {
+            "requests": 14,
+            "tokens": 1307,
+            "decode_ms": 21700.8,
+            "decode_tps": 60.228194352281946
+          },
+          "candidate": {
+            "requests": 14,
+            "tokens": 1290,
+            "decode_ms": 19213.2,
+            "decode_tps": 67.14134032852414
+          },
+          "gain": 0.11478255409428972
+        },
+        {
+          "baseline": {
+            "requests": 14,
+            "tokens": 1307,
+            "decode_ms": 21546.1,
+            "decode_tps": 60.66062999800428
+          },
+          "candidate": {
+            "requests": 14,
+            "tokens": 1290,
+            "decode_ms": 19282.4,
+            "decode_tps": 66.90038584408579
+          },
+          "gain": 0.10286335381427447
+        },
+        {
+          "baseline": {
+            "requests": 14,
+            "tokens": 1307,
+            "decode_ms": 21663.0,
+            "decode_tps": 60.33328717167521
+          },
+          "candidate": {
+            "requests": 14,
+            "tokens": 1290,
+            "decode_ms": 19152.5,
+            "decode_tps": 67.35413131444982
+          },
+          "gain": 0.11636767151103777
+        }
+      ],
+      "identical_outputs": 30,
+      "prompts": {
+        "en_dns": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 237,
+            "decode_ms": 4162.5,
+            "decode_tps": 56.93693693693694
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 237,
+            "decode_ms": 3674.8,
+            "decode_tps": 64.4933057581365
+          },
+          "gain": 0.13271470556220755
+        },
+        "new_en_os": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 240,
+            "decode_ms": 4327.1,
+            "decode_tps": 55.464398789027285
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 207,
+            "decode_ms": 3207.8999999999996,
+            "decode_tps": 64.5281960160853
+          },
+          "gain": 0.16341648742167814
+        },
+        "new_en_sort": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 663,
+            "decode_ms": 9668.2,
+            "decode_tps": 68.57532943050413
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 666,
+            "decode_ms": 8957.6,
+            "decode_tps": 74.35027239439135
+          },
+          "gain": 0.08421312754668842
+        },
+        "new_py_rotate": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 147,
+            "decode_ms": 2481.1,
+            "decode_tps": 59.247914231590826
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 147,
+            "decode_ms": 2179.6,
+            "decode_tps": 67.44356762708755
+          },
+          "gain": 0.13832813360249596
+        },
+        "new_sql_latest": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 138,
+            "decode_ms": 2223.0,
+            "decode_tps": 62.07827260458839
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 138,
+            "decode_ms": 1898.5,
+            "decode_tps": 72.6889649723466
+          },
+          "gain": 0.1709244140110615
+        },
+        "new_zh_database": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 294,
+            "decode_ms": 4798.1,
+            "decode_tps": 61.27425439236364
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 294,
+            "decode_ms": 4148.1,
+            "decode_tps": 70.8758226657988
+          },
+          "gain": 0.15669824739037153
+        },
+        "new_zh_probability": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 768,
+            "decode_ms": 12833.9,
+            "decode_tps": 59.84151349161206
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 768,
+            "decode_ms": 11692.9,
+            "decode_tps": 65.68088327104482
+          },
+          "gain": 0.09758058308888296
+        },
+        "new_zh_scene": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 255,
+            "decode_ms": 4553.0,
+            "decode_tps": 56.00702833296727
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 255,
+            "decode_ms": 4458.2,
+            "decode_tps": 57.19797227580638
+          },
+          "gain": 0.021264187340182206
+        },
+        "new_zh_translation": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 57,
+            "decode_ms": 934.0,
+            "decode_tps": 61.02783725910064
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 57,
+            "decode_ms": 870.4,
+            "decode_tps": 65.48713235294117
+          },
+          "gain": 0.0730698529411764
+        },
+        "python_search": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 390,
+            "decode_ms": 6406.5,
+            "decode_tps": 60.87567314446265
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 390,
+            "decode_ms": 5569.2,
+            "decode_tps": 70.0280112044818
+          },
+          "gain": 0.1503447532859299
+        },
+        "sql_rank": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 132,
+            "decode_ms": 2202.5,
+            "decode_tps": 59.93189557321226
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 132,
+            "decode_ms": 1700.0,
+            "decode_tps": 77.6470588235294
+          },
+          "gain": 0.2955882352941175
+        },
+        "zh_leaves": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 243,
+            "decode_ms": 4196.1,
+            "decode_tps": 57.91091728033173
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 243,
+            "decode_ms": 4024.8999999999996,
+            "decode_tps": 60.374170786851856
+          },
+          "gain": 0.042535218266292585
+        },
+        "zh_queue": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 306,
+            "decode_ms": 5257.3,
+            "decode_tps": 58.204781922279494
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 285,
+            "decode_ms": 4473.3,
+            "decode_tps": 63.711354033934676
+          },
+          "gain": 0.09460686785164962
+        },
+        "zh_translate_new": {
+          "baseline": {
+            "requests": 3,
+            "tokens": 51,
+            "decode_ms": 866.5999999999999,
+            "decode_tps": 58.85068082160167
+          },
+          "candidate": {
+            "requests": 3,
+            "tokens": 51,
+            "decode_ms": 792.7,
+            "decode_tps": 64.33707581682856
+          },
+          "gain": 0.09322568436987488
+        }
+      }
+    }
+  },
+  "historical_original6_baseline_tps": 59.3596,
+  "historical_original6_gain": 0.11394586370915838,
+  "method": "14 prompts, temperature 0, reasoning off, max_tokens 256; each configuration warmup 1 and measured 3 cycles; candidate followed by original saved executable/configuration; original6 has earlier baseline and candidate repeats; no diagnostic timing or competing benchmark/build during formal measurements",
+  "scope": "short-prompt warm decode throughput, excluding prompt processing; mean gains are workload-dependent",
+  "production": {
+    "exe": "<REPO>/build/strata.exe",
+    "cwd": "<REPO>/build",
+    "args": [
+      "--pack",
+      "C:/strata-models/pack-iq3xxs-native",
+      "--native",
+      "C:/strata-models/hf/IQ3_XXS/Qwen3.8-Flash-Next-GSQ-RCO-IQ3_XXS-00001-of-00002.gguf",
+      "--ple-gguf",
+      "C:/strata-models/hf/IQ3_XXS/Qwen3.8-Flash-Next-GSQ-RCO-IQ3_XXS-00002-of-00002.gguf",
+      "--tiered-experts",
+      "--expert-profile",
+      "C:\\strata-models\\decode10\\expert-profile.bin",
+      "--expert-cache",
+      "auto",
+      "--host-budget-gib",
+      "10",
+      "--host-reserve-gib",
+      "8",
+      "--mtp",
+      "C:\\strata-models\\decode10\\mtp",
+      "--spec",
+      "4",
+      "--spec-min-p",
+      "0.8",
+      "--prefill",
+      "16384",
+      "--max-context",
+      "32768",
+      "--serve",
+      "--adapt-every",
+      "0",
+      "--native-tasks",
+      "12",
+      "--pcie-frac",
+      "0",
+      "--skip-empty-pcie",
+      "--decode-tuning",
+      "31"
+    ],
+    "tokenizer": "C:/strata-models/pack-iq3xxs-native/tokenizer",
+    "model_name": "qwen3.8-flash-next",
+    "lib_dirs": [
+      "E:/strata-setup/cuda-portable/bin"
+    ]
+  },
+  "configuration_change": {
+    "production": "C:\\strata-models\\strata-iq3xxs-native.json",
+    "backup": "<TASK>\\outputs\\strata-iq3xxs-native.before-decode10.json",
+    "before_sha256": "e9995caf62cb81b3e3903eae1a196fe78ff3d26e372e433b3a1d0ce8264cc0e9",
+    "after_sha256": "b83e2a3aa990d1d7ab17f0bd53b9067f05fe12b5e26d04e008fe95f6b7f83da4",
+    "decode_tuning": 31,
+    "changed_options": [
+      "--expert-profile",
+      "--mtp",
+      "--decode-tuning"
+    ],
+    "preserved_model_weights_quantization_topk_context": true
+  },
+  "health": {
+    "status": "ok",
+    "max_context": 32768,
+    "model": "qwen3.8-flash-next",
+    "images": false,
+    "api_key": false
+  },
+  "server_pid": 16668,
+  "engine_pid": 27216,
+  "diagnostics_enabled": false,
+  "profile_sha256": "379b95cceec9a460cbeb6fe100c90f7b92a4b4c8efd5df184cfb518c715feda4",
+  "draft_vocab_sha256": "be5b69d901551f87bf61042344de602c3fab62f8618dfb364633ffdff2674b01",
+  "binary_sha256": "230061f0600c245c24186d9f2eb262e93fd3b78130765630412f027d1fc67b1a",
+  "original_binary_sha256": "edad4313440c1e60cc9332dc7b284948df004ca12672d0e7521b38d14bf94fd7",
+  "changed_files_this_round": [
+    "include/strata/core/verify.hpp",
+    "include/strata/kernels/cpu/pool.hpp",
+    "include/strata/kernels/fused_gr.hpp",
+    "include/strata/kernels/iq_kernels.hpp",
+    "include/strata/kernels/native_mmvq.hpp",
+    "include/strata/kernels/shared_expert.hpp",
+    "serve/server.py",
+    "serve/test_server.py",
+    "src/core/verify.cpp",
+    "src/kernels/cpu/native_pool_test.cpp",
+    "src/kernels/cpu/pool.cpp",
+    "src/kernels/cuda/fused_gr.cu",
+    "src/kernels/cuda/iq_kernels.cu",
+    "src/kernels/cuda/native_mmvq.cu",
+    "src/kernels/cuda/shared_expert.cu",
+    "src/program/generate.cpp"
+  ],
+  "quality": {
+    "fresh": [
+      {
+        "phase": "warmup",
+        "cycle": 0,
+        "name": "python_search",
+        "arm": "candidate",
+        "cases": 8,
+        "passed": true
+      },
+      {
+        "phase": "warmup",
+        "cycle": 0,
+        "name": "sql_rank",
+        "arm": "candidate",
+        "cases": 5,
+        "passed": true
+      },
+      {
+        "phase": "measured",
+        "cycle": 0,
+        "name": "python_search",
+        "arm": "candidate",
+        "cases": 8,
+        "passed": true
+      },
+      {
+        "phase": "measured",
+        "cycle": 0,
+        "name": "sql_rank",
+        "arm": "candidate",
+        "cases": 5,
+        "passed": true
+      },
+      {
+        "phase": "measured",
+        "cycle": 1,
+        "name": "python_search",
+        "arm": "candidate",
+        "cases": 8,
+        "passed": true
+      },
+      {
+        "phase": "measured",
+        "cycle": 1,
+        "name": "sql_rank",
+        "arm": "candidate",
+        "cases": 5,
+        "passed": true
+      },
+      {
+        "phase": "measured",
+        "cycle": 2,
+        "name": "python_search",
+        "arm": "candidate",
+        "cases": 8,
+        "passed": true
+      },
+      {
+        "phase": "measured",
+        "cycle": 2,
+        "name": "sql_rank",
+        "arm": "candidate",
+        "cases": 5,
+        "passed": true
+      }
+    ],
+    "new": [
+      {
+        "phase": "warmup",
+        "cycle": 0,
+        "name": "new_py_rotate",
+        "arm": "candidate",
+        "passed": true,
+        "method": "reviewed code executed against rotation, empty-list, negative-k and non-mutation cases",
+        "cases": 32
+      },
+      {
+        "phase": "warmup",
+        "cycle": 0,
+        "name": "new_sql_latest",
+        "arm": "candidate",
+        "passed": true,
+        "method": "manual PostgreSQL DISTINCT ON review; all outputs match reviewed query; ordering includes required timestamp and id tie-break",
+        "database_executed": false
+      },
+      {
+        "phase": "measured",
+        "cycle": 0,
+        "name": "new_py_rotate",
+        "arm": "candidate",
+        "passed": true,
+        "method": "reviewed code executed against rotation, empty-list, negative-k and non-mutation cases",
+        "cases": 32
+      },
+      {
+        "phase": "measured",
+        "cycle": 0,
+        "name": "new_sql_latest",
+        "arm": "candidate",
+        "passed": true,
+        "method": "manual PostgreSQL DISTINCT ON review; all outputs match reviewed query; ordering includes required timestamp and id tie-break",
+        "database_executed": false
+      },
+      {
+        "phase": "measured",
+        "cycle": 1,
+        "name": "new_py_rotate",
+        "arm": "candidate",
+        "passed": true,
+        "method": "reviewed code executed against rotation, empty-list, negative-k and non-mutation cases",
+        "cases": 32
+      },
+      {
+        "phase": "measured",
+        "cycle": 1,
+        "name": "new_sql_latest",
+        "arm": "candidate",
+        "passed": true,
+        "method": "manual PostgreSQL DISTINCT ON review; all outputs match reviewed query; ordering includes required timestamp and id tie-break",
+        "database_executed": false
+      },
+      {
+        "phase": "measured",
+        "cycle": 2,
+        "name": "new_py_rotate",
+        "arm": "candidate",
+        "passed": true,
+        "method": "reviewed code executed against rotation, empty-list, negative-k and non-mutation cases",
+        "cases": 32
+      },
+      {
+        "phase": "measured",
+        "cycle": 2,
+        "name": "new_sql_latest",
+        "arm": "candidate",
+        "passed": true,
+        "method": "manual PostgreSQL DISTINCT ON review; all outputs match reviewed query; ordering includes required timestamp and id tie-break",
+        "database_executed": false
+      }
+    ]
+  },
+  "normal_checks": {
+    "capital": {
+      "response": {
+        "id": "chatcmpl-0e5c2859f3044848bd169de3",
+        "object": "chat.completion",
+        "created": 1790949909,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "Paris"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 26,
+          "completion_tokens": 2,
+          "total_tokens": 28,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 26,
+          "prompt_ms": 1568.3,
+          "prompt_per_token_ms": 60.319,
+          "prompt_per_second": 16.6,
+          "predicted_n": 2,
+          "predicted_ms": 543.3,
+          "predicted_per_token_ms": 271.65,
+          "predicted_per_second": 3.7,
+          "draft_n": 3,
+          "draft_n_accepted": 3
+        }
+      },
+      "passed": true
+    },
+    "code": {
+      "response": {
+        "id": "chatcmpl-df2813514d884660b191665e",
+        "object": "chat.completion",
+        "created": 1790949911,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def fibonacci(n):\n    if n == 0:\n        return 0\n    if n == 1:\n        return 1\n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        a, b = b, a + b\n    return b"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 53,
+          "completion_tokens": 71,
+          "total_tokens": 124,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 53,
+          "prompt_ms": 1101.4,
+          "prompt_per_token_ms": 20.781,
+          "prompt_per_second": 48.1,
+          "predicted_n": 71,
+          "predicted_ms": 3032.2,
+          "predicted_per_token_ms": 42.707,
+          "predicted_per_second": 23.4,
+          "draft_n": 55,
+          "draft_n_accepted": 51
+        }
+      },
+      "code": "def fibonacci(n):\n    if n == 0:\n        return 0\n    if n == 1:\n        return 1\n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        a, b = b, a + b\n    return b",
+      "passed": true,
+      "actual": [
+        0,
+        1,
+        1,
+        55,
+        832040
+      ]
+    }
+  },
+  "needle_checks": [
+    {
+      "length": "16k",
+      "depth": 10,
+      "prompt_tokens": 15954,
+      "seconds": 47.5,
+      "found": true,
+      "word": "meadow-copper-504",
+      "answer": "meadow-copper-504"
+    },
+    {
+      "length": "16k",
+      "depth": 50,
+      "prompt_tokens": 15954,
+      "seconds": 24.2,
+      "found": true,
+      "word": "falcon-quartz-940",
+      "answer": "falcon-quartz-940"
+    },
+    {
+      "length": "16k",
+      "depth": 90,
+      "prompt_tokens": 15955,
+      "seconds": 24.0,
+      "found": true,
+      "word": "willow-cobalt-696",
+      "answer": "willow-cobalt-696"
+    },
+    {
+      "length": "32k",
+      "depth": 10,
+      "prompt_tokens": 31241,
+      "seconds": 52.5,
+      "found": true,
+      "word": "falcon-saffron-138",
+      "answer": "falcon-saffron-138"
+    },
+    {
+      "length": "32k",
+      "depth": 50,
+      "prompt_tokens": 31239,
+      "seconds": 47.5,
+      "found": true,
+      "word": "quartz-tundra-528",
+      "answer": "quartz-tundra-528"
+    },
+    {
+      "length": "32k",
+      "depth": 90,
+      "prompt_tokens": 31239,
+      "seconds": 46.5,
+      "found": true,
+      "word": "quartz-glacier-192",
+      "answer": "quartz-glacier-192"
+    }
+  ],
+  "kernel_tests": {
+    "native_pool_exact_sentinel": 88473600,
+    "integrated_iq3s_bitwise": 1953792,
+    "server_tests": 39
+  },
+  "limitations": [
+    "Final combined configurations have 30/42 identical formal texts; altered residency and draft windows can change floating-point batch paths. The target weights, quantization, expert top-k and full target vocabulary remain unchanged.",
+    "Independent8 mean gain 10.47%; cycles 10.94%,9.63%,10.83%; gains are not guaranteed to exceed 10% on every run or every prompt.",
+    "The causality task reached max_tokens=256 for both configurations; code/recall checks are not a comprehensive quality evaluation.",
+    "CPU access violation recurred once during an excluded baseline-return screening run. CPU IQ2_XS<2> register-only AVX instruction, execute AV address differs by one bit; root cause unresolved. Original earlier failure has a similar unusual record. No hardware fault or permanent stability claim.",
+    "Full repository CTest suite was not rerun; the prior missing PLE parity fixture remains an existing limitation."
+  ]
+}

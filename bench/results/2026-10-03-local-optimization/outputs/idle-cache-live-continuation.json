@@ -1,0 +1,137 @@
+{
+  "before": {
+    "prompt_tokens": 1401,
+    "local_prepare_ms": 5.310399996233173,
+    "headers_ms": 26.800700012245215,
+    "ttft_ms": 1913.6054000118747,
+    "wall_ms": 2062.334100002772,
+    "content": "AMBER-731",
+    "message": {
+      "role": "assistant",
+      "content": "AMBER-731"
+    },
+    "timings": {
+      "cache_n": 1394,
+      "prompt_n": 7,
+      "prompt_ms": 290.1,
+      "prompt_per_token_ms": 41.443,
+      "prompt_per_second": 24.1,
+      "predicted_n": 7,
+      "predicted_ms": 171.2,
+      "predicted_per_token_ms": 24.457,
+      "predicted_per_second": 40.9,
+      "draft_n": 6,
+      "draft_n_accepted": 6
+    },
+    "usage": {
+      "prompt_tokens": 1401,
+      "completion_tokens": 7,
+      "total_tokens": 1408,
+      "prompt_tokens_details": {
+        "cached_tokens": 1394
+      }
+    }
+  },
+  "disk": {
+    "service": "strata",
+    "model": "qwen3.8-flash-next",
+    "engine": "0.1.24",
+    "started": 1790970501,
+    "uptime_s": 188,
+    "cache_max_tokens": 32768,
+    "cache": {
+      "state": "disk",
+      "idle_seconds": 5,
+      "expire_seconds": 25,
+      "disk_bytes": 1298970952,
+      "released_vram_bytes": 1065353216,
+      "released_host_bytes": 236113920,
+      "tokens": 1409,
+      "operation_ms": 8331.3
+    },
+    "context": {
+      "native": 32768,
+      "max_positions": 32768
+    },
+    "concurrency": {
+      "serving": 1,
+      "requested": 1
+    },
+    "dialects": [
+      "/v1/chat/completions",
+      "/v1/messages"
+    ],
+    "vision": {
+      "enabled": false,
+      "available": false,
+      "error": null
+    },
+    "activity": {
+      "requests": 7,
+      "in_flight": 0,
+      "last_request_at": 1790970676
+    },
+    "last_timings": {
+      "cache_n": 1394,
+      "prompt_n": 7,
+      "prompt_ms": 290.1,
+      "prompt_per_token_ms": 41.443,
+      "prompt_per_second": 24.1,
+      "predicted_n": 7,
+      "predicted_ms": 171.2,
+      "predicted_per_token_ms": 24.457,
+      "predicted_per_second": 40.9,
+      "draft_n": 6,
+      "draft_n_accepted": 6,
+      "at": 1790970676
+    },
+    "machine": {
+      "at": 1790970690,
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 2080 Ti",
+        "used_mib": 22122.0,
+        "total_mib": 22528.0,
+        "util_pct": 1,
+        "temp_c": 40,
+        "power_w": 22.549
+      },
+      "ram": {
+        "used_gib": 28.6,
+        "total_gib": 31.6
+      }
+    }
+  },
+  "after": {
+    "prompt_tokens": 1429,
+    "local_prepare_ms": 8.27630001003854,
+    "headers_ms": 5.960599999525584,
+    "ttft_ms": 2122.4706000066362,
+    "wall_ms": 2239.590800003498,
+    "content": "AMBER-731",
+    "message": {
+      "role": "assistant",
+      "content": "AMBER-731"
+    },
+    "timings": {
+      "cache_n": 1409,
+      "prompt_n": 20,
+      "prompt_ms": 529.0,
+      "prompt_per_token_ms": 26.45,
+      "prompt_per_second": 37.8,
+      "predicted_n": 7,
+      "predicted_ms": 140.8,
+      "predicted_per_token_ms": 20.114,
+      "predicted_per_second": 49.7,
+      "draft_n": 5,
+      "draft_n_accepted": 5
+    },
+    "usage": {
+      "prompt_tokens": 1429,
+      "completion_tokens": 7,
+      "total_tokens": 1436,
+      "prompt_tokens_details": {
+        "cached_tokens": 1409
+      }
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "warmup": {
+    "subset_p8": {
+      "requests": 6,
+      "tokens": 457,
+      "decode_ms": 9452.0,
+      "decode_tps": 48.34955564959797,
+      "wall_s": 11.861631799998577,
+      "min_available_ram_mib": 3754.78125
+    },
+    "subset_p9": {
+      "requests": 6,
+      "tokens": 456,
+      "decode_ms": 10751.9,
+      "decode_tps": 42.41110873427022,
+      "wall_s": 12.868026300013298,
+      "min_available_ram_mib": 3781.765625
+    }
+  },
+  "measured": {
+    "subset_p8": {
+      "requests": 18,
+      "tokens": 1371,
+      "decode_ms": 21494.2,
+      "decode_tps": 63.78464888202399,
+      "wall_s": 24.782521499990253,
+      "min_available_ram_mib": 3709.0703125
+    },
+    "subset_p9": {
+      "requests": 18,
+      "tokens": 1368,
+      "decode_ms": 21245.3,
+      "decode_tps": 64.39071229872019,
+      "wall_s": 24.670830099996238,
+      "min_available_ram_mib": 3686.46484375
+    }
+  },
+  "cycles": [
+    {
+      "subset_p8": {
+        "requests": 6,
+        "tokens": 457,
+        "decode_ms": 7250.4,
+        "decode_tps": 63.03100518592078,
+        "wall_s": 8.312327499988896,
+        "min_available_ram_mib": 3709.0703125
+      },
+      "subset_p9": {
+        "requests": 6,
+        "tokens": 456,
+        "decode_ms": 7093.1,
+        "decode_tps": 64.28782901693195,
+        "wall_s": 8.290344699998968,
+        "min_available_ram_mib": 3718.3671875
+      }
+    },
+    {
+      "subset_p8": {
+        "requests": 6,
+        "tokens": 457,
+        "decode_ms": 7097.5,
+        "decode_tps": 64.38886932018316,
+        "wall_s": 8.268332100000407,
+        "min_available_ram_mib": 3717.38671875
+      },
+      "subset_p9": {
+        "requests": 6,
+        "tokens": 456,
+        "decode_ms": 7072.6,
+        "decode_tps": 64.47416791561801,
+        "wall_s": 8.125386699990486,
+        "min_available_ram_mib": 3716.92578125
+      }
+    },
+    {
+      "subset_p8": {
+        "requests": 6,
+        "tokens": 457,
+        "decode_ms": 7146.3,
+        "decode_tps": 63.94917649692848,
+        "wall_s": 8.20186190000095,
+        "min_available_ram_mib": 3714.9140625
+      },
+      "subset_p9": {
+        "requests": 6,
+        "tokens": 456,
+        "decode_ms": 7079.6,
+        "decode_tps": 64.41041866772133,
+        "wall_s": 8.255098700006783,
+        "min_available_ram_mib": 3686.46484375
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/decode10_subset_screen.json",
+    "arms": "work/decode10_subset_arms.json",
+    "warmups": 1,
+    "repeats": 3,
+    "max_tokens": 256,
+    "prompts": "work/fresh_prompts_x16.json",
+    "limit": 0
+  }
+}

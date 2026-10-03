@@ -108,7 +108,6 @@ MtpDrafter::~MtpDrafter() {
     if (cs_) cudaStreamDestroy(cs_);
     if (dense_) cudaFree(dense_);
     if (experts_) cudaFree(experts_);
-    if (state_arena_) cudaFree(state_arena_);
     if (arena_) cudaFree(arena_);
     if (head_logits_) cudaFree(head_logits_);
     if (dhead_) cudaFree(dhead_);
@@ -202,20 +201,23 @@ bool MtpDrafter::load(const std::string& rt_dir, const ModelGeometry& g, Session
     // is pinned after the expert arena has pinned what it could: if it does not fit, the K/V stays whole in VRAM.
     int64_t ring = (window > 0 && window < max_cells) ? window + 4 * (int64_t) max_t + 64 : 0;
     uint64_t sb = qsa_state_bytes(g, max_cells, false, ring);
-    if (cudaMalloc(&state_arena_, sb) != cudaSuccess) { err = "mtp: the K/V state does not fit"; return false; }
+    if (!idle_arena_.allocate(sb, idle_cache_, err)) return false;
+    state_arena_ = idle_arena_.data();
     if (qsa_state_init(g, max_cells, state_arena_, st_, &ss.qsa_states[0], ring) == 0) {
         if (st_.kv_mode == 0) { err = "mtp: state init failed"; return false; }
         std::fprintf(stderr, "strata mtp: no pinned RAM left for the draft layer's K/V copy; keeping it in VRAM\n");
         cudaGetLastError();
-        cudaFree(state_arena_);
+        idle_arena_.release();
         st_ = QsaState{};
         ring = -1;   // fully resident
         sb = qsa_state_bytes(g, max_cells, false, ring);
-        if (cudaMalloc(&state_arena_, sb) != cudaSuccess) { err = "mtp: the K/V state does not fit"; return false; }
+        if (!idle_arena_.allocate(sb, idle_cache_, err)) return false;
+        state_arena_ = idle_arena_.data();
         if (qsa_state_init(g, max_cells, state_arena_, st_, &ss.qsa_states[0], ring) == 0) { err = "mtp: state init failed"; return false; }
     }
     qsa_state_zero(st_, g, nullptr);
     cudaDeviceSynchronize();
+    if (idle_cache_ && !idle_arena_.remember_constant(st_.page_table, (size_t) st_.n_pages * sizeof(int32_t), err)) return false;
     vram_ += sb;
 
     // ---- buffers

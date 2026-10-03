@@ -1,0 +1,84 @@
+{
+  "date": "2026-10-03",
+  "server_tests": {
+    "command": "python -m unittest serve.test_server -q",
+    "passed": 40,
+    "seconds": 10.286,
+    "uses_mock_engine": true
+  },
+  "frozen_source_count": 236,
+  "source_hash_mismatches": [],
+  "deployed_binary_sha256": "4feb4d78fff931c239515d2ce0c05cd6c7be366a7bf29949dfb21b7c2636684a",
+  "matches_validated_candidate": true,
+  "external_ggml_commit": "3cf03257f219afbe7334045ff7c6a06ac68c627d",
+  "status": {
+    "service": "strata",
+    "model": "qwen3.8-flash-next",
+    "engine": "0.1.24",
+    "started": 1790989099,
+    "uptime_s": 890,
+    "cache_max_tokens": 32768,
+    "cache": {
+      "state": "disk",
+      "idle_seconds": 180,
+      "expire_seconds": 3600,
+      "disk_bytes": 1298970952,
+      "released_vram_bytes": 1065353216,
+      "released_host_bytes": 236113920,
+      "tokens": 31253,
+      "operation_ms": 1786.3
+    },
+    "context": {
+      "native": 32768,
+      "max_positions": 32768
+    },
+    "concurrency": {
+      "serving": 1,
+      "requested": 1
+    },
+    "dialects": [
+      "/v1/chat/completions",
+      "/v1/messages"
+    ],
+    "vision": {
+      "enabled": false,
+      "available": false,
+      "error": null
+    },
+    "activity": {
+      "requests": 4,
+      "in_flight": 0,
+      "last_request_at": 1790989164
+    },
+    "last_timings": {
+      "cache_n": 31236,
+      "prompt_n": 7,
+      "prompt_ms": 60.8,
+      "prompt_per_token_ms": 8.686,
+      "prompt_per_second": 115.1,
+      "predicted_n": 11,
+      "predicted_ms": 204.3,
+      "predicted_per_token_ms": 18.573,
+      "predicted_per_second": 53.8,
+      "draft_n": 10,
+      "draft_n_accepted": 7,
+      "at": 1790989164
+    },
+    "machine": {
+      "at": 1790989989,
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 2080 Ti",
+        "used_mib": 21139.0,
+        "total_mib": 22528.0,
+        "util_pct": 5,
+        "temp_c": 31,
+        "power_w": 22.986
+      },
+      "ram": {
+        "used_gib": 25.4,
+        "total_gib": 31.6
+      }
+    }
+  },
+  "gpu_benchmarks_rerun_for_publication": false
+}

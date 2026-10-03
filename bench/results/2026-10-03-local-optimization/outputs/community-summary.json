@@ -1,0 +1,247 @@
+{
+  "control_a": {
+    "decode_tps": 65.686281729346,
+    "cycles": [
+      65.21898077063683,
+      66.16032753812378
+    ],
+    "warmup_tps": 36.53731147648423
+  },
+  "prefetch2048": {
+    "decode_tps": 65.75164747681738,
+    "cycles": [
+      65.30205862543559,
+      66.2074698652099
+    ],
+    "warmup_tps": 35.5616508260509
+  },
+  "parallel_quant": {
+    "decode_tps": 65.81908605919291,
+    "cycles": [
+      65.38343131074721,
+      66.26058535135938
+    ],
+    "warmup_tps": 36.9150292175007
+  },
+  "async_commit": {
+    "decode_tps": 66.48331581811,
+    "cycles": [
+      65.99976322954895,
+      66.97400627693601
+    ],
+    "warmup_tps": 36.00607097878386
+  },
+  "control_b": {
+    "decode_tps": 64.23504842832968,
+    "cycles": [
+      62.74355331091822,
+      65.79917972323035
+    ],
+    "warmup_tps": 34.932719269389224
+  },
+  "reserve1500": {
+    "decode_tps": 62.86263430565691,
+    "cycles": [
+      62.09761459508072,
+      63.64673865332279
+    ],
+    "warmup_tps": 35.0424940588875
+  },
+  "async_balanced": {
+    "sync": {
+      "tokens": 3918,
+      "decode_ms": 59216.9,
+      "decode_tps": 66.1635445286734,
+      "requests": 42
+    },
+    "async_": {
+      "tokens": 3918,
+      "decode_ms": 58680.2,
+      "decode_tps": 66.76868858661014,
+      "requests": 42
+    },
+    "gain_pct": 0.9146185595822809,
+    "cycles": [
+      {
+        "sync": {
+          "tokens": 1306,
+          "decode_ms": 19640.8,
+          "decode_tps": 66.49423648731212,
+          "requests": 14
+        },
+        "async_": {
+          "tokens": 1306,
+          "decode_ms": 19525.1,
+          "decode_tps": 66.88826177586799,
+          "requests": 14
+        },
+        "gain_pct": 0.5925705886269617
+      },
+      {
+        "sync": {
+          "tokens": 1306,
+          "decode_ms": 19762.8,
+          "decode_tps": 66.08375331430769,
+          "requests": 14
+        },
+        "async_": {
+          "tokens": 1306,
+          "decode_ms": 19505.8,
+          "decode_tps": 66.9544443191256,
+          "requests": 14
+        },
+        "gain_pct": 1.31755682925081
+      },
+      {
+        "sync": {
+          "tokens": 1306,
+          "decode_ms": 19813.3,
+          "decode_tps": 65.91531950760348,
+          "requests": 14
+        },
+        "async_": {
+          "tokens": 1306,
+          "decode_ms": 19649.3,
+          "decode_tps": 66.46547205243952,
+          "requests": 14
+        },
+        "gain_pct": 0.8346353305206611
+      }
+    ],
+    "original6": {
+      "sync": {
+        "tokens": 1353,
+        "decode_ms": 20892.0,
+        "decode_tps": 64.7616312464101,
+        "requests": 18
+      },
+      "async_": {
+        "tokens": 1353,
+        "decode_ms": 20834.2,
+        "decode_tps": 64.94129844198481,
+        "requests": 18
+      },
+      "gain_pct": 0.27742845897611446
+    },
+    "independent8": {
+      "sync": {
+        "tokens": 2565,
+        "decode_ms": 38324.9,
+        "decode_tps": 66.92776758713003,
+        "requests": 24
+      },
+      "async_": {
+        "tokens": 2565,
+        "decode_ms": 37846.0,
+        "decode_tps": 67.77466575067378,
+        "requests": 24
+      },
+      "gain_pct": 1.2653913227289593
+    },
+    "prompt_cluster_ci95": [
+      0.36651858011611527,
+      1.3369389529241715
+    ],
+    "identical_outputs": 39,
+    "output_pairs": 42
+  },
+  "prefill_balanced": {
+    "8192": {
+      "old": {
+        "requests": 2,
+        "prompt_ms": [
+          16115.7,
+          16128.8
+        ],
+        "prompt_tokens": [
+          8390,
+          8390
+        ],
+        "prefill_tps": 520.3988277070508,
+        "all_found": true,
+        "all_zero_reuse": true
+      },
+      "turing": {
+        "requests": 2,
+        "prompt_ms": [
+          14760.4,
+          14777.1
+        ],
+        "prompt_tokens": [
+          8390,
+          8390
+        ],
+        "prefill_tps": 568.0914092255607,
+        "all_found": true,
+        "all_zero_reuse": true
+      },
+      "gain_pct": 9.164621244181115
+    },
+    "16384": {
+      "old": {
+        "requests": 2,
+        "prompt_ms": [
+          23622.8,
+          23677.4
+        ],
+        "prompt_tokens": [
+          15956,
+          15956
+        ],
+        "prefill_tps": 674.669451714792,
+        "all_found": true,
+        "all_zero_reuse": true
+      },
+      "turing": {
+        "requests": 2,
+        "prompt_ms": [
+          20711.6,
+          22521.3
+        ],
+        "prompt_tokens": [
+          15956,
+          15956
+        ],
+        "prefill_tps": 738.1415542330033,
+        "all_found": true,
+        "all_zero_reuse": true
+      },
+      "gain_pct": 9.407881497655723
+    },
+    "32768": {
+      "old": {
+        "requests": 2,
+        "prompt_ms": [
+          46960.2,
+          47237.6
+        ],
+        "prompt_tokens": [
+          31243,
+          31243
+        ],
+        "prefill_tps": 663.3488255564356,
+        "all_found": true,
+        "all_zero_reuse": true
+      },
+      "turing": {
+        "requests": 2,
+        "prompt_ms": [
+          39974.1,
+          41539.7
+        ],
+        "prompt_tokens": [
+          31243,
+          31243
+        ],
+        "prefill_tps": 766.5695869901784,
+        "all_found": true,
+        "all_zero_reuse": true
+      },
+      "gain_pct": 15.560555390620978
+    }
+  },
+  "deployed": {
+    "commit_async": true,
+    "turing_prompt_attn": true
+  }
+}

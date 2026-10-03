@@ -1,0 +1,63 @@
+{
+  "warmup": {
+    "candidate": {
+      "requests": 14,
+      "tokens": 1290,
+      "decode_ms": 21768.9,
+      "decode_tps": 59.25885092953709,
+      "wall_s": 27.399884299986297,
+      "min_available_ram_mib": 1626.71484375
+    }
+  },
+  "measured": {
+    "candidate": {
+      "requests": 42,
+      "tokens": 3870,
+      "decode_ms": 57648.1,
+      "decode_tps": 67.13144058520575,
+      "wall_s": 71.61636810000346,
+      "min_available_ram_mib": 1597.2578125
+    }
+  },
+  "cycles": [
+    {
+      "candidate": {
+        "requests": 14,
+        "tokens": 1290,
+        "decode_ms": 19213.2,
+        "decode_tps": 67.14134032852414,
+        "wall_s": 23.855654400002095,
+        "min_available_ram_mib": 1615.4375
+      }
+    },
+    {
+      "candidate": {
+        "requests": 14,
+        "tokens": 1290,
+        "decode_ms": 19282.4,
+        "decode_tps": 66.90038584408579,
+        "wall_s": 23.96878529998503,
+        "min_available_ram_mib": 1597.2578125
+      }
+    },
+    {
+      "candidate": {
+        "requests": 14,
+        "tokens": 1290,
+        "decode_ms": 19152.5,
+        "decode_tps": 67.35413131444982,
+        "wall_s": 23.79192840001633,
+        "min_available_ram_mib": 1699.8984375
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/decode10_candidate_confirm.json",
+    "arms": "work/decode10_final_arm.json",
+    "warmups": 1,
+    "repeats": 3,
+    "max_tokens": 256,
+    "prompts": "work/decode10_final_prompts.json",
+    "limit": 0
+  }
+}

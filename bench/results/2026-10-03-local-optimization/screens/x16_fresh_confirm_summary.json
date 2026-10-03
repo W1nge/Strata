@@ -1,0 +1,103 @@
+{
+  "warmup": {
+    "baseline": {
+      "requests": 6,
+      "tokens": 460,
+      "decode_ms": 8966.6,
+      "decode_tps": 51.301496665402716,
+      "wall_s": 10.537836699999389,
+      "min_available_ram_mib": 493.50390625
+    },
+    "candidate": {
+      "requests": 6,
+      "tokens": 453,
+      "decode_ms": 8633.0,
+      "decode_tps": 52.473068458241634,
+      "wall_s": 9.976985900000727,
+      "min_available_ram_mib": 499.44140625
+    }
+  },
+  "measured": {
+    "baseline": {
+      "requests": 18,
+      "tokens": 1380,
+      "decode_ms": 25211.0,
+      "decode_tps": 54.73801118559359,
+      "wall_s": 28.813626200000726,
+      "min_available_ram_mib": 449.8359375
+    },
+    "candidate": {
+      "requests": 18,
+      "tokens": 1359,
+      "decode_ms": 23352.6,
+      "decode_tps": 58.19480486112896,
+      "wall_s": 26.97353600000315,
+      "min_available_ram_mib": 474.1171875
+    }
+  },
+  "cycles": [
+    {
+      "baseline": {
+        "requests": 6,
+        "tokens": 460,
+        "decode_ms": 8363.8,
+        "decode_tps": 54.99892393409694,
+        "wall_s": 9.54953530000057,
+        "min_available_ram_mib": 485.24609375
+      },
+      "candidate": {
+        "requests": 6,
+        "tokens": 453,
+        "decode_ms": 7756.0,
+        "decode_tps": 58.40639504899433,
+        "wall_s": 8.999944899998809,
+        "min_available_ram_mib": 483.19921875
+      }
+    },
+    {
+      "baseline": {
+        "requests": 6,
+        "tokens": 460,
+        "decode_ms": 8414.5,
+        "decode_tps": 54.667538178144866,
+        "wall_s": 9.677129299998342,
+        "min_available_ram_mib": 481.88671875
+      },
+      "candidate": {
+        "requests": 6,
+        "tokens": 453,
+        "decode_ms": 7765.6,
+        "decode_tps": 58.33419182033584,
+        "wall_s": 8.901743800002805,
+        "min_available_ram_mib": 482.94140625
+      }
+    },
+    {
+      "baseline": {
+        "requests": 6,
+        "tokens": 460,
+        "decode_ms": 8432.7,
+        "decode_tps": 54.5495511520628,
+        "wall_s": 9.586961600001814,
+        "min_available_ram_mib": 449.8359375
+      },
+      "candidate": {
+        "requests": 6,
+        "tokens": 453,
+        "decode_ms": 7831.0,
+        "decode_tps": 57.847018260758524,
+        "wall_s": 9.071847300001536,
+        "min_available_ram_mib": 474.1171875
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/x16_fresh_confirm.json",
+    "arms": "work/x16_fresh_confirm_arms.json",
+    "warmups": 1,
+    "repeats": 3,
+    "max_tokens": 256,
+    "prompts": "work/fresh_prompts_x16.json",
+    "limit": 0
+  }
+}

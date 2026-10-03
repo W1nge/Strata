@@ -170,6 +170,7 @@ class StrataEngine:
         self.last = {}
         self.info = {}                   # INFO key=value facts (engine 0.1.8+): kv, expert slots, ... (Monitor tab)
         self.progress = None             # (read, total) prompt tokens while a prompt is read, from PP lines
+        self.cache = {}
         try:                             # a ready-made engine's BUILD.json says its version
             self.info["version"] = json.loads((Path(exe).parent / "BUILD.json").read_text()).get("version")
         except (OSError, ValueError):
@@ -197,6 +198,16 @@ class StrataEngine:
 
     def _pump(self):
         for line in self.proc.stdout:
+            if line.startswith("CACHE "):
+                cache = {}
+                for field in line.split()[1:]:
+                    k, _, v = field.partition("=")
+                    try:
+                        cache[k] = float(v) if "." in v else int(v)
+                    except ValueError:
+                        cache[k] = v
+                self.cache = cache
+                continue
             self.lines.put(line)
         self.ended = True                               # its output closed: it is gone, even before the OS says so
         self.lines.put(None)
@@ -293,6 +304,10 @@ class StrataEngine:
                 v = tune.get(k)
                 if isinstance(v, (int, float)) and not isinstance(v, bool) and 0.0 <= float(v) <= 1.0:
                     keys += f" {k}={float(v)!r}"
+            for k, lo, hi in (("native_tasks", 1, 16), ("native_order", 0, 3), ("native_nt1", 0, 7), ("mtp_t", 2, 8), ("decode_tuning", 0, 31), ("native_shape", 0, 2), ("commit_async", 0, 1), ("turing_prompt_attn", 0, 1), ("prefill_io_tuning", 0, 3), ("short_read", 0, 32768), ("refill_mode", 0, 3)):
+                v = tune.get(k)
+                if isinstance(v, int) and not isinstance(v, bool) and lo <= v <= hi:
+                    keys += f" {k}={v}"
         return keys + StrataEngine.projection_key(sampling)
 
     @staticmethod
@@ -689,6 +704,7 @@ class Service:
             "engine": (getattr(self.engine, "info", {}) or {}).get("version"),
             "started": int(self.started_at), "uptime_s": int(time.time() - self.started_at),
             "cache_max_tokens": ctx,
+            "cache": dict(getattr(self.engine, "cache", {}) or {}),
             "context": {"native": ctx, "max_positions": ctx},
             "concurrency": {"serving": 1, "requested": 1},       # one request at a time; more wait their turn
             "dialects": ["/v1/chat/completions", "/v1/messages"],

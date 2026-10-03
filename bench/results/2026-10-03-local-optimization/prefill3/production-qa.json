@@ -1,0 +1,138 @@
+[
+  {
+    "case": "root_initial",
+    "prompt_tokens": 1098,
+    "local_prepare_ms": 5.275000003166497,
+    "headers_ms": 38.43080000660848,
+    "ttft_ms": 13544.858499997645,
+    "wall_ms": 13897.63760000642,
+    "content": "AMBER-731",
+    "message": {
+      "role": "assistant",
+      "content": "AMBER-731"
+    },
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 1098,
+      "prompt_ms": 13475.4,
+      "prompt_per_token_ms": 12.273,
+      "prompt_per_second": 81.5,
+      "predicted_n": 7,
+      "predicted_ms": 382.4,
+      "predicted_per_token_ms": 54.629,
+      "predicted_per_second": 18.3,
+      "draft_n": 6,
+      "draft_n_accepted": 6
+    },
+    "usage": {
+      "prompt_tokens": 1098,
+      "completion_tokens": 7,
+      "total_tokens": 1105,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    }
+  },
+  {
+    "case": "root_branch",
+    "prompt_tokens": 1126,
+    "local_prepare_ms": 4.644400003599003,
+    "headers_ms": 5.2574000001186505,
+    "ttft_ms": 1685.1643000118202,
+    "wall_ms": 1876.294700006838,
+    "content": "AMBER-731",
+    "message": {
+      "role": "assistant",
+      "content": "AMBER-731"
+    },
+    "timings": {
+      "cache_n": 1004,
+      "prompt_n": 122,
+      "prompt_ms": 1660.5,
+      "prompt_per_token_ms": 13.611,
+      "prompt_per_second": 73.5,
+      "predicted_n": 7,
+      "predicted_ms": 209.6,
+      "predicted_per_token_ms": 29.943,
+      "predicted_per_second": 33.4,
+      "draft_n": 6,
+      "draft_n_accepted": 6
+    },
+    "usage": {
+      "prompt_tokens": 1126,
+      "completion_tokens": 7,
+      "total_tokens": 1133,
+      "prompt_tokens_details": {
+        "cached_tokens": 1004
+      }
+    }
+  },
+  {
+    "case": "long_31k",
+    "prompt_tokens": 31243,
+    "local_prepare_ms": 80.08929999778047,
+    "headers_ms": 81.18900000408757,
+    "ttft_ms": 47525.71549999993,
+    "wall_ms": 47942.14280000597,
+    "content": "cobalt-willow-32768",
+    "message": {
+      "role": "assistant",
+      "content": "cobalt-willow-32768"
+    },
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 31243,
+      "prompt_ms": 47406.1,
+      "prompt_per_token_ms": 1.517,
+      "prompt_per_second": 659.1,
+      "predicted_n": 11,
+      "predicted_ms": 448.4,
+      "predicted_per_token_ms": 40.764,
+      "predicted_per_second": 24.5,
+      "draft_n": 10,
+      "draft_n_accepted": 7
+    },
+    "usage": {
+      "prompt_tokens": 31243,
+      "completion_tokens": 11,
+      "total_tokens": 31254,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    }
+  },
+  {
+    "case": "long_31k_retry",
+    "prompt_tokens": 31243,
+    "local_prepare_ms": 84.66069999849424,
+    "headers_ms": 81.11649999045767,
+    "ttft_ms": 166.90060000109952,
+    "wall_ms": 351.413299998967,
+    "content": "cobalt-willow-32768",
+    "message": {
+      "role": "assistant",
+      "content": "cobalt-willow-32768"
+    },
+    "timings": {
+      "cache_n": 31236,
+      "prompt_n": 7,
+      "prompt_ms": 60.7,
+      "prompt_per_token_ms": 8.671,
+      "prompt_per_second": 115.3,
+      "predicted_n": 11,
+      "predicted_ms": 203.5,
+      "predicted_per_token_ms": 18.5,
+      "predicted_per_second": 54.1,
+      "draft_n": 10,
+      "draft_n_accepted": 7
+    },
+    "usage": {
+      "prompt_tokens": 31243,
+      "completion_tokens": 11,
+      "total_tokens": 31254,
+      "prompt_tokens_details": {
+        "cached_tokens": 31236
+      }
+    }
+  }
+]

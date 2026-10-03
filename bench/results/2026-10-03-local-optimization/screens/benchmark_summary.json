@@ -1,0 +1,50 @@
+[
+  {
+    "trial": "baseline",
+    "requests": 18,
+    "mean_wall_tps": 10.217394046709767,
+    "aggregate_wall_tps": 7.770347924298244,
+    "mean_decode_tps": 14.188888888888888,
+    "pass_mean_wall_tps": [
+      15.431842987242506,
+      6.789349934165443,
+      8.430989218721354
+    ]
+  },
+  {
+    "trial": "avx2_10g",
+    "requests": 18,
+    "mean_wall_tps": 20.79790652637656,
+    "aggregate_wall_tps": 19.63383215206094,
+    "mean_decode_tps": 28.544444444444444,
+    "pass_mean_wall_tps": [
+      13.903786628485737,
+      20.149025055566305,
+      28.34090789507764
+    ]
+  },
+  {
+    "trial": "vnni_10g",
+    "requests": 18,
+    "mean_wall_tps": 16.741573877637226,
+    "aggregate_wall_tps": 15.351201204222907,
+    "mean_decode_tps": 23.894444444444446,
+    "pass_mean_wall_tps": [
+      14.03196055316438,
+      16.879956869780028,
+      19.31280420996727
+    ]
+  },
+  {
+    "trial": "vnni_8g",
+    "requests": 18,
+    "mean_wall_tps": 20.482428574037325,
+    "aggregate_wall_tps": 14.566292355028857,
+    "mean_decode_tps": 28.11111111111111,
+    "pass_mean_wall_tps": [
+      9.608241012433396,
+      20.19105343210176,
+      31.647991277576814
+    ]
+  }
+]

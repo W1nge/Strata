@@ -1,0 +1,45 @@
+{
+  "CMakeLists.txt": {
+    "before": "b123aa4e1af87dd7d22a60a8598595136c8dcf5591520965167b84d6a4ab4570",
+    "after": "3efb23a45abeff77c7116f810c466ff2b702d4d80d207e4c18fe37a0f12d8e71"
+  },
+  "include/strata/core/mtp.hpp": {
+    "before": "d1280414896cb0d4e8cf54aa161ced4ac15c2146291bf33cac093f65e77d3386",
+    "after": "21522da968c0afedd74f6300a67b98ad0b4acf61a2d4d076a8089168b087672a"
+  },
+  "src/core/mtp.cpp": {
+    "before": "6ecfd094915559239cb276b6ffd81e079276b854824fbc4525a1f64fe11f0246",
+    "after": "4c37b4d15b02f511fbed4aacc96f0639fc86742bd120f4341ffb27b6da64a061"
+  },
+  "src/program/generate.cpp": {
+    "before": "6e0b89b5cb81022cc32464f6af57b80223a428c7384730e9acd5e2fa60607cc7",
+    "after": "ed3676cd3350f1fd0f08ccbafdadf985b1aa8f2abbb258767ffa25de36e3d222"
+  },
+  "serve/server.py": {
+    "before": "af1242399c6d2f639f083eea3a1494547a709ee1cda70c8bce65001a5cc8eca1",
+    "after": "f6c1e19b9b1d214dfb8829e34aefa8125154d00d269159de8836898ea1e506b4"
+  },
+  "serve/test_server.py": {
+    "before": "765611352faa01722f52daa14c62c899a4f9d85be7b32e153a660c7b819353de",
+    "after": "74e9e238afedceaba31009f154a5a7b32f4c21d67689ecbc3c547178d226e9d3"
+  },
+  "include/strata/core/idle_cache.hpp": {
+    "before": null,
+    "after": "96d434e8a57a72cd615717c7961137d8c01307105af1807eebc85fd5bbe2eec8"
+  },
+  "src/core/idle_cache.cpp": {
+    "before": null,
+    "after": "3eed179290669f5958c53823d74c81b417972779df81df160d1fb827de334fe1"
+  },
+  "tests/cuda/idle_cache_test.cpp": {
+    "before": null,
+    "after": "cc504ba073a15b54b13941325095916904fbbfebb18d4ba48c5f08f7bb968f44"
+  },
+  "docs/idle-cache.md": {
+    "before": null,
+    "after": "d2f831fecfadc138c1647722f32965e3d6eabb3afcc8fd07707a7473ea941d63"
+  },
+  "binary_sha256": "20ac87bbb92eb075c90dfcbf9bfab5bb024f6732e8a1b30b0072093ae4b21286",
+  "config_sha256": "e2039f631e0739bbd9b118f9a3dac17c6777b2b5fbb8f6659b919974f8a0ec60",
+  "patch_check": "passed against before snapshots"
+}

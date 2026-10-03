@@ -1,0 +1,10 @@
+{
+  "tokens": 88252,
+  "full_vocab": 248320,
+  "cjk_tokens": 55328,
+  "training_tokens": 2980,
+  "training_distinct": 1192,
+  "selection": "first 32768 vocabulary IDs, all CJK-containing tokens, control tokens, independent training output tokens",
+  "target_vocab_unchanged": true,
+  "path": "<TASK>\\work\\decode10_mtp_broad"
+}

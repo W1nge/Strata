@@ -131,6 +131,13 @@ public:
     bool fill_slot_queued(int32_t slot, const uint8_t* host_blob, std::string& err, int64_t bytes = 0);
     bool sync_queued(std::string& err);
 
+    struct SlotFill { int32_t slot; const uint8_t* src; int64_t bytes; };
+    /// Refill disjoint slots through bounded double-buffered pinned storage. All source pointers must remain
+    /// valid until this call returns; read_into must support concurrent calls. Waits for preceding device work
+    /// and every upload before returning, including on failure. Does not publish a residency table.
+    bool fill_slots_staged(const std::vector<SlotFill>& jobs, const class ExpertSource& source,
+                           int workers, int read_mode, std::string& err); // 0 memcpy, 1 source read, 2 cached read
+
     /// Reads `slot` back to the host and compares it to `host_blob`, byte for byte.  **THE ONLY THING THAT SAYS
     /// THE CACHE HOLDS THE EXPERT IT CLAIMS TO.**  A slot table that is right about indices and wrong about
     /// bytes produces a plausible token, which is exactly the failure this project has paid for most often.

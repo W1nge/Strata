@@ -109,6 +109,9 @@ public:
 
     /// Keep the first `n_keep` (1..T) tokens of the last window; advances `ss.ple_prev` by them.
     bool commit(int n_keep, std::string& err);
+    // Upstream #284: single-GPU commit overlaps MTP; session readers must wait.
+    static void set_commit_async(bool on);
+    bool wait_commit(std::string& err);
 
     /// Token t's residual after the last layer, (hc, n_embd) on the device, valid until the next `run`.
     const float* final_R(int t) const;
@@ -120,15 +123,16 @@ public:
     /// Plan v0.3 P6: split the window into two token groups and pipeline the CPU experts of one with the GPU work
     /// of the other (default on).  Set before the first `run`.
     void set_split(bool on) { split_ = on; }
+    void set_decode_tuning(int value) { decode_tuning_ = value >= 0 && value < 32 ? value : 0; }
     /// Plan v0.3 P6: how the PCIe share of the misses reaches the GPU: 0 = DMA into staging (the copy engine works
     /// beside the CPU; best when the CPU is compute-bound, the i-quants), 1 = the grouped kernel reads the mapped
     /// arena directly, 2 = a copy kernel stages it inside the graph (no API calls on the pool's thread; best when
     /// the CPU is RAM-bound, Q2_0).  Set before the first `run`.
     void set_pcie_mode(int mode) { sink_.pcie_mode = mode; }
     /// When the dispatcher cannot assign PCIe experts, omit its empty GPU kernels.
-    /// Experimental: requires STRATA_VERIFY_SKIP_EMPTY_PCIE=1. Call between requests;
-    /// both graph variants are cached for per-request tuning.
-    void set_pcie_enabled(bool enabled);
+    /// Opt in with skip_empty or STRATA_VERIFY_SKIP_EMPTY_PCIE=1. Call between
+    /// requests; both graph variants are cached for per-request tuning.
+    void set_pcie_enabled(bool enabled, bool skip_empty = false);
 
     double ms_wait = 0, ms_pool = 0, ms_host = 0, ms_commit = 0;
     int64_t windows = 0;
@@ -161,6 +165,8 @@ private:
     bool record_window(int T, cudaStream_t cs, std::string& err);
     static constexpr int kProfPer = 32;              // stamps per layer
     bool prof_on_ = false;
+    unsigned long long* prof_mapped_ = nullptr;      // diagnostic stamps readable after a CUDA fault
+    void audit_error(const std::string& error) const;
     unsigned long long* prof_ = nullptr;              // device: n_layers * kProfPer + 4 stamps
     std::vector<unsigned long long> prof_h_;
     double prof_sum_[2][kProfPer] = {};   // [GDN / QSA layers][stage]
@@ -178,7 +184,8 @@ private:
     int64_t n_vocab_ = 0;
     cudaStream_t cs_ = nullptr;
     bool pcie_enabled_ = true;  // conservative for callers that do not provide dispatch information
-    cudaGraphExec_t exec_[2][9] = {}; // [PCIe enabled][window size]
+    int decode_tuning_ = 0; // bits: HC single=1, HC tile=2, expert activation=4, HC norm=8, IQ3_S columns=16
+    cudaGraphExec_t exec_[32][2][9] = {}; // [decode tuning][PCIe enabled][window size]
     cudaGraphExec_t commit_exec_ = nullptr;
 
     // mapped staging (host pointer, device alias)
@@ -195,6 +202,8 @@ private:
     uint32_t* h_flag_ = nullptr; uint32_t* m_flag_ = nullptr;
     uint32_t* h_flagA_ = nullptr; uint32_t* m_flagA_ = nullptr;  // the GPU plan is in place
     uint32_t* h_flagB_ = nullptr; uint32_t* m_flagB_ = nullptr;  // the PCIe share's DMA copies have landed
+    cudaEvent_t commit_done_ = nullptr;
+    bool commit_pending_ = false;
     cudaStream_t copy_ = nullptr;                                 // the copy engine's stream (DMA of missed experts)
     struct FlagSet { uint32_t* flag; uint32_t value; };
     FlagSet flag_sets_[2 * 64 * 2] = {};                          // host-function arguments, one per (layer, group)

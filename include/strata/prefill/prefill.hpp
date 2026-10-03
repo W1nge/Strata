@@ -23,6 +23,9 @@
 
 namespace strata::prefill {
 
+/// Set between requests: bit 0 batches native gathers; bit 1 overlaps the first PLE read.
+void set_io_tuning(int mask);
+
 struct PrefillStats {
     int64_t tokens = 0;
     int64_t chunks = 0;
@@ -57,6 +60,9 @@ public:
     /// ring (a big one only pays when the copy engine, not the host copies, is the limit); set before bytes_needed.
     static void set_pinned_share(double share);
     static double pinned_share();
+    /// Startup override for the streamed device ring: 16..512 slots, or 0 for environment/automatic sizing.
+    /// Optional larger ring for chunks >= 12K; short chunks keep their original footprint.
+    static void set_ring_slots(int slots, int large_slots = 0);
 
     /// Device bytes `init` needs for a chunk of `chunk` tokens (what a borrowed region must hold).
     static uint64_t bytes_needed(const core::ModelGeometry& g, const core::SessionState& ss, int64_t chunk);

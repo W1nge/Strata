@@ -1,0 +1,30 @@
+{
+  "source": {
+    "include/strata/prefill/prefill.hpp": {
+      "before": "ee8715b29404bcb2cfaa1a09a7cbb893f744c74648ae41d8dd297892368209b0",
+      "after": "6d13e4ecfd7ab90d9cf1e2e81a9ae2c7e12bd238d6b28a04c1e6dccd1a2bf84c"
+    },
+    "src/prefill/prefill.cpp": {
+      "before": "666ef3edd24bf23b6142565dd43c0d3c2b0b96fd12856b83e1a5e497376a1bd8",
+      "after": "024bc6ed135a7ac1854b8d294aaffcc9dcc5f90f6e490ae55a9ec4fe50412b7b"
+    },
+    "src/program/generate.cpp": {
+      "before": "ed3676cd3350f1fd0f08ccbafdadf985b1aa8f2abbb258767ffa25de36e3d222",
+      "after": "013806a5af09d88bd4a51134aa8899696cf93704695913c825553617f231e40a"
+    }
+  },
+  "binaries": {
+    "strata-before.exe": "20ac87bbb92eb075c90dfcbf9bfab5bb024f6732e8a1b30b0072093ae4b21286",
+    "strata-final.exe": "6a268e6a969306d388034a753627ab7c26999e9fedc885dbeedd75695467a663",
+    "strata-direct-experiment.exe": "f67248ed7769e46a6882ed0804a85338e83c599cdd09cda3d30906b64798898a"
+  },
+  "configs": {
+    "config-before.json": "e2039f631e0739bbd9b118f9a3dac17c6777b2b5fbb8f6659b919974f8a0ec60",
+    "config-after.json": "e6ddac72cbd6b187fef2239c9343f85fceccfa6fe3dce117bec6f1e616c7aa75"
+  },
+  "tests": {
+    "cli_cases": 9,
+    "formal_measurements": 24,
+    "qa_records": 19
+  }
+}

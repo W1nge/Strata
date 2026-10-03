@@ -1471,7 +1471,7 @@ std::size_t native_mmvq_weight_bytes(int ggml_type, int n_in, int n_out) {
 }
 
 void native_mmvq(int ggml_type, const void* weights, const void* x_q8_1, float* y,
-                 int n_in, int n_out, int ncols, void* stream) {
+                 int n_in, int n_out, int ncols, void* stream, bool interleaved) {
     switch (ggml_type) {
     case 2: native_q4_0_mmvq(weights, x_q8_1, y, n_in, n_out, ncols, stream); break;
     case 6: native_q5_0_mmvq(weights, x_q8_1, y, n_in, n_out, ncols, stream); break;
@@ -1484,7 +1484,7 @@ void native_mmvq(int ggml_type, const void* weights, const void* x_q8_1, float* 
     case 23: native_iq4_xs_mmvq(weights, x_q8_1, y, n_in, n_out, ncols, stream); break;
     case 42: native_q2_0_mmvq(weights, x_q8_1, y, n_in, n_out, ncols, stream); break;
     case 16: case 17: case 18: case 21: case 22: case 29:
-        iq_mmvq(ggml_type, weights, x_q8_1, y, n_in, n_out, ncols, stream); break;
+        iq_mmvq(ggml_type, weights, x_q8_1, y, n_in, n_out, ncols, stream, interleaved); break;
     default: throw std::invalid_argument("unsupported native MMVQ GGML type");
     }
 }

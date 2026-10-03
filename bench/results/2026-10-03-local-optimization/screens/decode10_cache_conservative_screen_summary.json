@@ -1,0 +1,53 @@
+{
+  "warmup": {
+    "gpu15": {
+      "requests": 6,
+      "tokens": 445,
+      "decode_ms": 12847.1,
+      "decode_tps": 34.63816736851118,
+      "wall_s": 17.226172000002407,
+      "min_available_ram_mib": 2621.24609375
+    }
+  },
+  "measured": {
+    "gpu15": {
+      "requests": 12,
+      "tokens": 890,
+      "decode_ms": 14135.5,
+      "decode_tps": 62.96204591277281,
+      "wall_s": 18.01554480001505,
+      "min_available_ram_mib": 2630.296875
+    }
+  },
+  "cycles": [
+    {
+      "gpu15": {
+        "requests": 6,
+        "tokens": 445,
+        "decode_ms": 7112.6,
+        "decode_tps": 62.56502544779686,
+        "wall_s": 9.038628499998595,
+        "min_available_ram_mib": 2650.921875
+      }
+    },
+    {
+      "gpu15": {
+        "requests": 6,
+        "tokens": 445,
+        "decode_ms": 7022.9,
+        "decode_tps": 63.364137322188846,
+        "wall_s": 8.976916300016455,
+        "min_available_ram_mib": 2630.296875
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/decode10_cache_conservative_screen.json",
+    "arms": "work/decode10_best_single_arm.json",
+    "warmups": 1,
+    "repeats": 2,
+    "max_tokens": 256,
+    "prompts": "work/fresh_prompts_x16.json",
+    "limit": 0
+  }
+}

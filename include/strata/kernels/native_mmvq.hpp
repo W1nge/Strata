@@ -107,6 +107,6 @@ void native_iq4_nl_f32(const void* weights, const float* x, void* scratch_q8_1,
 bool native_mmvq_supported(int ggml_type) noexcept;
 std::size_t native_mmvq_weight_bytes(int ggml_type, int n_in, int n_out);
 void native_mmvq(int ggml_type, const void* weights, const void* x_q8_1, float* y,
-                 int n_in, int n_out, int ncols, void* stream);
+                 int n_in, int n_out, int ncols, void* stream, bool interleaved = false);
 
 } // namespace strata::kernels

@@ -1,0 +1,172 @@
+[
+  {
+    "case": "full_128k",
+    "prompt_tokens": 130048,
+    "local_prepare_ms": 329.35379999980796,
+    "headers_ms": 349.8388000007253,
+    "ttft_ms": 204620.16209999274,
+    "wall_ms": 209944.55359999847,
+    "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258",
+    "message": {
+      "role": "assistant",
+      "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258"
+    },
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 130048,
+      "prompt_ms": 204186.6,
+      "prompt_per_token_ms": 1.57,
+      "prompt_per_second": 636.9,
+      "predicted_n": 64,
+      "predicted_ms": 5379.8,
+      "predicted_per_token_ms": 84.059,
+      "predicted_per_second": 11.9,
+      "draft_n": 55,
+      "draft_n_accepted": 45
+    },
+    "usage": {
+      "prompt_tokens": 130048,
+      "completion_tokens": 64,
+      "total_tokens": 130112,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    }
+  },
+  {
+    "case": "warm",
+    "prompt_tokens": 130153,
+    "local_prepare_ms": 328.0532999924617,
+    "headers_ms": 343.49569999903906,
+    "ttft_ms": 3025.381399987964,
+    "wall_ms": 10710.28829998977,
+    "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for GPU expert caching.\n6. CPU and GPU workloads are designed to run concurrently to maximize throughput.\n7. The engine uses speculative decoding to accelerate token generation.\n8. Prompt processing speed is optimized by increasing chunk sizes for prefill operations.\n9. KV cache streaming moves less frequently accessed data to system RAM to save VRAM.\n10. Quantization formats are carefully selected to balance model quality and memory usage.\n11. The system supports multiple model variants tailored for specific tasks like coding.\n12. Fine-tuned models are integrated with specific compatibility notes for quantization.\n13. Installation scripts automate the setup of complex dependencies like CUDA and Python.\n14. Windows-specific issues like Task Scheduler throttling are documented with workarounds.\n15. Linux support includes automatic compilation of the engine if pre-built binaries fail.\n1",
+    "message": {
+      "role": "assistant",
+      "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for GPU expert caching.\n6. CPU and GPU workloads are designed to run concurrently to maximize throughput.\n7. The engine uses speculative decoding to accelerate token generation.\n8. Prompt processing speed is optimized by increasing chunk sizes for prefill operations.\n9. KV cache streaming moves less frequently accessed data to system RAM to save VRAM.\n10. Quantization formats are carefully selected to balance model quality and memory usage.\n11. The system supports multiple model variants tailored for specific tasks like coding.\n12. Fine-tuned models are integrated with specific compatibility notes for quantization.\n13. Installation scripts automate the setup of complex dependencies like CUDA and Python.\n14. Windows-specific issues like Task Scheduler throttling are documented with workarounds.\n15. Linux support includes automatic compilation of the engine if pre-built binaries fail.\n1"
+    },
+    "timings": {
+      "cache_n": 130041,
+      "prompt_n": 112,
+      "prompt_ms": 2632.3,
+      "prompt_per_token_ms": 23.503,
+      "prompt_per_second": 42.5,
+      "predicted_n": 256,
+      "predicted_ms": 7704.5,
+      "predicted_per_token_ms": 30.096,
+      "predicted_per_second": 33.2,
+      "draft_n": 142,
+      "draft_n_accepted": 111
+    },
+    "usage": {
+      "prompt_tokens": 130153,
+      "completion_tokens": 256,
+      "total_tokens": 130409,
+      "prompt_tokens_details": {
+        "cached_tokens": 130041
+      }
+    }
+  },
+  {
+    "case": "measured_1",
+    "prompt_tokens": 130153,
+    "local_prepare_ms": 334.8095999972429,
+    "headers_ms": 331.73039999383036,
+    "ttft_ms": 457.491499997559,
+    "wall_ms": 5591.984500002582,
+    "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for GPU expert caching.\n6. CPU and GPU workloads are designed to run concurrently to maximize throughput.\n7. The engine uses speculative decoding to accelerate token generation.\n8. Prompt processing speed is optimized by increasing chunk sizes for prefill operations.\n9. KV cache streaming moves less frequently accessed data to system RAM to save VRAM.\n10. Quantization formats are carefully selected to balance model quality and memory usage.\n11. The system supports multiple model variants tailored for specific tasks like coding.\n12. Fine-tuned models are integrated with specific compatibility notes for quantization.\n13. Installation scripts automate the setup of complex dependencies like CUDA and Python.\n14. Windows-specific issues like Task Scheduler throttling are documented with workarounds.\n15. Linux support includes automatic compilation of the engine if pre-built binaries fail.\n1",
+    "message": {
+      "role": "assistant",
+      "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for GPU expert caching.\n6. CPU and GPU workloads are designed to run concurrently to maximize throughput.\n7. The engine uses speculative decoding to accelerate token generation.\n8. Prompt processing speed is optimized by increasing chunk sizes for prefill operations.\n9. KV cache streaming moves less frequently accessed data to system RAM to save VRAM.\n10. Quantization formats are carefully selected to balance model quality and memory usage.\n11. The system supports multiple model variants tailored for specific tasks like coding.\n12. Fine-tuned models are integrated with specific compatibility notes for quantization.\n13. Installation scripts automate the setup of complex dependencies like CUDA and Python.\n14. Windows-specific issues like Task Scheduler throttling are documented with workarounds.\n15. Linux support includes automatic compilation of the engine if pre-built binaries fail.\n1"
+    },
+    "timings": {
+      "cache_n": 130146,
+      "prompt_n": 7,
+      "prompt_ms": 75.1,
+      "prompt_per_token_ms": 10.729,
+      "prompt_per_second": 93.2,
+      "predicted_n": 256,
+      "predicted_ms": 5155.0,
+      "predicted_per_token_ms": 20.137,
+      "predicted_per_second": 49.7,
+      "draft_n": 142,
+      "draft_n_accepted": 111
+    },
+    "usage": {
+      "prompt_tokens": 130153,
+      "completion_tokens": 256,
+      "total_tokens": 130409,
+      "prompt_tokens_details": {
+        "cached_tokens": 130146
+      }
+    }
+  },
+  {
+    "case": "measured_2",
+    "prompt_tokens": 130153,
+    "local_prepare_ms": 329.03759999317117,
+    "headers_ms": 328.10470000549685,
+    "ttft_ms": 443.6802999989595,
+    "wall_ms": 5558.891099994071,
+    "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for GPU expert caching.\n6. CPU and GPU workloads are designed to run concurrently to maximize throughput.\n7. The engine uses speculative decoding to accelerate token generation.\n8. Prompt processing speed is optimized by increasing chunk sizes for prefill operations.\n9. KV cache streaming moves less frequently accessed data to system RAM to save VRAM.\n10. Quantization formats are carefully selected to balance model quality and memory usage.\n11. The system supports multiple model variants tailored for specific tasks like coding.\n12. Fine-tuned models are integrated with specific compatibility notes for quantization.\n13. Installation scripts automate the setup of complex dependencies like CUDA and Python.\n14. Windows-specific issues like Task Scheduler throttling are documented with workarounds.\n15. Linux support includes automatic compilation of the engine if pre-built binaries fail.\n1",
+    "message": {
+      "role": "assistant",
+      "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for GPU expert caching.\n6. CPU and GPU workloads are designed to run concurrently to maximize throughput.\n7. The engine uses speculative decoding to accelerate token generation.\n8. Prompt processing speed is optimized by increasing chunk sizes for prefill operations.\n9. KV cache streaming moves less frequently accessed data to system RAM to save VRAM.\n10. Quantization formats are carefully selected to balance model quality and memory usage.\n11. The system supports multiple model variants tailored for specific tasks like coding.\n12. Fine-tuned models are integrated with specific compatibility notes for quantization.\n13. Installation scripts automate the setup of complex dependencies like CUDA and Python.\n14. Windows-specific issues like Task Scheduler throttling are documented with workarounds.\n15. Linux support includes automatic compilation of the engine if pre-built binaries fail.\n1"
+    },
+    "timings": {
+      "cache_n": 130146,
+      "prompt_n": 7,
+      "prompt_ms": 68.6,
+      "prompt_per_token_ms": 9.8,
+      "prompt_per_second": 102.0,
+      "predicted_n": 256,
+      "predicted_ms": 5134.6,
+      "predicted_per_token_ms": 20.057,
+      "predicted_per_second": 49.9,
+      "draft_n": 142,
+      "draft_n_accepted": 111
+    },
+    "usage": {
+      "prompt_tokens": 130153,
+      "completion_tokens": 256,
+      "total_tokens": 130409,
+      "prompt_tokens_details": {
+        "cached_tokens": 130146
+      }
+    }
+  },
+  {
+    "case": "measured_3",
+    "prompt_tokens": 130153,
+    "local_prepare_ms": 330.51980000163894,
+    "headers_ms": 329.22560001316015,
+    "ttft_ms": 444.24690000596456,
+    "wall_ms": 5534.553200006485,
+    "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for GPU expert caching.\n6. CPU and GPU workloads are designed to run concurrently to maximize throughput.\n7. The engine uses speculative decoding to accelerate token generation.\n8. Prompt processing speed is optimized by increasing chunk sizes for prefill operations.\n9. KV cache streaming moves less frequently accessed data to system RAM to save VRAM.\n10. Quantization formats are carefully selected to balance model quality and memory usage.\n11. The system supports multiple model variants tailored for specific tasks like coding.\n12. Fine-tuned models are integrated with specific compatibility notes for quantization.\n13. Installation scripts automate the setup of complex dependencies like CUDA and Python.\n14. Windows-specific issues like Task Scheduler throttling are documented with workarounds.\n15. Linux support includes automatic compilation of the engine if pre-built binaries fail.\n1",
+    "message": {
+      "role": "assistant",
+      "content": "1. The project prioritizes measured data over theoretical estimates for performance claims.\n2. Engine versions are explicitly tracked to correlate speed improvements with specific code changes.\n3. Benchmark results are stored in dated directories to preserve historical performance data.\n4. The documentation distinguishes between measured speeds and estimated speeds for different hardware.\n5. Memory bandwidth is identified as a primary bottleneck for GPU expert caching.\n6. CPU and GPU workloads are designed to run concurrently to maximize throughput.\n7. The engine uses speculative decoding to accelerate token generation.\n8. Prompt processing speed is optimized by increasing chunk sizes for prefill operations.\n9. KV cache streaming moves less frequently accessed data to system RAM to save VRAM.\n10. Quantization formats are carefully selected to balance model quality and memory usage.\n11. The system supports multiple model variants tailored for specific tasks like coding.\n12. Fine-tuned models are integrated with specific compatibility notes for quantization.\n13. Installation scripts automate the setup of complex dependencies like CUDA and Python.\n14. Windows-specific issues like Task Scheduler throttling are documented with workarounds.\n15. Linux support includes automatic compilation of the engine if pre-built binaries fail.\n1"
+    },
+    "timings": {
+      "cache_n": 130146,
+      "prompt_n": 7,
+      "prompt_ms": 67.7,
+      "prompt_per_token_ms": 9.671,
+      "prompt_per_second": 103.4,
+      "predicted_n": 256,
+      "predicted_ms": 5109.7,
+      "predicted_per_token_ms": 19.96,
+      "predicted_per_second": 50.1,
+      "draft_n": 142,
+      "draft_n_accepted": 111
+    },
+    "usage": {
+      "prompt_tokens": 130153,
+      "completion_tokens": 256,
+      "total_tokens": 130409,
+      "prompt_tokens_details": {
+        "cached_tokens": 130146
+      }
+    }
+  }
+]

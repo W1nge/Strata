@@ -1,0 +1,120 @@
+[
+  {
+    "case": "prefill",
+    "label": "128k",
+    "expected": [
+      "violet-583107",
+      "copper-942681",
+      "cedar-276439",
+      "quartz-814725",
+      "maple-693258"
+    ],
+    "found": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "prompt_tokens": 130048,
+    "local_prepare_ms": 332.9857000062475,
+    "headers_ms": 330.14320000074804,
+    "ttft_ms": 194080.1294999983,
+    "wall_ms": 198487.6770999981,
+    "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258",
+    "message": {
+      "role": "assistant",
+      "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258"
+    },
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 130048,
+      "prompt_ms": 193670.5,
+      "prompt_per_token_ms": 1.489,
+      "prompt_per_second": 671.5,
+      "predicted_n": 64,
+      "predicted_ms": 4457.3,
+      "predicted_per_token_ms": 69.645,
+      "predicted_per_second": 14.4,
+      "draft_n": 53,
+      "draft_n_accepted": 45
+    },
+    "usage": {
+      "prompt_tokens": 130048,
+      "completion_tokens": 64,
+      "total_tokens": 130112,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "status": {
+      "service": "strata",
+      "model": "qwen3.8-flash-next",
+      "engine": "0.1.24",
+      "started": 1790985112,
+      "uptime_s": 201,
+      "cache_max_tokens": 262144,
+      "cache": {
+        "state": "resident",
+        "idle_seconds": 180,
+        "expire_seconds": 3600,
+        "disk_bytes": 0,
+        "released_vram_bytes": 0,
+        "released_host_bytes": 0,
+        "tokens": 0,
+        "operation_ms": 0.0
+      },
+      "context": {
+        "native": 262144,
+        "max_positions": 262144
+      },
+      "concurrency": {
+        "serving": 1,
+        "requested": 1
+      },
+      "dialects": [
+        "/v1/chat/completions",
+        "/v1/messages"
+      ],
+      "vision": {
+        "enabled": false,
+        "available": false,
+        "error": null
+      },
+      "activity": {
+        "requests": 2,
+        "in_flight": 0,
+        "last_request_at": 1790985314
+      },
+      "last_timings": {
+        "cache_n": 0,
+        "prompt_n": 130048,
+        "prompt_ms": 193670.5,
+        "prompt_per_token_ms": 1.489,
+        "prompt_per_second": 671.5,
+        "predicted_n": 64,
+        "predicted_ms": 4457.3,
+        "predicted_per_token_ms": 69.645,
+        "predicted_per_second": 14.4,
+        "draft_n": 53,
+        "draft_n_accepted": 45,
+        "at": 1790985314
+      },
+      "machine": {
+        "at": 1790985314,
+        "gpu": {
+          "name": "NVIDIA GeForce RTX 2080 Ti",
+          "used_mib": 22238.0,
+          "total_mib": 22528.0,
+          "util_pct": 99,
+          "temp_c": 63,
+          "power_w": 147.332
+        },
+        "ram": {
+          "used_gib": 28.0,
+          "total_gib": 31.6
+        }
+      }
+    }
+  }
+]

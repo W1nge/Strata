@@ -1,0 +1,268 @@
+{
+  "order": [
+    "B2",
+    "A2",
+    "A3",
+    "B3"
+  ],
+  "excluded": "A1/B1 retained as preliminary: an incremental-build repair and byte tests occurred between these two arms.",
+  "measurement_requests": 24,
+  "clearing_requests": 24,
+  "concurrency": 1,
+  "diagnostics": false,
+  "os_file_cache_purged": false,
+  "groups": [
+    {
+      "case": "8K",
+      "A": {
+        "n": 4,
+        "samples": [
+          {
+            "run": "A2",
+            "cycle": 0,
+            "prompt_ms": 13893.8,
+            "ttft_ms": 13944.213800001307,
+            "wall_ms": 14285.715300007723
+          },
+          {
+            "run": "A2",
+            "cycle": 1,
+            "prompt_ms": 17198.4,
+            "ttft_ms": 17239.875999992364,
+            "wall_ms": 17421.10709998815
+          },
+          {
+            "run": "A3",
+            "cycle": 0,
+            "prompt_ms": 17639.8,
+            "ttft_ms": 17692.916500003776,
+            "wall_ms": 18048.742300001322
+          },
+          {
+            "run": "A3",
+            "cycle": 1,
+            "prompt_ms": 13811.9,
+            "ttft_ms": 13854.19240000192,
+            "wall_ms": 14044.552999999723
+          }
+        ],
+        "prompt_ms": 15546.1,
+        "ttft_ms": 15592.044899996836,
+        "wall_ms": 15853.411199997936
+      },
+      "B": {
+        "n": 4,
+        "samples": [
+          {
+            "run": "B2",
+            "cycle": 0,
+            "prompt_ms": 15917.9,
+            "ttft_ms": 15968.068500005757,
+            "wall_ms": 16310.184300004039
+          },
+          {
+            "run": "B2",
+            "cycle": 1,
+            "prompt_ms": 13801.2,
+            "ttft_ms": 13843.204299992067,
+            "wall_ms": 14023.486199992476
+          },
+          {
+            "run": "B3",
+            "cycle": 0,
+            "prompt_ms": 13869.4,
+            "ttft_ms": 13919.697099991026,
+            "wall_ms": 14270.323599994299
+          },
+          {
+            "run": "B3",
+            "cycle": 1,
+            "prompt_ms": 13800.1,
+            "ttft_ms": 13841.663800005335,
+            "wall_ms": 14022.577099996852
+          }
+        ],
+        "prompt_ms": 13835.3,
+        "ttft_ms": 13881.450699991547,
+        "wall_ms": 14146.904899993388
+      },
+      "prompt_time_reduction_pct": 11.00468927898316,
+      "prompt_speed_increase_pct": 12.365470933048073
+    },
+    {
+      "case": "16K",
+      "A": {
+        "n": 4,
+        "samples": [
+          {
+            "run": "A2",
+            "cycle": 0,
+            "prompt_ms": 17710.9,
+            "ttft_ms": 17774.078300004476,
+            "wall_ms": 18142.724400007864
+          },
+          {
+            "run": "A2",
+            "cycle": 1,
+            "prompt_ms": 19676.4,
+            "ttft_ms": 19742.78850000701,
+            "wall_ms": 19925.992799995583
+          },
+          {
+            "run": "A3",
+            "cycle": 0,
+            "prompt_ms": 19505.6,
+            "ttft_ms": 19568.325100000948,
+            "wall_ms": 19921.940700005507
+          },
+          {
+            "run": "A3",
+            "cycle": 1,
+            "prompt_ms": 17728.3,
+            "ttft_ms": 17790.48129999137,
+            "wall_ms": 17970.304100002977
+          }
+        ],
+        "prompt_ms": 18616.949999999997,
+        "ttft_ms": 18679.40319999616,
+        "wall_ms": 19032.332550006686
+      },
+      "B": {
+        "n": 4,
+        "samples": [
+          {
+            "run": "B2",
+            "cycle": 0,
+            "prompt_ms": 16846.4,
+            "ttft_ms": 16910.061200003838,
+            "wall_ms": 17267.393800007994
+          },
+          {
+            "run": "B2",
+            "cycle": 1,
+            "prompt_ms": 16777.7,
+            "ttft_ms": 16840.159800005495,
+            "wall_ms": 17022.931400002562
+          },
+          {
+            "run": "B3",
+            "cycle": 0,
+            "prompt_ms": 16772.3,
+            "ttft_ms": 16835.132600012003,
+            "wall_ms": 17191.099100004067
+          },
+          {
+            "run": "B3",
+            "cycle": 1,
+            "prompt_ms": 20935.2,
+            "ttft_ms": 20997.08990000363,
+            "wall_ms": 21177.705299996887
+          }
+        ],
+        "prompt_ms": 16812.050000000003,
+        "ttft_ms": 16875.110500004666,
+        "wall_ms": 17229.24645000603
+      },
+      "prompt_time_reduction_pct": 9.694928546297831,
+      "prompt_speed_increase_pct": 10.73575203499868
+    },
+    {
+      "case": "31K_first",
+      "A": {
+        "n": 2,
+        "samples": [
+          {
+            "run": "A2",
+            "cycle": 0,
+            "prompt_ms": 42907.1,
+            "ttft_ms": 43029.98760000628,
+            "wall_ms": 43943.04950001242
+          },
+          {
+            "run": "A3",
+            "cycle": 0,
+            "prompt_ms": 45037.9,
+            "ttft_ms": 45162.97290001239,
+            "wall_ms": 45952.19400001224
+          }
+        ],
+        "prompt_ms": 43972.5,
+        "ttft_ms": 44096.480250009336,
+        "wall_ms": 44947.62175001233
+      },
+      "B": {
+        "n": 2,
+        "samples": [
+          {
+            "run": "B2",
+            "cycle": 0,
+            "prompt_ms": 39146.2,
+            "ttft_ms": 39272.21600001212,
+            "wall_ms": 40133.5848000017
+          },
+          {
+            "run": "B3",
+            "cycle": 0,
+            "prompt_ms": 39413.8,
+            "ttft_ms": 39552.977200000896,
+            "wall_ms": 40367.28960000619
+          }
+        ],
+        "prompt_ms": 39280.0,
+        "ttft_ms": 39412.59660000651,
+        "wall_ms": 40250.437200003944
+      },
+      "prompt_time_reduction_pct": 10.671442378759455,
+      "prompt_speed_increase_pct": 11.94628309572301
+    },
+    {
+      "case": "31K_repeat",
+      "A": {
+        "n": 2,
+        "samples": [
+          {
+            "run": "A2",
+            "cycle": 1,
+            "prompt_ms": 38788.8,
+            "ttft_ms": 38895.97019999928,
+            "wall_ms": 39079.67069999722
+          },
+          {
+            "run": "A3",
+            "cycle": 1,
+            "prompt_ms": 35481.9,
+            "ttft_ms": 35587.3486000055,
+            "wall_ms": 35770.318800001405
+          }
+        ],
+        "prompt_ms": 37135.350000000006,
+        "ttft_ms": 37241.65940000239,
+        "wall_ms": 37424.994749999314
+      },
+      "B": {
+        "n": 2,
+        "samples": [
+          {
+            "run": "B2",
+            "cycle": 1,
+            "prompt_ms": 37160.8,
+            "ttft_ms": 37267.69940000668,
+            "wall_ms": 37452.1808999998
+          },
+          {
+            "run": "B3",
+            "cycle": 1,
+            "prompt_ms": 34296.7,
+            "ttft_ms": 34402.30469999369,
+            "wall_ms": 34585.500699991826
+          }
+        ],
+        "prompt_ms": 35728.75,
+        "ttft_ms": 35835.002050000185,
+        "wall_ms": 36018.840799995814
+      },
+      "prompt_time_reduction_pct": 3.7877655656941567,
+      "prompt_speed_increase_pct": 3.9368855613476805
+    }
+  ]
+}

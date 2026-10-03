@@ -368,6 +368,33 @@ __global__ void __launch_bounds__(128) mmvq_kernel(const uint8_t* __restrict__ w
     }
 }
 
+
+// Reuse each weight block across a fixed number of activation columns. Each column
+// retains row_dot's lane partition, accumulation sequence and warp reduction.
+template<int NC>
+__global__ void __launch_bounds__(128) iq3s_mmvq_interleaved_kernel(
+    const uint8_t* __restrict__ w, size_t row_bytes, const block_q8_1* __restrict__ x,
+    float* __restrict__ y, int n_in, int n_out) {
+    const int row_index = blockIdx.x * 4 + threadIdx.y;
+    if (row_index >= n_out) return;
+    const int lane = threadIdx.x;
+    const uint8_t* row = w + (size_t) row_index * row_bytes;
+    using F = Fmt<21>;
+    const int nb = n_in / F::qk;
+    float acc[NC] = {};
+    for (int k = lane; k < nb * F::ipb; k += 32) {
+        const int kbx = k / F::ipb, iqs = F::step * (k % F::ipb);
+#pragma unroll
+        for (int c = 0; c < NC; ++c)
+            acc[c] += F::dot(row, x + (size_t) c * (n_in / 32) + kbx * (F::qk / 32), kbx, iqs);
+    }
+#pragma unroll
+    for (int c = 0; c < NC; ++c) {
+        acc[c] = warp_sum(acc[c]);
+        if (lane == 0) y[(size_t) c * n_out + row_index] = acc[c];
+    }
+}
+
 // ---------------------------------------------------------------- grouped native experts
 constexpr int GU_ROWS = 8;     // rows per block (one warp each)
 
@@ -430,6 +457,25 @@ __global__ void quantize_q8_1_kernel(const float* __restrict__ x, block_q8_1* __
     const long long i = (long long) blockIdx.x * blockDim.x + threadIdx.x;
     if (i >= n) return;
     const float xi = x[i];
+    float amax = fabsf(xi), sum = xi;
+#pragma unroll
+    for (int o = 16; o > 0; o >>= 1) {
+        amax = fmaxf(amax, __shfl_xor_sync(0xffffffffu, amax, o));
+        sum += __shfl_xor_sync(0xffffffffu, sum, o);
+    }
+    const float d = amax / 127.0f;
+    const int8_t q = amax == 0.0f ? 0 : roundf(xi / d);
+    const long long ib = i / 32, iqs = i % 32;
+    y[ib].qs[iqs] = q;
+    if (iqs == 0) y[ib].ds = make_half2(d, sum);
+}
+
+// Same activation and warp reduction order, without a round trip through h.
+__global__ void swiglu_q8_kernel(const float* __restrict__ gate, const float* __restrict__ up, block_q8_1* __restrict__ y, long long n) {
+    const long long i = (long long) blockIdx.x * blockDim.x + threadIdx.x;
+    if (i >= n) return;
+    const float g = gate[i];
+    const float xi = (g / (1.0f + __expf(-g))) * up[i];
     float amax = fabsf(xi), sum = xi;
 #pragma unroll
     for (int o = 16; o > 0; o >>= 1) {
@@ -678,12 +724,22 @@ void quantize_q8_1_rows(const float* x, int64_t n_rows, int64_t n_cols, void* y,
     check("quantize_q8_1_rows");
 }
 
-void iq_mmvq(int t, const void* w, const void* x_q8_1, float* y, int n_in, int n_out, int ncols, void* stream) {
+void iq_mmvq(int t, const void* w, const void* x_q8_1, float* y, int n_in, int n_out, int ncols, void* stream, bool interleaved) {
     const dim3 grid((unsigned) ((n_out + 3) / 4)), block(32, 4);
     const size_t rb = iq_row_bytes(t, n_in);
     cudaStream_t s = (cudaStream_t) stream;
     const auto* W = (const uint8_t*) w;
     const auto* X = (const block_q8_1*) x_q8_1;
+    if (interleaved && t == 21 && ncols >= 2 && ncols <= 8) {
+        switch (ncols) {
+#define STRATA_IQ3S_COLS(N) case N: iq3s_mmvq_interleaved_kernel<N><<<grid, block, 0, s>>>(W, rb, X, y, n_in, n_out); break
+            STRATA_IQ3S_COLS(2); STRATA_IQ3S_COLS(3); STRATA_IQ3S_COLS(4);
+            STRATA_IQ3S_COLS(5); STRATA_IQ3S_COLS(6); STRATA_IQ3S_COLS(7); STRATA_IQ3S_COLS(8);
+#undef STRATA_IQ3S_COLS
+        }
+        check("iq_mmvq interleaved");
+        return;
+    }
     switch (t) {
         case 16: mmvq_kernel<16><<<grid, block, 0, s>>>(W, rb, X, y, n_in, n_out, ncols); break;
         case 17: mmvq_kernel<17><<<grid, block, 0, s>>>(W, rb, X, y, n_in, n_out, ncols); break;
@@ -758,7 +814,7 @@ size_t native_expert_scratch_bytes(int64_t cap, int64_t n_ff) {
 
 void native_expert_grouped(const NativeExpertLayout& L, const unsigned long long* grp_ptr, const int32_t* grp_start,
                            const int32_t* n_groups, const int32_t* ent_dst, const int32_t* ent_tok, int64_t cap_groups,
-                           int64_t cap_entries, const void* x_q8_1, void* scratch, float* out, void* stream) {
+                           int64_t cap_entries, const void* x_q8_1, void* scratch, float* out, void* stream, bool fuse_activation) {
     if (cap_groups <= 0 || cap_entries <= 0) return;
     cudaStream_t s = (cudaStream_t) stream;
     const size_t f = (size_t) cap_entries * (size_t) L.n_ff * sizeof(float), fa = (f + 255) & ~(size_t) 255;
@@ -783,8 +839,12 @@ void native_expert_grouped(const NativeExpertLayout& L, const unsigned long long
     }
     check("native_expert_grouped/gu");
     const long long nh = (long long) cap_entries * L.n_ff;
-    swiglu_entries_kernel<<<(unsigned) ((nh + 255) / 256), 256, 0, s>>>(gate, up, h, nh);
-    quantize_q8_1_kernel<<<(unsigned) ((nh + 255) / 256), 256, 0, s>>>(h, hq, nh);
+    if (fuse_activation) {
+        swiglu_q8_kernel<<<(unsigned) ((nh + 255) / 256), 256, 0, s>>>(gate, up, hq, nh);
+    } else {
+        swiglu_entries_kernel<<<(unsigned) ((nh + 255) / 256), 256, 0, s>>>(gate, up, h, nh);
+        quantize_q8_1_kernel<<<(unsigned) ((nh + 255) / 256), 256, 0, s>>>(h, hq, nh);
+    }
     const dim3 gd((unsigned) ((L.n_embd + 7) / 8), (unsigned) cap_groups);
     switch (L.d_type) {
         case 20: native_down_kernel<20><<<gd, 256, 0, s>>>(grp_ptr, grp_start, n_groups, ent_dst, hq, L, out); break;

@@ -1,0 +1,525 @@
+[
+  {
+    "case": "clear",
+    "prompt_tokens": 16,
+    "local_prepare_ms": 0.29209999775048345,
+    "headers_ms": 21.683600003598258,
+    "ttft_ms": 766.9635000056587,
+    "wall_ms": 1009.8399000125937,
+    "content": "READY",
+    "message": {
+      "role": "assistant",
+      "content": "READY"
+    },
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 16,
+      "prompt_ms": 699.8,
+      "prompt_per_token_ms": 43.737,
+      "prompt_per_second": 22.9,
+      "predicted_n": 2,
+      "predicted_ms": 287.6,
+      "predicted_per_token_ms": 143.8,
+      "predicted_per_second": 7.0,
+      "draft_n": 3,
+      "draft_n_accepted": 3
+    },
+    "usage": {
+      "prompt_tokens": 16,
+      "completion_tokens": 2,
+      "total_tokens": 18,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    }
+  },
+  {
+    "case": "full_31k",
+    "prompt_tokens": 31243,
+    "local_prepare_ms": 78.61979999870528,
+    "headers_ms": 79.79960000375286,
+    "ttft_ms": 56786.049700007425,
+    "wall_ms": 57690.97619999957,
+    "content": "cobalt-willow-32768",
+    "message": {
+      "role": "assistant",
+      "content": "cobalt-willow-32768"
+    },
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 31243,
+      "prompt_ms": 56664.2,
+      "prompt_per_token_ms": 1.814,
+      "prompt_per_second": 551.4,
+      "predicted_n": 11,
+      "predicted_ms": 940.2,
+      "predicted_per_token_ms": 85.473,
+      "predicted_per_second": 11.7,
+      "draft_n": 10,
+      "draft_n_accepted": 7
+    },
+    "usage": {
+      "prompt_tokens": 31243,
+      "completion_tokens": 11,
+      "total_tokens": 31254,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    }
+  },
+  {
+    "case": "resident_retry",
+    "prompt_tokens": 31243,
+    "local_prepare_ms": 82.53430000331718,
+    "headers_ms": 80.07419999921694,
+    "ttft_ms": 166.29069999908097,
+    "wall_ms": 346.9203999993624,
+    "content": "cobalt-willow-32768",
+    "message": {
+      "role": "assistant",
+      "content": "cobalt-willow-32768"
+    },
+    "timings": {
+      "cache_n": 31236,
+      "prompt_n": 7,
+      "prompt_ms": 60.7,
+      "prompt_per_token_ms": 8.671,
+      "prompt_per_second": 115.3,
+      "predicted_n": 11,
+      "predicted_ms": 199.8,
+      "predicted_per_token_ms": 18.164,
+      "predicted_per_second": 55.1,
+      "draft_n": 10,
+      "draft_n_accepted": 7
+    },
+    "usage": {
+      "prompt_tokens": 31243,
+      "completion_tokens": 11,
+      "total_tokens": 31254,
+      "prompt_tokens_details": {
+        "cached_tokens": 31236
+      }
+    }
+  },
+  {
+    "case": "offload",
+    "status": {
+      "service": "strata",
+      "model": "qwen3.8-flash-next",
+      "engine": "0.1.24",
+      "started": 1790988788,
+      "uptime_s": 67,
+      "cache_max_tokens": 32768,
+      "cache": {
+        "state": "disk",
+        "idle_seconds": 5,
+        "expire_seconds": 30,
+        "disk_bytes": 1298970952,
+        "released_vram_bytes": 1065353216,
+        "released_host_bytes": 236113920,
+        "tokens": 31253,
+        "operation_ms": 1964.6
+      },
+      "context": {
+        "native": 32768,
+        "max_positions": 32768
+      },
+      "concurrency": {
+        "serving": 1,
+        "requested": 1
+      },
+      "dialects": [
+        "/v1/chat/completions",
+        "/v1/messages"
+      ],
+      "vision": {
+        "enabled": false,
+        "available": false,
+        "error": null
+      },
+      "activity": {
+        "requests": 3,
+        "in_flight": 0,
+        "last_request_at": 1790988847
+      },
+      "last_timings": {
+        "cache_n": 31236,
+        "prompt_n": 7,
+        "prompt_ms": 60.7,
+        "prompt_per_token_ms": 8.671,
+        "prompt_per_second": 115.3,
+        "predicted_n": 11,
+        "predicted_ms": 199.8,
+        "predicted_per_token_ms": 18.164,
+        "predicted_per_second": 55.1,
+        "draft_n": 10,
+        "draft_n_accepted": 7,
+        "at": 1790988847
+      },
+      "machine": {
+        "at": 1790988855,
+        "gpu": {
+          "name": "NVIDIA GeForce RTX 2080 Ti",
+          "used_mib": 22135.0,
+          "total_mib": 22528.0,
+          "util_pct": 11,
+          "temp_c": 49,
+          "power_w": 27.455
+        },
+        "ram": {
+          "used_gib": 23.8,
+          "total_gib": 31.6
+        }
+      }
+    },
+    "file_bytes": 1298970952
+  },
+  {
+    "case": "disk_retry",
+    "prompt_tokens": 31243,
+    "local_prepare_ms": 79.15010000579059,
+    "headers_ms": 79.88320000004023,
+    "ttft_ms": 1887.796700000763,
+    "wall_ms": 2085.4534999962198,
+    "content": "cobalt-willow-32768",
+    "message": {
+      "role": "assistant",
+      "content": "cobalt-willow-32768"
+    },
+    "timings": {
+      "cache_n": 31236,
+      "prompt_n": 7,
+      "prompt_ms": 214.6,
+      "prompt_per_token_ms": 30.657,
+      "prompt_per_second": 32.6,
+      "predicted_n": 11,
+      "predicted_ms": 221.6,
+      "predicted_per_token_ms": 20.145,
+      "predicted_per_second": 49.6,
+      "draft_n": 10,
+      "draft_n_accepted": 7
+    },
+    "usage": {
+      "prompt_tokens": 31243,
+      "completion_tokens": 11,
+      "total_tokens": 31254,
+      "prompt_tokens_details": {
+        "cached_tokens": 31236
+      }
+    }
+  },
+  {
+    "case": "continuation",
+    "prompt_tokens": 31274,
+    "local_prepare_ms": 82.55300000018906,
+    "headers_ms": 80.08600000175647,
+    "ttft_ms": 561.9934999995166,
+    "wall_ms": 1008.8191999966512,
+    "content": "cobalt-willow-32768",
+    "message": {
+      "role": "assistant",
+      "content": "cobalt-willow-32768"
+    },
+    "timings": {
+      "cache_n": 31253,
+      "prompt_n": 21,
+      "prompt_ms": 449.1,
+      "prompt_per_token_ms": 21.386,
+      "prompt_per_second": 46.8,
+      "predicted_n": 11,
+      "predicted_ms": 473.3,
+      "predicted_per_token_ms": 43.027,
+      "predicted_per_second": 23.2,
+      "draft_n": 8,
+      "draft_n_accepted": 8
+    },
+    "usage": {
+      "prompt_tokens": 31274,
+      "completion_tokens": 11,
+      "total_tokens": 31285,
+      "prompt_tokens_details": {
+        "cached_tokens": 31253
+      }
+    }
+  },
+  {
+    "case": "short_after_long",
+    "prompt_tokens": 1401,
+    "local_prepare_ms": 6.775000001653098,
+    "headers_ms": 6.03449999471195,
+    "ttft_ms": 20346.69039999426,
+    "wall_ms": 20555.38130000059,
+    "content": "AMBER-731",
+    "message": {
+      "role": "assistant",
+      "content": "AMBER-731"
+    },
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 1401,
+      "prompt_ms": 20319.2,
+      "prompt_per_token_ms": 14.503,
+      "prompt_per_second": 68.9,
+      "predicted_n": 7,
+      "predicted_ms": 229.2,
+      "predicted_per_token_ms": 32.743,
+      "predicted_per_second": 30.5,
+      "draft_n": 6,
+      "draft_n_accepted": 6
+    },
+    "usage": {
+      "prompt_tokens": 1401,
+      "completion_tokens": 7,
+      "total_tokens": 1408,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    }
+  },
+  {
+    "case": "changed_branch",
+    "prompt_tokens": 1401,
+    "local_prepare_ms": 6.814000007580034,
+    "headers_ms": 7.667700003366917,
+    "ttft_ms": 5310.812199997599,
+    "wall_ms": 5446.83640000585,
+    "content": "TEAL-942",
+    "message": {
+      "role": "assistant",
+      "content": "TEAL-942"
+    },
+    "timings": {
+      "cache_n": 1004,
+      "prompt_n": 397,
+      "prompt_ms": 5283.3,
+      "prompt_per_token_ms": 13.308,
+      "prompt_per_second": 75.1,
+      "predicted_n": 7,
+      "predicted_ms": 154.8,
+      "predicted_per_token_ms": 22.114,
+      "predicted_per_second": 45.2,
+      "draft_n": 6,
+      "draft_n_accepted": 6
+    },
+    "usage": {
+      "prompt_tokens": 1401,
+      "completion_tokens": 7,
+      "total_tokens": 1408,
+      "prompt_tokens_details": {
+        "cached_tokens": 1004
+      }
+    }
+  },
+  {
+    "case": "prefill_cancel_recovery",
+    "prompt_tokens": 1401,
+    "local_prepare_ms": 6.403599996701814,
+    "headers_ms": 6.287700001848862,
+    "ttft_ms": 17725.497599996743,
+    "wall_ms": 17903.918299998622,
+    "content": "AMBER-731",
+    "message": {
+      "role": "assistant",
+      "content": "AMBER-731"
+    },
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 1401,
+      "prompt_ms": 17672.3,
+      "prompt_per_token_ms": 12.614,
+      "prompt_per_second": 79.3,
+      "predicted_n": 7,
+      "predicted_ms": 221.7,
+      "predicted_per_token_ms": 31.671,
+      "predicted_per_second": 31.6,
+      "draft_n": 6,
+      "draft_n_accepted": 6
+    },
+    "usage": {
+      "prompt_tokens": 1401,
+      "completion_tokens": 7,
+      "total_tokens": 1408,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    }
+  },
+  {
+    "case": "expired_deleted",
+    "status": {
+      "service": "strata",
+      "model": "qwen3.8-flash-next",
+      "engine": "0.1.24",
+      "started": 1790988788,
+      "uptime_s": 198,
+      "cache_max_tokens": 32768,
+      "cache": {
+        "state": "expired",
+        "idle_seconds": 5,
+        "expire_seconds": 30,
+        "disk_bytes": 0,
+        "released_vram_bytes": 1065353216,
+        "released_host_bytes": 236113920,
+        "tokens": 0,
+        "operation_ms": 0.0
+      },
+      "context": {
+        "native": 32768,
+        "max_positions": 32768
+      },
+      "concurrency": {
+        "serving": 1,
+        "requested": 1
+      },
+      "dialects": [
+        "/v1/chat/completions",
+        "/v1/messages"
+      ],
+      "vision": {
+        "enabled": false,
+        "available": false,
+        "error": null
+      },
+      "activity": {
+        "requests": 9,
+        "in_flight": 0,
+        "last_request_at": 1790988954
+      },
+      "last_timings": {
+        "cache_n": 0,
+        "prompt_n": 1401,
+        "prompt_ms": 17672.3,
+        "prompt_per_token_ms": 12.614,
+        "prompt_per_second": 79.3,
+        "predicted_n": 7,
+        "predicted_ms": 221.7,
+        "predicted_per_token_ms": 31.671,
+        "predicted_per_second": 31.6,
+        "draft_n": 6,
+        "draft_n_accepted": 6,
+        "at": 1790988954
+      },
+      "machine": {
+        "at": 1790988986,
+        "gpu": {
+          "name": "NVIDIA GeForce RTX 2080 Ti",
+          "used_mib": 21112.0,
+          "total_mib": 22528.0,
+          "util_pct": 1,
+          "temp_c": 43,
+          "power_w": 24.498
+        },
+        "ram": {
+          "used_gib": 27.7,
+          "total_gib": 31.6
+        }
+      }
+    }
+  },
+  {
+    "case": "expired_fresh_prefill",
+    "prompt_tokens": 1401,
+    "local_prepare_ms": 8.183500001905486,
+    "headers_ms": 6.129199988208711,
+    "ttft_ms": 17019.837699990603,
+    "wall_ms": 17132.815799996024,
+    "content": "AMBER-731",
+    "message": {
+      "role": "assistant",
+      "content": "AMBER-731"
+    },
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 1401,
+      "prompt_ms": 16852.4,
+      "prompt_per_token_ms": 12.029,
+      "prompt_per_second": 83.1,
+      "predicted_n": 7,
+      "predicted_ms": 131.0,
+      "predicted_per_token_ms": 18.714,
+      "predicted_per_second": 53.4,
+      "draft_n": 6,
+      "draft_n_accepted": 6
+    },
+    "usage": {
+      "prompt_tokens": 1401,
+      "completion_tokens": 7,
+      "total_tokens": 1408,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    }
+  },
+  {
+    "case": "complete",
+    "status": {
+      "service": "strata",
+      "model": "qwen3.8-flash-next",
+      "engine": "0.1.24",
+      "started": 1790988788,
+      "uptime_s": 215,
+      "cache_max_tokens": 32768,
+      "cache": {
+        "state": "resident",
+        "idle_seconds": 5,
+        "expire_seconds": 30,
+        "disk_bytes": 0,
+        "released_vram_bytes": 0,
+        "released_host_bytes": 0,
+        "tokens": 0,
+        "operation_ms": 142.1
+      },
+      "context": {
+        "native": 32768,
+        "max_positions": 32768
+      },
+      "concurrency": {
+        "serving": 1,
+        "requested": 1
+      },
+      "dialects": [
+        "/v1/chat/completions",
+        "/v1/messages"
+      ],
+      "vision": {
+        "enabled": false,
+        "available": false,
+        "error": null
+      },
+      "activity": {
+        "requests": 10,
+        "in_flight": 0,
+        "last_request_at": 1790989003
+      },
+      "last_timings": {
+        "cache_n": 0,
+        "prompt_n": 1401,
+        "prompt_ms": 16852.4,
+        "prompt_per_token_ms": 12.029,
+        "prompt_per_second": 83.1,
+        "predicted_n": 7,
+        "predicted_ms": 131.0,
+        "predicted_per_token_ms": 18.714,
+        "predicted_per_second": 53.4,
+        "draft_n": 6,
+        "draft_n_accepted": 6,
+        "at": 1790989003
+      },
+      "machine": {
+        "at": 1790989003,
+        "gpu": {
+          "name": "NVIDIA GeForce RTX 2080 Ti",
+          "used_mib": 22128.0,
+          "total_mib": 22528.0,
+          "util_pct": 100,
+          "temp_c": 55,
+          "power_w": 189.405
+        },
+        "ram": {
+          "used_gib": 27.8,
+          "total_gib": 31.6
+        }
+      }
+    }
+  }
+]

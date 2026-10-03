@@ -23,6 +23,9 @@
 
 namespace strata::kernels {
 
+// Set before a request, while the preceding request is complete. Other architectures are unchanged.
+void set_turing_prompt_attn(bool enabled);
+
 /// Same arguments and output as `qsa_decode_attn_batch` minus the scratch. Returns false (nothing launched) when the
 /// pools are Q4_0 or the geometry is not 24 heads / 2 KV heads / 256: the caller then uses the old kernel.
 bool qsa_prompt_attn_batch(const float* q, const QsaAttnPools& pools, const int32_t* ids, const int32_t* steps,

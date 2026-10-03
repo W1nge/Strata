@@ -1,0 +1,172 @@
+[
+  {
+    "case": "full_128k",
+    "prompt_tokens": 130048,
+    "local_prepare_ms": 331.20089999283664,
+    "headers_ms": 363.3658999897307,
+    "ttft_ms": 198248.6801999912,
+    "wall_ms": 203520.56929998798,
+    "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258",
+    "message": {
+      "role": "assistant",
+      "content": "ALPHA=violet-583107\nBRAVO=copper-942681\nCHARLIE=cedar-276439\nDELTA=quartz-814725\nECHO=maple-693258"
+    },
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 130048,
+      "prompt_ms": 197797.9,
+      "prompt_per_token_ms": 1.521,
+      "prompt_per_second": 657.5,
+      "predicted_n": 64,
+      "predicted_ms": 5329.9,
+      "predicted_per_token_ms": 83.28,
+      "predicted_per_second": 12.0,
+      "draft_n": 53,
+      "draft_n_accepted": 45
+    },
+    "usage": {
+      "prompt_tokens": 130048,
+      "completion_tokens": 64,
+      "total_tokens": 130112,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    }
+  },
+  {
+    "case": "warm",
+    "prompt_tokens": 130153,
+    "local_prepare_ms": 324.1712000017287,
+    "headers_ms": 350.9559999947669,
+    "ttft_ms": 2674.36550000275,
+    "wall_ms": 11226.58999999112,
+    "content": "1. The project enforces strict validation of tensor shapes and engine forms to prevent silent memory corruption.\n2. Expert weights are stored in a pinned host arena to enable zero-copy access for the CPU expert pool.\n3. The engine uses a tiered memory strategy, splitting experts between VRAM, pinned RAM, and SSD based on usage profiles.\n4. CUDA graphs are captured per-layer to minimize driver overhead and enable precise timing measurements.\n5. A \"doorbell\" mechanism using mapped pinned memory synchronizes the GPU router with the CPU expert pool.\n6. The CPU expert pool runs concurrently with GPU attention layers to hide memory latency.\n7. Speculative decoding uses a dedicated MTP draft layer to predict multiple tokens per verification pass.\n8. The draft layer maintains its own KV cache ring to support speculative token generation.\n9. Idle conversation caches are offloaded to disk snapshots to free VRAM during inactivity.\n10. The engine supports layer splitting across multiple GPUs to increase expert cache capacity.\n11. Quantized weights are decoded using specialized kernels that match the specific activation format required.\n12. The system validates GGUF file geometry and tensor offsets to ensure data integrity before loading.\n13. Expert profiles",
+    "message": {
+      "role": "assistant",
+      "content": "1. The project enforces strict validation of tensor shapes and engine forms to prevent silent memory corruption.\n2. Expert weights are stored in a pinned host arena to enable zero-copy access for the CPU expert pool.\n3. The engine uses a tiered memory strategy, splitting experts between VRAM, pinned RAM, and SSD based on usage profiles.\n4. CUDA graphs are captured per-layer to minimize driver overhead and enable precise timing measurements.\n5. A \"doorbell\" mechanism using mapped pinned memory synchronizes the GPU router with the CPU expert pool.\n6. The CPU expert pool runs concurrently with GPU attention layers to hide memory latency.\n7. Speculative decoding uses a dedicated MTP draft layer to predict multiple tokens per verification pass.\n8. The draft layer maintains its own KV cache ring to support speculative token generation.\n9. Idle conversation caches are offloaded to disk snapshots to free VRAM during inactivity.\n10. The engine supports layer splitting across multiple GPUs to increase expert cache capacity.\n11. Quantized weights are decoded using specialized kernels that match the specific activation format required.\n12. The system validates GGUF file geometry and tensor offsets to ensure data integrity before loading.\n13. Expert profiles"
+    },
+    "timings": {
+      "cache_n": 130041,
+      "prompt_n": 112,
+      "prompt_ms": 2274.1,
+      "prompt_per_token_ms": 20.304,
+      "prompt_per_second": 49.3,
+      "predicted_n": 256,
+      "predicted_ms": 8571.8,
+      "predicted_per_token_ms": 33.484,
+      "predicted_per_second": 29.9,
+      "draft_n": 136,
+      "draft_n_accepted": 109
+    },
+    "usage": {
+      "prompt_tokens": 130153,
+      "completion_tokens": 256,
+      "total_tokens": 130409,
+      "prompt_tokens_details": {
+        "cached_tokens": 130041
+      }
+    }
+  },
+  {
+    "case": "measured_1",
+    "prompt_tokens": 130153,
+    "local_prepare_ms": 332.2050999995554,
+    "headers_ms": 334.1948000015691,
+    "ttft_ms": 455.2620000031311,
+    "wall_ms": 5825.443900001119,
+    "content": "1. The project enforces strict validation of tensor shapes and engine forms to prevent silent memory corruption.\n2. Expert weights are stored in a pinned host arena to enable zero-copy access for the CPU expert pool.\n3. The engine uses a tiered memory strategy, splitting experts between VRAM, pinned RAM, and SSD based on usage profiles.\n4. CUDA graphs are captured per-layer to minimize driver overhead and enable precise timing measurements.\n5. A \"doorbell\" mechanism using mapped pinned memory synchronizes the GPU router with the CPU expert pool.\n6. The CPU expert pool runs concurrently with GPU attention layers to hide memory latency.\n7. Speculative decoding uses a dedicated MTP draft layer to predict multiple tokens per verification pass.\n8. The draft layer maintains its own KV cache ring to support speculative token generation.\n9. Expert routing decisions are made on the GPU and published to the host before CPU computation begins.\n10. The engine refuses to load models if the expert profile geometry does not match the model architecture.\n11. Quantized activation formats are strictly enforced per tensor type to ensure numerical parity with reference implementations.\n12. The system uses a \"bounce buffer\" for CUDA copies when source memory stradd",
+    "message": {
+      "role": "assistant",
+      "content": "1. The project enforces strict validation of tensor shapes and engine forms to prevent silent memory corruption.\n2. Expert weights are stored in a pinned host arena to enable zero-copy access for the CPU expert pool.\n3. The engine uses a tiered memory strategy, splitting experts between VRAM, pinned RAM, and SSD based on usage profiles.\n4. CUDA graphs are captured per-layer to minimize driver overhead and enable precise timing measurements.\n5. A \"doorbell\" mechanism using mapped pinned memory synchronizes the GPU router with the CPU expert pool.\n6. The CPU expert pool runs concurrently with GPU attention layers to hide memory latency.\n7. Speculative decoding uses a dedicated MTP draft layer to predict multiple tokens per verification pass.\n8. The draft layer maintains its own KV cache ring to support speculative token generation.\n9. Expert routing decisions are made on the GPU and published to the host before CPU computation begins.\n10. The engine refuses to load models if the expert profile geometry does not match the model architecture.\n11. Quantized activation formats are strictly enforced per tensor type to ensure numerical parity with reference implementations.\n12. The system uses a \"bounce buffer\" for CUDA copies when source memory stradd"
+    },
+    "timings": {
+      "cache_n": 130146,
+      "prompt_n": 7,
+      "prompt_ms": 72.3,
+      "prompt_per_token_ms": 10.329,
+      "prompt_per_second": 96.8,
+      "predicted_n": 256,
+      "predicted_ms": 5389.6,
+      "predicted_per_token_ms": 21.053,
+      "predicted_per_second": 47.5,
+      "draft_n": 135,
+      "draft_n_accepted": 106
+    },
+    "usage": {
+      "prompt_tokens": 130153,
+      "completion_tokens": 256,
+      "total_tokens": 130409,
+      "prompt_tokens_details": {
+        "cached_tokens": 130146
+      }
+    }
+  },
+  {
+    "case": "measured_2",
+    "prompt_tokens": 130153,
+    "local_prepare_ms": 330.6735999940429,
+    "headers_ms": 330.30789998883847,
+    "ttft_ms": 447.1454000013182,
+    "wall_ms": 5527.314999999362,
+    "content": "1. The project enforces strict validation of tensor shapes and engine forms to prevent silent memory corruption.\n2. Expert weights are stored in a pinned host arena to enable zero-copy access for the CPU expert pool.\n3. The engine uses a tiered memory strategy, splitting experts between VRAM, pinned RAM, and SSD based on usage profiles.\n4. CUDA graphs are captured per-layer to minimize driver overhead and enable precise timing measurements.\n5. A \"doorbell\" mechanism using mapped pinned memory synchronizes the GPU router with the CPU expert pool.\n6. The CPU expert pool runs concurrently with GPU attention layers to hide memory latency.\n7. Speculative decoding uses a dedicated MTP draft layer to predict multiple tokens per verification pass.\n8. KV cache streaming moves less frequently accessed context to RAM to free up VRAM for expert caching.\n9. Quantization formats are strictly mapped to specific activation quantization kernels to ensure numerical parity.\n10. The engine refuses to load if tensor geometry mismatches the expected architecture to prevent undefined behavior.\n11. Idle conversation caches are offloaded to disk snapshots to release VRAM during periods of inactivity.\n12. Layer splitting allows models to run across multiple GPUs by assigning contiguous",
+    "message": {
+      "role": "assistant",
+      "content": "1. The project enforces strict validation of tensor shapes and engine forms to prevent silent memory corruption.\n2. Expert weights are stored in a pinned host arena to enable zero-copy access for the CPU expert pool.\n3. The engine uses a tiered memory strategy, splitting experts between VRAM, pinned RAM, and SSD based on usage profiles.\n4. CUDA graphs are captured per-layer to minimize driver overhead and enable precise timing measurements.\n5. A \"doorbell\" mechanism using mapped pinned memory synchronizes the GPU router with the CPU expert pool.\n6. The CPU expert pool runs concurrently with GPU attention layers to hide memory latency.\n7. Speculative decoding uses a dedicated MTP draft layer to predict multiple tokens per verification pass.\n8. KV cache streaming moves less frequently accessed context to RAM to free up VRAM for expert caching.\n9. Quantization formats are strictly mapped to specific activation quantization kernels to ensure numerical parity.\n10. The engine refuses to load if tensor geometry mismatches the expected architecture to prevent undefined behavior.\n11. Idle conversation caches are offloaded to disk snapshots to release VRAM during periods of inactivity.\n12. Layer splitting allows models to run across multiple GPUs by assigning contiguous"
+    },
+    "timings": {
+      "cache_n": 130146,
+      "prompt_n": 7,
+      "prompt_ms": 69.2,
+      "prompt_per_token_ms": 9.886,
+      "prompt_per_second": 101.2,
+      "predicted_n": 256,
+      "predicted_ms": 5099.6,
+      "predicted_per_token_ms": 19.92,
+      "predicted_per_second": 50.2,
+      "draft_n": 133,
+      "draft_n_accepted": 109
+    },
+    "usage": {
+      "prompt_tokens": 130153,
+      "completion_tokens": 256,
+      "total_tokens": 130409,
+      "prompt_tokens_details": {
+        "cached_tokens": 130146
+      }
+    }
+  },
+  {
+    "case": "measured_3",
+    "prompt_tokens": 130153,
+    "local_prepare_ms": 330.4194000083953,
+    "headers_ms": 325.65250000334345,
+    "ttft_ms": 481.9031999941217,
+    "wall_ms": 5797.504300004221,
+    "content": "1. The project enforces strict validation of tensor shapes and engine forms to prevent silent memory corruption.\n2. Expert weights are stored in a pinned host arena to enable zero-copy access for the CPU expert pool.\n3. The engine uses a tiered memory strategy, splitting experts between VRAM, pinned RAM, and SSD based on usage profiles.\n4. CUDA graphs are captured per-layer to minimize driver overhead and enable precise timing measurements.\n5. A \"doorbell\" mechanism using mapped pinned memory synchronizes the GPU router with the CPU expert pool.\n6. The CPU expert pool runs concurrently with GPU attention layers to hide memory latency.\n7. Speculative decoding uses a dedicated MTP draft layer to predict multiple tokens per verification pass.\n8. The draft layer maintains its own KV cache ring to support speculative token generation.\n9. Expert routing decisions are made on the GPU and published to the host before CPU computation begins.\n10. The engine refuses to load models with mismatched expert profiles to prevent incorrect weight mapping.\n11. Quantized activations are produced in multiple formats (Q8_0, Q8_K) to match specific weight tensor requirements.\n12. BF16 weights are stored as 2-byte",
+    "message": {
+      "role": "assistant",
+      "content": "1. The project enforces strict validation of tensor shapes and engine forms to prevent silent memory corruption.\n2. Expert weights are stored in a pinned host arena to enable zero-copy access for the CPU expert pool.\n3. The engine uses a tiered memory strategy, splitting experts between VRAM, pinned RAM, and SSD based on usage profiles.\n4. CUDA graphs are captured per-layer to minimize driver overhead and enable precise timing measurements.\n5. A \"doorbell\" mechanism using mapped pinned memory synchronizes the GPU router with the CPU expert pool.\n6. The CPU expert pool runs concurrently with GPU attention layers to hide memory latency.\n7. Speculative decoding uses a dedicated MTP draft layer to predict multiple tokens per verification pass.\n8. The draft layer maintains its own KV cache ring to support speculative token generation.\n9. Expert routing decisions are made on the GPU and published to the host before CPU computation begins.\n10. The engine refuses to load models with mismatched expert profiles to prevent incorrect weight mapping.\n11. Quantized activations are produced in multiple formats (Q8_0, Q8_K) to match specific weight tensor requirements.\n12. BF16 weights are stored as 2-byte"
+    },
+    "timings": {
+      "cache_n": 130146,
+      "prompt_n": 7,
+      "prompt_ms": 77.9,
+      "prompt_per_token_ms": 11.129,
+      "prompt_per_second": 89.9,
+      "predicted_n": 256,
+      "predicted_ms": 5334.9,
+      "predicted_per_token_ms": 20.839,
+      "predicted_per_second": 48.0,
+      "draft_n": 145,
+      "draft_n_accepted": 114
+    },
+    "usage": {
+      "prompt_tokens": 130153,
+      "completion_tokens": 256,
+      "total_tokens": 130409,
+      "prompt_tokens_details": {
+        "cached_tokens": 130146
+      }
+    }
+  }
+]

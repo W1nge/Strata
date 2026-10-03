@@ -4,6 +4,7 @@
 #include <cuda_runtime.h>
 
 #include <cfloat>
+#include <atomic>
 #include <cstdio>
 #include <cstdlib>
 
@@ -13,6 +14,8 @@ namespace {
 constexpr int IDX_DIM = 128, IDX_HEADS = 4, R = 4;
 constexpr int SCORE_WARPS = 8;
 constexpr int TOPK_T = 256;
+std::atomic<int> topk_wide{-1};
+std::atomic<int> score_tile{-1};
 
 __device__ __forceinline__ uint32_t order_key(float s) {
     const float v = s + 0.0f;
@@ -47,6 +50,52 @@ __global__ void __launch_bounds__(SCORE_WARPS * 32) block_scores_kernel(const fl
     if (lane == 0) {
         if (b == n_bid && n_kv % R != 0) score += 1e9f;
         out[qi * max_blocks + b] = score;
+    }
+}
+
+// Same float4 products, four heads and warp XOR reduction as block_scores_kernel.
+// A warp keeps one key in registers while it scores several neighbouring queries.
+template<int QUERIES>
+__global__ void __launch_bounds__(SCORE_WARPS * 32) block_scores_tiled_kernel(
+        const float* __restrict__ pooled, const float* __restrict__ dead, const float* __restrict__ q_idx,
+        const int32_t* __restrict__ steps, int64_t nq, int64_t max_blocks, float* __restrict__ out) {
+    __shared__ __align__(16) float query[QUERIES * IDX_HEADS * IDX_DIM];
+    const int64_t q0 = (int64_t) blockIdx.y * QUERIES;
+    const int count = (int) min((int64_t) QUERIES, nq-q0);
+    for (int i=threadIdx.x; i<QUERIES*IDX_HEADS*IDX_DIM; i+=blockDim.x)
+        query[i] = i<count*IDX_HEADS*IDX_DIM ? q_idx[q0*IDX_HEADS*IDX_DIM+i] : 0.0f;
+    __syncthreads();
+    const int lane = threadIdx.x & 31;
+    const int64_t b = (int64_t) blockIdx.x*SCORE_WARPS + (threadIdx.x>>5);
+    int last_bid = 0;
+#pragma unroll
+    for (int i=0;i<QUERIES;++i)
+        if(i<count) last_bid=max(last_bid,steps[(q0+i)*kStepCount+kStepNBid]);
+    if (b>last_bid || b>=max_blocks) return;
+    float4 regular = {0,0,0,0};
+    if (b<last_bid) regular = *reinterpret_cast<const float4*>(pooled+b*IDX_DIM+lane*4);
+#pragma unroll
+    for (int i=0; i<QUERIES; ++i) {
+        if (i>=count) break;
+        const int64_t qi=q0+i;
+        const int32_t* st=steps+qi*kStepCount;
+        const int64_t n_kv=st[kStepNKv], n_bid=st[kStepNBid];
+        if (b>n_bid) continue;
+        const float4 k4=b==n_bid ? *reinterpret_cast<const float4*>(dead+lane*4) : regular;
+        const float* q=query+i*IDX_HEADS*IDX_DIM+lane*4;
+        float score=0.0f;
+#pragma unroll
+        for(int h=0;h<IDX_HEADS;++h) {
+            const float4 q4=*reinterpret_cast<const float4*>(q+h*IDX_DIM);
+            float d=k4.x*q4.x+k4.y*q4.y+k4.z*q4.z+k4.w*q4.w;
+#pragma unroll
+            for(int o=16;o>0;o>>=1)d+=__shfl_xor_sync(0xffffffffu,d,o);
+            score+=d>0.0f?d:0.0f;
+        }
+        if(lane==0) {
+            if(b==n_bid && n_kv%R!=0) score+=1e9f;
+            out[qi*max_blocks+b]=score;
+        }
     }
 }
 
@@ -335,6 +384,7 @@ __device__ __forceinline__ int block_excl_scan(int v, int* s_warp, int& total) {
     return r;
 }
 
+template<int KEYS>
 __global__ void __launch_bounds__(TK_T) block_topk_reg_kernel(const float* __restrict__ scores,
                                                               const int32_t* __restrict__ steps, int64_t max_blocks,
                                                               int64_t cap, int32_t* __restrict__ ids) {
@@ -354,9 +404,9 @@ __global__ void __launch_bounds__(TK_T) block_topk_reg_kernel(const float* __res
     const int64_t nb = n_bid + 1;
     const int64_t per = (nb + TK_T - 1) / TK_T;       // <= TK_PER (the caller checks)
     const int64_t b0 = (int64_t) t * per, b1 = (b0 + per < nb) ? b0 + per : nb;
-    uint32_t key[TK_PER];
+    uint32_t key[KEYS];
 #pragma unroll
-    for (int j = 0; j < TK_PER; ++j) key[j] = (b0 + j < b1) ? order_key(sc[b0 + j]) : 0u;
+    for (int j = 0; j < KEYS; ++j) key[j] = (b0 + j < b1) ? order_key(sc[b0 + j]) : 0u;
     auto weight = [&](int64_t b) -> int { return b < n_bid ? R : (int) (n_kv - n_bid * R); };
     uint32_t prefix = 0;
     int above = 0;
@@ -365,7 +415,7 @@ __global__ void __launch_bounds__(TK_T) block_topk_reg_kernel(const float* __res
         __syncwarp();
         const uint32_t hi_mask = shift == 24 ? 0u : (0xffffffffu << (shift + 8));
 #pragma unroll
-        for (int j = 0; j < TK_PER; ++j) {
+        for (int j = 0; j < KEYS; ++j) {
             const int64_t b = b0 + j;
             if (b >= b1) break;
             const int w = weight(b);
@@ -397,7 +447,7 @@ __global__ void __launch_bounds__(TK_T) block_topk_reg_kernel(const float* __res
     const int64_t eq_budget = width - above;
     int gt = 0, eq = 0;
 #pragma unroll
-    for (int j = 0; j < TK_PER; ++j) {
+    for (int j = 0; j < KEYS; ++j) {
         const int64_t b = b0 + j;
         if (b >= b1) break;
         const int w = weight(b);
@@ -414,7 +464,7 @@ __global__ void __launch_bounds__(TK_T) block_topk_reg_kernel(const float* __res
     int64_t wpos = block_excl_scan(sel, s_warp, tot);
     int64_t eq_left = my_eq;
 #pragma unroll
-    for (int j = 0; j < TK_PER; ++j) {
+    for (int j = 0; j < KEYS; ++j) {
         const int64_t b = b0 + j;
         if (b >= b1) break;
         const int w = weight(b);
@@ -438,9 +488,18 @@ void qsa_block_scores(const float* pooled, const float* dead, const float* q_idx
     }
     // a block past a query's n_bid returns at once: the grid need only reach the batch's largest n_bid (C-1)
     const int64_t reach = active_blocks > 0 && active_blocks < max_blocks ? active_blocks : max_blocks;
-    const dim3 grid((unsigned) ((reach + SCORE_WARPS - 1) / SCORE_WARPS), (unsigned) nq);
-    block_scores_kernel<<<grid, SCORE_WARPS * 32, 0, (cudaStream_t) stream>>>(pooled, dead, q_idx, steps, max_blocks,
-                                                                              scores);
+    const int mode=score_tile.load(std::memory_order_relaxed);
+    const char* env=std::getenv("STRATA_QSA_SCORE_TILE");
+    const int requested=mode>=0?mode:env?std::atoi(env):0;
+    // A short key set fits Turing's cache: shared-query staging has no payoff.
+    const int tile=reach>=16384 && nq>=64 ? requested : 0;
+    const unsigned gx=(unsigned) ((reach+SCORE_WARPS-1)/SCORE_WARPS);
+    if(tile==4)
+        block_scores_tiled_kernel<4><<<dim3(gx,(unsigned)((nq+3)/4)),SCORE_WARPS*32,0,(cudaStream_t)stream>>>(pooled,dead,q_idx,steps,nq,max_blocks,scores);
+    else if(tile==8)
+        block_scores_tiled_kernel<8><<<dim3(gx,(unsigned)((nq+7)/8)),SCORE_WARPS*32,0,(cudaStream_t)stream>>>(pooled,dead,q_idx,steps,nq,max_blocks,scores);
+    else
+        block_scores_kernel<<<dim3(gx,(unsigned)nq),SCORE_WARPS*32,0,(cudaStream_t)stream>>>(pooled,dead,q_idx,steps,max_blocks,scores);
     const cudaError_t e = cudaGetLastError();
     if (e != cudaSuccess) { std::fprintf(stderr, "qsa_block_scores: %s\n", cudaGetErrorString(e)); std::exit(1); }
 }
@@ -498,13 +557,20 @@ void qsa_block_topk_ref(const float* scores, const int32_t* steps, int64_t nq, i
     if (e != cudaSuccess) { std::fprintf(stderr, "qsa_block_topk: %s\n", cudaGetErrorString(e)); std::exit(1); }
 }
 
+void qsa_set_topk_wide(bool enabled) { topk_wide.store(enabled, std::memory_order_relaxed); }
+void qsa_set_score_tile(int queries) { score_tile.store(queries==4||queries==8?queries:0,std::memory_order_relaxed); }
+
 void qsa_block_topk(const float* scores, const int32_t* steps, int64_t nq, int64_t max_blocks, int64_t cap,
-                    const QsaShapes& s, int32_t* ids, void* stream) {
+                    const QsaShapes& s, int32_t* ids, void* stream, int64_t active_blocks) {
     // keys in registers when every query's blocks fit (contexts up to ~135K cells); the same ids. STRATA_TOPK_OLD=1:
     // the kernel that reads them from memory on every pass
     static const bool old = std::getenv("STRATA_TOPK_OLD") != nullptr;
+    const char* opt = std::getenv("STRATA_TOPK_WIDE");
+    const int mode = topk_wide.load(std::memory_order_relaxed);
+    const bool wide = mode >= 0 ? mode != 0 : opt && std::atoi(opt) != 0;
+    const int64_t reach = wide && active_blocks > 0 && active_blocks < max_blocks ? active_blocks : max_blocks;
     if (nq <= 0) return;
-    if (old || max_blocks > (int64_t) TK_T * TK_PER) {
+    if (old || reach > (int64_t) TK_T * (wide ? 65 : TK_PER)) {
         qsa_block_topk_ref(scores, steps, nq, max_blocks, cap, s, ids, stream);
         return;
     }
@@ -512,7 +578,10 @@ void qsa_block_topk(const float* scores, const int32_t* steps, int64_t nq, int64
         std::fprintf(stderr, "qsa_block_topk: unsupported geometry or cap\n");
         std::exit(1);
     }
-    block_topk_reg_kernel<<<(unsigned) nq, TK_T, 0, (cudaStream_t) stream>>>(scores, steps, max_blocks, cap, ids);
+    if (reach <= (int64_t) TK_T * TK_PER)
+        block_topk_reg_kernel<TK_PER><<<(unsigned) nq, TK_T, 0, (cudaStream_t) stream>>>(scores, steps, max_blocks, cap, ids);
+    else
+        block_topk_reg_kernel<65><<<(unsigned) nq, TK_T, 0, (cudaStream_t) stream>>>(scores, steps, max_blocks, cap, ids);
     const cudaError_t e = cudaGetLastError();
     if (e != cudaSuccess) { std::fprintf(stderr, "qsa_block_topk: %s\n", cudaGetErrorString(e)); std::exit(1); }
 }

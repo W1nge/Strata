@@ -19,6 +19,18 @@
 #include <thread>
 #include <vector>
 
+namespace strata::core {
+namespace {
+int cold_prefetch_workers() {
+    const char* value = std::getenv("STRATA_COLD_PREFETCH_WORKERS");
+    if (value == nullptr) return 4;
+    char* tail = nullptr;
+    const long n = std::strtol(value, &tail, 10);
+    return tail != value && *tail == '\0' && n >= 1 && n <= 32 ? (int) n : 4;
+}
+}
+}
+
 #if !defined(_WIN32)
 #include <fcntl.h>
 #include <sys/mman.h>
@@ -49,6 +61,25 @@ LoadStats load_experts_gguf(const std::string& gguf, uint8_t* dst, const strata:
                             int threads);
 
 namespace {
+
+// Complete each positioned read before releasing its stack OVERLAPPED or reusing the caller's buffer.
+// Separate per-thread events let the workers overlap I/O on an asynchronous handle.
+bool read_positioned(HANDLE file, bool async, uint64_t off, uint8_t* dst, DWORD n, DWORD& got) {
+    struct ReadEvent {
+        HANDLE value = CreateEventA(nullptr, TRUE, FALSE, nullptr);
+        ~ReadEvent() { if (value != nullptr) CloseHandle(value); }
+    };
+    thread_local ReadEvent event;
+    if (async && event.value == nullptr) return false;
+    OVERLAPPED ov{};
+    ov.Offset = (DWORD) (off & 0xffffffffu);
+    ov.OffsetHigh = (DWORD) (off >> 32);
+    if (async) { ResetEvent(event.value); ov.hEvent = event.value; }
+    BOOL ok = ReadFile(file, dst, n, &got, &ov);
+    if (!ok && async && GetLastError() == ERROR_IO_PENDING)
+        ok = GetOverlappedResult(file, &ov, &got, TRUE);
+    return ok != FALSE;
+}
 
 uint64_t win_page_size() {
     static const uint64_t p = [] {
@@ -130,6 +161,10 @@ bool TieredExpertSource::open(const std::string& pack_dir, int64_t n_layers, int
         err = "TieredExpertSource: MapViewOfFile failed on " + path;
         return false;
     }
+    if (direct_load_ < 0) {
+        const char* value = std::getenv("STRATA_TIERED_DIRECT_LOAD");
+        direct_load_ = value && std::atoi(value) != 0 ? 1 : 0;
+    }
     hFile_ = (void*) f;
     hMap_ = (void*) m;
     base_ = (const uint8_t*) view;
@@ -147,8 +182,11 @@ bool TieredExpertSource::open(const std::string& pack_dir, int64_t n_layers, int
                                FILE_FLAG_NO_BUFFERING, nullptr);
         if (d != INVALID_HANDLE_VALUE) hDirect_ = (void*) d;
     }
+    HANDLE cached = CreateFileA(path.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING,
+                                FILE_FLAG_OVERLAPPED | FILE_FLAG_RANDOM_ACCESS, nullptr);
+    if (cached != INVALID_HANDLE_VALUE) hCachedAsync_ = (void*) cached;
     pf_stop_ = false;
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < cold_prefetch_workers(); ++i)
         pf_threads_.emplace_back([this] {
             for (;;) {
                 std::pair<uint64_t, uint64_t> r;
@@ -228,6 +266,7 @@ bool TieredExpertSource::settle(const ExpertCache* cache, const std::vector<std:
             (void) cudaGetLastError();
             pin_arena_ = nullptr;
         } else {
+            const bool direct_load = direct_load_ > 0;
             std::atomic<size_t> next{0};
             std::vector<int64_t> order;
             order.reserve((size_t) n_pinned);
@@ -239,8 +278,10 @@ bool TieredExpertSource::settle(const ExpertCache* cache, const std::vector<std:
                     const size_t i = next.fetch_add(1);
                     if (i >= order.size()) return;
                     const int64_t idx = order[i];
-                    std::memcpy(pin_arena_ + pin_off_[(size_t) idx], base_ + lay.blob_offset(idx / n_expert_, idx % n_expert_),
-                                lay.blob_bytes(idx / n_expert_));
+                    const uint8_t* from = base_ + lay.blob_offset(idx / n_expert_, idx % n_expert_);
+                    uint8_t* to = pin_arena_ + pin_off_[(size_t) idx];
+                    if (direct_load) read_into(from, to, lay.blob_bytes(idx / n_expert_));
+                    else std::memcpy(to, from, lay.blob_bytes(idx / n_expert_));
                     release_host_copy(idx / n_expert_, idx % n_expert_);
                 }
             };
@@ -314,6 +355,8 @@ void TieredExpertSource::close() {
     hFile_ = nullptr;
     if (hDirect_ != nullptr) CloseHandle((HANDLE) hDirect_);
     hDirect_ = nullptr;
+    if (hCachedAsync_ != nullptr) CloseHandle((HANDLE) hCachedAsync_);
+    hCachedAsync_ = nullptr;
     tier_.clear();
     pin_off_.clear();
 }
@@ -354,8 +397,14 @@ void TieredExpertSource::read_into(const uint8_t* src, uint8_t* dst, size_t n) c
             const uint64_t pg = sector_;
             const uint64_t a = off / pg * pg, b = std::min<uint64_t>((off + n + pg - 1) / pg * pg,
                                                                      (file_bytes_ + pg - 1) / pg * pg);
-            thread_local uint8_t* bounce = nullptr;
-            thread_local size_t cap = 0;
+            struct ReadScratch {
+                uint8_t* bounce = nullptr;
+                size_t cap = 0;
+                ~ReadScratch() { _aligned_free(bounce); }
+            };
+            thread_local ReadScratch scratch;
+            auto& bounce = scratch.bounce;
+            auto& cap = scratch.cap;
             if (cap < b - a) {
                 _aligned_free(bounce);
                 bounce = (uint8_t*) _aligned_malloc((size_t) (b - a), pg);
@@ -384,6 +433,24 @@ void TieredExpertSource::read_into(const uint8_t* src, uint8_t* dst, size_t n) c
             ov.OffsetHigh = (DWORD) ((off + done) >> 32);
             DWORD got = 0;
             if (!ReadFile((HANDLE) hFile_, dst + done, (DWORD) (n - done), &got, &ov) || got == 0) break;
+            done += got;
+        }
+        if (done == n) return;
+    }
+    std::memcpy(dst, src, n);
+}
+
+void TieredExpertSource::read_into_cached(const uint8_t* src, uint8_t* dst, size_t n) const {
+    const uintptr_t p = reinterpret_cast<uintptr_t>(src), base = reinterpret_cast<uintptr_t>(base_);
+    if (base_ != nullptr && p >= base && p - base <= file_bytes_ && n <= file_bytes_ - (p - base)) {
+        const uint64_t off = p - base;
+        const bool async = hCachedAsync_ != nullptr;
+        HANDLE file = (HANDLE) (async ? hCachedAsync_ : hFile_);
+        size_t done = 0;
+        while (done < n) {
+            DWORD got = 0;
+            if (!read_positioned(file, async, off + done, dst + done,
+                                 (DWORD) std::min<size_t>(n - done, 0x7ffff000), got) || got == 0) break;
             done += got;
         }
         if (done == n) return;
@@ -533,7 +600,7 @@ bool TieredExpertSource::open(const std::string& pack_dir, int64_t n_layers, int
     tier_.assign((size_t) (n_layers * n_expert), (uint8_t) kCold);
     note_ = "mapped " + path;
     pf_stop_ = false;
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < cold_prefetch_workers(); ++i)
         pf_threads_.emplace_back([this] {
             for (;;) {
                 std::pair<uint64_t, uint64_t> r;

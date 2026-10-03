@@ -1,0 +1,53 @@
+{
+  "warmup": {
+    "production": {
+      "requests": 6,
+      "tokens": 435,
+      "decode_ms": 12413.5,
+      "decode_tps": 35.0424940588875,
+      "wall_s": 16.842363400006434,
+      "min_available_ram_mib": 2143.06640625
+    }
+  },
+  "measured": {
+    "production": {
+      "requests": 12,
+      "tokens": 870,
+      "decode_ms": 13839.7,
+      "decode_tps": 62.86263430565691,
+      "wall_s": 17.72944749999442,
+      "min_available_ram_mib": 2034.890625
+    }
+  },
+  "cycles": [
+    {
+      "production": {
+        "requests": 6,
+        "tokens": 435,
+        "decode_ms": 7005.1,
+        "decode_tps": 62.09761459508072,
+        "wall_s": 8.992852499999572,
+        "min_available_ram_mib": 2053.23828125
+      }
+    },
+    {
+      "production": {
+        "requests": 6,
+        "tokens": 435,
+        "decode_ms": 6834.6,
+        "decode_tps": 63.64673865332279,
+        "wall_s": 8.73659499999485,
+        "min_available_ram_mib": 2034.890625
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/community/reserve1500.json",
+    "arms": "work/community/arm.json",
+    "warmups": 1,
+    "repeats": 2,
+    "max_tokens": 256,
+    "prompts": "work/fresh_prompts_x16.json",
+    "limit": 0
+  }
+}

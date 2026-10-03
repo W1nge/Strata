@@ -1,0 +1,8 @@
+PASS scores ctx1025 capacity262144 queries1: bitwise 0/4/8 incl untouched tail, FP64 1.86e-08; 0.005 / 0.006 / 0.006 ms
+PASS scores ctx2039 capacity262144 queries33: bitwise 0/4/8 incl untouched tail, FP64 3e-08; 0.016 / 0.016 / 0.016 ms
+PASS scores ctx31243 capacity32768 queries256: bitwise 0/4/8 incl untouched tail, FP64 2.86e-08; 1.337 / 1.337 / 1.337 ms
+PASS scores ctx65536 capacity262144 queries256: bitwise 0/4/8 incl untouched tail, FP64 2.8e-08; 3.820 / 2.984 / 2.918 ms
+PASS scores ctx130048 capacity262144 queries256: bitwise 0/4/8 incl untouched tail, FP64 3.16e-08; 7.561 / 6.048 / 5.967 ms
+PASS scores ctx262144 capacity262144 queries256: bitwise 0/4/8 incl untouched tail, FP64 3.12e-08; 15.208 / 12.454 / 12.154 ms
+PASS scores ctx262143 capacity262144 queries257: bitwise 0/4/8 incl untouched tail, FP64 3.09e-08; 15.266 / 12.940 / 12.329 ms
+FAILURES: 0

@@ -1,0 +1,72 @@
+[
+  {
+    "cycle": 0,
+    "length": 32768,
+    "prompt_tokens": 31243,
+    "local_prepare_ms": 82.66440000443254,
+    "headers_ms": 83.8551000051666,
+    "ttft_ms": 43760.14719999512,
+    "wall_ms": 44677.3719000048,
+    "content": "cobalt-willow-32768",
+    "message": {
+      "role": "assistant",
+      "content": "cobalt-willow-32768"
+    },
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 31243,
+      "prompt_ms": 43601.3,
+      "prompt_per_token_ms": 1.396,
+      "prompt_per_second": 716.6,
+      "predicted_n": 11,
+      "predicted_ms": 985.5,
+      "predicted_per_token_ms": 89.591,
+      "predicted_per_second": 11.2,
+      "draft_n": 10,
+      "draft_n_accepted": 7
+    },
+    "usage": {
+      "prompt_tokens": 31243,
+      "completion_tokens": 11,
+      "total_tokens": 31254,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    }
+  },
+  {
+    "cycle": 1,
+    "length": 32768,
+    "prompt_tokens": 31243,
+    "local_prepare_ms": 82.83549999759998,
+    "headers_ms": 79.3441999994684,
+    "ttft_ms": 33569.13020000502,
+    "wall_ms": 33752.95809999807,
+    "content": "cobalt-willow-32768",
+    "message": {
+      "role": "assistant",
+      "content": "cobalt-willow-32768"
+    },
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 31243,
+      "prompt_ms": 33464.4,
+      "prompt_per_token_ms": 1.071,
+      "prompt_per_second": 933.6,
+      "predicted_n": 11,
+      "predicted_ms": 202.2,
+      "predicted_per_token_ms": 18.382,
+      "predicted_per_second": 54.4,
+      "draft_n": 10,
+      "draft_n_accepted": 7
+    },
+    "usage": {
+      "prompt_tokens": 31243,
+      "completion_tokens": 11,
+      "total_tokens": 31254,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    }
+  }
+]

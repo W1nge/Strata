@@ -1,0 +1,149 @@
+{
+  "warmup": {
+    "baseline": {
+      "requests": 6,
+      "tokens": 473,
+      "decode_ms": 10221.300000000001,
+      "decode_tps": 46.27591402267813,
+      "wall_s": 11.820238600004814,
+      "min_available_ram_mib": 4390.69140625
+    },
+    "pinned_first": {
+      "requests": 6,
+      "tokens": 473,
+      "decode_ms": 8787.4,
+      "decode_tps": 53.82707057832806,
+      "wall_s": 10.330789699997695,
+      "min_available_ram_mib": 4401.1015625
+    },
+    "nt_first": {
+      "requests": 6,
+      "tokens": 473,
+      "decode_ms": 7887.2,
+      "decode_tps": 59.970585252053965,
+      "wall_s": 8.692575099994428,
+      "min_available_ram_mib": 4394.9375
+    },
+    "pinned_nt_first": {
+      "requests": 6,
+      "tokens": 473,
+      "decode_ms": 8243.9,
+      "decode_tps": 57.37575662004634,
+      "wall_s": 8.980802099991706,
+      "min_available_ram_mib": 4390.69140625
+    }
+  },
+  "measured": {
+    "baseline": {
+      "requests": 12,
+      "tokens": 946,
+      "decode_ms": 15079.6,
+      "decode_tps": 62.73375951616754,
+      "wall_s": 16.50457849999657,
+      "min_available_ram_mib": 4361.2578125
+    },
+    "pinned_first": {
+      "requests": 12,
+      "tokens": 946,
+      "decode_ms": 15040.9,
+      "decode_tps": 62.89517249632669,
+      "wall_s": 16.856215999992855,
+      "min_available_ram_mib": 4364.609375
+    },
+    "nt_first": {
+      "requests": 12,
+      "tokens": 946,
+      "decode_ms": 15131.9,
+      "decode_tps": 62.51693442330441,
+      "wall_s": 16.630094399988593,
+      "min_available_ram_mib": 4361.41015625
+    },
+    "pinned_nt_first": {
+      "requests": 12,
+      "tokens": 946,
+      "decode_ms": 15070.6,
+      "decode_tps": 62.77122344166788,
+      "wall_s": 16.20066349998524,
+      "min_available_ram_mib": 4362.61328125
+    }
+  },
+  "cycles": [
+    {
+      "baseline": {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 7546.9,
+        "decode_tps": 62.674740621977236,
+        "wall_s": 8.401341799995862,
+        "min_available_ram_mib": 4369.6875
+      },
+      "pinned_first": {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 7507.7,
+        "decode_tps": 63.00198462911411,
+        "wall_s": 8.452271099995414,
+        "min_available_ram_mib": 4364.609375
+      },
+      "nt_first": {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 7515.9,
+        "decode_tps": 62.93324818052396,
+        "wall_s": 8.070231699988653,
+        "min_available_ram_mib": 4368.859375
+      },
+      "pinned_nt_first": {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 7520.3,
+        "decode_tps": 62.89642700424185,
+        "wall_s": 8.086905899996054,
+        "min_available_ram_mib": 4367.84375
+      }
+    },
+    {
+      "baseline": {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 7532.7,
+        "decode_tps": 62.79288966771543,
+        "wall_s": 8.103236700000707,
+        "min_available_ram_mib": 4361.2578125
+      },
+      "pinned_first": {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 7533.2,
+        "decode_tps": 62.788721924281845,
+        "wall_s": 8.403944899997441,
+        "min_available_ram_mib": 4366.1015625
+      },
+      "nt_first": {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 7616.0,
+        "decode_tps": 62.10609243697479,
+        "wall_s": 8.55986269999994,
+        "min_available_ram_mib": 4361.41015625
+      },
+      "pinned_nt_first": {
+        "requests": 6,
+        "tokens": 473,
+        "decode_ms": 7550.3,
+        "decode_tps": 62.64651735692621,
+        "wall_s": 8.113757599989185,
+        "min_available_ram_mib": 4362.61328125
+      }
+    }
+  ],
+  "settings": {
+    "out": "work/x16_order_best_screen.json",
+    "arms": "work/x16_order_best_arms.json",
+    "warmups": 1,
+    "repeats": 2,
+    "max_tokens": 128,
+    "prompts": null,
+    "limit": 6
+  }
+}

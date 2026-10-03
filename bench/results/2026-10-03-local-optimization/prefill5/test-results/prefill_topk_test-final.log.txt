@@ -1,0 +1,13 @@
+PASS topk ctx1024 capacity262144 queries17 pattern1: exact IDs incl CPU; 0.005 -> 0.005 ms (0.99x)
+PASS topk ctx31243 capacity32768 queries256 pattern0: exact IDs incl CPU; 0.152 -> 0.151 ms (1.00x)
+PASS topk ctx31243 capacity262144 queries256 pattern0: exact IDs incl CPU; 0.566 -> 0.152 ms (3.72x)
+PASS topk ctx130048 capacity262144 queries256 pattern0: exact IDs incl CPU; 4.638 -> 0.905 ms (5.13x)
+PASS topk ctx262144 capacity262144 queries256 pattern0: exact IDs incl CPU; 17.619 -> 3.373 ms (5.22x)
+PASS topk ctx262144 capacity262144 queries17 pattern1: exact IDs incl CPU; 0.402 -> 0.342 ms (1.18x)
+PASS topk ctx262144 capacity262144 queries17 pattern2: exact IDs incl CPU; 0.317 -> 0.293 ms (1.08x)
+PASS topk ctx262144 capacity262144 queries17 pattern3: exact IDs incl CPU; 0.281 -> 0.324 ms (0.87x)
+PASS topk ctx135168 capacity262144 queries17 pattern2: exact IDs incl CPU; 0.178 -> 0.137 ms (1.30x)
+PASS topk ctx135172 capacity262144 queries17 pattern2: exact IDs incl CPU; 0.177 -> 0.138 ms (1.28x)
+PASS topk ctx266240 capacity270000 queries17 pattern2: exact IDs incl CPU; 0.323 -> 0.323 ms (1.00x)
+PASS topk ctx266244 capacity270000 queries17 pattern2: exact IDs incl CPU; 0.323 -> 0.323 ms (1.00x)
+FAILURES: 0

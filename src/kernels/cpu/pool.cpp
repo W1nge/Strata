@@ -2,6 +2,7 @@
 #include "strata/kernels/cpu/pool.hpp"
 #include "strata/core/progress.hpp"
 #include "strata/kernels/cpu/expert_layout.hpp"
+#include "strata/kernels/cpu/iq_avx2.hpp"
 
 #include <algorithm>
 #include <cmath>
@@ -169,7 +170,7 @@ void ExpertPool::diag(std::FILE* f) const {
                  (uint32_t) (h >> 16) & 0xffffu, done_.load(), parked_.load(), n_, sleepers_.load(), mode_);
     std::fprintf(f, "  expert pool threads:");
     for (int i = 0; i < n_; ++i) {
-        const int32_t s = wstate_[(size_t) i].load();
+        const int32_t s = wstate_[(size_t) i * wstate_stride_].load();
         if (s == kParked) std::fprintf(f, " w%d=parked", i);
         else if (s == kSleeping) std::fprintf(f, " w%d=sleeping", i);
         else if (s == kBetween) std::fprintf(f, " w%d=draining", i);
@@ -192,8 +193,10 @@ ExpertPool::ExpertPool(int n_workers, bool pin, bool host_works) : host_works_(h
     profile_on_ = std::getenv("STRATA_CPU_PROFILE") != nullptr;
     if (profile_on_) profile_cells_.assign((size_t) n_ + 1, std::vector<ProfileCell>(kProfileCells));
     scratch_.resize((size_t) n_);
-    wstate_.reset(new std::atomic<int32_t>[(size_t) n_]);
-    for (int i = 0; i < n_; ++i) wstate_[(size_t) i].store(kParked);
+    if (const char* value = std::getenv("STRATA_POOL_PAD_STATE"))
+        if (std::atoi(value) != 0) wstate_stride_ = 64 / sizeof(std::atomic<int32_t>);
+    wstate_.reset(new std::atomic<int32_t>[(size_t) n_ * wstate_stride_]);
+    for (int i = 0; i < n_; ++i) wstate_[(size_t) i * wstate_stride_].store(kParked);
     hstate_ms_.store(now_ms());
     g_diag_pool.store(this);
     strata::core::diag_pool_fn().store(&diag_active_pool);
@@ -258,13 +261,13 @@ void ExpertPool::worker(int id) {
             if ((++spins & 1023u) != 0) continue;
             if (std::chrono::steady_clock::now() - parked_at < spin_before_sleep_) continue;
             std::unique_lock<std::mutex> lk(sleep_mu_);
-            wstate_[(size_t) id].store(kSleeping, std::memory_order_relaxed);
+            wstate_[(size_t) id * wstate_stride_].store(kSleeping, std::memory_order_relaxed);
             sleepers_.fetch_add(1, std::memory_order_seq_cst);
             sleep_cv_.wait(lk, [&] {
                 return epoch_.load(std::memory_order_seq_cst) != seen || stop_.load(std::memory_order_relaxed);
             });
             sleepers_.fetch_sub(1, std::memory_order_relaxed);
-            wstate_[(size_t) id].store(kParked, std::memory_order_relaxed);
+            wstate_[(size_t) id * wstate_stride_].store(kParked, std::memory_order_relaxed);
         }
         if (stop_.load(std::memory_order_acquire)) return;
         // acquire: the batch this epoch published (`head`, and the description before it) is visible from here
@@ -274,9 +277,9 @@ void ExpertPool::worker(int id) {
         // Drain: one claim per iteration, so a slow worker takes fewer experts and a fast one takes more.
         // Every job is the same size (all experts are 1,382,400 bytes), so there is nothing to schedule.  Only
         // this epoch's jobs: if the host has already moved on, the claims fail and the worker parks again.
-        wstate_[(size_t) id].store(kBetween, std::memory_order_relaxed);
+        wstate_[(size_t) id * wstate_stride_].store(kBetween, std::memory_order_relaxed);
         drain(id, scratch_[(size_t) id], seen);
-        wstate_[(size_t) id].store(kParked, std::memory_order_relaxed);
+        wstate_[(size_t) id * wstate_stride_].store(kParked, std::memory_order_relaxed);
         parked_.fetch_add(1, std::memory_order_acq_rel);   // back at the park
     }
 }
@@ -354,7 +357,7 @@ void ExpertPool::drain(int id, ExpertScratch& scratch, uint32_t epoch) {
         const int ci = claim(epoch);
         if (ci < 0) break;
         const uint32_t i = (uint32_t) ci;
-        if (id >= 0) wstate_[(size_t) id].store(ci, std::memory_order_relaxed);
+        if (id >= 0) wstate_[(size_t) id * wstate_stride_].store(ci, std::memory_order_relaxed);
         else { hstate_.store(ci, std::memory_order_relaxed); hstate_ms_.store(now_ms(), std::memory_order_relaxed); }
         if (mode_ == 0) {
             const ExpertJob& j = jobs_[i];
@@ -370,7 +373,15 @@ void ExpertPool::drain(int id, ExpertScratch& scratch, uint32_t epoch) {
         } else if (mode_ >= 5) {
             // plan v0.3 P6: native layers, 5 = gate/up rows, 6 = down rows
             const int per = mode_ == 5 ? FF : H;
-            const int64_t g0 = mrows_ * (int64_t) i / mtasks_, g1 = mrows_ * (int64_t) (i + 1) / mtasks_;
+            // Monotone integer boundaries cover each row exactly once. Later jobs are smaller,
+            // so a slower worker claiming the final job holds the phase for less time.
+            const auto boundary = [&](int64_t j) {
+                const int64_t n = mtasks_;
+                if (native_shape_ == 1) return mrows_ * j * (2 * n - j) / (n * n);
+                if (native_shape_ == 2) return mrows_ * j * (3 * n - j) / (2 * n * n);
+                return mrows_ * j / n;
+            };
+            const int64_t g0 = boundary(i), g1 = boundary(i + 1);
             for (int64_t r = g0; r < g1;) {
                 const int e = (int) (r / per), r0 = (int) (r % per);
                 const int r1 = (int) std::min<int64_t>(per, r0 + (g1 - r));
@@ -392,7 +403,16 @@ void ExpertPool::drain(int id, ExpertScratch& scratch, uint32_t epoch) {
                 } else if (mode_ == 5) {
                     float* ff[MAXT];
                     for (int t = 0; t < mjobs_[e].nt; ++t) ff[t] = sb.ff[t];
-                    native_gu_rows(*nfmt_, mjobs_[e].blob, mjobs_[e].nact, mjobs_[e].nt, ff, r0, r1);
+#if defined(STRATA_NATIVE_EXPERTS)
+                    const int type = nfmt_->gu_type;
+                    const int bit = type == 16 ? 1 : type == 17 ? 2 : type == 21 ? 4 : 0;
+                    static const bool iq256_on = std::getenv("STRATA_NO_IQ256") == nullptr;
+                    if (mjobs_[e].nt == 1 && (native_nt1_ & bit) != 0 && iq256_on)
+                        iq256_gu_rows(type, mjobs_[e].blob, nfmt_->gu_row, nfmt_->up_off,
+                                      (int) nfmt_->n_embd, mjobs_[e].nact, 1, ff, r0, r1);
+                    else
+#endif
+                        native_gu_rows(*nfmt_, mjobs_[e].blob, mjobs_[e].nact, mjobs_[e].nt, ff, r0, r1);
                 } else if (nfmt_->d_type == 42) {
                     // Q2_0 down (most IQ layers): the AVX-512 kernel, ggml-cpu has only a scalar one on x86
                     const ActQ* a2[MAXT];
@@ -527,13 +547,22 @@ void ExpertPool::run_split_multi(ExpertJobMulti* jobs, int n) {
 void ExpertPool::run_split_multi_native(const NativeFmt& f, ExpertJobMulti* jobs, int n, int64_t layer) {
     if (n <= 0) return;
     const auto t0 = std::chrono::steady_clock::now();
+    if (native_order_ != 0) {
+        std::stable_sort(jobs, jobs + n, [&](const ExpertJobMulti& a, const ExpertJobMulti& b) {
+            if (native_order_ == 1 || native_order_ == 3) {
+                const bool ap = a.profile_source == 1, bp = b.profile_source == 1;
+                if (ap != bp) return ap;
+            }
+            return native_order_ >= 2 && a.nt > b.nt;
+        });
+    }
     // more distinct experts than buffers: run them in batches
     for (int b0 = 0; b0 < n; b0 += kMaxSplitMulti) {
         const int nb = (std::min)(kMaxSplitMulti, n - b0);
         mjobs_ = jobs + b0;
         nfmt_ = &f;
         const int threads = n_ + (host_works_ ? 1 : 0);
-        mtasks_ = 3 * threads;
+        mtasks_ = native_tasks_ * threads;
         mrows_ = (int64_t) nb * FF;
         const auto a = std::chrono::steady_clock::now();
         run_phase(5, mtasks_);

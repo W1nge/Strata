@@ -1,0 +1,1271 @@
+{
+  "date": "2026-10-03",
+  "path_placeholders": [
+    "<TASK>",
+    "<REPO>",
+    "<USER_HOME>"
+  ],
+  "note": "Source and published hashes differ for path normalization, JSON formatting, and historical banners. No performance numbers were recomputed.",
+  "files": [
+    {
+      "source": "<TASK>/outputs/CACHE-IDLE-POLICY.md",
+      "path": "docs/performance/archive/CACHE-IDLE-POLICY.md",
+      "source_sha256": "e46ca63380f8af93a8dc6cf052eaace9f2e0a80a8519dfe2189605ac31199fc9",
+      "published_sha256": "04b17ed95bf5623e73b275de3ac0fb6a396c60cb169f9b8ed570fd2bd30f5372",
+      "bytes": 4943
+    },
+    {
+      "source": "<TASK>/outputs/COMMUNITY-EXPERIMENTS-2.md",
+      "path": "docs/performance/archive/COMMUNITY-EXPERIMENTS-2.md",
+      "source_sha256": "6b2e28bbc344663f96a307b4e22c672b8e0f370c7cfb395ac13036e7b1a77bd1",
+      "published_sha256": "d16661f19a91fd7af8c060bca89b5667f4639052075324a7be5ec3c4900730b6",
+      "bytes": 7246
+    },
+    {
+      "source": "<TASK>/outputs/COMMUNITY-EXPERIMENTS.md",
+      "path": "docs/performance/archive/COMMUNITY-EXPERIMENTS.md",
+      "source_sha256": "6b593dcf0719222423a025e4b25071200e6afc346c807acf20ff662570664b6a",
+      "published_sha256": "df3b62d92d6e3ddb58089269fb4fe43c15101b9b3df32d723d1f64eb85a67810",
+      "bytes": 10129
+    },
+    {
+      "source": "<TASK>/outputs/CONTEXT256-COMPARISON.md",
+      "path": "docs/performance/archive/CONTEXT256-COMPARISON.md",
+      "source_sha256": "61c5ef11973699de0d60761ae76a86558c03ac23004914fcdc45edf99e99f57a",
+      "published_sha256": "da432774a7e0871a4e958d909f457093b3994e1b82e920f003009b04c6848f47",
+      "bytes": 6605
+    },
+    {
+      "source": "<TASK>/outputs/CONTINUOUS-OPTIMIZATION-X16.md",
+      "path": "docs/performance/archive/CONTINUOUS-OPTIMIZATION-X16.md",
+      "source_sha256": "a8046953a519633885f40c88267e0cc997e9cf316d0e3d7f2b7f68f910529e37",
+      "published_sha256": "65bfdff2c46b7978cacb843a70fc01f748054a92da937e9515f7a7a78744755a",
+      "bytes": 5513
+    },
+    {
+      "source": "<TASK>/outputs/CPU-AVX-REVIEW.md",
+      "path": "docs/performance/archive/CPU-AVX-REVIEW.md",
+      "source_sha256": "6ea7acea3cdd3434320d4a93e7573fb46b4587fff8b214501ca09e5ffece00e5",
+      "published_sha256": "df7aab01f9d761f12197e70c4d041e1ab75defb1687a2cac709a5a063f25ea94",
+      "bytes": 11061
+    },
+    {
+      "source": "<TASK>/outputs/DECODE-10-RESULTS.md",
+      "path": "docs/performance/archive/DECODE-10-RESULTS.md",
+      "source_sha256": "0aecc9cbc3232f1ecea0556fffbac7e68afaeb2502180b3200e79693f8427fb4",
+      "published_sha256": "26a138b1cd4756a10b5120d6f6e911f3fb201dc6d683eeced05bd768056b42a7",
+      "bytes": 5287
+    },
+    {
+      "source": "<TASK>/outputs/DECODE-40-RESULTS.md",
+      "path": "docs/performance/archive/DECODE-40-RESULTS.md",
+      "source_sha256": "6048748d7a4537ccee45109e9ef5519d802c78f1d07af473b3c571c976699700",
+      "published_sha256": "ab570b8f92b055dd2cb05637653bcd3e1c92961806d230df88e058539e6a1830",
+      "bytes": 6023
+    },
+    {
+      "source": "<TASK>/outputs/GPU-STABILITY-X16.md",
+      "path": "docs/performance/archive/GPU-STABILITY-X16.md",
+      "source_sha256": "71cb0e0aeaac71bf97c9067279ebd82b2fb24be559e496563f0d5577f24e9bd6",
+      "published_sha256": "ab2aa806481f584d1c55f21f327f63ed50f3f2fd366a43f98524e5fff4788012",
+      "bytes": 3850
+    },
+    {
+      "source": "<TASK>/outputs/IMPLEMENTATION-RESULTS.md",
+      "path": "docs/performance/archive/IMPLEMENTATION-RESULTS.md",
+      "source_sha256": "089213fece9930f4cd92f754eb24466ba9cfeda4916d23eb2c1ce04dbd683374",
+      "published_sha256": "2bad915fc70c8eda5b1c0dff185dcfbdec6eca451b7845c9b235b826f8001bb8",
+      "bytes": 7534
+    },
+    {
+      "source": "<TASK>/outputs/PREFILL-CACHE-OPTIMIZATION.md",
+      "path": "docs/performance/archive/PREFILL-CACHE-OPTIMIZATION.md",
+      "source_sha256": "9e81e8cee098ce9bfd2bd185426f9e147a79fed84961df7b7bdbecaa1ede4859",
+      "published_sha256": "0687b9a757389745453a480476faadd19e46277a179063a75f312c02c0b42c65",
+      "bytes": 5963
+    },
+    {
+      "source": "<TASK>/outputs/PREFILL-LOADING-OPTIMIZATION.md",
+      "path": "docs/performance/archive/PREFILL-LOADING-OPTIMIZATION.md",
+      "source_sha256": "ed6378db0bcf2bc395ff1a3aa68a1b25b49fe38b9739a45a64a458145382f038",
+      "published_sha256": "b27cfbfbfb9d8a393e36728e8138859aba86cc4a560f9d84ba59e68d1698c944",
+      "bytes": 5881
+    },
+    {
+      "source": "<TASK>/outputs/PREFILL-LONG-OPTIMIZATION.md",
+      "path": "docs/performance/archive/PREFILL-LONG-OPTIMIZATION.md",
+      "source_sha256": "096bfafccd73dbfd8e93560e85504f38ea80f8210b8dae12de0ebf9825b422f8",
+      "published_sha256": "e4e1f5aba12b53c11790220329b1b2f9956a4151296a48bf56c41a7b368fc3a9",
+      "bytes": 6037
+    },
+    {
+      "source": "<TASK>/outputs/prefill5-report.md",
+      "path": "docs/performance/archive/prefill5-report.md",
+      "source_sha256": "16940e98aea57bdccabe1bdac93c39e00f09264bb21410154ba7838e336e29ae",
+      "published_sha256": "415e32b3721783897519ea5e104d820f9c5d4b7e3ba95949e3cede8e6c5ce824",
+      "bytes": 10538
+    },
+    {
+      "source": "<TASK>/outputs/PROFILE-AND-NEXT-STEP.md",
+      "path": "docs/performance/archive/PROFILE-AND-NEXT-STEP.md",
+      "source_sha256": "a5ff93f2f378e7be1aaca22455eaf5e75d51a50b236a16ffe4a668c6ec0999fd",
+      "published_sha256": "92bf2c7a270bd40557460ae782c08796a911a3dc086f84d2ab9e6a60ec5ab50b",
+      "bytes": 7047
+    },
+    {
+      "source": "<TASK>/outputs/REMAINING-BOTTLENECKS.md",
+      "path": "docs/performance/archive/REMAINING-BOTTLENECKS.md",
+      "source_sha256": "ed898bf029b1e8aaf1365113160f582ba21203baae6c52bac8c342d0215a3edb",
+      "published_sha256": "5cae299e2f10840caa731d5cae207664e596b9d18c2544594b9e303c7b3ae241",
+      "bytes": 7352
+    },
+    {
+      "source": "<TASK>/outputs/community-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/community-summary.json",
+      "source_sha256": "c22f5bf7e40e4dff7a7888d63a15620e71016498a9028768d51560cc5f555f1a",
+      "published_sha256": "2b83ddda2e7370943e6e2512045b10a80cdb9b406a3242e2553f66a86ad045b5",
+      "bytes": 5322
+    },
+    {
+      "source": "<TASK>/outputs/community2-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/community2-summary.json",
+      "source_sha256": "28cc52cde422c9fd1033088da2d1ba4e49526d5d98a9986f343a4aa524f540a8",
+      "published_sha256": "0e96dae5148bb6aa8bab23b09b14261bf859553206ab7471850b88c07a06460f",
+      "bytes": 8111
+    },
+    {
+      "source": "<TASK>/outputs/context256-comparison.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/context256-comparison.json",
+      "source_sha256": "b961a8cfde90320b76c5aa525cbabe885f3dbad88ab6aed87b85afc57e36e7ac",
+      "published_sha256": "35ad4523c6b4df69443c0d30ca86f9d714e6e78bdc305a519d4ce0063227f267",
+      "bytes": 25075
+    },
+    {
+      "source": "<TASK>/outputs/context256-manifest.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/context256-manifest.json",
+      "source_sha256": "a20c9d435dadb1153e9d9ab79d92e814007aa3392fff120023da3f08d5aea433",
+      "published_sha256": "8914cb6468482421068ac93cf5b42499ea64ed07a11834383f7ca5c1e7304899",
+      "bytes": 25331
+    },
+    {
+      "source": "<TASK>/outputs/decode-benchmark-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/decode-benchmark-summary.json",
+      "source_sha256": "0959bf0921e326239db046c78bdd556f322d76551e1c31e914efa193b425e7dd",
+      "published_sha256": "2afa4ff85cd05380747d5fcdba0cc936c64548cc29d21b160198ddc8a9abd7b8",
+      "bytes": 14341
+    },
+    {
+      "source": "<TASK>/outputs/decode10-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/decode10-summary.json",
+      "source_sha256": "c8004df684339e7a0bdc0bb64a687c71e4a0ebc72833c86105d35a10e548f212",
+      "published_sha256": "7830f267048b8970dc2b0a6e435af9277f85b65e2decfc684089eb9c730029f4",
+      "bytes": 29134
+    },
+    {
+      "source": "<TASK>/outputs/gpu-stability-binary-hashes.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/gpu-stability-binary-hashes.json",
+      "source_sha256": "f2350fd0f27bb17a56fabd1d38fe81740034607b065ff9271672dab4ac4aba88",
+      "published_sha256": "e0836f7d6d45a6e8c2699549c301ef1a13556ebae62146eda3879eace108acbd",
+      "bytes": 295
+    },
+    {
+      "source": "<TASK>/outputs/idle-cache-config-after.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/idle-cache-config-after.json",
+      "source_sha256": "e2039f631e0739bbd9b118f9a3dac17c6777b2b5fbb8f6659b919974f8a0ec60",
+      "published_sha256": "ac94f9271f18bf5d7f2a4db3b83e54188e1e49cc770150e3147bd444aff3b01a",
+      "bytes": 1466
+    },
+    {
+      "source": "<TASK>/outputs/idle-cache-config-before.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/idle-cache-config-before.json",
+      "source_sha256": "b22506cb3619649ca034b39d9cd1c8041b2f6605e9fd9f37a604aef58acefe4f",
+      "published_sha256": "180d0af8f0ce5741a10d96fa5ea596dd0da5735d0c28fa872737ea4435280fe3",
+      "bytes": 1328
+    },
+    {
+      "source": "<TASK>/outputs/idle-cache-live-continuation.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/idle-cache-live-continuation.json",
+      "source_sha256": "b350e6be1ac4d4de881859b572400d20d4172ccec253ee1d9f24154a7dbe3ad0",
+      "published_sha256": "98724958f6ffe57c295839c75388124554f9fd9c05f8b536f41e0d888b9fdaaa",
+      "bytes": 3200
+    },
+    {
+      "source": "<TASK>/outputs/idle-cache-manifest.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/idle-cache-manifest.json",
+      "source_sha256": "33a43e1911ff2f5f3bf7b6437d6781943e237903dd7351945d67d1e0beb477ca",
+      "published_sha256": "6b98641df19853273b75242e744e3ce4bee388ecb19e86b08245387663326180",
+      "bytes": 1952
+    },
+    {
+      "source": "<TASK>/outputs/idle-cache-production-qa.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/idle-cache-production-qa.json",
+      "source_sha256": "f839f88c6dd1019c39f37449aab618914ad6c540be07aaeea8e9172a90b5889d",
+      "published_sha256": "64421b1839e6bd4ff2145d406aa159ecb045df8ee9dc0455dcd0e79b0150d808",
+      "bytes": 6828
+    },
+    {
+      "source": "<TASK>/outputs/idle-cache-qa.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/idle-cache-qa.json",
+      "source_sha256": "909acc3babeeddebb353de5a1aabb173271aa06fe8867b37f20512c107961f5b",
+      "published_sha256": "aa7b9ca7cdba8d919b6ee04939d1fdacd2e4812e470e260dc879e980eaed24cf",
+      "bytes": 21626
+    },
+    {
+      "source": "<TASK>/outputs/prefill-cache-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/prefill-cache-summary.json",
+      "source_sha256": "5fb470e7f3a353cf9ca25e921361dcd2cf8555b9dafcac722e2171453e17c4af",
+      "published_sha256": "f8524ae9f8b6e2d96695fe43425f80aaf09af5e65b0d58640d37fe9e41944cee",
+      "bytes": 15013
+    },
+    {
+      "source": "<TASK>/outputs/prefill-loading-manifest.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/prefill-loading-manifest.json",
+      "source_sha256": "9645fb8d1cc1b3f8417df5a82da3e6f4e9f60f39bb728fb99c5ace9fb72e292f",
+      "published_sha256": "ae2d384ff6d5455f52604de0ecf9be490e6827b5651862c9093c0d05d73884fb",
+      "bytes": 1256
+    },
+    {
+      "source": "<TASK>/outputs/prefill-loading-production.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/prefill-loading-production.json",
+      "source_sha256": "041e449f5aa2c5c38e227ee5069234a26bc3682ce34691bf7bec096edf380bea",
+      "published_sha256": "928fbc1b6490e7e7b9997061c985dbe7f65d971317fcf61540597439bc38c9bb",
+      "bytes": 3236
+    },
+    {
+      "source": "<TASK>/outputs/prefill-loading-profile.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/prefill-loading-profile.json",
+      "source_sha256": "0a436aae649ac343879afd912cd143bb0496427daadf4ae6537ec08321409b32",
+      "published_sha256": "8540d1b2b69e01c440ba2d1b6fe0349015775b181a38c54696510a83ea92f4c2",
+      "bytes": 1278
+    },
+    {
+      "source": "<TASK>/outputs/prefill-loading-qa.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/prefill-loading-qa.json",
+      "source_sha256": "7bc47677d21f1b0b1e1d442477248b5601b2698e64b069e999270690eab592dd",
+      "published_sha256": "135fae5b029cb26c78d0001ac33f7e09d9da0e9b86f15138c278e316e8cc036f",
+      "bytes": 18708
+    },
+    {
+      "source": "<TASK>/outputs/prefill-loading-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/prefill-loading-summary.json",
+      "source_sha256": "3071442d1ad109b9ccfdd5bb2ad786ff9215bbc0cde1a47d1a5cd8ebd52ad778",
+      "published_sha256": "9bb2a133572885b438d3ae791a99d7e8e3c35a01355e2faf51857a29124768e0",
+      "bytes": 6964
+    },
+    {
+      "source": "<TASK>/outputs/prefill-long-manifest.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/prefill-long-manifest.json",
+      "source_sha256": "77bac4d3b874ef9f39c9012b8bf0e1fdaf49c1f7e7f641f6dc1c54e5f8db3a82",
+      "published_sha256": "b1d99c9cd752e4fed112aff453ee043449e997205ae3871f0b5c5e1d67b4f717",
+      "bytes": 2535
+    },
+    {
+      "source": "<TASK>/outputs/prefill-long-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/prefill-long-summary.json",
+      "source_sha256": "b869232a661458b58366d5adb12aab91676069897fef4d38cf5181212b7aed74",
+      "published_sha256": "9dbee91a3da22800958eef71416284ba059626aa90a1d2fd9623d1097a4e6c0e",
+      "bytes": 3119
+    },
+    {
+      "source": "<TASK>/outputs/profile-benchmark-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/profile-benchmark-summary.json",
+      "source_sha256": "98fb9dd4aa234bdc693f860d63f4ede33f19da480ef64a3714b0d6a205c29672",
+      "published_sha256": "120bf9c209a25524805c9b2e6e5fa9cd2534531ae1d610c0b32a77606a080603",
+      "bytes": 8248
+    },
+    {
+      "source": "<TASK>/outputs/remaining-bottlenecks.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/remaining-bottlenecks.json",
+      "source_sha256": "aeb38ef974edc2809b36bd8b80a67fcbe26825a815e22624e70bf31cca5a64cc",
+      "published_sha256": "2294a49bc1cc0d5b19e0d6d6acf6e6be78799190c777a8fb6155a103db61355d",
+      "bytes": 9225
+    },
+    {
+      "source": "<TASK>/outputs/strata-256k-fp16-candidate.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-256k-fp16-candidate.json",
+      "source_sha256": "7a41f67bca1d1b271d1ec5414adc984395a31342c03acfe2a56cb38ec670c459",
+      "published_sha256": "abe37e27917fb6b9c43af710e35f1491046455b4fbd900b7b6ab17ff309d7c51",
+      "bytes": 1530
+    },
+    {
+      "source": "<TASK>/outputs/strata-256k-int8-candidate.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-256k-int8-candidate.json",
+      "source_sha256": "7e930860c30f5fab93607fe42ff497a299c9e62177c591fc3d1ee762554045c2",
+      "published_sha256": "e0d46b25848eeefd3b7454a6d15abed41504d1e97699e0ab1b5cab0ef3c45650",
+      "bytes": 1530
+    },
+    {
+      "source": "<TASK>/outputs/strata-iq3xxs-native.before-community.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-iq3xxs-native.before-community.json",
+      "source_sha256": "b83e2a3aa990d1d7ab17f0bd53b9067f05fe12b5e26d04e008fe95f6b7f83da4",
+      "published_sha256": "304a138951262af753f98560763b30bad420d8c7c1bbc6e7e6d565b5dba1217a",
+      "bytes": 1055
+    },
+    {
+      "source": "<TASK>/outputs/strata-iq3xxs-native.before-community2.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-iq3xxs-native.before-community2.json",
+      "source_sha256": "bce547729b7e4cd074dd6c753d42c1b94ea2042b6a63f6009759fe94377c619a",
+      "published_sha256": "0026c521c38b36e05f8e2f07744815c881a8702eb04a09abf3caf012fba53e76",
+      "bytes": 1123
+    },
+    {
+      "source": "<TASK>/outputs/strata-iq3xxs-native.before-decode10.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-iq3xxs-native.before-decode10.json",
+      "source_sha256": "e9995caf62cb81b3e3903eae1a196fe78ff3d26e372e433b3a1d0ce8264cc0e9",
+      "published_sha256": "0270da2ee2f32f2451427a6b121eb5a68905906ce5f9615de1aad68b92eed6b2",
+      "bytes": 1001
+    },
+    {
+      "source": "<TASK>/outputs/strata-iq3xxs-native.before-prefill-cache.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-iq3xxs-native.before-prefill-cache.json",
+      "source_sha256": "9db3a06439b2b141491cb7f0f305901852b49a1cbe32c6aa2ce1c2444f3bc718",
+      "published_sha256": "7df3f3189dba1f3c09cb15f720258d4b5f0b65de9572177a12315ffdbe47d73f",
+      "bytes": 1196
+    },
+    {
+      "source": "<TASK>/outputs/strata-iq3xxs-native.before-prefill-loading.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-iq3xxs-native.before-prefill-loading.json",
+      "source_sha256": "e2039f631e0739bbd9b118f9a3dac17c6777b2b5fbb8f6659b919974f8a0ec60",
+      "published_sha256": "ac94f9271f18bf5d7f2a4db3b83e54188e1e49cc770150e3147bd444aff3b01a",
+      "bytes": 1466
+    },
+    {
+      "source": "<TASK>/outputs/strata-iq3xxs-native.before-prefill-long.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-iq3xxs-native.before-prefill-long.json",
+      "source_sha256": "190d8e29e1375e462a7257aeaf1e69ee94d539b5a91034ea134984d073cede18",
+      "published_sha256": "00fedbdd7e8c0e83848aecdb8d16179f32097b5d016300aba5f856207ceb6c30",
+      "bytes": 1265
+    },
+    {
+      "source": "<TASK>/outputs/strata-iq3xxs-native.before-x16.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-iq3xxs-native.before-x16.json",
+      "source_sha256": "771a624e36fcc9b927c36597d4fd6a697150205cb376c3144037e23e89f53a86",
+      "published_sha256": "533e707c3fe53c2d75121812b4ae6f2599da8c23505ee8010b5464956f197c73",
+      "bytes": 916
+    },
+    {
+      "source": "<TASK>/outputs/strata-iq3xxs-native.before.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-iq3xxs-native.before.json",
+      "source_sha256": "c43daf2f4fcd194b4431404779cf2b7793bc42f2307bfd7ea73b13f152ad8258",
+      "published_sha256": "0849c71ccef9acdc9c52a7f62b703bd20046d368b11fcb97aa2117492876decf",
+      "bytes": 886
+    },
+    {
+      "source": "<TASK>/outputs/strata-iq3xxs-native.community.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-iq3xxs-native.community.json",
+      "source_sha256": "bce547729b7e4cd074dd6c753d42c1b94ea2042b6a63f6009759fe94377c619a",
+      "published_sha256": "0026c521c38b36e05f8e2f07744815c881a8702eb04a09abf3caf012fba53e76",
+      "bytes": 1123
+    },
+    {
+      "source": "<TASK>/outputs/strata-iq3xxs-native.community2.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-iq3xxs-native.community2.json",
+      "source_sha256": "9db3a06439b2b141491cb7f0f305901852b49a1cbe32c6aa2ce1c2444f3bc718",
+      "published_sha256": "7df3f3189dba1f3c09cb15f720258d4b5f0b65de9572177a12315ffdbe47d73f",
+      "bytes": 1196
+    },
+    {
+      "source": "<TASK>/outputs/strata-iq3xxs-native.decode10.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-iq3xxs-native.decode10.json",
+      "source_sha256": "b83e2a3aa990d1d7ab17f0bd53b9067f05fe12b5e26d04e008fe95f6b7f83da4",
+      "published_sha256": "304a138951262af753f98560763b30bad420d8c7c1bbc6e7e6d565b5dba1217a",
+      "bytes": 1055
+    },
+    {
+      "source": "<TASK>/outputs/strata-iq3xxs-native.optimized.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-iq3xxs-native.optimized.json",
+      "source_sha256": "771a624e36fcc9b927c36597d4fd6a697150205cb376c3144037e23e89f53a86",
+      "published_sha256": "533e707c3fe53c2d75121812b4ae6f2599da8c23505ee8010b5464956f197c73",
+      "bytes": 916
+    },
+    {
+      "source": "<TASK>/outputs/strata-iq3xxs-native.prefill-cache.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-iq3xxs-native.prefill-cache.json",
+      "source_sha256": "190d8e29e1375e462a7257aeaf1e69ee94d539b5a91034ea134984d073cede18",
+      "published_sha256": "00fedbdd7e8c0e83848aecdb8d16179f32097b5d016300aba5f856207ceb6c30",
+      "bytes": 1265
+    },
+    {
+      "source": "<TASK>/outputs/strata-iq3xxs-native.prefill-loading.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-iq3xxs-native.prefill-loading.json",
+      "source_sha256": "e6ddac72cbd6b187fef2239c9343f85fceccfa6fe3dce117bec6f1e616c7aa75",
+      "published_sha256": "f74f9a5b05177b520e3e8226f4bbaffd9f7f8a9dc140c0db23bd65c412069c65",
+      "bytes": 1505
+    },
+    {
+      "source": "<TASK>/outputs/strata-iq3xxs-native.prefill-long.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-iq3xxs-native.prefill-long.json",
+      "source_sha256": "b22506cb3619649ca034b39d9cd1c8041b2f6605e9fd9f37a604aef58acefe4f",
+      "published_sha256": "180d0af8f0ce5741a10d96fa5ea596dd0da5735d0c28fa872737ea4435280fe3",
+      "bytes": 1328
+    },
+    {
+      "source": "<TASK>/outputs/strata-iq3xxs-native.x16.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/strata-iq3xxs-native.x16.json",
+      "source_sha256": "e9995caf62cb81b3e3903eae1a196fe78ff3d26e372e433b3a1d0ce8264cc0e9",
+      "published_sha256": "0270da2ee2f32f2451427a6b121eb5a68905906ce5f9615de1aad68b92eed6b2",
+      "bytes": 1001
+    },
+    {
+      "source": "<TASK>/outputs/x16-optimization-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/x16-optimization-summary.json",
+      "source_sha256": "aa5298cfbe8bb7e4648e71118645bee0cc4a7c7ecc46c433c2fb56f7e820af05",
+      "published_sha256": "9e6df60c877471eb725754bc10bfd024694b9c06707443cca975b40ae67d64e7",
+      "bytes": 125836
+    },
+    {
+      "source": "<TASK>/outputs/x16-stable-cpu-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/outputs/x16-stable-cpu-summary.json",
+      "source_sha256": "f191ffadd6b3d2fd146a258e0c64df75b2b6b22e9fc3e572b1ebb553f2ab0412",
+      "published_sha256": "169cc4ac5cceb6b4b3881b13a3a6b44735e4cfb4f45ed8697a99bb6f016fdeb6",
+      "bytes": 758
+    },
+    {
+      "source": "<TASK>/work/benchmark_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/benchmark_summary.json",
+      "source_sha256": "b5e367191ab75cf961d81d78d5be82245ca8c581dcfceb199382de30a9ed877f",
+      "published_sha256": "470e33a0bbf00d7109bbe2b0368c17ace8dccd1f2f4d689846a01e716ded53ce",
+      "bytes": 1171
+    },
+    {
+      "source": "<TASK>/work/decode10_broad_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_broad_screen_summary.json",
+      "source_sha256": "a49171925f3532f1e493f3b98cc6f7998d22fab9de923235a5477e36cfa000a7",
+      "published_sha256": "13f2f636ab382dffe0d6abfd3450d79464a09cf951056eed9f58464bd7a077c2",
+      "bytes": 2565
+    },
+    {
+      "source": "<TASK>/work/decode10_cache_baseA_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_cache_baseA_screen_summary.json",
+      "source_sha256": "9879e1e344216debdcdc5ad127b31948d1e39c67860a4d31e7f0dc697647a85c",
+      "published_sha256": "6e6ec52a7f404ec9a2120e7048f35f52b281014d5566fc8e93a881a2ff1cebf4",
+      "bytes": 2094
+    },
+    {
+      "source": "<TASK>/work/decode10_cache_conservative_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_cache_conservative_screen_summary.json",
+      "source_sha256": "75aea4a96e01b1e14684b26bd6c35a3504e2eaa0b5387a5ba7567c055b49c096",
+      "published_sha256": "cd554c0991907750aa787b8db8dc5c3d4267df03a4a5fd3d3036b4ebcb6cb95b",
+      "bytes": 1204
+    },
+    {
+      "source": "<TASK>/work/decode10_cache_cost_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_cache_cost_screen_summary.json",
+      "source_sha256": "c35f678fe72e6a3c6a44f54cdc3b228e73b7dfddd0ca18523174945996f10495",
+      "published_sha256": "c7b51b54d6127383b6ffd6e5e31b855152f2076088af535c4711f8ba016ffdf6",
+      "bytes": 1196
+    },
+    {
+      "source": "<TASK>/work/decode10_cache_mix_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_cache_mix_screen_summary.json",
+      "source_sha256": "aaa14209f906fabcefe36849d7ba608a6f67bbfe5df989e4ff256ddb5929fe66",
+      "published_sha256": "fd7c6f6bfe2b2c9dd8cd6864307f5b93990af8c89d6abdd69962390d237b74e6",
+      "bytes": 1197
+    },
+    {
+      "source": "<TASK>/work/decode10_candidate_confirm_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_candidate_confirm_summary.json",
+      "source_sha256": "d26f73a5cc8f59185e72a4292e7090375ffb2ae143aa4967d95b310a6f2e32c7",
+      "published_sha256": "b28bb209c0c79445f3761c47b8bd978d9f5a7ec802c2719aec49c569da4cae77",
+      "bytes": 1464
+    },
+    {
+      "source": "<TASK>/work/decode10_conservative31_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_conservative31_screen_summary.json",
+      "source_sha256": "bfb5b9fe92b05fa91608733b74c0462d4f78cd2e91f7bd7c3589268fe8cf7f2b",
+      "published_sha256": "3e6268812aa8cf324517a483438fea80b7c2cd5c7a49587e229cf6486610ac57",
+      "bytes": 1436
+    },
+    {
+      "source": "<TASK>/work/decode10_dense_full_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_dense_full_screen_summary.json",
+      "source_sha256": "a00b4613d10bb29f8323f22fc2649a1cc4361986c447d194975cc7947b5824b8",
+      "published_sha256": "b635a728e5c1653e21c2fa8208bd818a59c11c22c7c23cbc688dfba143773cf2",
+      "bytes": 3667
+    },
+    {
+      "source": "<TASK>/work/decode10_draft_broad_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_draft_broad_summary.json",
+      "source_sha256": "81352ef14f8fff7c59e04871909d21c5a05a5d3191bda2628bb2e0b346bce01d",
+      "published_sha256": "c3fc97845f4c92271dcca9d23bdd9a868e1b907dcdb81ed65999360804455dd2",
+      "bytes": 329
+    },
+    {
+      "source": "<TASK>/work/decode10_draft_vocab_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_draft_vocab_summary.json",
+      "source_sha256": "5962bdc6715593af8e7b851fd67a728b012c4617bdbeb9a4a547e6319d645937",
+      "published_sha256": "a0778ea2f44bce7afe5d703b0ff7dd889896004342f265188be12456e0c7764d",
+      "bytes": 332
+    },
+    {
+      "source": "<TASK>/work/decode10_gpu_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_gpu_screen_summary.json",
+      "source_sha256": "e62f7a6a1fa9d58248cabfcd60f58f51c3a9741a13b035aa05624b2eb57c6622",
+      "published_sha256": "493035179a1ce9e2d929a6ca3b5d6856c7e5079e1067989c004b63c56dd58b40",
+      "bytes": 4740
+    },
+    {
+      "source": "<TASK>/work/decode10_original_return_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_original_return_screen_summary.json",
+      "source_sha256": "ceb39eaa927f70727b6c335cea10c0b1268ed3bbbe7d9ae298cca6225a67839b",
+      "published_sha256": "9abf264aa8468143c196496fd58a884b0c7627fd0a590eb20274ba12f5b1d2b5",
+      "bytes": 1481
+    },
+    {
+      "source": "<TASK>/work/decode10_pad1_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_pad1_screen_summary.json",
+      "source_sha256": "1c88d542c2ddd1e9e534d2eb716ff5ff53b66b4c454aa5a7fa02568f4e573b41",
+      "published_sha256": "798bb92d860eb094c94abfefd21e4a15c13eb20d3afc561655379568321180d2",
+      "bytes": 2959
+    },
+    {
+      "source": "<TASK>/work/decode10_profile_http_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_profile_http_summary.json",
+      "source_sha256": "231645ba394c5d77b122c12bdf712a7fa24b2064abf1a1a693a29640f987334c",
+      "published_sha256": "c3d3a5df028d2e84f08cd2f40c091ecd1e672db156511e0c260ba74465bc1dc8",
+      "bytes": 933
+    },
+    {
+      "source": "<TASK>/work/decode10_profile_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_profile_summary.json",
+      "source_sha256": "a1aae9ee8f579dd01f9fe3874be81e92518bfdf499a13d2c46f7ad03b9c34589",
+      "published_sha256": "1d07f1fa9019e137be089eb6f1be606b19493bda215b04648d8a0a7b2a64b850",
+      "bytes": 294187
+    },
+    {
+      "source": "<TASK>/work/decode10_profiles_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_profiles_summary.json",
+      "source_sha256": "5a94d4dc849749d27ce4379cd598144a4228f42394e56600adde896ec3129f54",
+      "published_sha256": "ce38a1d574904a5dcd209cfc05ea60b44013caecce13c02253a3b276a697e95b",
+      "bytes": 2361
+    },
+    {
+      "source": "<TASK>/work/decode10_round2_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_round2_screen_summary.json",
+      "source_sha256": "0dfe1c213c4352df96a71d9b9a230ac013c56f30cb4cd6c64565c921c1749ffd",
+      "published_sha256": "e47112e0502dd0af19703914e38f13d6d4a6365e5f0c21e73d570bab4a8d6a15",
+      "bytes": 4716
+    },
+    {
+      "source": "<TASK>/work/decode10_subset_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_subset_screen_summary.json",
+      "source_sha256": "22fc4ab0d9bcb400be06bb999820190e8f0111102f952a7e8593928611f11343",
+      "published_sha256": "8fd0cda8acd388c027a8647ecbff6c24863e0562e2e735df9b88f3dbf6319265",
+      "bytes": 2566
+    },
+    {
+      "source": "<TASK>/work/decode10_training_http_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/decode10_training_http_summary.json",
+      "source_sha256": "5b84ada56f563579bd5ef82b4939f763b40fc55e85d07aee04acef7ec77ef7e8",
+      "published_sha256": "0ce9b6cae4d30c422a60589138075df1f8ffa1efc483e3620c71c37996fa3a46",
+      "bytes": 924
+    },
+    {
+      "source": "<TASK>/work/empty_pcie_ab_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/empty_pcie_ab_summary.json",
+      "source_sha256": "93add0f8f182c9d2a4117ef09cb138819d888f523268871ad31dd2cd3f9b6428",
+      "published_sha256": "4b0f0404e2b3d412a844c7121fdb3f68fa49b1c852e23df3f123cc450cab6585",
+      "bytes": 5156
+    },
+    {
+      "source": "<TASK>/work/empty_pcie_exploratory_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/empty_pcie_exploratory_summary.json",
+      "source_sha256": "e04eee0112e612927333a381b7db8f0c31534d0668f3c46e9774fd857000d17d",
+      "published_sha256": "a4ecb2faf31a506e950b51162714c64e694f6394a9c054ee53dfcbff4a476b6a",
+      "bytes": 5149
+    },
+    {
+      "source": "<TASK>/work/joint_profile_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/joint_profile_summary.json",
+      "source_sha256": "b40fb41b40856bf591a1ad23488634c2fba436cc87165fddaaf9718e77af225c",
+      "published_sha256": "67122ac69bd3ae85854a7e61e3edce60eb0f9dfc56b6aabf108c5ba349d7a0b0",
+      "bytes": 300271
+    },
+    {
+      "source": "<TASK>/work/pcie_control_verified_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/pcie_control_verified_summary.json",
+      "source_sha256": "98fb9dd4aa234bdc693f860d63f4ede33f19da480ef64a3714b0d6a205c29672",
+      "published_sha256": "120bf9c209a25524805c9b2e6e5fa9cd2534531ae1d610c0b32a77606a080603",
+      "bytes": 8248
+    },
+    {
+      "source": "<TASK>/work/x16_adapt16_long_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_adapt16_long_screen_summary.json",
+      "source_sha256": "3d32ab52633a757e953a8d4ef2060a38a59f16a9cfda53adc60b8d44bec83e20",
+      "published_sha256": "bdd332ae0a4dfc80813c884ca2ab3d9dd8bba584af042744ea1ae282efbe3d01",
+      "bytes": 2634
+    },
+    {
+      "source": "<TASK>/work/x16_adapt16_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_adapt16_screen_summary.json",
+      "source_sha256": "b2978b34d0c99d7b2e817ae45fbc416a56a1ee6fbe621665918f460696b3327f",
+      "published_sha256": "df4f79071d5d622906e84c01b1c3722a79fe99c7f915599f23b2e6eee09337d0",
+      "bytes": 1423
+    },
+    {
+      "source": "<TASK>/work/x16_adapt4_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_adapt4_screen_summary.json",
+      "source_sha256": "6ddcf754c598dc6108b38428c77ccd1e6e08e56711dffd763fd7fdd7c0959b5e",
+      "published_sha256": "e8b33c34a680cbf994dfed84002a7274fe87dfd0e1744b3164572a27a11a712a",
+      "bytes": 1427
+    },
+    {
+      "source": "<TASK>/work/x16_budget6_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_budget6_screen_summary.json",
+      "source_sha256": "e9294f007cbf582c2748e23c3d94e8f75b07c2c9468139d486ff3248c05f3d71",
+      "published_sha256": "e5c02fbdf8a9ba23fd883b4c02f395bf9ff2cf616f77b8ee1ff8ce8cc91147f4",
+      "bytes": 1178
+    },
+    {
+      "source": "<TASK>/work/x16_budget8_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_budget8_screen_summary.json",
+      "source_sha256": "70dd61b139aa7a8b20563db51b877619f37da00073f09f930f5e04d1607208e8",
+      "published_sha256": "dd31242c290a487a50f64d9a149fb877d9e8093235c1de92ae328c0142715a7a",
+      "bytes": 1177
+    },
+    {
+      "source": "<TASK>/work/x16_compute_suite_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_compute_suite_summary.json",
+      "source_sha256": "b627231d192b2b43ee24c65a000613f0672db66b72854320feada525c63db207",
+      "published_sha256": "12c8306251d820f72b3da641f3fa458d98ed9cf0aaec6a395de437664d41cc9f",
+      "bytes": 48050
+    },
+    {
+      "source": "<TASK>/work/x16_cpu_best_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_cpu_best_screen_summary.json",
+      "source_sha256": "15d52df9737df6e0f2e00bc7578b818a7f65d9ee67a9f722ac1065237626f612",
+      "published_sha256": "e55361c977a3836b6f37b0394773024848601469b8152c55698d4f187c73bb64",
+      "bytes": 7387
+    },
+    {
+      "source": "<TASK>/work/x16_cpu_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_cpu_screen_summary.json",
+      "source_sha256": "fadc8b050ee73bb543c49b26dc36698057962ddee4f0d4693ab7e574b9a16654",
+      "published_sha256": "5255834f3105afb825ec1b977db9399c3d1165b0cf2879b1a3e99ce368ff4e98",
+      "bytes": 10379
+    },
+    {
+      "source": "<TASK>/work/x16_direct_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_direct_screen_summary.json",
+      "source_sha256": "c7e9b47e3e739311bac68eb37146e1759a21bf3d5e3d24f5f4117323f119f6f0",
+      "published_sha256": "35366f596f12e0cc4f795b73dc3bd426ae8de0a9c0f61bfb92bfc7e3d06b6489",
+      "bytes": 5184
+    },
+    {
+      "source": "<TASK>/work/x16_dma_best_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_dma_best_screen_summary.json",
+      "source_sha256": "5497064a8c5b391538ce698cd782c28ebe487a0be4f93ec58db151147154df52",
+      "published_sha256": "e4091c72fff382f9f9f81e8989c5571a8492cadaf91a6d7be329624861903f70",
+      "bytes": 3860
+    },
+    {
+      "source": "<TASK>/work/x16_dma_confirm_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_dma_confirm_screen_summary.json",
+      "source_sha256": "75f3c76cd3f753ca84048a4e79b99e2ac3bd3c30d1f26853aa4f9734b293fc56",
+      "published_sha256": "2b283b776cd9a451e0609394ee6c050f9e2b1fcf5df676592c4f823f34dd9ebf",
+      "bytes": 4364
+    },
+    {
+      "source": "<TASK>/work/x16_dma_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_dma_screen_summary.json",
+      "source_sha256": "c639b3740de66638caabb94981fc7b9f5171660064c98f6f52e25a6508ec0348",
+      "published_sha256": "7e6855ffd34f1225ec3ffc5f2a94d1daafad6320e5cc32b30ac6d9e044cab69c",
+      "bytes": 5233
+    },
+    {
+      "source": "<TASK>/work/x16_final_fresh_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_final_fresh_screen_summary.json",
+      "source_sha256": "78c56cea97cbde38e9662a07414aad315f16658003254e9a256956f539b18f10",
+      "published_sha256": "d4a3b47b9706dc6ab73247519f2c37286ae5c78bf3bd99a701f55451a57220cd",
+      "bytes": 4336
+    },
+    {
+      "source": "<TASK>/work/x16_followup_suite_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_followup_suite_summary.json",
+      "source_sha256": "0bcbce346ae5e9a1c2295e992f22c478ff0e1a18221fca0407716594153bc989",
+      "published_sha256": "fa2167dd0e8be9e2062375475affe0e7b15b912dabffac14f3393c94d4576266",
+      "bytes": 31881
+    },
+    {
+      "source": "<TASK>/work/x16_fresh_confirm_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_fresh_confirm_summary.json",
+      "source_sha256": "f3b8b5df8fbddb84edc5cc9c2273e0a1fc631c5b9afe53590b01e5e9f1cc8843",
+      "published_sha256": "db99c6924767e5075da20bc1edcc2aafc52bedf332daba7776ee8f6f4e75a7eb",
+      "bytes": 2553
+    },
+    {
+      "source": "<TASK>/work/x16_kernel_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_kernel_screen_summary.json",
+      "source_sha256": "6d83297a30e128840318f6b049684475593c699fdcf9cb0bcc2c3a53fbc57f52",
+      "published_sha256": "6ba6e508d374aff5b6481a80b0bb95889ed1d0226609743c5161c5453a7dba8b",
+      "bytes": 5225
+    },
+    {
+      "source": "<TASK>/work/x16_memory_suite_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_memory_suite_summary.json",
+      "source_sha256": "c00abc1ad408152489f14d7fe9d3ca1c474302a3206d4699c039785a98a16929",
+      "published_sha256": "0c9f8ea81e4f0fa019b47d09a9c4d202b0da57faf82894d169758b619245e011",
+      "bytes": 23885
+    },
+    {
+      "source": "<TASK>/work/x16_mtp2_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_mtp2_screen_summary.json",
+      "source_sha256": "9cccb101e1b28cdf1dcf6fef10cda2eadd75a00d5503494c36e457abac54b041",
+      "published_sha256": "08a7b046fba25d71b254574797331551b4835eba07f925b05e63d874bd78e369",
+      "bytes": 5809
+    },
+    {
+      "source": "<TASK>/work/x16_mtp_refine_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_mtp_refine_summary.json",
+      "source_sha256": "87bb4e51c42be6745aaba6c83cfade831eefa73f10bdf7bdc8af740d2d15eb08",
+      "published_sha256": "747bd9342583f3e94195917505fdfcf62fc119b86e1f094af908eb6a575b3a6c",
+      "bytes": 6643
+    },
+    {
+      "source": "<TASK>/work/x16_order_best_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_order_best_screen_summary.json",
+      "source_sha256": "382be0797db2c6cf5da92378888b564876c2c472b77fb3d6ccc4aa6cd414e511",
+      "published_sha256": "a3ca1b14708f0d14f68c0c5a070dd65564f98ec2f72f372c425ef7d2bd2a2632",
+      "bytes": 3875
+    },
+    {
+      "source": "<TASK>/work/x16_pf12_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_pf12_screen_summary.json",
+      "source_sha256": "8d78a1d9818c8145da11309b68a450dcd578d677b1f198bbb33c870e20c8d0fb",
+      "published_sha256": "c0131ac4c42284c3cb039867d02684d4b305c22e7b59c982a1629607c8644f1b",
+      "bytes": 1175
+    },
+    {
+      "source": "<TASK>/work/x16_pf16_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_pf16_screen_summary.json",
+      "source_sha256": "1f17d996e2c5d8aec3d519a3ac6b9d4eb50e613df334ed2159f617dc45936f6f",
+      "published_sha256": "0e25fda00b7cecfe7a1962ecd0e953f2a9053d2e1f4155a65498473419c7bf82",
+      "bytes": 1170
+    },
+    {
+      "source": "<TASK>/work/x16_pfoff_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_pfoff_screen_summary.json",
+      "source_sha256": "6c9952b41801eebd49156ddfd347a881c7d9ecda6361f5eeb53874924f5134e7",
+      "published_sha256": "6445d6de59ca2fe01559cda5c48e75e52d453f10e2725d522df561b8ba812af0",
+      "bytes": 1176
+    },
+    {
+      "source": "<TASK>/work/x16_plan_audit_pairs_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_plan_audit_pairs_summary.json",
+      "source_sha256": "554ec495ca4d4bc002c46d5ab761d6f320db90d3d41db1a838910742e267b301",
+      "published_sha256": "b547a0827c739f0e7f5c5d0d12a0f28731d1daf659244c0b37d0f2b706dca683",
+      "bytes": 4932
+    },
+    {
+      "source": "<TASK>/work/x16_plan_audit_repro_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_plan_audit_repro_summary.json",
+      "source_sha256": "c8c81dccacf0613a4a6937fec29073925dbc5faea4540c25b6696c7442efd23c",
+      "published_sha256": "6cb1a795972297942ae7b9b9ec6396ea21c82976c69bcfe0a924e59186cfe2c7",
+      "bytes": 3079
+    },
+    {
+      "source": "<TASK>/work/x16_skip_best_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_skip_best_screen_summary.json",
+      "source_sha256": "2a059a13f22b4e3ab7f096451eb7473c54971502ac64c058157680f2b8d0c206",
+      "published_sha256": "ecf26f93f79df8f2e86ed5225ead2d2643fc3d6af1bf2052abb4cfc359887259",
+      "bytes": 2522
+    },
+    {
+      "source": "<TASK>/work/x16_stable_cpu_confirm_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_stable_cpu_confirm_summary.json",
+      "source_sha256": "ff647090559ef42518ecc542b93ff35bd2e868042d1d70603a70f7f8f623e975",
+      "published_sha256": "b2eedbae15b4d5772df7292959c1c0acadf4a3c0d9e0a7f67133d7ac426d2784",
+      "bytes": 3966
+    },
+    {
+      "source": "<TASK>/work/x16_static_after_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_static_after_screen_summary.json",
+      "source_sha256": "177240fdbf5ada0b1e3a2910373f2d3a7e5c1635629cf9b34408d1b5185c9ee3",
+      "published_sha256": "9af71b79a76ad65c308148da3fe23074c18083fb9ddc0cb4796f8f8f76775ec3",
+      "bytes": 1429
+    },
+    {
+      "source": "<TASK>/work/x16_static_control_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_static_control_screen_summary.json",
+      "source_sha256": "17d7dd004a4b7030c326f1ee78556ee5143a71b03942791a70b8e3a285b554ac",
+      "published_sha256": "98c093959fe9079c53023237d3ee3d9fda9f3275fa5793077e81c739363a32d8",
+      "bytes": 1433
+    },
+    {
+      "source": "<TASK>/work/x16_vnni_best_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_vnni_best_screen_summary.json",
+      "source_sha256": "9e94ee7ddc295dad62bf7501cf299cfaaa241e52797f8e0d5869cd37012a1158",
+      "published_sha256": "604e782749a0ac7b38acd33988fa8cefebe536249f54e5bf2e7913b0c16d8831",
+      "bytes": 1423
+    },
+    {
+      "source": "<TASK>/work/x16_window8_screen_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/screens/x16_window8_screen_summary.json",
+      "source_sha256": "96b93761fc493e7f112af2a825419478bf2065e71dedccbb42b14de250b70e49",
+      "published_sha256": "501e9622278cc453329c27c9fb92fb72b2061994326b9b703e12a354f8fdc357",
+      "bytes": 3631
+    },
+    {
+      "source": "<TASK>/work/community/async_balanced_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/community/async_balanced_summary.json",
+      "source_sha256": "baf75b62d1bea794cbe70249e3d9e862886ff6ef6e67d8ced3ec27c1636686e4",
+      "published_sha256": "3cac7742e9cc3c7699cb86da11075c28495d2310ddb54b5f33dff1cd6456da10",
+      "bytes": 2529
+    },
+    {
+      "source": "<TASK>/work/community/async_commit_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/community/async_commit_summary.json",
+      "source_sha256": "ae186bd5786484d0584589fb07ab53d47e3087a9a9041c7db87612013c388747",
+      "published_sha256": "ef40aa91ac1607da4c5ae2f93bc50da44658da51f8335b9c0dac73b598f6e637",
+      "bytes": 1198
+    },
+    {
+      "source": "<TASK>/work/community/control_a_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/community/control_a_summary.json",
+      "source_sha256": "b68a0cb83957200019e0f1979cd338e25f103bd019c3150e3c94769c7d78ba64",
+      "published_sha256": "826b64c02e7c5885b5544fca41bac3ef5a32acf6294b6a1597f6a5759e498c56",
+      "bytes": 1199
+    },
+    {
+      "source": "<TASK>/work/community/control_b_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/community/control_b_summary.json",
+      "source_sha256": "53a69851fa6a494690cfc5576e132239fdda15b00087505c7993c808588bfb98",
+      "published_sha256": "55707b59830457a56f4f9aca715ef8bbbf4a02eacf28f7767592aea94b63eeb1",
+      "bytes": 1196
+    },
+    {
+      "source": "<TASK>/work/community/parallel_quant_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/community/parallel_quant_summary.json",
+      "source_sha256": "6672499ec57fe260a40928b62326dab8d6d266033f044e22123563ddab7765ea",
+      "published_sha256": "9e537eb64ae50fe0b1565326f4d4b7e67ef50efcdffc9d5c78cff93ffb629493",
+      "bytes": 1216
+    },
+    {
+      "source": "<TASK>/work/community/prefetch2048_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/community/prefetch2048_summary.json",
+      "source_sha256": "8be5e07fde8dc1e9c6b92cde8049f7ba3cc6f246d57a439823f896a2ca0cb491",
+      "published_sha256": "5f19f33c8d5c9f3d848edcc0cb6072068274a695394b70b163ba9c9eebce20f8",
+      "bytes": 1213
+    },
+    {
+      "source": "<TASK>/work/community/reserve1500_summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/community/reserve1500_summary.json",
+      "source_sha256": "06f648e3aa83f6e2cb3eb0ddfc5670c91caa8ee106c2f7f889a6c189e02a2728",
+      "published_sha256": "9e58a93dd1e4f9da98a2fba440e0d1b07caae93cf44d26151700ec80162681cf",
+      "bytes": 1199
+    },
+    {
+      "source": "<TASK>/work/community2/before_control-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/community2/before_control-summary.json",
+      "source_sha256": "57116852d9e3be8ddca337dc7f7131081a8bdeb3263398a2e33fb650acd68c58",
+      "published_sha256": "7acb051002fe5cfa8dabd6ac8788efb4aaf0d84e730d92e427626a420650b772",
+      "bytes": 307
+    },
+    {
+      "source": "<TASK>/work/community2/depth256_a-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/community2/depth256_a-summary.json",
+      "source_sha256": "727f3064d37794a09e20bb394f1016f1cab32d42e2a0d9de9f513aac6bf32d2b",
+      "published_sha256": "29a253002a27c449a43bbf37e1cbe613b11f46ed7be8d8899c0c9559b31c04d4",
+      "bytes": 306
+    },
+    {
+      "source": "<TASK>/work/community2/depth256_b-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/community2/depth256_b-summary.json",
+      "source_sha256": "31825d7edf1b536dc76fc70b5c046bfabbf9353a81967f0940af2acbd37738f3",
+      "published_sha256": "413e86e6d5de87e40acea6cbd35a246f8debc72356937a1a06aae8913373f89f",
+      "bytes": 304
+    },
+    {
+      "source": "<TASK>/work/community2/depth64_a-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/community2/depth64_a-summary.json",
+      "source_sha256": "58479cd3300f1f00dcb5e2827e6b76d05f91b276ff01156fe62333b611667f51",
+      "published_sha256": "bea8372642c52bd4580c6db3f7979cd9ad134ed0dc2f10cc0d8ff6f48340e090",
+      "bytes": 305
+    },
+    {
+      "source": "<TASK>/work/community2/depth64_b-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/community2/depth64_b-summary.json",
+      "source_sha256": "cf8a97f042f24e0618af0c58edfcf0ac9cda37e3eef3ce8fe150c6548fb2c2c3",
+      "published_sha256": "33df0454a6fbbb995ba707a5c73ba271645b8c99c6f8316f97defb78f3c98556",
+      "bytes": 307
+    },
+    {
+      "source": "<TASK>/work/community2/ple-depth-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/community2/ple-depth-summary.json",
+      "source_sha256": "3e517e59a4233fa7a1fe76cd3a4d8a8f17beffb67fb5e16ff085ef9dd273d0d8",
+      "published_sha256": "7f536cede87ab0012aaeb22194f12755d0628ecab7d63074285611812d93643e",
+      "bytes": 457
+    },
+    {
+      "source": "<TASK>/work/community2/prefill_balance4-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/community2/prefill_balance4-summary.json",
+      "source_sha256": "e9336c662541e359771574a6ff6f0996ebbb3ca6a9fe1d485271ca27eb3d7823",
+      "published_sha256": "2e08d4ba0d197a9517a3e868ab710ba0d48e4448a03deb0069dd97dab1ee04ce",
+      "bytes": 1673
+    },
+    {
+      "source": "<TASK>/work/community2/prefill_screen-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/community2/prefill_screen-summary.json",
+      "source_sha256": "81146b437a61b585e5ce8e54a112d7e57f925efe3b64825f71a27bc1f68c309f",
+      "published_sha256": "fdf543a930e1419b1d038ba36bf2c467bec57c5ab5eeeba6584f620db3bed046",
+      "bytes": 2199
+    },
+    {
+      "source": "<TASK>/work/community2/production-qa.json",
+      "path": "bench/results/2026-10-03-local-optimization/community2/production-qa.json",
+      "source_sha256": "4ac9c83dda289f795792990b60dede87c2bf6bb8cd9817a420ebdcc091f8bcc5",
+      "published_sha256": "0465b5e5b774d9cd2e1a59aebe30c62f214df8c8cf0ba613b8a7b87e5931cd81",
+      "bytes": 6853
+    },
+    {
+      "source": "<TASK>/work/community2/qa.json",
+      "path": "bench/results/2026-10-03-local-optimization/community2/qa.json",
+      "source_sha256": "6e44dac61dadf098893c28e4217d2b51875359760f91d449f505af29deedea8e",
+      "published_sha256": "326deaaa238308deda46eac2225aed470f2cfc598287d20d9860f4c41c78cb98",
+      "bytes": 37759
+    },
+    {
+      "source": "<TASK>/work/agent-prefill/production-qa.json",
+      "path": "bench/results/2026-10-03-local-optimization/agent-prefill/production-qa.json",
+      "source_sha256": "90aee61aaec83fd821863f3162599acd5e28836e751f6fde7b44fd9b4031241b",
+      "published_sha256": "d1fb5345df579360c5cb22f6776390192cbd5febea922ffd69a1959d76cb9ba4",
+      "bytes": 3416
+    },
+    {
+      "source": "<TASK>/work/agent-prefill/qa.json",
+      "path": "bench/results/2026-10-03-local-optimization/agent-prefill/qa.json",
+      "source_sha256": "44e450a17d82a19b1a6e27bcce408bd8fd02ce5aebd1527b39fe7ce386fc1c22",
+      "published_sha256": "a651211aa6d2d0dfcf7d35265ad249eba1661d5e04e6d155899dfbe803fc0ca4",
+      "bytes": 165467
+    },
+    {
+      "source": "<TASK>/work/cache-idle/production-qa.json",
+      "path": "bench/results/2026-10-03-local-optimization/cache-idle/production-qa.json",
+      "source_sha256": "f839f88c6dd1019c39f37449aab618914ad6c540be07aaeea8e9172a90b5889d",
+      "published_sha256": "64421b1839e6bd4ff2145d406aa159ecb045df8ee9dc0455dcd0e79b0150d808",
+      "bytes": 6828
+    },
+    {
+      "source": "<TASK>/work/cache-idle/qa.json",
+      "path": "bench/results/2026-10-03-local-optimization/cache-idle/qa.json",
+      "source_sha256": "909acc3babeeddebb353de5a1aabb173271aa06fe8867b37f20512c107961f5b",
+      "published_sha256": "aa7b9ca7cdba8d919b6ee04939d1fdacd2e4812e470e260dc879e980eaed24cf",
+      "bytes": 21626
+    },
+    {
+      "source": "<TASK>/work/prefill3/cli-check.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill3/cli-check.json",
+      "source_sha256": "1207f91aaecf43e5dfbad8e79029fb2dc946e338af1d130fdcbe26bd2d8d9002",
+      "published_sha256": "6f071cce0d0e1024195dbdca3886f2c55ede9a8119b5680fddc19c6e3a0ee1d5",
+      "bytes": 1285
+    },
+    {
+      "source": "<TASK>/work/prefill3/final-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill3/final-summary.json",
+      "source_sha256": "b869232a661458b58366d5adb12aab91676069897fef4d38cf5181212b7aed74",
+      "published_sha256": "9dbee91a3da22800958eef71416284ba059626aa90a1d2fd9623d1097a4e6c0e",
+      "bytes": 3119
+    },
+    {
+      "source": "<TASK>/work/prefill3/formal-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill3/formal-summary.json",
+      "source_sha256": "2e521937f7f86667a6abfb339ab774532775d71587fa89c48f7849c36d19d936",
+      "published_sha256": "665c1b067bd89fe3854e88057b828aa3b85ad01019d4b31a0fb97071ed393ad3",
+      "bytes": 722
+    },
+    {
+      "source": "<TASK>/work/prefill3/production-qa.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill3/production-qa.json",
+      "source_sha256": "d78988b4d71ecebef1164199a0ce026aac23ce5b7881be3dd5ec042a3fb8a3ef",
+      "published_sha256": "f1209830df1cf85f6e97167a1dbd8e22892f1aa76e662a62902c86950edb8ea6",
+      "bytes": 3416
+    },
+    {
+      "source": "<TASK>/work/prefill3/qa.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill3/qa.json",
+      "source_sha256": "4ad9bb546817fabceb77f74d2de68eab513ce478180fcc0dccf44689f17f811e",
+      "published_sha256": "48dfc0acc8209d963a76cda9abbfd83c15b05fafc97ea8a7f5d6d2b6cda35d36",
+      "bytes": 165463
+    },
+    {
+      "source": "<TASK>/work/prefill4/cli-check.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill4/cli-check.json",
+      "source_sha256": "5c103bbb7242b977d5d0f48032bc272a8682a3a08473177d1f15f624d7223088",
+      "published_sha256": "1ef9a910301f1de38c6b0ecc381d34f96504d9d6f177bb64a2acdaf3766fd152",
+      "bytes": 1301
+    },
+    {
+      "source": "<TASK>/work/prefill4/profile-summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill4/profile-summary.json",
+      "source_sha256": "0a436aae649ac343879afd912cd143bb0496427daadf4ae6537ec08321409b32",
+      "published_sha256": "8540d1b2b69e01c440ba2d1b6fe0349015775b181a38c54696510a83ea92f4c2",
+      "bytes": 1278
+    },
+    {
+      "source": "<TASK>/work/prefill4/qa.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill4/qa.json",
+      "source_sha256": "7bc47677d21f1b0b1e1d442477248b5601b2698e64b069e999270690eab592dd",
+      "published_sha256": "135fae5b029cb26c78d0001ac33f7e09d9da0e9b86f15138c278e316e8cc036f",
+      "bytes": 18708
+    },
+    {
+      "source": "<TASK>/work/prefill4/summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill4/summary.json",
+      "source_sha256": "3071442d1ad109b9ccfdd5bb2ad786ff9215bbc0cde1a47d1a5cd8ebd52ad778",
+      "published_sha256": "9bb2a133572885b438d3ae791a99d7e8e3c35a01355e2faf51857a29124768e0",
+      "bytes": 6964
+    },
+    {
+      "source": "<TASK>/work/prefill5/cli-check.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/cli-check.json",
+      "source_sha256": "0a9e9158bc52b88569345111a967e782b28f69eddce5ef12d23927e9d8f335f4",
+      "published_sha256": "d8bedaafc07a9d1154cae483e3f3eb6c4b0c501055836837ed820ad907284274",
+      "bytes": 2283
+    },
+    {
+      "source": "<TASK>/work/prefill5/config-after.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/config-after.json",
+      "source_sha256": "099deb599fb9bebc14afba32f1145a1048f4cfde840f4ba7ea54b9bbfdd9982f",
+      "published_sha256": "3eb2fc54e0cc373c561028d30b81ebdd2757ef19eb5c16dbc06d1add5911f52e",
+      "bytes": 1613
+    },
+    {
+      "source": "<TASK>/work/prefill5/config-before.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/config-before.json",
+      "source_sha256": "e6ddac72cbd6b187fef2239c9343f85fceccfa6fe3dce117bec6f1e616c7aa75",
+      "published_sha256": "f74f9a5b05177b520e3e8226f4bbaffd9f7f8a9dc140c0db23bd65c412069c65",
+      "bytes": 1505
+    },
+    {
+      "source": "<TASK>/work/prefill5/daily-A1.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/daily-A1.json",
+      "source_sha256": "61aaaac4664cbdb8bd96443beb8c569e260856ee6b7bb8a46a52d1aaaaa91d92",
+      "published_sha256": "69b77842d3b0aba9d6ba9f6d5e02fb5d47c11c56221ecfba9e819f75eff2adfc",
+      "bytes": 3492
+    },
+    {
+      "source": "<TASK>/work/prefill5/daily-A2.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/daily-A2.json",
+      "source_sha256": "a5478434ba7cec45c0fd2f01bcc17f0b685f269e19ed674f29bb4e661a6c16b4",
+      "published_sha256": "59929e15a275a4873e96ab81b4a4aff842dffe0de5882b6e277f507fa276e132",
+      "bytes": 3490
+    },
+    {
+      "source": "<TASK>/work/prefill5/daily-B1.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/daily-B1.json",
+      "source_sha256": "0562a8596588990565d7f37937433c872b1057825e8e6d7c3359ef64ce597c14",
+      "published_sha256": "441486decd6ca672bc1d3fb2e3eb40e72ad6c96c09fd0982a0d9c8248c878379",
+      "bytes": 3491
+    },
+    {
+      "source": "<TASK>/work/prefill5/daily-B2.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/daily-B2.json",
+      "source_sha256": "8931b5262b014b813df8ff89cdbc22c1f3e9316f7d488fb0988136d1c43d9055",
+      "published_sha256": "7c218deff62c8babfaa3d1f76c3702549d2786a1aa5522a5ea6fd8a5fec6c50d",
+      "bytes": 3493
+    },
+    {
+      "source": "<TASK>/work/prefill5/decision.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/decision.json",
+      "source_sha256": "310b52696cfb3dfbdca341b3c1c4bed61dbed14ba96fbf56d02bada718795046",
+      "published_sha256": "310b52696cfb3dfbdca341b3c1c4bed61dbed14ba96fbf56d02bada718795046",
+      "bytes": 790
+    },
+    {
+      "source": "<TASK>/work/prefill5/decode-guard-long-B.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/decode-guard-long-B.json",
+      "source_sha256": "35b8371abc3f0af869942f44a5baf5c5a0d399c6d3d4c0791a5bd6c65ac0ae6e",
+      "published_sha256": "cf8b6920e6237b5be01998560794e248c9443bba603f1b50188898e7e2cfbdef",
+      "bytes": 14536
+    },
+    {
+      "source": "<TASK>/work/prefill5/decode-guard-long-D.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/decode-guard-long-D.json",
+      "source_sha256": "4ce03c719641ca3e590655510bf650e888fc83e382efed9ca51c547e544c9dc2",
+      "published_sha256": "fa24241031f766c23a12351a7fa3c84d18883487fffcc530b70ccd715dd82c1a",
+      "bytes": 15290
+    },
+    {
+      "source": "<TASK>/work/prefill5/evidence-manifest.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/evidence-manifest.json",
+      "source_sha256": "27f46f7536bb9b8330139b22bb6cf67469739cc4330bc165b149df7b7d7ac7e6",
+      "published_sha256": "84c1c291d30e4c6702754f8a835972b87dfb6d2ef7904433af7e86997681db46",
+      "bytes": 21489
+    },
+    {
+      "source": "<TASK>/work/prefill5/final-profile.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/final-profile.json",
+      "source_sha256": "a851bf5b884f5476236e4e3245d483222b7ed1af52c8be8a870ea269db60e9df",
+      "published_sha256": "5b21ecedc25b5fd46bf9a4616b7b8e3893e0d043aa0abc411480702cd795280e",
+      "bytes": 2959
+    },
+    {
+      "source": "<TASK>/work/prefill5/final-verification.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/final-verification.json",
+      "source_sha256": "5ffb8a4a91be7bca5068c6c8645890c62ce531f4b080280305ab988bbf6a3ab7",
+      "published_sha256": "7367402a5a2f13a94c6094ee1240b222e3d451cdcde583f406d15fe8e4fdae94",
+      "bytes": 3490
+    },
+    {
+      "source": "<TASK>/work/prefill5/frozen.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/frozen.json",
+      "source_sha256": "0c38c0d071a8a1c0f3f3267731bf83bcd02b722f0da62e6ace5faac037720f44",
+      "published_sha256": "b827a230b5c95dc9273348629904f1497bc8d67888cd60bdb128fa339496dcde",
+      "bytes": 25850
+    },
+    {
+      "source": "<TASK>/work/prefill5/long-A1.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/long-A1.json",
+      "source_sha256": "6b445636bfd4ef5c6515b69757436a51e70b5643262bcf6a712b03a791788522",
+      "published_sha256": "6144194341426d6d00cde4613c88f0d694d36616833118af76963ed078aae3d2",
+      "bytes": 16256
+    },
+    {
+      "source": "<TASK>/work/prefill5/long-A2.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/long-A2.json",
+      "source_sha256": "25eebeafe5e485a1ec12021039fb97f2bd2a11b32baa08c624846d2df82423b1",
+      "published_sha256": "65e38675f81a6001876a69d4ebfaaa8ff9642e8afae3afd9f38b5a3298a60217",
+      "bytes": 8231
+    },
+    {
+      "source": "<TASK>/work/prefill5/long-B1.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/long-B1.json",
+      "source_sha256": "f41e283015a91daea9f214f8d97a394f29bcf0e13e753b570f21901c0d2fb6db",
+      "published_sha256": "7d3bfe47d13226214f6e4b40f6767e6fbbc2dbbe101699ec5debe6517892cbae",
+      "bytes": 16149
+    },
+    {
+      "source": "<TASK>/work/prefill5/long-B2.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/long-B2.json",
+      "source_sha256": "9374d89396f3ec4aa1cbaa28fbf38bfe5d9f535eafb75fd10340dd77761b3c20",
+      "published_sha256": "339761afb6b5e171411cdf7950a9b52644b3ffc0032551e36689e09a509d124c",
+      "bytes": 8155
+    },
+    {
+      "source": "<TASK>/work/prefill5/long-profile-A.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/long-profile-A.json",
+      "source_sha256": "9ace97deb8850ac5acfa2db85d717bbb6bf7d052132fe2e7fc66cf13811bb431",
+      "published_sha256": "8c50f044e117cb27fb50dbf36430c604a09b6a73c63d46936b501b787225c795",
+      "bytes": 2961
+    },
+    {
+      "source": "<TASK>/work/prefill5/long-profile-B.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/long-profile-B.json",
+      "source_sha256": "f26e95d5429e80df29eeee57c959739930ade05e7a80f2a073cf3a5097248783",
+      "published_sha256": "96fc11bebe00bfb8bd8184cf0fa35c7bb4480a2c29aa3b81dd101bc982137bd8",
+      "bytes": 2961
+    },
+    {
+      "source": "<TASK>/work/prefill5/production-qa.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/production-qa.json",
+      "source_sha256": "220a7916392a077b338f2334a4daea786e3a35ea5751819419c4fb1c2cb46568",
+      "published_sha256": "28af207bfef54cfc0e00d3276196d3410ca208f4b6b6638769a6981dee73155b",
+      "bytes": 17162
+    },
+    {
+      "source": "<TASK>/work/prefill5/profile.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/profile.json",
+      "source_sha256": "00392b7fb5b368d990ee566693e30113fc8aa4651760bba2c9e67151db26e04f",
+      "published_sha256": "b4a244214caa18df8ed4d64ae77d721de36259cd3e8e58e6dceff0eae6c6dadd",
+      "bytes": 1751
+    },
+    {
+      "source": "<TASK>/work/prefill5/qa.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/qa.json",
+      "source_sha256": "d558e79e3d53c8fbb1458e35d56ee7fca48a893e40ce0be00e256c87a9de4136",
+      "published_sha256": "785f1a7bbfd4ab35d596b8f826344d9492d0518f49181ac245d9a78aded2383e",
+      "bytes": 12855
+    },
+    {
+      "source": "<TASK>/work/prefill5/selected-long.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/selected-long.json",
+      "source_sha256": "15f54d66c350397ded943ba8d1a3c2d8b1977c850eaa191a78081451327541fb",
+      "published_sha256": "a69622ac6573490b2175edf13c3016d7def0916c029de8e14c75e46561dd1a88",
+      "bytes": 8224
+    },
+    {
+      "source": "<TASK>/work/prefill5/summary.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/summary.json",
+      "source_sha256": "c381bc3e2cadd00babf501c19fd487ad9532631f8aa2269d6ed3401fe004faf6",
+      "published_sha256": "89745adc610d2b0d2e7c6d027ea547f176a93fb3a7feec8c4a39eca99f066050",
+      "bytes": 76096
+    },
+    {
+      "source": "<TASK>/work/prefill5/tc-profile.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/tc-profile.json",
+      "source_sha256": "20ae1fd90c92757686d54412d2b9c9cde7c7597ead90400637ccfb051a2e5728",
+      "published_sha256": "465e35d9630ab1d27c50783b5d67fc6f0ccf7839c46a8c9f701a22061aaf564e",
+      "bytes": 1750
+    },
+    {
+      "source": "<TASK>/work/prefill5/tc2-profile.json",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/tc2-profile.json",
+      "source_sha256": "4781f6f56b3a8e2e4351c901d84775338e9efb110b0bca5ba7ac61c3f4e99a63",
+      "published_sha256": "c03b4884825a85efd220fc8ed87563684f17abbae963b43ee74412e1a9ade0cc",
+      "bytes": 1755
+    },
+    {
+      "source": "<TASK>/work/prefill5/prefill_bf16_test-final.log",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/test-results/prefill_bf16_test-final.log.txt",
+      "source_sha256": "315c4d4082869bfd1932b8d9913b0197e68b3fba70e7628925390ba5b5b07c25",
+      "published_sha256": "aab55b9f8e583c79007dec1fd3f31394f97b07e5f6ad5b984224cdc6e497d91c",
+      "bytes": 1668
+    },
+    {
+      "source": "<TASK>/work/prefill5/prefill_topk_test-final.log",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/test-results/prefill_topk_test-final.log.txt",
+      "source_sha256": "052d8c713061589d3ae73be95489c2c1e04de7ac413930984cbba41fa0d7cbf2",
+      "published_sha256": "1709d92cab74dfd8a56677020120ee3a8ae47b85452d7e973aaa6bb2388de520",
+      "bytes": 1224
+    },
+    {
+      "source": "<TASK>/work/prefill5/prefill_scores_test-final.log",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/test-results/prefill_scores_test-final.log.txt",
+      "source_sha256": "6e76ff67fb7e4c67c3f63f9e9591972deadef604e4645d39bfcb5aac173ae0e6",
+      "published_sha256": "119655ef0311b84ea6918f7d5409c4defff85715d839ffe13fc05aa54bca9cc9",
+      "bytes": 872
+    },
+    {
+      "source": "<TASK>/work/prefill5/prefill_bf16_test-memcheck.log",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/test-results/prefill_bf16_test-memcheck.log.txt",
+      "source_sha256": "adba10db853bd67fe9009b776eefe7b61210d2cbe3eee029ba6fa188978b5832",
+      "published_sha256": "a9d061cee538182f762e132abeea7bac7bddb844338f25751bbbb043f242c425",
+      "bytes": 62
+    },
+    {
+      "source": "<TASK>/work/prefill5/prefill_topk_test-memcheck.log",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/test-results/prefill_topk_test-memcheck.log.txt",
+      "source_sha256": "adba10db853bd67fe9009b776eefe7b61210d2cbe3eee029ba6fa188978b5832",
+      "published_sha256": "a9d061cee538182f762e132abeea7bac7bddb844338f25751bbbb043f242c425",
+      "bytes": 62
+    },
+    {
+      "source": "<TASK>/work/prefill5/prefill_scores_test-memcheck.log",
+      "path": "bench/results/2026-10-03-local-optimization/prefill5/test-results/prefill_scores_test-memcheck.log.txt",
+      "source_sha256": "adba10db853bd67fe9009b776eefe7b61210d2cbe3eee029ba6fa188978b5832",
+      "published_sha256": "a9d061cee538182f762e132abeea7bac7bddb844338f25751bbbb043f242c425",
+      "bytes": 62
+    },
+    {
+      "source": "<TASK>/outputs/decode10-expert-profile.bin",
+      "path": "bench/results/2026-10-03-local-optimization/assets/expert-profile.bin",
+      "source_sha256": "379b95cceec9a460cbeb6fe100c90f7b92a4b4c8efd5df184cfb518c715feda4",
+      "published_sha256": "379b95cceec9a460cbeb6fe100c90f7b92a4b4c8efd5df184cfb518c715feda4",
+      "bytes": 196632
+    },
+    {
+      "source": "<TASK>/outputs/decode10-draft-vocab.bin",
+      "path": "bench/results/2026-10-03-local-optimization/assets/draft_vocab.bin",
+      "source_sha256": "be5b69d901551f87bf61042344de602c3fab62f8618dfb364633ffdff2674b01",
+      "published_sha256": "be5b69d901551f87bf61042344de602c3fab62f8618dfb364633ffdff2674b01",
+      "bytes": 353008
+    },
+    {
+      "source": "C:/strata-models/strata-iq3xxs-native.json",
+      "path": "bench/results/2026-10-03-local-optimization/current-config.snapshot.json",
+      "source_sha256": "099deb599fb9bebc14afba32f1145a1048f4cfde840f4ba7ea54b9bbfdd9982f",
+      "published_sha256": "3eb2fc54e0cc373c561028d30b81ebdd2757ef19eb5c16dbc06d1add5911f52e",
+      "bytes": 1613
+    }
+  ]
+}

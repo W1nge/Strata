@@ -35,7 +35,12 @@ bool qsa_block_scores_tc(const float* pooled, const float* dead, const float* q_
 
 /// ids [nq, cap] (cells, ascending); `cap` >= the largest selection width.
 void qsa_block_topk(const float* scores, const int32_t* steps, int64_t nq, int64_t max_blocks, int64_t cap,
-                    const QsaShapes& s, int32_t* ids, void* stream);
+                    const QsaShapes& s, int32_t* ids, void* stream, int64_t active_blocks = -1);
+/// Opt-in long-window dispatch; active_blocks must bound every query's n_bid + 1.
+void qsa_set_topk_wide(bool enabled);
+/// Reuse each loaded key across 4/8 queries for >=16384 active blocks and >=64 queries.
+/// Smaller batches and 0 retain the original scorer.
+void qsa_set_score_tile(int queries);
 /// The original kernel (keys read from memory on every radix pass), for tests: the same ids.
 void qsa_block_topk_ref(const float* scores, const int32_t* steps, int64_t nq, int64_t max_blocks, int64_t cap,
                         const QsaShapes& s, int32_t* ids, void* stream);

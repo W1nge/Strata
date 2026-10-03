@@ -451,7 +451,7 @@ void expert_pool_dispatch_multi(ExpertDispatch& d, const float* x_f, const int32
                 ExpertJobMulti& nj = d.jobs_multi[(size_t) jo];
                 nj.blob = b;
                 nj.nt = 0;
-                if (d.pool->profile_enabled())
+                if (d.pool->needs_source())
                     nj.profile_source = d.src->pinned(d.layers, e) ? 1 : d.src->streams_from_ssd() ? 2 : 0;
             }
             ExpertJobMulti& jb = d.jobs_multi[(size_t) jo];

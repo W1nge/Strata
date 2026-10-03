@@ -1,0 +1,282 @@
+[
+  {
+    "case": "long_initial",
+    "result": {
+      "id": "chatcmpl-b4308932590d496d90e13f5e",
+      "object": "chat.completion",
+      "created": 1790958491,
+      "model": "qwen3.8-flash-next",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "cobalt-willow-8192"
+          },
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 8390,
+        "completion_tokens": 10,
+        "total_tokens": 8400,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 8390,
+        "prompt_ms": 30250.7,
+        "prompt_per_token_ms": 3.606,
+        "prompt_per_second": 277.3,
+        "predicted_n": 10,
+        "predicted_ms": 424.7,
+        "predicted_per_token_ms": 42.47,
+        "predicted_per_second": 23.5,
+        "draft_n": 10,
+        "draft_n_accepted": 6
+      }
+    }
+  },
+  {
+    "case": "follow",
+    "result": {
+      "id": "chatcmpl-503b7affe0f74f07a026ed1b",
+      "object": "chat.completion",
+      "created": 1790958522,
+      "model": "qwen3.8-flash-next",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "cobalt-willow-8192"
+          },
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 8427,
+        "completion_tokens": 10,
+        "total_tokens": 8437,
+        "prompt_tokens_details": {
+          "cached_tokens": 8399
+        }
+      },
+      "timings": {
+        "cache_n": 8399,
+        "prompt_n": 28,
+        "prompt_ms": 782.6,
+        "prompt_per_token_ms": 27.95,
+        "prompt_per_second": 35.8,
+        "predicted_n": 10,
+        "predicted_ms": 366.6,
+        "predicted_per_token_ms": 36.66,
+        "predicted_per_second": 27.3,
+        "draft_n": 8,
+        "draft_n_accepted": 8
+      }
+    }
+  },
+  {
+    "case": "fork",
+    "result": {
+      "id": "chatcmpl-b9cde224192d4278894d84b1",
+      "object": "chat.completion",
+      "created": 1790958523,
+      "model": "qwen3.8-flash-next",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "cobalt-willow-8192"
+          },
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 8419,
+        "completion_tokens": 10,
+        "total_tokens": 8429,
+        "prompt_tokens_details": {
+          "cached_tokens": 8383
+        }
+      },
+      "timings": {
+        "cache_n": 8383,
+        "prompt_n": 36,
+        "prompt_ms": 570.7,
+        "prompt_per_token_ms": 15.853,
+        "prompt_per_second": 63.1,
+        "predicted_n": 10,
+        "predicted_ms": 265.9,
+        "predicted_per_token_ms": 26.59,
+        "predicted_per_second": 37.6,
+        "draft_n": 8,
+        "draft_n_accepted": 8
+      }
+    }
+  },
+  {
+    "case": "return",
+    "result": {
+      "id": "chatcmpl-3fdb865a53204e8880ee921a",
+      "object": "chat.completion",
+      "created": 1790958524,
+      "model": "qwen3.8-flash-next",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "cobalt-willow-8192"
+          },
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 8427,
+        "completion_tokens": 10,
+        "total_tokens": 8437,
+        "prompt_tokens_details": {
+          "cached_tokens": 8383
+        }
+      },
+      "timings": {
+        "cache_n": 8383,
+        "prompt_n": 44,
+        "prompt_ms": 507.0,
+        "prompt_per_token_ms": 11.523,
+        "prompt_per_second": 86.8,
+        "predicted_n": 10,
+        "predicted_ms": 183.2,
+        "predicted_per_token_ms": 18.32,
+        "predicted_per_second": 54.6,
+        "draft_n": 8,
+        "draft_n_accepted": 8
+      }
+    }
+  },
+  {
+    "case": "token_limit",
+    "result": {
+      "id": "chatcmpl-e3c6d1a7299b4fd588e1782e",
+      "object": "chat.completion",
+      "created": 1790958525,
+      "model": "qwen3.8-flash-next",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "1"
+          },
+          "finish_reason": "length"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 26,
+        "completion_tokens": 1,
+        "total_tokens": 27,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 26,
+        "prompt_ms": 671.7,
+        "prompt_per_token_ms": 25.835,
+        "prompt_per_second": 38.7,
+        "predicted_n": 1,
+        "predicted_ms": 20.0,
+        "predicted_per_token_ms": 20.0,
+        "predicted_per_second": 50.0,
+        "draft_n": 0,
+        "draft_n_accepted": 0
+      }
+    }
+  },
+  {
+    "case": "after_limit",
+    "result": {
+      "id": "chatcmpl-d1c1dd0ff6184efc8ca29b04",
+      "object": "chat.completion",
+      "created": 1790958525,
+      "model": "qwen3.8-flash-next",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "56"
+          },
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 24,
+        "completion_tokens": 3,
+        "total_tokens": 27,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 24,
+        "prompt_ms": 440.8,
+        "prompt_per_token_ms": 18.367,
+        "prompt_per_second": 54.4,
+        "predicted_n": 3,
+        "predicted_ms": 279.7,
+        "predicted_per_token_ms": 93.233,
+        "predicted_per_second": 10.7,
+        "draft_n": 3,
+        "draft_n_accepted": 3
+      }
+    }
+  },
+  {
+    "case": "long_32k",
+    "result": {
+      "id": "chatcmpl-8a26e890ad8f4aeeb3667b88",
+      "object": "chat.completion",
+      "created": 1790958526,
+      "model": "qwen3.8-flash-next",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "cobalt-willow-32768"
+          },
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 31243,
+        "completion_tokens": 11,
+        "total_tokens": 31254,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 31243,
+        "prompt_ms": 59530.2,
+        "prompt_per_token_ms": 1.905,
+        "prompt_per_second": 524.8,
+        "predicted_n": 11,
+        "predicted_ms": 321.9,
+        "predicted_per_token_ms": 29.264,
+        "predicted_per_second": 34.2,
+        "draft_n": 10,
+        "draft_n_accepted": 7
+      }
+    }
+  }
+]

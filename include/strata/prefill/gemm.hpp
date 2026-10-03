@@ -39,6 +39,12 @@ public:
     /// Caller-owned buffers only: the scratch and workspace moved (the prompt path laid its buffers out again).
     void rebind(uint16_t* scratch, int64_t scratch_elems, void* workspace, size_t ws_bytes);
 
+    /// Turing-only HC BF16 projections through losslessly scaled FP16 inputs.
+    /// Other shapes/devices and any input that fails an exact round-trip use BF16 cuBLAS.
+    static void set_turing_bf16(bool enabled);
+    int64_t fast_tiles() const { return fast_tiles_; }
+    int64_t fallback_tiles() const { return fallback_tiles_; }
+
     uint16_t* scratch() const { return scratch_; }
     int64_t scratch_elems() const { return scratch_elems_; }
     void* stream() const { return stream_; }
@@ -50,6 +56,10 @@ private:
     int64_t scratch_elems_ = 0;
     void* workspace_ = nullptr;
     bool external_ = false;
+    bool turing_ = false;
+    int64_t fast_tiles_ = 0, fallback_tiles_ = 0;
+    bool bf16_turing(const uint16_t* X, const uint16_t* W, float* Y, int64_t T, int64_t N, int64_t K,
+                     int64_t ldy, float beta);
 };
 
 

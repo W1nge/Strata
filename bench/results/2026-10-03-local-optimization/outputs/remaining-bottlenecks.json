@@ -1,0 +1,347 @@
+{
+  "source": "<TASK>\\work\\final_memory-engine.snapshot.log",
+  "note": "Existing benchmark logs only; phase means are rounded to 0.01 ms in the source. CPU phases include page faults and synchronization; GPU wait is a host-side interval, not pure GPU kernel time. gu/quant/down are subsets of cpu; listed phases are not an exhaustive partition.",
+  "original_all": {
+    "requests": 18,
+    "windows": 558.0,
+    "tokens": 1419,
+    "decode_ms": 28738.2,
+    "decode_tps": 49.376787690251994,
+    "tokens_per_window": 2.543010752688172,
+    "window_ms": 51.50215053763441,
+    "phases": {
+      "gpu_wait": {
+        "ms_window": 21.949892473118283,
+        "percent": 42.619370733031296
+      },
+      "cpu": {
+        "ms_window": 20.75654121863799,
+        "percent": 40.302280588206635
+      },
+      "gu": {
+        "ms_window": 16.29727598566308,
+        "percent": 31.643874703356502
+      },
+      "quant": {
+        "ms_window": 0.12141577060931899,
+        "percent": 0.23574893347530465
+      },
+      "down": {
+        "ms_window": 4.331935483870968,
+        "percent": 8.411173977493371
+      },
+      "stage": {
+        "ms_window": 0.931774193548387,
+        "percent": 1.8091947303588949
+      },
+      "draft": {
+        "ms_window": 3.676594982078853,
+        "percent": 7.138721283866073
+      },
+      "commit": {
+        "ms_window": 0.856415770609319,
+        "percent": 1.6628738055967318
+      },
+      "join": {
+        "ms_window": 0.0,
+        "percent": 0.0
+      }
+    },
+    "vram_hit_rate": 0.7434741492249016,
+    "logical_cold_prefetches_per_layer_window": 2.4313620071684587
+  },
+  "original_first": {
+    "requests": 6,
+    "windows": 187.0,
+    "tokens": 473,
+    "decode_ms": 13097.1,
+    "decode_tps": 36.11486512281345,
+    "tokens_per_window": 2.5294117647058822,
+    "window_ms": 70.03796791443851,
+    "phases": {
+      "gpu_wait": {
+        "ms_window": 21.39101604278075,
+        "percent": 30.542028387963747
+      },
+      "cpu": {
+        "ms_window": 37.91989304812834,
+        "percent": 54.14190927762634
+      },
+      "gu": {
+        "ms_window": 32.615026737967916,
+        "percent": 46.56763711050538
+      },
+      "quant": {
+        "ms_window": 0.12385026737967915,
+        "percent": 0.17683303937512884
+      },
+      "down": {
+        "ms_window": 5.173743315508022,
+        "percent": 7.387055149613274
+      },
+      "stage": {
+        "ms_window": 2.7472727272727275,
+        "percent": 3.9225477395759367
+      },
+      "draft": {
+        "ms_window": 3.6557754010695187,
+        "percent": 5.219705125562148
+      },
+      "commit": {
+        "ms_window": 0.8581818181818183,
+        "percent": 1.2253094196425165
+      },
+      "join": {
+        "ms_window": 0.0,
+        "percent": 0.0
+      }
+    },
+    "vram_hit_rate": 0.7425161295707405,
+    "logical_cold_prefetches_per_layer_window": 2.4327807486631015
+  },
+  "original_warm": {
+    "requests": 12,
+    "windows": 371.0,
+    "tokens": 946,
+    "decode_ms": 15641.1,
+    "decode_tps": 60.48167967726055,
+    "tokens_per_window": 2.549865229110512,
+    "window_ms": 42.159299191374664,
+    "phases": {
+      "gpu_wait": {
+        "ms_window": 22.231590296495956,
+        "percent": 52.73235258389755
+      },
+      "cpu": {
+        "ms_window": 12.105471698113208,
+        "percent": 28.713645459718304
+      },
+      "gu": {
+        "ms_window": 8.072425876010781,
+        "percent": 19.147438479390836
+      },
+      "quant": {
+        "ms_window": 0.12018867924528302,
+        "percent": 0.2850822512483137
+      },
+      "down": {
+        "ms_window": 3.9076280323450137,
+        "percent": 9.268721509356759
+      },
+      "stage": {
+        "ms_window": 0.01668463611859838,
+        "percent": 0.039575221691569004
+      },
+      "draft": {
+        "ms_window": 3.6870889487870624,
+        "percent": 8.745612520858508
+      },
+      "commit": {
+        "ms_window": 0.8555256064690028,
+        "percent": 2.0292690411799685
+      },
+      "join": {
+        "ms_window": 0.0,
+        "percent": 0.0
+      }
+    },
+    "vram_hit_rate": 0.7439563680483843,
+    "logical_cold_prefetches_per_layer_window": 2.430646900269542
+  },
+  "heldout_all": {
+    "requests": 18,
+    "windows": 1876.0,
+    "tokens": 4456,
+    "decode_ms": 96136.1,
+    "decode_tps": 46.35095453216845,
+    "tokens_per_window": 2.375266524520256,
+    "window_ms": 51.24525586353945,
+    "phases": {
+      "gpu_wait": {
+        "ms_window": 20.234200426439234,
+        "percent": 39.485021755615215
+      },
+      "cpu": {
+        "ms_window": 21.304546908315565,
+        "percent": 41.573696041341385
+      },
+      "gu": {
+        "ms_window": 13.869669509594882,
+        "percent": 27.065275167184854
+      },
+      "quant": {
+        "ms_window": 0.19982942430703624,
+        "percent": 0.3899471686494459
+      },
+      "down": {
+        "ms_window": 7.232846481876332,
+        "percent": 14.114177712638643
+      },
+      "stage": {
+        "ms_window": 1.096279317697228,
+        "percent": 2.1392796254476725
+      },
+      "draft": {
+        "ms_window": 4.375271855010661,
+        "percent": 8.537906155960144
+      },
+      "commit": {
+        "ms_window": 0.8444722814498934,
+        "percent": 1.647903337039884
+      },
+      "join": {
+        "ms_window": 0.0,
+        "percent": 0.0
+      }
+    },
+    "vram_hit_rate": 0.5761207534848402,
+    "logical_cold_prefetches_per_layer_window": 4.538720682302771
+  },
+  "heldout_first": {
+    "requests": 6,
+    "windows": 637.0,
+    "tokens": 1499,
+    "decode_ms": 36814.2,
+    "decode_tps": 40.7179838214602,
+    "tokens_per_window": 2.3532182103610677,
+    "window_ms": 57.793092621664044,
+    "phases": {
+      "gpu_wait": {
+        "ms_window": 20.011852433281003,
+        "percent": 34.626720124299865
+      },
+      "cpu": {
+        "ms_window": 27.414552590266876,
+        "percent": 47.435690575919075
+      },
+      "gu": {
+        "ms_window": 17.25464678178964,
+        "percent": 29.855897995882025
+      },
+      "quant": {
+        "ms_window": 0.19957613814756672,
+        "percent": 0.3453287046846054
+      },
+      "down": {
+        "ms_window": 9.957660910518053,
+        "percent": 17.22984609199711
+      },
+      "stage": {
+        "ms_window": 2.3102668759811618,
+        "percent": 3.997479233556617
+      },
+      "draft": {
+        "ms_window": 3.820313971742543,
+        "percent": 6.610329709731571
+      },
+      "commit": {
+        "ms_window": 0.8459026687598117,
+        "percent": 1.4636743430524093
+      },
+      "join": {
+        "ms_window": 0.0,
+        "percent": 0.0
+      }
+    },
+    "vram_hit_rate": 0.5781123640249546,
+    "logical_cold_prefetches_per_layer_window": 4.487331240188383
+  },
+  "heldout_later": {
+    "requests": 12,
+    "windows": 1239.0,
+    "tokens": 2957,
+    "decode_ms": 59321.9,
+    "decode_tps": 49.846683939658035,
+    "tokens_per_window": 2.386602098466505,
+    "window_ms": 47.878853914447134,
+    "phases": {
+      "gpu_wait": {
+        "ms_window": 20.348514931396288,
+        "percent": 42.500004214295224
+      },
+      "cpu": {
+        "ms_window": 18.16324455205811,
+        "percent": 37.93583819803479
+      },
+      "gu": {
+        "ms_window": 12.129370460048428,
+        "percent": 25.33346032409616
+      },
+      "quant": {
+        "ms_window": 0.19995964487489912,
+        "percent": 0.4176366569513114
+      },
+      "down": {
+        "ms_window": 5.831953188054883,
+        "percent": 12.18064492202711
+      },
+      "stage": {
+        "ms_window": 0.4721388216303471,
+        "percent": 0.9861113686513749
+      },
+      "draft": {
+        "ms_window": 4.660589184826473,
+        "percent": 9.734128542747282
+      },
+      "commit": {
+        "ms_window": 0.8437368845843423,
+        "percent": 1.762232834754113
+      },
+      "join": {
+        "ms_window": 0.0,
+        "percent": 0.0
+      }
+    },
+    "vram_hit_rate": 0.5751148450724739,
+    "logical_cold_prefetches_per_layer_window": 4.5651412429378535
+  },
+  "combined": {
+    "requests": 36,
+    "windows": 2434.0,
+    "tokens": 5875,
+    "decode_ms": 124874.3,
+    "decode_tps": 47.047310775716056,
+    "tokens_per_window": 2.4137222678718158,
+    "window_ms": 51.30414954806902,
+    "phases": {
+      "gpu_wait": {
+        "ms_window": 20.627526705012325,
+        "percent": 40.20635150707552
+      },
+      "cpu": {
+        "ms_window": 21.178915365653243,
+        "percent": 41.28109627040952
+      },
+      "gu": {
+        "ms_window": 14.42620377978636,
+        "percent": 28.118980446737236
+      },
+      "quant": {
+        "ms_window": 0.1818529170090386,
+        "percent": 0.3544604454239183
+      },
+      "down": {
+        "ms_window": 6.567806080525884,
+        "percent": 12.801705394945156
+      },
+      "stage": {
+        "ms_window": 1.0585661462612983,
+        "percent": 2.063314869432702
+      },
+      "draft": {
+        "ms_window": 4.215098603122432,
+        "percent": 8.215901910961662
+      },
+      "commit": {
+        "ms_window": 0.8472103533278554,
+        "percent": 1.6513485961482868
+      },
+      "join": {
+        "ms_window": 0.0,
+        "percent": 0.0
+      }
+    },
+    "vram_hit_rate": 0.6141894940638405,
+    "logical_cold_prefetches_per_layer_window": 4.055603944124897
+  }
+}

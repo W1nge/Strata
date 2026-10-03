@@ -13,6 +13,11 @@
 namespace strata::kernels {
 namespace {
 
+bool turing_prompt_enabled = [] {
+    const char* value = std::getenv("STRATA_TURING_PROMPT_ATTN");
+    return value && std::atoi(value) != 0;
+}();
+
 constexpr int HD = 256;           // head_dim
 constexpr int G = 12;             // query heads per KV head
 #ifndef D1_CH
@@ -22,8 +27,8 @@ constexpr int CH = D1_CH;         // cells per chunk
 constexpr int THREADS = 128;      // 4 warps: scores by cell (8 each), p.v by dimension (64 each = one int8 scale group)
 constexpr int QS = HD + 8;        // q row stride in halves (bank-conflict-free fragment loads)
 
-// The MMA and cp.async below need sm_80. Builds for older cards (the experimental sm_75 one) compile them to a trap;
-// qsa_prompt_attn_batch refuses such a device at run time, so the old kernel runs there.
+// Upstream #270: Turing uses two m16n8k8 operations for one k16 tile.
+// cp.async still requires sm_80; Turing selects the v1 kernel without it.
 #if !defined(__CUDA_ARCH__) || __CUDA_ARCH__ >= 800
 #define STRATA_PA_SM80 1
 #else
@@ -31,7 +36,14 @@ constexpr int QS = HD + 8;        // q row stride in halves (bank-conflict-free 
 #endif
 
 __device__ __forceinline__ void mma16816(float* c, const uint32_t* a, const uint32_t* b) {
-#if !STRATA_PA_SM80
+#if defined(__CUDA_ARCH__) && __CUDA_ARCH__ >= 750 && __CUDA_ARCH__ < 800
+    asm volatile("mma.sync.aligned.m16n8k8.row.col.f32.f16.f16.f32 {%0,%1,%2,%3}, {%4,%5}, {%6}, {%0,%1,%2,%3};\n"
+                 : "+f"(c[0]), "+f"(c[1]), "+f"(c[2]), "+f"(c[3])
+                 : "r"(a[0]), "r"(a[1]), "r"(b[0]));
+    asm volatile("mma.sync.aligned.m16n8k8.row.col.f32.f16.f16.f32 {%0,%1,%2,%3}, {%4,%5}, {%6}, {%0,%1,%2,%3};\n"
+                 : "+f"(c[0]), "+f"(c[1]), "+f"(c[2]), "+f"(c[3])
+                 : "r"(a[2]), "r"(a[3]), "r"(b[1]));
+#elif !STRATA_PA_SM80
     __trap();
 #else
     asm volatile("mma.sync.aligned.m16n8k16.row.col.f32.f16.f16.f32 {%0,%1,%2,%3}, {%4,%5,%6,%7}, {%8,%9}, "
@@ -633,22 +645,28 @@ bool launch(const float* q, const QsaAttnPools& pools, const int32_t* ids, const
 
 }  // namespace
 
+void set_turing_prompt_attn(bool enabled) { turing_prompt_enabled = enabled; }
+
 bool qsa_prompt_attn_batch(const float* q, const QsaAttnPools& pools, const int32_t* ids, const int32_t* steps,
                            int64_t cap, const QsaShapes& s, float* attn, int64_t n_q, void* stream) {
     if (n_q <= 0) return true;
-    {   // sm_80 or newer (the MMA and cp.async above); an older card keeps the old kernel
-        static int cc_major[64] = {};
+    bool turing = false;
+    {   // Probe the current device; a split may mix Turing and newer cards.
+        static int cc[64] = {};
         int dev = 0;
         if (cudaGetDevice(&dev) != cudaSuccess || dev < 0 || dev >= 64) { cudaGetLastError(); return false; }
-        if (cc_major[dev] == 0) {
-            int major = 0;
-            if (cudaDeviceGetAttribute(&major, cudaDevAttrComputeCapabilityMajor, dev) != cudaSuccess) {
+        if (cc[dev] == 0) {
+            int major = 0, minor = 0;
+            if (cudaDeviceGetAttribute(&major, cudaDevAttrComputeCapabilityMajor, dev) != cudaSuccess ||
+                cudaDeviceGetAttribute(&minor, cudaDevAttrComputeCapabilityMinor, dev) != cudaSuccess) {
                 cudaGetLastError();
                 return false;
             }
-            cc_major[dev] = major;
+            cc[dev] = 10 * major + minor;
         }
-        if (cc_major[dev] < 8) return false;
+        if (cc[dev] < 75) return false;
+        turing = cc[dev] < 80;
+        if (turing && !turing_prompt_enabled) return false;
     }
     if (pools.k_q4 != nullptr || s.head_dim != HD || s.n_head != (int64_t) G * s.n_head_kv || cap <= 0 || !ids ||
         !steps || !pools.page_table)
@@ -659,7 +677,7 @@ bool qsa_prompt_attn_batch(const float* q, const QsaAttnPools& pools, const int3
         // STRATA_PROMPT_ATTN_V1=1 (debug): the first version, same accuracy, another summation order - the control
         // for how far the model amplifies an FP32-level change
         static const bool v1 = std::getenv("STRATA_PROMPT_ATTN_V1") != nullptr;
-        if (v1) return launch<1>(q, pools, ids, steps, cap, s, attn, n_q, st);
+        if (v1 || turing) return launch<1>(q, pools, ids, steps, cap, s, attn, n_q, st);
         return launch_i8(q, pools, ids, steps, cap, s, attn, n_q, st);
     }
     if (!pools.k_pool || !pools.v_pool) return false;
