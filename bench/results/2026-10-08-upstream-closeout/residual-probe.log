@@ -1,5 +1,5 @@
 E:\strata-setup\upstream-01403-integrated\residual_probe.cu(380): warning #177-D: variable "strata::kernels::<unnamed>::TQ3" was declared but never referenced
-  constexpr int TQ3 = N / 8 / 32;                    
+  constexpr int TQ3 = N / 8 / 32;
                 ^
 
 Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
@@ -341,7 +341,7 @@ BENCH T=8 apply=1 variant=4 round=1 us=134.413437
 BENCH T=8 apply=1 variant=4 round=2 us=135.301605
 BENCH T=8 apply=1 variant=4 round=3 us=135.007996
 BENCH T=8 apply=1 variant=4 round=4 us=135.176926
-PARITY 0 0 
-PARITY 1 1 
-PARITY 2 1 
-PARITY 3 1 
+PARITY 0 0
+PARITY 1 1
+PARITY 2 1
+PARITY 3 1

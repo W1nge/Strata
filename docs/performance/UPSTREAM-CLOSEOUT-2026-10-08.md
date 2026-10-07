@@ -33,7 +33,7 @@ GitHub 查询六个 PR 均无合并冲突；这不等于维护者批准。跨硬
 - idle 独立分支两轮真实 HTTP 生命周期通过，六项整合版再次通过：落盘、恢复命中、损坏回退、过期回退、流式取消后重新落盘与成功请求。使用 IQ3_XXS、INT8 KV、MTP、4096 context。
 - 日常 256K 容量配置首次/重复短请求均回答 4，正常停止。没有测满 256K prompt，也没有在最终 256K 容量下等待完整落盘周期。
 - 前轮四模式八次模型对照、PLE 64 例与 norm 逐位验证仍有效；本轮没有改动其数学计算。
-- 最终 Python 联合回归结果见同目录 final-server-tests.log。一次命令误写不存在的 test_prompt_reuse 模块产生 loader error，已改为实际的 test_prompt_encoder 并重跑；不把该次失败报告为通过。
+- 最终 Python 联合回归 274 项通过（76.397 秒），日志见 bench/results/2026-10-08-upstream-closeout/final-server-tests.log。一次命令误写不存在的 test_prompt_reuse 模块产生 loader error，已改为实际的 test_prompt_encoder 并重跑；不把该次失败报告为通过。
 
 ## 证据和回退
 
