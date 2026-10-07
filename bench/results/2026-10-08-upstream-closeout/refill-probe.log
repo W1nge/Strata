@@ -1,0 +1,45 @@
+refill_probe.cu
+tmpxft_00000c04_00000000-10_refill_probe.cudafe1.cpp
+strata_kernels.lib
+REFILL n=16 mode=0 round=0 ms=2.6762 exact=1
+REFILL n=16 mode=1 round=0 ms=6.4515 exact=1
+REFILL n=16 mode=1 round=1 ms=6.1880 exact=1
+REFILL n=16 mode=0 round=1 ms=2.6777 exact=1
+REFILL n=16 mode=0 round=2 ms=2.5158 exact=1
+REFILL n=16 mode=1 round=2 ms=6.7377 exact=1
+REFILL n=16 mode=1 round=3 ms=6.4019 exact=1
+REFILL n=16 mode=0 round=3 ms=2.5192 exact=1
+REFILL n=16 mode=0 round=4 ms=2.5062 exact=1
+REFILL n=16 mode=1 round=4 ms=6.3136 exact=1
+REFILL n=16 mode=1 round=5 ms=6.4775 exact=1
+REFILL n=16 mode=0 round=5 ms=2.5174 exact=1
+REFILL n=16 mode=0 round=6 ms=2.5025 exact=1
+REFILL n=16 mode=1 round=6 ms=6.3230 exact=1
+REFILL n=189 mode=0 round=0 ms=30.7637 exact=1
+REFILL n=189 mode=1 round=0 ms=32.8087 exact=1
+REFILL n=189 mode=1 round=1 ms=32.7602 exact=1
+REFILL n=189 mode=0 round=1 ms=29.7121 exact=1
+REFILL n=189 mode=0 round=2 ms=29.9035 exact=1
+REFILL n=189 mode=1 round=2 ms=32.8137 exact=1
+REFILL n=189 mode=1 round=3 ms=32.8122 exact=1
+REFILL n=189 mode=0 round=3 ms=29.3068 exact=1
+REFILL n=189 mode=0 round=4 ms=35.4088 exact=1
+REFILL n=189 mode=1 round=4 ms=32.5642 exact=1
+REFILL n=189 mode=1 round=5 ms=32.5190 exact=1
+REFILL n=189 mode=0 round=5 ms=29.0379 exact=1
+REFILL n=189 mode=0 round=6 ms=29.0736 exact=1
+REFILL n=189 mode=1 round=6 ms=32.6751 exact=1
+REFILL n=512 mode=0 round=0 ms=90.4205 exact=1
+REFILL n=512 mode=1 round=0 ms=81.6409 exact=1
+REFILL n=512 mode=1 round=1 ms=82.1960 exact=1
+REFILL n=512 mode=0 round=1 ms=93.4406 exact=1
+REFILL n=512 mode=0 round=2 ms=80.2029 exact=1
+REFILL n=512 mode=1 round=2 ms=81.8169 exact=1
+REFILL n=512 mode=1 round=3 ms=82.2429 exact=1
+REFILL n=512 mode=0 round=3 ms=80.5958 exact=1
+REFILL n=512 mode=0 round=4 ms=94.1949 exact=1
+REFILL n=512 mode=1 round=4 ms=91.4353 exact=1
+REFILL n=512 mode=1 round=5 ms=81.3336 exact=1
+REFILL n=512 mode=0 round=5 ms=78.9230 exact=1
+REFILL n=512 mode=0 round=6 ms=79.5909 exact=1
+REFILL n=512 mode=1 round=6 ms=84.3327 exact=1

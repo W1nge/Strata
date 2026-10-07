@@ -1,0 +1,218 @@
+{
+  "kernel_variants": {
+    "0": "upstream plain",
+    "1": "split with submitted norm reuse",
+    "2": "current staged with submitted norm reuse",
+    "3": "old single-token dispatch",
+    "4": "old 1280 tile / 4 warps with submitted norm reuse"
+  },
+  "kernel_results": [
+    {
+      "tokens": 1,
+      "pending_write": 0,
+      "median_us": {
+        "0": 48.159904,
+        "1": 36.834946,
+        "2": 33.183426,
+        "3": 35.752289,
+        "4": 36.655937
+      }
+    },
+    {
+      "tokens": 1,
+      "pending_write": 1,
+      "median_us": {
+        "0": 40.996864,
+        "1": 37.712128,
+        "2": 34.349026,
+        "3": 40.408993,
+        "4": 37.547199
+      }
+    },
+    {
+      "tokens": 2,
+      "pending_write": 0,
+      "median_us": {
+        "0": 46.269314,
+        "1": 43.358208,
+        "2": 36.679455,
+        "4": 43.665054
+      }
+    },
+    {
+      "tokens": 2,
+      "pending_write": 1,
+      "median_us": {
+        "0": 47.892288,
+        "1": 44.787777,
+        "2": 38.240639,
+        "4": 45.223743
+      }
+    },
+    {
+      "tokens": 3,
+      "pending_write": 0,
+      "median_us": {
+        "0": 55.756832,
+        "1": 52.634464,
+        "2": 43.297119,
+        "4": 52.130817
+      }
+    },
+    {
+      "tokens": 3,
+      "pending_write": 1,
+      "median_us": {
+        "0": 57.864193,
+        "1": 54.451073,
+        "2": 44.978176,
+        "4": 53.998913
+      }
+    },
+    {
+      "tokens": 4,
+      "pending_write": 0,
+      "median_us": {
+        "0": 65.929504,
+        "1": 63.711391,
+        "2": 52.209663,
+        "4": 62.281727
+      }
+    },
+    {
+      "tokens": 4,
+      "pending_write": 1,
+      "median_us": {
+        "0": 68.481087,
+        "1": 65.934212,
+        "2": 54.392639,
+        "4": 64.520317
+      }
+    },
+    {
+      "tokens": 5,
+      "pending_write": 0,
+      "median_us": {
+        "0": 76.648834,
+        "1": 73.828323,
+        "2": 60.524158,
+        "4": 72.321022
+      }
+    },
+    {
+      "tokens": 5,
+      "pending_write": 1,
+      "median_us": {
+        "0": 79.890434,
+        "1": 76.703583,
+        "2": 63.086369,
+        "4": 74.877533
+      }
+    },
+    {
+      "tokens": 6,
+      "pending_write": 0,
+      "median_us": {
+        "0": 87.93251,
+        "1": 84.889603,
+        "2": 68.606018,
+        "4": 82.097603
+      }
+    },
+    {
+      "tokens": 6,
+      "pending_write": 1,
+      "median_us": {
+        "0": 90.529503,
+        "1": 87.29216,
+        "2": 71.407936,
+        "4": 85.043198
+      }
+    },
+    {
+      "tokens": 7,
+      "pending_write": 0,
+      "median_us": {
+        "0": 99.000221,
+        "1": 96.517151,
+        "2": 94.02803,
+        "4": 116.87661
+      }
+    },
+    {
+      "tokens": 7,
+      "pending_write": 1,
+      "median_us": {
+        "0": 103.517982,
+        "1": 99.98867,
+        "2": 98.219521,
+        "4": 120.686111
+      }
+    },
+    {
+      "tokens": 8,
+      "pending_write": 0,
+      "median_us": {
+        "0": 110.979584,
+        "1": 107.882179,
+        "2": 102.431618,
+        "4": 130.523972
+      }
+    },
+    {
+      "tokens": 8,
+      "pending_write": 1,
+      "median_us": {
+        "0": 115.931999,
+        "1": 112.283806,
+        "2": 106.379295,
+        "4": 135.007996
+      }
+    }
+  ],
+  "refill_results": [
+    {
+      "slots": 16,
+      "queued_median_ms": 2.5174,
+      "staged_median_ms": 6.4019
+    },
+    {
+      "slots": 189,
+      "queued_median_ms": 29.7121,
+      "staged_median_ms": 32.7602
+    },
+    {
+      "slots": 512,
+      "queued_median_ms": 80.5958,
+      "staged_median_ms": 82.196
+    }
+  ],
+  "refill_scope": "Warmed mapped experts.bin, 1868800 bytes/slot; current CUDA queued-copy primitive versus old 4-worker/double-pinned-buffer mechanism including thread/allocation cleanup; 7 interleaved pairs and complete byte comparison. This is not an end-to-end FileExpertSource/cold-disk test.",
+  "kernel_scope": "RTX2080Ti sm75, CUDA graphs of 100 reads, 10 graph launches per sample, 5 samples, all outputs checked by upstream randomized selftest. One GPU; no end-to-end speed claim.",
+  "disposition": {
+    "idle": "submitted #1471 and installed",
+    "refill": "closed: no benefit in qualified transfer comparison; no cold-storage claim or new production switch",
+    "kernel": "closed: old singleton/4warp slower than staged; no new production dispatch"
+  },
+  "install": {
+    "upstream": "d5ea7133741e67743c0e886bb426c0ce8d69cf6c",
+    "daily_head": "3cdda788b799baa0b9802dd71352a805e10f9ec1",
+    "prs": [
+      1451,
+      1454,
+      1455,
+      1457,
+      1465,
+      1471
+    ],
+    "sha256": {
+      "C:\\Users\\Winge\\.zcode\\workspace\\default\\Strata\\build\\strata.exe": "2b73dd7174a4fc40c2229eee7d33399683ec9c433c2bac299b3602a26f65b226",
+      "C:\\strata-models\\strata-256k-int8.json": "943eb8db5f3da2e53d23382a799c524ca640dbb65aa553aa10db636bc0cfd397"
+    },
+    "idle_lifecycle": "E:/strata-setup/integrated-idle-evidence/lifecycle.json",
+    "residual_kernel_probe": "E:\\strata-setup\\upstream-01403-integrated\\residual-probe.log",
+    "refill_probe": "E:\\strata-setup\\upstream-01403-integrated\\refill-probe.log",
+    "rollback_before_idle": "E:\\strata-setup\\upstream-01403-integrated\\rollback-01403-before-idle",
+    "old_fork_rollback": "E:\\strata-setup\\upstream-01403-integrated\\rollback-0138"
+  }
+}
