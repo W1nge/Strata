@@ -1,0 +1,35 @@
+{
+  "timestamp": "2026-10-08T07:31:23.6884808Z",
+  "memory": {
+    "AvailableMBytes": 25011,
+    "PageReadsPersec": 655,
+    "PagesInputPersec": 2119
+  },
+  "disk": [
+    {
+      "Name": "0 D: E: F:",
+      "DiskReadBytesPersec": 0,
+      "DiskReadsPersec": 0,
+      "AvgDiskQueueLength": 0
+    },
+    {
+      "Name": "1",
+      "DiskReadBytesPersec": 0,
+      "DiskReadsPersec": 0,
+      "AvgDiskQueueLength": 0
+    },
+    {
+      "Name": "2 C:",
+      "DiskReadBytesPersec": 1848917,
+      "DiskReadsPersec": 107,
+      "AvgDiskQueueLength": 0
+    },
+    {
+      "Name": "_Total",
+      "DiskReadBytesPersec": 1848917,
+      "DiskReadsPersec": 107,
+      "AvgDiskQueueLength": 0
+    }
+  ],
+  "gpu": null
+}

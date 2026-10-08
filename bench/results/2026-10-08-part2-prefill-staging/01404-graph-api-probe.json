@@ -1,0 +1,15 @@
+{
+  "driver_version": 12020,
+  "runtime_version": 12040,
+  "graph_create": 0,
+  "legacy_count": {
+    "code": 0,
+    "message": "no error",
+    "count": 0
+  },
+  "v2_count": {
+    "code": 1,
+    "message": "invalid argument",
+    "count": 0
+  }
+}

@@ -1,0 +1,19 @@
+[
+  "C:\\ProgramData\\anaconda3\\python.exe",
+  "-X",
+  "utf8",
+  "C:\\Users\\Winge\\Documents\\Playground\\Strata-optimization-pr\\tools\\bench_part2_tuning.py",
+  "01404-short448-a",
+  "--config",
+  "E:\\strata-setup\\part2-prefill-next\\baseline-coding-config.json",
+  "--out",
+  "E:\\strata-setup\\part2-prefill-next",
+  "--coding",
+  "--coding-edit",
+  "--coding-cases",
+  "probe,edit_utilities",
+  "--rounds",
+  "2",
+  "--overrides",
+  "{\"exe\": \"E:/strata-setup/part2-prefill-next/prefill-release-01404/strata.exe\", \"short_read\": 448, \"env\": {\"STRATA_FILE_RELEASE\": \"1\"}}"
+]

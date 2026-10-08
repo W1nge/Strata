@@ -1,0 +1,22 @@
+[
+  {
+    "name": "01404-source-release-0",
+    "command": [
+      "E:\\strata-setup\\part2-dual\\build\\file_expert_source_test.exe",
+      "--rotation-gpu"
+    ],
+    "returncode": 0,
+    "seconds": 0.5572437000082573,
+    "executable_sha256": "fd891d0360255f84b67cda01d1c1cf301223e2e192e15f3bdb140e7f7c7764b3"
+  },
+  {
+    "name": "01404-source-release-1",
+    "command": [
+      "E:\\strata-setup\\part2-dual\\build\\file_expert_source_test.exe",
+      "--rotation-gpu"
+    ],
+    "returncode": 0,
+    "seconds": 0.5343692999886116,
+    "executable_sha256": "fd891d0360255f84b67cda01d1c1cf301223e2e192e15f3bdb140e7f7c7764b3"
+  }
+]

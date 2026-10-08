@@ -1,0 +1,665 @@
+{
+  "label": "coding-candidate-a",
+  "overrides": {
+    "exe": "E:/strata-setup/part2-prefill-next/prefill-release/strata.exe",
+    "env": {
+      "STRATA_FILE_RELEASE": "1"
+    }
+  },
+  "requests": [
+    {
+      "key": "probe",
+      "seconds": 1.5056651000049897,
+      "response": {
+        "id": "chatcmpl-8a22d3609a474dc986e359cc",
+        "object": "chat.completion",
+        "created": 1791447202,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef stable_unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n```"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 41,
+          "completion_tokens": 53,
+          "total_tokens": 94,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 41,
+          "prompt_ms": 888.1,
+          "prompt_per_token_ms": 21.661,
+          "prompt_per_second": 46.2,
+          "predicted_n": 53,
+          "predicted_ms": 597.7,
+          "predicted_per_token_ms": 11.277,
+          "predicted_per_second": 88.7,
+          "draft_n": 46,
+          "draft_n_accepted": 45
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "utilities",
+      "seconds": 9.72910700000648,
+      "response": {
+        "id": "chatcmpl-38dfa3432f7c402e8bab0ae8",
+        "object": "chat.completion",
+        "created": 1791447204,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def stable_unique(items):\n    \"\"\"Return a list of hashable values from items, preserving first occurrence order.\"\"\"\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\n\ndef frequencies(items):\n    \"\"\"Return a dict mapping each hashable value in items to its occurrence count.\"\"\"\n    counts = {}\n    for item in items:\n        counts[item] = counts.get(item, 0) + 1\n    return counts\n\n\ndef chunked(items, size):\n    \"\"\"Split items into chunks of given size; last chunk may be shorter. Raise ValueError if size <= 0.\"\"\"\n    if size <= 0:\n        raise ValueError(\"size must be positive\")\n    items = list(items)\n    if not items:\n        return []\n    return [items[i:i + size] for i in range(0, len(items), size)]\n\n\ndef running_totals(numbers):\n    \"\"\"Return a list of cumulative sums of numbers. Empty input yields [].\"\"\"\n    result = []\n    total = 0\n    for num in numbers:\n        total += num\n        result.append(total)\n    return result\n\n\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping or touching [start, end] intervals and return sorted non-overlapping intervals.\"\"\"\n    if not intervals:\n        return []\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    merged = [list(sorted_intervals[0])]\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            merged[-1][1] = max(last_end, end)\n        else:\n            merged.append([start, end])\n    return merged\n\n\ndef lower_bound(values, target):\n    \"\"\"Return the first index in ascending sorted values where value >= target, or len(values).\"\"\"\n    lo, hi = 0, len(values)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if values[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n\n\ndef rotate_right(items, k):\n    \"\"\"Return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\"\"\"\n    items = list(items)\n    n = len(items)\n    if n == 0:\n        return []\n    k = k % n\n    if k == 0:\n        return items[:]\n    return items[-k:] + items[:-k]\n\n\ndef moving_average(numbers, window):\n    \"\"\"Return means of complete consecutive windows using a linear sliding window. Raise ValueError if window <= 0.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    numbers = list(numbers)\n    n = len(numbers)\n    if window > n:\n        return []\n    result = []\n    window_sum = 0\n    for i in range(n):\n        window_sum += numbers[i]\n        if i >= window:\n            window_sum -= numbers[i - window]\n        if i >= window - 1:\n            result.append(window_sum / window)\n    return result"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 303,
+          "completion_tokens": 721,
+          "total_tokens": 1024,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 303,
+          "prompt_ms": 2171.2,
+          "prompt_per_token_ms": 7.166,
+          "prompt_per_second": 139.6,
+          "predicted_n": 721,
+          "predicted_ms": 7554.1,
+          "predicted_per_token_ms": 10.477,
+          "predicted_per_second": 95.4,
+          "draft_n": 618,
+          "draft_n_accepted": 558
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "ttl_cache",
+      "seconds": 7.6644479999959,
+      "response": {
+        "id": "chatcmpl-cb90b1b4fdd9417da2ef22fa",
+        "object": "chat.completion",
+        "created": 1791447214,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "class TTLCache:\n    \"\"\"A cache with time-to-live expiration and LRU eviction.\"\"\"\n\n    def __init__(self, capacity):\n        \"\"\"Initialize the cache with a positive integer capacity.\"\"\"\n        if not isinstance(capacity, int) or capacity <= 0:\n            raise ValueError(\"capacity must be a positive integer\")\n        self.capacity = capacity\n        self._data = {}\n\n    def put(self, key, value, now, ttl):\n        \"\"\"Insert or replace a key-value pair with a TTL, purging expired entries first.\"\"\"\n        if not isinstance(ttl, (int, float)) or ttl <= 0:\n            raise ValueError(\"ttl must be > 0\")\n        self.purge(now)\n        expires_at = now + ttl\n        if key in self._data:\n            del self._data[key]\n        self._data[key] = (value, expires_at)\n        while len(self._data) > self.capacity:\n            oldest_key = next(iter(self._data))\n            del self._data[oldest_key]\n\n    def get(self, key, now, default=None):\n        \"\"\"Return the value for key if present and not expired, marking it as most recently used.\"\"\"\n        self.purge(now)\n        if key not in self._data:\n            return default\n        value, expires_at = self._data[key]\n        del self._data[key]\n        self._data[key] = (value, expires_at)\n        return value\n\n    def delete(self, key):\n        \"\"\"Remove key if present and return True, else False.\"\"\"\n        if key in self._data:\n            del self._data[key]\n            return True\n        return False\n\n    def purge(self, now):\n        \"\"\"Remove all entries expiring at or before now and return the number removed.\"\"\"\n        to_remove = []\n        for key, (value, expires_at) in self._data.items():\n            if expires_at <= now:\n                to_remove.append(key)\n        for key in to_remove:\n            del self._data[key]\n        return len(to_remove)\n\n    def size(self, now):\n        \"\"\"Purge expired entries and return the live count.\"\"\"\n        self.purge(now)\n        return len(self._data)\n\n    def clear(self):\n        \"\"\"Remove all entries.\"\"\"\n        self._data.clear()"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 292,
+          "completion_tokens": 511,
+          "total_tokens": 803,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 292,
+          "prompt_ms": 2128.2,
+          "prompt_per_token_ms": 7.288,
+          "prompt_per_second": 137.2,
+          "predicted_n": 511,
+          "predicted_ms": 5532.5,
+          "predicted_per_token_ms": 10.827,
+          "predicted_per_second": 92.4,
+          "draft_n": 418,
+          "draft_n_accepted": 391
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "algorithms",
+      "seconds": 13.047568499998306,
+      "response": {
+        "id": "chatcmpl-42805c3fffb04c06965ae9ba",
+        "object": "chat.completion",
+        "created": 1791447221,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def topological_sort(n, edges):\n    \"\"\"\n    Perform a topological sort on a directed graph with nodes 0..n-1.\n    Always chooses the smallest currently available node (Kahn's algorithm with min-heap behavior via list).\n    Raises ValueError if a cycle is detected.\n    Time complexity: O(n^2 + len(edges)) due to linear search for min node.\n    \"\"\"\n    if n == 0:\n        return []\n    \n    # Build adjacency list and in-degree array\n    adj = [[] for _ in range(n)]\n    in_degree = [0] * n\n    for u, v in edges:\n        adj[u].append(v)\n        in_degree[v] += 1\n    \n    # Find all nodes with in-degree 0\n    available = [i for i in range(n) if in_degree[i] == 0]\n    result = []\n    \n    while available:\n        # Choose the smallest available node\n        min_node = min(available)\n        available.remove(min_node)\n        result.append(min_node)\n        \n        for neighbor in adj[min_node]:\n            in_degree[neighbor] -= 1\n            if in_degree[neighbor] == 0:\n                available.append(neighbor)\n    \n    if len(result) != n:\n        raise ValueError(\"Cycle detected in graph\")\n    \n    return result\n\n\ndef shortest_paths(n, edges, start):\n    \"\"\"\n    Compute shortest paths from start to all nodes using Dijkstra's algorithm.\n    Edges are directed with nonnegative weights. Parallel edges allowed.\n    Returns a list of distances, with float('inf') for unreachable nodes.\n    Time complexity: O(n^2 + len(edges)) using a simple array-based Dijkstra.\n    \"\"\"\n    INF = float('inf')\n    dist = [INF] * n\n    dist[start] = 0\n    visited = [False] * n\n    \n    # Build adjacency list\n    adj = [[] for _ in range(n)]\n    for u, v, w in edges:\n        adj[u].append((v, w))\n    \n    for _ in range(n):\n        # Find the unvisited node with the smallest distance\n        min_dist = INF\n        min_node = -1\n        for i in range(n):\n            if not visited[i] and dist[i] < min_dist:\n                min_dist = dist[i]\n                min_node = i\n        \n        if min_node == -1:\n            break\n        \n        visited[min_node] = True\n        \n        for neighbor, weight in adj[min_node]:\n            if not visited[neighbor]:\n                new_dist = dist[min_node] + weight\n                if new_dist < dist[neighbor]:\n                    dist[neighbor] = new_dist\n    \n    return dist\n\n\ndef longest_common_subsequence(a, b):\n    \"\"\"\n    Compute the longest common subsequence of strings a and b using dynamic programming.\n    Returns one such subsequence as a string.\n    Time complexity: O(len(a) * len(b)).\n    \"\"\"\n    m = len(a)\n    n = len(b)\n    \n    if m == 0 or n == 0:\n        return \"\"\n    \n    # dp[i][j] = length of LCS of a[0..i-1] and b[0..j-1]\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    \n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if a[i - 1] == b[j - 1]:\n                dp[i][j] = dp[i - 1][j - 1] + 1\n            else:\n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])\n    \n    # Reconstruct the LCS\n    lcs = []\n    i, j = m, n\n    while i > 0 and j > 0:\n        if a[i - 1] == b[j - 1]:\n            lcs.append(a[i - 1])\n            i -= 1\n            j -= 1\n        elif dp[i - 1][j] >= dp[i][j - 1]:\n            i -= 1\n        else:\n            j -= 1\n    \n    lcs.reverse()\n    return \"\".join(lcs)"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 256,
+          "completion_tokens": 962,
+          "total_tokens": 1218,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 256,
+          "prompt_ms": 1891.8,
+          "prompt_per_token_ms": 7.39,
+          "prompt_per_second": 135.3,
+          "predicted_n": 962,
+          "predicted_ms": 11152.3,
+          "predicted_per_token_ms": 11.593,
+          "predicted_per_second": 86.3,
+          "draft_n": 803,
+          "draft_n_accepted": 726
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "matrices",
+      "seconds": 16.904249200000777,
+      "response": {
+        "id": "chatcmpl-6ad7a70818a54fae8e91273d",
+        "object": "chat.completion",
+        "created": 1791447235,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def validate_matrix(matrix):\n    \"\"\"Validate that matrix is a non-empty list of non-empty lists of equal length. Returns (row_count, column_count). Raises ValueError if invalid.\"\"\"\n    if not isinstance(matrix, list) or len(matrix) == 0:\n        raise ValueError(\"Matrix must be a non-empty list of lists\")\n    row_count = len(matrix)\n    col_count = None\n    for row in matrix:\n        if not isinstance(row, list) or len(row) == 0:\n            raise ValueError(\"Matrix rows must be non-empty lists\")\n        if col_count is None:\n            col_count = len(row)\n        elif len(row) != col_count:\n            raise ValueError(\"Matrix must be rectangular (all rows same length)\")\n    return (row_count, col_count)\n\ndef zeros(rows, cols):\n    \"\"\"Return a rows x cols matrix of zeros. rows and cols must be positive integers. Raises ValueError otherwise.\"\"\"\n    if not isinstance(rows, int) or not isinstance(cols, int):\n        raise ValueError(\"rows and cols must be integers\")\n    if rows <= 0 or cols <= 0:\n        raise ValueError(\"rows and cols must be positive integers\")\n    return [[0 for _ in range(cols)] for _ in range(rows)]\n\ndef identity(n):\n    \"\"\"Return an n x n identity matrix. n must be a positive integer. Raises ValueError otherwise.\"\"\"\n    if not isinstance(n, int):\n        raise ValueError(\"n must be an integer\")\n    if n <= 0:\n        raise ValueError(\"n must be a positive integer\")\n    result = [[0 for _ in range(n)] for _ in range(n)]\n    for i in range(n):\n        result[i][i] = 1\n    return result\n\ndef transpose(matrix):\n    \"\"\"Return the transpose of matrix. Validates matrix first. Raises ValueError if invalid.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    return [[matrix[i][j] for i in range(rows)] for j in range(cols)]\n\ndef add(a, b):\n    \"\"\"Return the elementwise sum of matrices a and b. Both must be valid and have the same shape. Raises ValueError otherwise.\"\"\"\n    a_rows, a_cols = validate_matrix(a)\n    b_rows, b_cols = validate_matrix(b)\n    if a_rows != b_rows or a_cols != b_cols:\n        raise ValueError(\"Matrices must have the same dimensions for addition\")\n    return [[a[i][j] + b[i][j] for j in range(a_cols)] for i in range(a_rows)]\n\ndef subtract(a, b):\n    \"\"\"Return the elementwise difference a - b. Both must be valid and have the same shape. Raises ValueError otherwise.\"\"\"\n    a_rows, a_cols = validate_matrix(a)\n    b_rows, b_cols = validate_matrix(b)\n    if a_rows != b_rows or a_cols != b_cols:\n        raise ValueError(\"Matrices must have the same dimensions for subtraction\")\n    return [[a[i][j] - b[i][j] for j in range(a_cols)] for i in range(a_rows)]\n\ndef scale(matrix, scalar):\n    \"\"\"Return a new matrix where every element of matrix is multiplied by scalar. Validates matrix first. Raises ValueError if invalid.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    return [[matrix[i][j] * scalar for j in range(cols)] for i in range(rows)]\n\ndef matmul(a, b):\n    \"\"\"Return the matrix product a * b. Validates both matrices. Requires columns of a equal rows of b. Raises ValueError otherwise.\"\"\"\n    a_rows, a_cols = validate_matrix(a)\n    b_rows, b_cols = validate_matrix(b)\n    if a_cols != b_rows:\n        raise ValueError(\"Columns of a must equal rows of b for matrix multiplication\")\n    result = [[0 for _ in range(b_cols)] for _ in range(a_rows)]\n    for i in range(a_rows):\n        for j in range(b_cols):\n            s = 0\n            for k in range(a_cols):\n                s += a[i][k] * b[k][j]\n            result[i][j] = s\n    return result\n\ndef row_sums(matrix):\n    \"\"\"Return a list of the sum of each row in matrix. Validates matrix first. Raises ValueError if invalid.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    return [sum(matrix[i]) for i in range(rows)]\n\ndef col_sums(matrix):\n    \"\"\"Return a list of the sum of each column in matrix. Validates matrix first. Raises ValueError if invalid.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    return [sum(matrix[i][j] for i in range(rows)) for j in range(cols)]\n\ndef trace(matrix):\n    \"\"\"Return the sum of the diagonal elements of a square matrix. Validates matrix first. Raises ValueError if not square.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    if rows != cols:\n        raise ValueError(\"Matrix must be square for trace\")\n    return sum(matrix[i][i] for i in range(rows))\n\ndef matrix_power(matrix, exponent):\n    \"\"\"Return matrix raised to a nonnegative integer exponent using exponentiation by squaring. Matrix must be square. Raises ValueError if invalid.\"\"\"\n    if not isinstance(exponent, int):\n        raise ValueError(\"Exponent must be an integer\")\n    if exponent < 0:\n        raise ValueError(\"Exponent must be nonnegative\")\n    rows, cols = validate_matrix(matrix)\n    if rows != cols:\n        raise ValueError(\"Matrix must be square for matrix_power\")\n    n = rows\n    if exponent == 0:\n        return identity(n)\n    if exponent == 1:\n        return [row[:] for row in matrix]\n    if exponent % 2 == 0:\n        half = matrix_power(matrix, exponent // 2)\n        return matmul(half, half)\n    else:\n        half = matrix_power(matrix, exponent - 1)\n        return matmul(half, matrix)"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 303,
+          "completion_tokens": 1302,
+          "total_tokens": 1605,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 303,
+          "prompt_ms": 2289.7,
+          "prompt_per_token_ms": 7.557,
+          "prompt_per_second": 132.3,
+          "predicted_n": 1302,
+          "predicted_ms": 14610.8,
+          "predicted_per_token_ms": 11.222,
+          "predicted_per_second": 89.1,
+          "draft_n": 1112,
+          "draft_n_accepted": 1009
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "edit_utilities",
+      "seconds": 17.328705100007937,
+      "response": {
+        "id": "chatcmpl-65efe28c63294dd89ceb8952",
+        "object": "chat.completion",
+        "created": 1791447252,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def stable_unique(items):\n    \"\"\"Return a list of hashable values from items, preserving first occurrence order.\"\"\"\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\n\ndef frequencies(items):\n    \"\"\"Return a dict mapping each hashable value in items to its occurrence count.\"\"\"\n    counts = {}\n    for item in items:\n        counts[item] = counts.get(item, 0) + 1\n    return counts\n\n\ndef chunked(items, size):\n    \"\"\"Split items into chunks of given size; last chunk may be shorter. Raise ValueError if size <= 0.\"\"\"\n    if size <= 0:\n        raise ValueError(\"size must be positive\")\n    items = list(items)\n    if not items:\n        return []\n    return [items[i:i + size] for i in range(0, len(items), size)]\n\n\ndef running_totals(numbers):\n    \"\"\"Return a list of cumulative sums of numbers. Empty input yields [].\"\"\"\n    result = []\n    total = 0\n    for num in numbers:\n        total += num\n        result.append(total)\n    return result\n\n\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping or touching [start, end] intervals and return sorted non-overlapping intervals.\"\"\"\n    if not intervals:\n        return []\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    merged = [list(sorted_intervals[0])]\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            merged[-1][1] = max(last_end, end)\n        else:\n            merged.append([start, end])\n    return merged\n\n\ndef lower_bound(values, target):\n    \"\"\"Return the first index in ascending sorted values where value >= target, or len(values).\"\"\"\n    lo, hi = 0, len(values)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if values[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n\n\ndef rotate_right(items, k):\n    \"\"\"Return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\"\"\"\n    items = list(items)\n    n = len(items)\n    if n == 0:\n        return []\n    k = k % n\n    if k == 0:\n        return items[:]\n    return items[-k:] + items[:-k]\n\n\ndef moving_average(numbers, window):\n    \"\"\"Return means of complete consecutive windows using a linear sliding window. Raise ValueError if window <= 0.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    numbers = list(numbers)\n    n = len(numbers)\n    if window > n:\n        return []\n    result = []\n    window_sum = 0\n    for i in range(n):\n        window_sum += numbers[i]\n        if i >= window:\n            window_sum -= numbers[i - window]\n        if i >= window - 1:\n            result.append(window_sum / window)\n    return result\n\n\ndef window_minimum(numbers, window):\n    \"\"\"Return the minimum of each complete consecutive window, in order. Empty input or window > len(numbers) returns []. Raise ValueError if window <= 0. Do not modify numbers. Use an O(n) monotonic queue implemented with a list and a head index, without imports.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    numbers = list(numbers)\n    n = len(numbers)\n    if n == 0 or window > n:\n        return []\n    result = []\n    queue = []\n    head = 0\n    for i in range(n):\n        while head < len(queue) and numbers[queue[-1]] >= numbers[i]:\n            queue.pop()\n        queue.append(i)\n        if queue[head] <= i - window:\n            head += 1\n        if i >= window - 1:\n            result.append(numbers[queue[head]])\n    return result"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 878,
+          "completion_tokens": 931,
+          "total_tokens": 1809,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 878,
+          "prompt_ms": 6906.7,
+          "prompt_per_token_ms": 7.866,
+          "prompt_per_second": 127.1,
+          "predicted_n": 931,
+          "predicted_ms": 10416.6,
+          "predicted_per_token_ms": 11.189,
+          "predicted_per_second": 89.4,
+          "draft_n": 806,
+          "draft_n_accepted": 748
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "probe@2",
+      "seconds": 0.8001098000095226,
+      "response": {
+        "id": "chatcmpl-2670e76f4e134b328492e96b",
+        "object": "chat.completion",
+        "created": 1791447269,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef stable_unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n```"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 41,
+          "completion_tokens": 53,
+          "total_tokens": 94,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 41,
+          "prompt_ms": 310.5,
+          "prompt_per_token_ms": 7.573,
+          "prompt_per_second": 132.0,
+          "predicted_n": 53,
+          "predicted_ms": 487.5,
+          "predicted_per_token_ms": 9.198,
+          "predicted_per_second": 108.7,
+          "draft_n": 46,
+          "draft_n_accepted": 45
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "utilities@2",
+      "seconds": 10.249942400012515,
+      "response": {
+        "id": "chatcmpl-841853512ea24bdf986eedb6",
+        "object": "chat.completion",
+        "created": 1791447270,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def stable_unique(items):\n    \"\"\"Return a list of hashable values from items, preserving first occurrence order.\"\"\"\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\n\ndef frequencies(items):\n    \"\"\"Return a dict mapping each hashable value in items to its occurrence count.\"\"\"\n    counts = {}\n    for item in items:\n        counts[item] = counts.get(item, 0) + 1\n    return counts\n\n\ndef chunked(items, size):\n    \"\"\"Split items into chunks of given size; last chunk may be shorter. Raise ValueError if size <= 0.\"\"\"\n    if size <= 0:\n        raise ValueError(\"size must be positive\")\n    items = list(items)\n    if not items:\n        return []\n    return [items[i:i + size] for i in range(0, len(items), size)]\n\n\ndef running_totals(numbers):\n    \"\"\"Return a list of cumulative sums of numbers. Empty input yields [].\"\"\"\n    result = []\n    total = 0\n    for num in numbers:\n        total += num\n        result.append(total)\n    return result\n\n\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping or touching [start, end] intervals and return sorted non-overlapping intervals.\"\"\"\n    if not intervals:\n        return []\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    merged = [list(sorted_intervals[0])]\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            merged[-1][1] = max(last_end, end)\n        else:\n            merged.append([start, end])\n    return merged\n\n\ndef lower_bound(values, target):\n    \"\"\"Return the first index in ascending sorted values where value >= target, or len(values).\"\"\"\n    lo, hi = 0, len(values)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if values[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n\n\ndef rotate_right(items, k):\n    \"\"\"Return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\"\"\"\n    items = list(items)\n    n = len(items)\n    if n == 0:\n        return []\n    k = k % n\n    if k == 0:\n        return items[:]\n    return items[-k:] + items[:-k]\n\n\ndef moving_average(numbers, window):\n    \"\"\"Return means of complete consecutive windows using a linear sliding window. Raise ValueError if window <= 0.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    numbers = list(numbers)\n    n = len(numbers)\n    if window > n:\n        return []\n    result = []\n    window_sum = 0\n    for i in range(n):\n        window_sum += numbers[i]\n        if i >= window:\n            window_sum -= numbers[i - window]\n        if i >= window - 1:\n            result.append(window_sum / window)\n    return result"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 303,
+          "completion_tokens": 721,
+          "total_tokens": 1024,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 303,
+          "prompt_ms": 2141.7,
+          "prompt_per_token_ms": 7.068,
+          "prompt_per_second": 141.5,
+          "predicted_n": 721,
+          "predicted_ms": 8104.6,
+          "predicted_per_token_ms": 11.241,
+          "predicted_per_second": 89.0,
+          "draft_n": 618,
+          "draft_n_accepted": 558
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "ttl_cache@2",
+      "seconds": 7.740615400005481,
+      "response": {
+        "id": "chatcmpl-7d187ed3c5be429684baed10",
+        "object": "chat.completion",
+        "created": 1791447280,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "class TTLCache:\n    \"\"\"A cache with time-to-live expiration and LRU eviction.\"\"\"\n\n    def __init__(self, capacity):\n        \"\"\"Initialize the cache with a positive integer capacity.\"\"\"\n        if not isinstance(capacity, int) or capacity <= 0:\n            raise ValueError(\"capacity must be a positive integer\")\n        self.capacity = capacity\n        self._data = {}\n\n    def put(self, key, value, now, ttl):\n        \"\"\"Insert or replace a key-value pair with a TTL, purging expired entries first.\"\"\"\n        if not isinstance(ttl, (int, float)) or ttl <= 0:\n            raise ValueError(\"ttl must be > 0\")\n        self.purge(now)\n        expires_at = now + ttl\n        if key in self._data:\n            del self._data[key]\n        self._data[key] = (value, expires_at)\n        while len(self._data) > self.capacity:\n            oldest_key = next(iter(self._data))\n            del self._data[oldest_key]\n\n    def get(self, key, now, default=None):\n        \"\"\"Return the value for key if present and not expired, marking it as most recently used.\"\"\"\n        self.purge(now)\n        if key not in self._data:\n            return default\n        value, expires_at = self._data[key]\n        del self._data[key]\n        self._data[key] = (value, expires_at)\n        return value\n\n    def delete(self, key):\n        \"\"\"Remove key if present and return True, else False.\"\"\"\n        if key in self._data:\n            del self._data[key]\n            return True\n        return False\n\n    def purge(self, now):\n        \"\"\"Remove all entries expiring at or before now and return the number removed.\"\"\"\n        to_remove = []\n        for key, (value, expires_at) in self._data.items():\n            if expires_at <= now:\n                to_remove.append(key)\n        for key in to_remove:\n            del self._data[key]\n        return len(to_remove)\n\n    def size(self, now):\n        \"\"\"Purge expired entries and return the live count.\"\"\"\n        self.purge(now)\n        return len(self._data)\n\n    def clear(self):\n        \"\"\"Remove all entries.\"\"\"\n        self._data.clear()"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 292,
+          "completion_tokens": 511,
+          "total_tokens": 803,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 292,
+          "prompt_ms": 2127.0,
+          "prompt_per_token_ms": 7.284,
+          "prompt_per_second": 137.3,
+          "predicted_n": 511,
+          "predicted_ms": 5610.2,
+          "predicted_per_token_ms": 10.979,
+          "predicted_per_second": 91.1,
+          "draft_n": 418,
+          "draft_n_accepted": 391
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "algorithms@2",
+      "seconds": 12.762749999994412,
+      "response": {
+        "id": "chatcmpl-e1a2565bd7284dc8a8359f71",
+        "object": "chat.completion",
+        "created": 1791447288,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def topological_sort(n, edges):\n    \"\"\"\n    Perform a topological sort on a directed graph with nodes 0..n-1.\n    Always chooses the smallest currently available node (Kahn's algorithm with min-heap behavior via list).\n    Raises ValueError if a cycle is detected.\n    Time complexity: O(n^2 + len(edges)) due to linear search for min node.\n    \"\"\"\n    if n == 0:\n        return []\n    \n    # Build adjacency list and in-degree array\n    adj = [[] for _ in range(n)]\n    in_degree = [0] * n\n    for u, v in edges:\n        adj[u].append(v)\n        in_degree[v] += 1\n    \n    # Find all nodes with in-degree 0\n    available = [i for i in range(n) if in_degree[i] == 0]\n    result = []\n    \n    while available:\n        # Choose the smallest available node\n        min_node = min(available)\n        available.remove(min_node)\n        result.append(min_node)\n        \n        for neighbor in adj[min_node]:\n            in_degree[neighbor] -= 1\n            if in_degree[neighbor] == 0:\n                available.append(neighbor)\n    \n    if len(result) != n:\n        raise ValueError(\"Cycle detected in graph\")\n    \n    return result\n\n\ndef shortest_paths(n, edges, start):\n    \"\"\"\n    Compute shortest paths from start to all nodes using Dijkstra's algorithm.\n    Edges are directed with nonnegative weights. Parallel edges allowed.\n    Returns a list of distances, with float('inf') for unreachable nodes.\n    Time complexity: O(n^2 + len(edges)) using a simple array-based Dijkstra.\n    \"\"\"\n    INF = float('inf')\n    dist = [INF] * n\n    dist[start] = 0\n    visited = [False] * n\n    \n    # Build adjacency list\n    adj = [[] for _ in range(n)]\n    for u, v, w in edges:\n        adj[u].append((v, w))\n    \n    for _ in range(n):\n        # Find the unvisited node with the smallest distance\n        min_dist = INF\n        min_node = -1\n        for i in range(n):\n            if not visited[i] and dist[i] < min_dist:\n                min_dist = dist[i]\n                min_node = i\n        \n        if min_node == -1:\n            break\n        \n        visited[min_node] = True\n        \n        for neighbor, weight in adj[min_node]:\n            if not visited[neighbor]:\n                new_dist = dist[min_node] + weight\n                if new_dist < dist[neighbor]:\n                    dist[neighbor] = new_dist\n    \n    return dist\n\n\ndef longest_common_subsequence(a, b):\n    \"\"\"\n    Compute the longest common subsequence of strings a and b using dynamic programming.\n    Returns one such subsequence as a string.\n    Time complexity: O(len(a) * len(b)).\n    \"\"\"\n    m = len(a)\n    n = len(b)\n    \n    if m == 0 or n == 0:\n        return \"\"\n    \n    # dp[i][j] = length of LCS of a[0..i-1] and b[0..j-1]\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    \n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if a[i - 1] == b[j - 1]:\n                dp[i][j] = dp[i - 1][j - 1] + 1\n            else:\n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])\n    \n    # Reconstruct the LCS\n    lcs = []\n    i, j = m, n\n    while i > 0 and j > 0:\n        if a[i - 1] == b[j - 1]:\n            lcs.append(a[i - 1])\n            i -= 1\n            j -= 1\n        elif dp[i - 1][j] >= dp[i][j - 1]:\n            i -= 1\n        else:\n            j -= 1\n    \n    lcs.reverse()\n    return \"\".join(lcs)"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 256,
+          "completion_tokens": 962,
+          "total_tokens": 1218,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 256,
+          "prompt_ms": 1860.2,
+          "prompt_per_token_ms": 7.266,
+          "prompt_per_second": 137.6,
+          "predicted_n": 962,
+          "predicted_ms": 10899.2,
+          "predicted_per_token_ms": 11.33,
+          "predicted_per_second": 88.3,
+          "draft_n": 803,
+          "draft_n_accepted": 726
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "matrices@2",
+      "seconds": 17.00512269999308,
+      "response": {
+        "id": "chatcmpl-d1d389c6153f4ea0bbfffd4b",
+        "object": "chat.completion",
+        "created": 1791447301,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def validate_matrix(matrix):\n    \"\"\"Validate that matrix is a non-empty list of non-empty lists of equal length. Returns (row_count, column_count). Raises ValueError if invalid.\"\"\"\n    if not isinstance(matrix, list) or len(matrix) == 0:\n        raise ValueError(\"Matrix must be a non-empty list of lists\")\n    row_count = len(matrix)\n    col_count = None\n    for row in matrix:\n        if not isinstance(row, list) or len(row) == 0:\n            raise ValueError(\"Matrix rows must be non-empty lists\")\n        if col_count is None:\n            col_count = len(row)\n        elif len(row) != col_count:\n            raise ValueError(\"Matrix must be rectangular (all rows same length)\")\n    return (row_count, col_count)\n\ndef zeros(rows, cols):\n    \"\"\"Return a rows x cols matrix of zeros. rows and cols must be positive integers. Raises ValueError otherwise.\"\"\"\n    if not isinstance(rows, int) or not isinstance(cols, int):\n        raise ValueError(\"rows and cols must be integers\")\n    if rows <= 0 or cols <= 0:\n        raise ValueError(\"rows and cols must be positive integers\")\n    return [[0 for _ in range(cols)] for _ in range(rows)]\n\ndef identity(n):\n    \"\"\"Return an n x n identity matrix. n must be a positive integer. Raises ValueError otherwise.\"\"\"\n    if not isinstance(n, int):\n        raise ValueError(\"n must be an integer\")\n    if n <= 0:\n        raise ValueError(\"n must be a positive integer\")\n    result = [[0 for _ in range(n)] for _ in range(n)]\n    for i in range(n):\n        result[i][i] = 1\n    return result\n\ndef transpose(matrix):\n    \"\"\"Return the transpose of matrix. Validates matrix first. Raises ValueError if invalid.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    return [[matrix[i][j] for i in range(rows)] for j in range(cols)]\n\ndef add(a, b):\n    \"\"\"Return the elementwise sum of matrices a and b. Both must be valid and have the same shape. Raises ValueError otherwise.\"\"\"\n    a_rows, a_cols = validate_matrix(a)\n    b_rows, b_cols = validate_matrix(b)\n    if a_rows != b_rows or a_cols != b_cols:\n        raise ValueError(\"Matrices must have the same dimensions for addition\")\n    return [[a[i][j] + b[i][j] for j in range(a_cols)] for i in range(a_rows)]\n\ndef subtract(a, b):\n    \"\"\"Return the elementwise difference a - b. Both must be valid and have the same shape. Raises ValueError otherwise.\"\"\"\n    a_rows, a_cols = validate_matrix(a)\n    b_rows, b_cols = validate_matrix(b)\n    if a_rows != b_rows or a_cols != b_cols:\n        raise ValueError(\"Matrices must have the same dimensions for subtraction\")\n    return [[a[i][j] - b[i][j] for j in range(a_cols)] for i in range(a_rows)]\n\ndef scale(matrix, scalar):\n    \"\"\"Return a new matrix where every element of matrix is multiplied by scalar. Validates matrix first. Raises ValueError if invalid.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    return [[matrix[i][j] * scalar for j in range(cols)] for i in range(rows)]\n\ndef matmul(a, b):\n    \"\"\"Return the matrix product a * b. Validates both matrices. Requires columns of a equal rows of b. Raises ValueError otherwise.\"\"\"\n    a_rows, a_cols = validate_matrix(a)\n    b_rows, b_cols = validate_matrix(b)\n    if a_cols != b_rows:\n        raise ValueError(\"Columns of a must equal rows of b for matrix multiplication\")\n    result = [[0 for _ in range(b_cols)] for _ in range(a_rows)]\n    for i in range(a_rows):\n        for j in range(b_cols):\n            s = 0\n            for k in range(a_cols):\n                s += a[i][k] * b[k][j]\n            result[i][j] = s\n    return result\n\ndef row_sums(matrix):\n    \"\"\"Return a list of the sum of each row in matrix. Validates matrix first. Raises ValueError if invalid.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    return [sum(matrix[i]) for i in range(rows)]\n\ndef col_sums(matrix):\n    \"\"\"Return a list of the sum of each column in matrix. Validates matrix first. Raises ValueError if invalid.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    return [sum(matrix[i][j] for i in range(rows)) for j in range(cols)]\n\ndef trace(matrix):\n    \"\"\"Return the sum of the diagonal elements of a square matrix. Validates matrix first. Raises ValueError if not square.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    if rows != cols:\n        raise ValueError(\"Matrix must be square for trace\")\n    return sum(matrix[i][i] for i in range(rows))\n\ndef matrix_power(matrix, exponent):\n    \"\"\"Return matrix raised to a nonnegative integer exponent using exponentiation by squaring. Matrix must be square. Raises ValueError if invalid.\"\"\"\n    if not isinstance(exponent, int):\n        raise ValueError(\"Exponent must be an integer\")\n    if exponent < 0:\n        raise ValueError(\"Exponent must be nonnegative\")\n    rows, cols = validate_matrix(matrix)\n    if rows != cols:\n        raise ValueError(\"Matrix must be square for matrix_power\")\n    n = rows\n    if exponent == 0:\n        return identity(n)\n    if exponent == 1:\n        return [row[:] for row in matrix]\n    if exponent % 2 == 0:\n        half = matrix_power(matrix, exponent // 2)\n        return matmul(half, half)\n    else:\n        half = matrix_power(matrix, exponent - 1)\n        return matmul(half, matrix)"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 303,
+          "completion_tokens": 1302,
+          "total_tokens": 1605,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 303,
+          "prompt_ms": 2235.8,
+          "prompt_per_token_ms": 7.379,
+          "prompt_per_second": 135.5,
+          "predicted_n": 1302,
+          "predicted_ms": 14765.6,
+          "predicted_per_token_ms": 11.341,
+          "predicted_per_second": 88.2,
+          "draft_n": 1112,
+          "draft_n_accepted": 1009
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "edit_utilities@2",
+      "seconds": 17.607491300004767,
+      "response": {
+        "id": "chatcmpl-ee9263c367dc4a3fa6805a9c",
+        "object": "chat.completion",
+        "created": 1791447318,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def stable_unique(items):\n    \"\"\"Return a list of hashable values from items, preserving first occurrence order.\"\"\"\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\n\ndef frequencies(items):\n    \"\"\"Return a dict mapping each hashable value in items to its occurrence count.\"\"\"\n    counts = {}\n    for item in items:\n        counts[item] = counts.get(item, 0) + 1\n    return counts\n\n\ndef chunked(items, size):\n    \"\"\"Split items into chunks of given size; last chunk may be shorter. Raise ValueError if size <= 0.\"\"\"\n    if size <= 0:\n        raise ValueError(\"size must be positive\")\n    items = list(items)\n    if not items:\n        return []\n    return [items[i:i + size] for i in range(0, len(items), size)]\n\n\ndef running_totals(numbers):\n    \"\"\"Return a list of cumulative sums of numbers. Empty input yields [].\"\"\"\n    result = []\n    total = 0\n    for num in numbers:\n        total += num\n        result.append(total)\n    return result\n\n\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping or touching [start, end] intervals and return sorted non-overlapping intervals.\"\"\"\n    if not intervals:\n        return []\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    merged = [list(sorted_intervals[0])]\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            merged[-1][1] = max(last_end, end)\n        else:\n            merged.append([start, end])\n    return merged\n\n\ndef lower_bound(values, target):\n    \"\"\"Return the first index in ascending sorted values where value >= target, or len(values).\"\"\"\n    lo, hi = 0, len(values)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if values[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n\n\ndef rotate_right(items, k):\n    \"\"\"Return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\"\"\"\n    items = list(items)\n    n = len(items)\n    if n == 0:\n        return []\n    k = k % n\n    if k == 0:\n        return items[:]\n    return items[-k:] + items[:-k]\n\n\ndef moving_average(numbers, window):\n    \"\"\"Return means of complete consecutive windows using a linear sliding window. Raise ValueError if window <= 0.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    numbers = list(numbers)\n    n = len(numbers)\n    if window > n:\n        return []\n    result = []\n    window_sum = 0\n    for i in range(n):\n        window_sum += numbers[i]\n        if i >= window:\n            window_sum -= numbers[i - window]\n        if i >= window - 1:\n            result.append(window_sum / window)\n    return result\n\n\ndef window_minimum(numbers, window):\n    \"\"\"Return the minimum of each complete consecutive window, in order. Empty input or window > len(numbers) returns []. Raise ValueError if window <= 0. Do not modify numbers. Use an O(n) monotonic queue implemented with a list and a head index, without imports.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    numbers = list(numbers)\n    n = len(numbers)\n    if n == 0 or window > n:\n        return []\n    result = []\n    queue = []\n    head = 0\n    for i in range(n):\n        while head < len(queue) and numbers[queue[-1]] >= numbers[i]:\n            queue.pop()\n        queue.append(i)\n        if queue[head] <= i - window:\n            head += 1\n        if i >= window - 1:\n            result.append(numbers[queue[head]])\n    return result"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 878,
+          "completion_tokens": 931,
+          "total_tokens": 1809,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 878,
+          "prompt_ms": 6938.4,
+          "prompt_per_token_ms": 7.903,
+          "prompt_per_second": 126.5,
+          "predicted_n": 931,
+          "predicted_ms": 10663.7,
+          "predicted_per_token_ms": 11.454,
+          "predicted_per_second": 87.3,
+          "draft_n": 806,
+          "draft_n_accepted": 748
+        }
+      },
+      "valid": true
+    }
+  ],
+  "ok": true,
+  "health": {
+    "status": "ok",
+    "max_context": 8192,
+    "model": "qwen3.8-flash-next",
+    "images": false,
+    "api_key": false,
+    "loaded": true,
+    "service": "strata"
+  },
+  "expected_requests": 12,
+  "cases": [
+    {
+      "key": "probe",
+      "prompt": "Write only Python code. Define stable_unique(items) removing duplicates from hashable items while preserving their first occurrence. Use a set. No imports.",
+      "max_tokens": 160
+    },
+    {
+      "key": "utilities",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement these eight independent functions without modifying the inputs:\n1. stable_unique(items): list of hashable values, first occurrences in order.\n2. frequencies(items): dict mapping each hashable value to its occurrence count.\n3. chunked(items, size): list of list chunks, last chunk may be shorter; raise ValueError if size <= 0. Empty input yields [].\n4. running_totals(numbers): list of cumulative sums, empty input yields [].\n5. merge_intervals(intervals): input list of [start, end] pairs with start <= end, possibly unsorted. Return sorted non-overlapping intervals as lists; merge overlaps and touching endpoints. Empty input yields [].\n6. lower_bound(values, target): binary search on an ascending sorted list; return first index whose value is >= target or len(values).\n7. rotate_right(items, k): return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\n8. moving_average(numbers, window): means of complete consecutive windows only. Return [] when window > len(numbers); raise ValueError if window <= 0.\nUse a linear sliding window for moving_average and binary search for lower_bound.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "ttl_cache",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement one class TTLCache with these methods:\n__init__(capacity): capacity must be a positive integer, else raise ValueError.\nput(key, value, now, ttl): ttl must be > 0, else raise ValueError without changing the cache. now is an explicit numeric timestamp; never read a real clock. First purge all entries with expires_at <= now. Insert or replace the key with expires_at = now + ttl and mark it most recently used. When capacity is exceeded, evict least recently used entries.\nget(key, now, default=None): purge expired entries; return default for a missing key, otherwise return its value and mark it most recently used without extending its expiration time.\ndelete(key): remove key if present and return True, else False.\npurge(now): remove all entries expiring at or before now and return the number removed.\nsize(now): purge expired entries and return the live count.\nclear(): remove all entries.\nKeys are hashable. Values may be None. Timestamps are nondecreasing. Use the insertion order of a normal Python dict to track LRU order; do not import OrderedDict.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "algorithms",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement these three independent functions:\ntopological_sort(n, edges): nodes are integers 0..n-1. edges is a list of unique directed (u,v) pairs. Return a topological order, always choosing the smallest currently available node. Include isolated nodes. Raise ValueError on a cycle. n=0 yields [].\nshortest_paths(n, edges, start): edges is a list of directed (u,v,weight) triples with nonnegative weights; parallel edges are allowed. Return distances from start as a list with float('inf') for unreachable nodes. n>=1 and start is valid. An O(n*n + len(edges)) Dijkstra implementation is acceptable; do not import heapq.\nlongest_common_subsequence(a, b): return any one longest common subsequence as a string. Empty inputs yield ''. Use dynamic programming and reconstruct the subsequence, not only its length.\nDo not modify any input. Include docstrings explaining the algorithm and time complexity.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "matrices",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement a small matrix module with twelve functions. Matrices are lists of lists of real numbers. Arithmetic functions must reject empty or ragged matrices with ValueError, reject incompatible dimensions with ValueError, and never modify inputs. No imports.\nvalidate_matrix(matrix): return (row_count, column_count); reject empty rows too.\nzeros(rows, cols): positive integer dimensions required, otherwise ValueError. Return independent rows of zeros.\nidentity(n): positive integer n required, otherwise ValueError. Return an n by n identity matrix.\ntranspose(matrix): return the transpose.\nadd(a,b) and subtract(a,b): elementwise operations on equal shapes.\nscale(matrix, scalar): multiply every cell by scalar.\nmatmul(a,b): matrix multiplication, validating that columns of a equal rows of b.\nrow_sums(matrix) and col_sums(matrix): return one-dimensional lists of sums.\ntrace(matrix): sum of the diagonal, requiring a square matrix.\nmatrix_power(matrix, exponent): square matrix raised to a nonnegative integer exponent, otherwise ValueError. Power zero returns identity. Use exponentiation by squaring and the above functions.\nAdd docstrings for every function describing validation and behavior. Implement every function completely.",
+      "max_tokens": 3072
+    },
+    {
+      "key": "edit_utilities",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nEdit the Python module below. Preserve the behavior of all eight existing functions and return the complete module, including those functions. Add one function:\nwindow_minimum(numbers, window): return the minimum of each complete consecutive window, in order. Empty input or window > len(numbers) returns []. Raise ValueError if window <= 0. Do not modify numbers. Use an O(n) monotonic queue implemented with a list and a head index, without imports. Include a docstring.\n\nExisting module:\ndef stable_unique(items):\n    \"\"\"Return a list of hashable values from items, preserving first occurrence order.\"\"\"\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\n\ndef frequencies(items):\n    \"\"\"Return a dict mapping each hashable value in items to its occurrence count.\"\"\"\n    counts = {}\n    for item in items:\n        counts[item] = counts.get(item, 0) + 1\n    return counts\n\n\ndef chunked(items, size):\n    \"\"\"Split items into chunks of given size; last chunk may be shorter. Raise ValueError if size <= 0.\"\"\"\n    if size <= 0:\n        raise ValueError(\"size must be positive\")\n    items = list(items)\n    if not items:\n        return []\n    return [items[i:i + size] for i in range(0, len(items), size)]\n\n\ndef running_totals(numbers):\n    \"\"\"Return a list of cumulative sums of numbers. Empty input yields [].\"\"\"\n    result = []\n    total = 0\n    for num in numbers:\n        total += num\n        result.append(total)\n    return result\n\n\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping or touching [start, end] intervals and return sorted non-overlapping intervals.\"\"\"\n    if not intervals:\n        return []\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    merged = [list(sorted_intervals[0])]\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            merged[-1][1] = max(last_end, end)\n        else:\n            merged.append([start, end])\n    return merged\n\n\ndef lower_bound(values, target):\n    \"\"\"Return the first index in ascending sorted values where value >= target, or len(values).\"\"\"\n    lo, hi = 0, len(values)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if values[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n\n\ndef rotate_right(items, k):\n    \"\"\"Return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\"\"\"\n    items = list(items)\n    n = len(items)\n    if n == 0:\n        return []\n    k = k % n\n    if k == 0:\n        return items[:]\n    return items[-k:] + items[:-k]\n\n\ndef moving_average(numbers, window):\n    \"\"\"Return means of complete consecutive windows using a linear sliding window. Raise ValueError if window <= 0.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    numbers = list(numbers)\n    n = len(numbers)\n    if window > n:\n        return []\n    result = []\n    window_sum = 0\n    for i in range(n):\n        window_sum += numbers[i]\n        if i >= window:\n            window_sum -= numbers[i - window]\n        if i >= window - 1:\n            result.append(window_sum / window)\n    return result\n",
+      "max_tokens": 3072
+    },
+    {
+      "key": "probe@2",
+      "prompt": "Write only Python code. Define stable_unique(items) removing duplicates from hashable items while preserving their first occurrence. Use a set. No imports.",
+      "max_tokens": 160
+    },
+    {
+      "key": "utilities@2",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement these eight independent functions without modifying the inputs:\n1. stable_unique(items): list of hashable values, first occurrences in order.\n2. frequencies(items): dict mapping each hashable value to its occurrence count.\n3. chunked(items, size): list of list chunks, last chunk may be shorter; raise ValueError if size <= 0. Empty input yields [].\n4. running_totals(numbers): list of cumulative sums, empty input yields [].\n5. merge_intervals(intervals): input list of [start, end] pairs with start <= end, possibly unsorted. Return sorted non-overlapping intervals as lists; merge overlaps and touching endpoints. Empty input yields [].\n6. lower_bound(values, target): binary search on an ascending sorted list; return first index whose value is >= target or len(values).\n7. rotate_right(items, k): return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\n8. moving_average(numbers, window): means of complete consecutive windows only. Return [] when window > len(numbers); raise ValueError if window <= 0.\nUse a linear sliding window for moving_average and binary search for lower_bound.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "ttl_cache@2",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement one class TTLCache with these methods:\n__init__(capacity): capacity must be a positive integer, else raise ValueError.\nput(key, value, now, ttl): ttl must be > 0, else raise ValueError without changing the cache. now is an explicit numeric timestamp; never read a real clock. First purge all entries with expires_at <= now. Insert or replace the key with expires_at = now + ttl and mark it most recently used. When capacity is exceeded, evict least recently used entries.\nget(key, now, default=None): purge expired entries; return default for a missing key, otherwise return its value and mark it most recently used without extending its expiration time.\ndelete(key): remove key if present and return True, else False.\npurge(now): remove all entries expiring at or before now and return the number removed.\nsize(now): purge expired entries and return the live count.\nclear(): remove all entries.\nKeys are hashable. Values may be None. Timestamps are nondecreasing. Use the insertion order of a normal Python dict to track LRU order; do not import OrderedDict.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "algorithms@2",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement these three independent functions:\ntopological_sort(n, edges): nodes are integers 0..n-1. edges is a list of unique directed (u,v) pairs. Return a topological order, always choosing the smallest currently available node. Include isolated nodes. Raise ValueError on a cycle. n=0 yields [].\nshortest_paths(n, edges, start): edges is a list of directed (u,v,weight) triples with nonnegative weights; parallel edges are allowed. Return distances from start as a list with float('inf') for unreachable nodes. n>=1 and start is valid. An O(n*n + len(edges)) Dijkstra implementation is acceptable; do not import heapq.\nlongest_common_subsequence(a, b): return any one longest common subsequence as a string. Empty inputs yield ''. Use dynamic programming and reconstruct the subsequence, not only its length.\nDo not modify any input. Include docstrings explaining the algorithm and time complexity.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "matrices@2",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement a small matrix module with twelve functions. Matrices are lists of lists of real numbers. Arithmetic functions must reject empty or ragged matrices with ValueError, reject incompatible dimensions with ValueError, and never modify inputs. No imports.\nvalidate_matrix(matrix): return (row_count, column_count); reject empty rows too.\nzeros(rows, cols): positive integer dimensions required, otherwise ValueError. Return independent rows of zeros.\nidentity(n): positive integer n required, otherwise ValueError. Return an n by n identity matrix.\ntranspose(matrix): return the transpose.\nadd(a,b) and subtract(a,b): elementwise operations on equal shapes.\nscale(matrix, scalar): multiply every cell by scalar.\nmatmul(a,b): matrix multiplication, validating that columns of a equal rows of b.\nrow_sums(matrix) and col_sums(matrix): return one-dimensional lists of sums.\ntrace(matrix): sum of the diagonal, requiring a square matrix.\nmatrix_power(matrix, exponent): square matrix raised to a nonnegative integer exponent, otherwise ValueError. Power zero returns identity. Use exponentiation by squaring and the above functions.\nAdd docstrings for every function describing validation and behavior. Implement every function completely.",
+      "max_tokens": 3072
+    },
+    {
+      "key": "edit_utilities@2",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nEdit the Python module below. Preserve the behavior of all eight existing functions and return the complete module, including those functions. Add one function:\nwindow_minimum(numbers, window): return the minimum of each complete consecutive window, in order. Empty input or window > len(numbers) returns []. Raise ValueError if window <= 0. Do not modify numbers. Use an O(n) monotonic queue implemented with a list and a head index, without imports. Include a docstring.\n\nExisting module:\ndef stable_unique(items):\n    \"\"\"Return a list of hashable values from items, preserving first occurrence order.\"\"\"\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\n\ndef frequencies(items):\n    \"\"\"Return a dict mapping each hashable value in items to its occurrence count.\"\"\"\n    counts = {}\n    for item in items:\n        counts[item] = counts.get(item, 0) + 1\n    return counts\n\n\ndef chunked(items, size):\n    \"\"\"Split items into chunks of given size; last chunk may be shorter. Raise ValueError if size <= 0.\"\"\"\n    if size <= 0:\n        raise ValueError(\"size must be positive\")\n    items = list(items)\n    if not items:\n        return []\n    return [items[i:i + size] for i in range(0, len(items), size)]\n\n\ndef running_totals(numbers):\n    \"\"\"Return a list of cumulative sums of numbers. Empty input yields [].\"\"\"\n    result = []\n    total = 0\n    for num in numbers:\n        total += num\n        result.append(total)\n    return result\n\n\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping or touching [start, end] intervals and return sorted non-overlapping intervals.\"\"\"\n    if not intervals:\n        return []\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    merged = [list(sorted_intervals[0])]\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            merged[-1][1] = max(last_end, end)\n        else:\n            merged.append([start, end])\n    return merged\n\n\ndef lower_bound(values, target):\n    \"\"\"Return the first index in ascending sorted values where value >= target, or len(values).\"\"\"\n    lo, hi = 0, len(values)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if values[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n\n\ndef rotate_right(items, k):\n    \"\"\"Return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\"\"\"\n    items = list(items)\n    n = len(items)\n    if n == 0:\n        return []\n    k = k % n\n    if k == 0:\n        return items[:]\n    return items[-k:] + items[:-k]\n\n\ndef moving_average(numbers, window):\n    \"\"\"Return means of complete consecutive windows using a linear sliding window. Raise ValueError if window <= 0.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    numbers = list(numbers)\n    n = len(numbers)\n    if window > n:\n        return []\n    result = []\n    window_sum = 0\n    for i in range(n):\n        window_sum += numbers[i]\n        if i >= window:\n            window_sum -= numbers[i - window]\n        if i >= window - 1:\n            result.append(window_sum / window)\n    return result\n",
+      "max_tokens": 3072
+    }
+  ],
+  "status": {
+    "service": "strata",
+    "model": "qwen3.8-flash-next",
+    "loaded": true,
+    "auto_load": true,
+    "structured_output": {
+      "formats": [
+        "json_object",
+        "json_schema"
+      ],
+      "method": "prompt_and_validate",
+      "constrained_decoding": false,
+      "stream_buffered": true
+    },
+    "engine": "0.1.40.3",
+    "started": 1791447202,
+    "uptime_s": 133,
+    "cache_max_tokens": 8192,
+    "cache": {
+      "state": "disabled"
+    },
+    "context": {
+      "native": 8192,
+      "max_positions": 8192
+    },
+    "concurrency": {
+      "serving": 1,
+      "requested": 1
+    },
+    "dialects": [
+      "/v1/chat/completions",
+      "/v1/messages",
+      "/v1/responses"
+    ],
+    "vision": {
+      "enabled": false,
+      "available": false,
+      "error": null
+    },
+    "activity": {
+      "requests": 12,
+      "in_flight": 0,
+      "last_request_at": 1791447335
+    },
+    "last_timings": {
+      "cache_n": 0,
+      "prompt_n": 878,
+      "prompt_ms": 6938.4,
+      "prompt_per_token_ms": 7.903,
+      "prompt_per_second": 126.5,
+      "predicted_n": 931,
+      "predicted_ms": 10663.7,
+      "predicted_per_token_ms": 11.454,
+      "predicted_per_second": 87.3,
+      "draft_n": 806,
+      "draft_n_accepted": 748,
+      "at": 1791447335
+    },
+    "vram": {
+      "elastic": false
+    },
+    "machine": {
+      "at": 1791447335,
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 2080 Ti",
+        "used_mib": 22445.0,
+        "total_mib": 22528.0,
+        "util_pct": 100,
+        "temp_c": 71,
+        "power_w": 237.169
+      },
+      "ram": {
+        "used_gib": 19.9,
+        "total_gib": 31.6
+      }
+    }
+  }
+}

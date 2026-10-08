@@ -1,0 +1,24 @@
+FileExpertSource: available RAM 24.65 GiB, 24.66 GiB after the mapped experts left the process working set (#467)
+FileExpertSource: RAM budget 0.00 GiB: 2 of the 0.00 GiB of experts the GPU cache does not hold, by profile rank; the rest are read from the files
+FileExpertSource: allocating 0.00 GiB page-locked cache complement
+FileExpertSource: before complement allocation: requested 0.00 GiB, available RAM 24.66 GiB, available commit 74.05 GiB (limit 94.06 GiB), available virtual address space 130987.44 GiB
+FileExpertSource: copied cache complement through layer 1/1 (0.00 GiB, 0 s)
+FileExpertSource: mapped pinned cache complement ready: resident 0.00 GiB, pinned 0.00 GiB in 0 s; page-locked and mapped
+FileExpertSource: available RAM 24.67 GiB, 24.67 GiB after the mapped experts left the process working set (#467)
+FileExpertSource: RAM budget 0.00 GiB: 2 of the 0.00 GiB of experts the GPU cache does not hold, by profile rank; the rest are read from the files
+FileExpertSource: allocating 0.00 GiB page-locked cache complement
+FileExpertSource: before complement allocation: requested 0.00 GiB, available RAM 24.67 GiB, available commit 74.05 GiB (limit 94.06 GiB), available virtual address space 130987.44 GiB
+FileExpertSource: copied cache complement through layer 1/1 (0.00 GiB, 0 s)
+FileExpertSource: mapped pinned cache complement ready: resident 0.00 GiB, pinned 0.00 GiB in 0 s; page-locked and mapped
+FileExpertSource: exchange buffer rotation enabled: 2 buffers, 1382400 bytes each; no host commit memcpy
+FileExpertSource: available RAM 24.66 GiB, 24.67 GiB after the mapped experts left the process working set (#467)
+FileExpertSource: RAM budget 0.00 GiB: 2 of the 0.00 GiB of experts the GPU cache does not hold, by profile rank; the rest are read from the files
+FileExpertSource: allocating 0.00 GiB pageable resident cache complement
+FileExpertSource: before complement allocation: requested 0.00 GiB, available RAM 24.67 GiB, available commit 74.04 GiB (limit 94.06 GiB), available virtual address space 130987.44 GiB
+FileExpertSource: copied cache complement through layer 1/1 (0.00 GiB, 0 s)
+FileExpertSource: pageable resident cache complement ready: resident 0.00 GiB, pinned 0.00 GiB in 0 s
+FileExpertSource: exchange rotation unavailable; retaining copy path: requires equal-size expert blocks and a fully mapped/pinned RAM complement
+rotation integration: rotate=0 pinned=1 exchanges=64 commit_ms=4.7213 exact_bytes=PASS
+rotation integration: rotate=1 pinned=1 exchanges=64 commit_ms=0.0083 exact_bytes=PASS
+rotation integration: rotate=1 pinned=0 exchanges=64 commit_ms=3.5055 exact_bytes=PASS
+file_expert_source_test: PASS

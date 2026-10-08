@@ -1,0 +1,3 @@
+pdl_parity: Tesla P100-PCIE-16GB (sm_60), pdl_supported() = 0
+copy_rows_strided vs cudaMemcpy2DAsync (96 rows of 256 of 512): bitwise equal
+CUDA: edges: invalid argument

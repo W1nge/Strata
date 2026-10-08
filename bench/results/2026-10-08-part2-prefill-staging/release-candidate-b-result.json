@@ -1,0 +1,947 @@
+{
+  "label": "release-candidate-b",
+  "overrides": {
+    "exe": "E:/strata-setup/part2-prefill-next/prefill-release/strata.exe",
+    "env": {
+      "STRATA_FILE_RELEASE": "1"
+    }
+  },
+  "requests": [
+    {
+      "key": "qa",
+      "seconds": 1.5829005999985384,
+      "response": {
+        "id": "chatcmpl-4ca3c42674c546df96e1c93e",
+        "object": "chat.completion",
+        "created": 1791445838,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\n  \"planet\": \"Jupiter\",\n  \"product\": 391,\n  \"sorted\": [-2, 0, 5, 9]\n}"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 67,
+          "completion_tokens": 40,
+          "total_tokens": 107,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 67,
+          "prompt_ms": 1100.2,
+          "prompt_per_token_ms": 16.421,
+          "prompt_per_second": 60.9,
+          "predicted_n": 40,
+          "predicted_ms": 468.0,
+          "predicted_per_token_ms": 11.7,
+          "predicted_per_second": 85.5,
+          "draft_n": 34,
+          "draft_n_accepted": 34
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "code",
+      "seconds": 0.976961599997594,
+      "response": {
+        "id": "chatcmpl-1ed7308d7757474db1718bf6",
+        "object": "chat.completion",
+        "created": 1791445840,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef stable_unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n```"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 57,
+          "completion_tokens": 53,
+          "total_tokens": 110,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 57,
+          "prompt_ms": 445.2,
+          "prompt_per_token_ms": 7.811,
+          "prompt_per_second": 128.0,
+          "predicted_n": 53,
+          "predicted_ms": 529.0,
+          "predicted_per_token_ms": 9.981,
+          "predicted_per_second": 100.2,
+          "draft_n": 49,
+          "draft_n_accepted": 48
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "medium",
+      "seconds": 9.101180400000885,
+      "response": {
+        "id": "chatcmpl-88e555df13064517bd7f0290",
+        "object": "chat.completion",
+        "created": 1791445841,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[7, 37, 52, 54, 19]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 928,
+          "completion_tokens": 20,
+          "total_tokens": 948,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 928,
+          "prompt_ms": 8762.9,
+          "prompt_per_token_ms": 9.443,
+          "prompt_per_second": 105.9,
+          "predicted_n": 20,
+          "predicted_ms": 334.5,
+          "predicted_per_token_ms": 16.725,
+          "predicted_per_second": 59.8,
+          "draft_n": 26,
+          "draft_n_accepted": 18
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "long",
+      "seconds": 24.977183199996944,
+      "response": {
+        "id": "chatcmpl-f3d24f3aefde497ab152aeac",
+        "object": "chat.completion",
+        "created": 1791445850,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[25, 6, 94, 44, 37]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 1924,
+          "completion_tokens": 20,
+          "total_tokens": 1944,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 1924,
+          "prompt_ms": 24521.2,
+          "prompt_per_token_ms": 12.745,
+          "prompt_per_second": 78.5,
+          "predicted_n": 20,
+          "predicted_ms": 450.9,
+          "predicted_per_token_ms": 22.545,
+          "predicted_per_second": 44.4,
+          "draft_n": 20,
+          "draft_n_accepted": 16
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "decode",
+      "seconds": 3.9567249000101583,
+      "response": {
+        "id": "chatcmpl-e2d497a44cb4483caad1c528",
+        "object": "chat.completion",
+        "created": 1791445875,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400, 441, 484, 529, 576, 625, 676, 729, 784, 841, 900, 961, 1024, 1089, 1156, 1225, 1296, 1369, 1444, 1521, 1600, 1681, 1764, 1849, 1936, 2025, 2116, 2209, 2304, 2401, 2500, 2601, 2704, 2809, 2916, 3025, 3136, 3249, 3364, 3481, 3600]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 42,
+          "completion_tokens": 318,
+          "total_tokens": 360,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 42,
+          "prompt_ms": 325.7,
+          "prompt_per_token_ms": 7.755,
+          "prompt_per_second": 129.0,
+          "predicted_n": 318,
+          "predicted_ms": 3628.4,
+          "predicted_per_token_ms": 11.41,
+          "predicted_per_second": 87.6,
+          "draft_n": 291,
+          "draft_n_accepted": 270
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "prose",
+      "seconds": 4.335769400000572,
+      "response": {
+        "id": "chatcmpl-a5597ab8d82a46c3a4ece715",
+        "object": "chat.completion",
+        "created": 1791445879,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "When a user types a domain name into a browser, the process begins with a local cache check. If the IP address is not stored locally, the browser queries a recursive resolver, typically provided by the Internet Service Provider. This resolver acts as an intermediary, handling the complex lookup process on behalf of the client. The resolver first checks its own cache. If the record is missing or expired, it initiates a chain of queries starting from the root name servers. These root servers direct the resolver to the appropriate Top-Level Domain (TLD) servers, such as those for .com or .org. The TLD servers then point to the authoritative name servers for the specific domain.\n\nAuthoritative servers hold the definitive DNS records for a domain, providing the final IP address. In contrast, recursive servers do not store original data but instead fetch answers from authoritative servers and return them to the client. Once the resolver obtains the IP address, it caches the result to speed up future requests. This caching is governed by the Time-to-Live (TTL) value associated with the DNS record. The TTL specifies how long the cached entry remains valid. Once the TTL expires, the resolver must query the authoritative servers again to ensure the information is current. This mechanism balances performance with data accuracy, ensuring users receive up-to-date IP addresses while minimizing unnecessary network traffic."
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 52,
+          "completion_tokens": 272,
+          "total_tokens": 324,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 52,
+          "prompt_ms": 389.8,
+          "prompt_per_token_ms": 7.496,
+          "prompt_per_second": 133.4,
+          "predicted_n": 272,
+          "predicted_ms": 3944.2,
+          "predicted_per_token_ms": 14.501,
+          "predicted_per_second": 69.0,
+          "draft_n": 145,
+          "draft_n_accepted": 120
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "long5k",
+      "seconds": 23.353449900008854,
+      "response": {
+        "id": "chatcmpl-1a6e149ec5a5427ebe92f124",
+        "object": "chat.completion",
+        "created": 1791445883,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[25, 6, 94, 44, 37]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 5107,
+          "completion_tokens": 20,
+          "total_tokens": 5127,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 5107,
+          "prompt_ms": 22888.1,
+          "prompt_per_token_ms": 4.482,
+          "prompt_per_second": 223.1,
+          "predicted_n": 20,
+          "predicted_ms": 455.7,
+          "predicted_per_token_ms": 22.785,
+          "predicted_per_second": 43.9,
+          "draft_n": 26,
+          "draft_n_accepted": 18
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "cache_first",
+      "seconds": 0.2931053999927826,
+      "response": {
+        "id": "chatcmpl-a6a78ff67cb446738565dfa0",
+        "object": "chat.completion",
+        "created": 1791445906,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "4"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 26,
+          "completion_tokens": 2,
+          "total_tokens": 28,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 26,
+          "prompt_ms": 224.2,
+          "prompt_per_token_ms": 8.623,
+          "prompt_per_second": 116.0,
+          "predicted_n": 2,
+          "predicted_ms": 66.7,
+          "predicted_per_token_ms": 33.35,
+          "predicted_per_second": 30.0,
+          "draft_n": 4,
+          "draft_n_accepted": 4
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "cache_repeat",
+      "seconds": 0.11833800000022165,
+      "response": {
+        "id": "chatcmpl-eb65339f7d7d4d5a89abff16",
+        "object": "chat.completion",
+        "created": 1791445907,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "4"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 26,
+          "completion_tokens": 2,
+          "total_tokens": 28,
+          "prompt_tokens_details": {
+            "cached_tokens": 19
+          }
+        },
+        "timings": {
+          "cache_n": 19,
+          "prompt_n": 7,
+          "prompt_ms": 49.4,
+          "prompt_per_token_ms": 7.057,
+          "prompt_per_second": 141.7,
+          "predicted_n": 2,
+          "predicted_ms": 66.9,
+          "predicted_per_token_ms": 33.45,
+          "predicted_per_second": 29.9,
+          "draft_n": 4,
+          "draft_n_accepted": 4
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "qa@2",
+      "seconds": 0.9060141000081785,
+      "response": {
+        "id": "chatcmpl-94a9508e46794e29ae1c1510",
+        "object": "chat.completion",
+        "created": 1791445907,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\n  \"planet\": \"Jupiter\",\n  \"product\": 391,\n  \"sorted\": [-2, 0, 5, 9]\n}"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 67,
+          "completion_tokens": 40,
+          "total_tokens": 107,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 67,
+          "prompt_ms": 506.4,
+          "prompt_per_token_ms": 7.558,
+          "prompt_per_second": 132.3,
+          "predicted_n": 40,
+          "predicted_ms": 397.2,
+          "predicted_per_token_ms": 9.93,
+          "predicted_per_second": 100.7,
+          "draft_n": 34,
+          "draft_n_accepted": 34
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "code@2",
+      "seconds": 0.9153478999942308,
+      "response": {
+        "id": "chatcmpl-0e97226fc0a04c10a74aba34",
+        "object": "chat.completion",
+        "created": 1791445908,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef stable_unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n```"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 57,
+          "completion_tokens": 53,
+          "total_tokens": 110,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 57,
+          "prompt_ms": 404.4,
+          "prompt_per_token_ms": 7.095,
+          "prompt_per_second": 140.9,
+          "predicted_n": 53,
+          "predicted_ms": 508.2,
+          "predicted_per_token_ms": 9.589,
+          "predicted_per_second": 104.3,
+          "draft_n": 49,
+          "draft_n_accepted": 48
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "medium@2",
+      "seconds": 8.9728771999944,
+      "response": {
+        "id": "chatcmpl-78ddf8bb638047c08c09b783",
+        "object": "chat.completion",
+        "created": 1791445909,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[7, 37, 52, 54, 19]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 928,
+          "completion_tokens": 20,
+          "total_tokens": 948,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 928,
+          "prompt_ms": 8649.2,
+          "prompt_per_token_ms": 9.32,
+          "prompt_per_second": 107.3,
+          "predicted_n": 20,
+          "predicted_ms": 320.0,
+          "predicted_per_token_ms": 16.0,
+          "predicted_per_second": 62.5,
+          "draft_n": 26,
+          "draft_n_accepted": 18
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "long@2",
+      "seconds": 19.026067999991938,
+      "response": {
+        "id": "chatcmpl-95241a1dbf5848328205b271",
+        "object": "chat.completion",
+        "created": 1791445918,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[25, 6, 94, 44, 37]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 1924,
+          "completion_tokens": 20,
+          "total_tokens": 1944,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 1924,
+          "prompt_ms": 18686.5,
+          "prompt_per_token_ms": 9.712,
+          "prompt_per_second": 103.0,
+          "predicted_n": 20,
+          "predicted_ms": 334.5,
+          "predicted_per_token_ms": 16.725,
+          "predicted_per_second": 59.8,
+          "draft_n": 20,
+          "draft_n_accepted": 16
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "decode@2",
+      "seconds": 3.9630481000058353,
+      "response": {
+        "id": "chatcmpl-767feca25a8840ed84d312c0",
+        "object": "chat.completion",
+        "created": 1791445937,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400, 441, 484, 529, 576, 625, 676, 729, 784, 841, 900, 961, 1024, 1089, 1156, 1225, 1296, 1369, 1444, 1521, 1600, 1681, 1764, 1849, 1936, 2025, 2116, 2209, 2304, 2401, 2500, 2601, 2704, 2809, 2916, 3025, 3136, 3249, 3364, 3481, 3600]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 42,
+          "completion_tokens": 318,
+          "total_tokens": 360,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 42,
+          "prompt_ms": 317.1,
+          "prompt_per_token_ms": 7.55,
+          "prompt_per_second": 132.5,
+          "predicted_n": 318,
+          "predicted_ms": 3643.3,
+          "predicted_per_token_ms": 11.457,
+          "predicted_per_second": 87.3,
+          "draft_n": 291,
+          "draft_n_accepted": 270
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "prose@2",
+      "seconds": 4.264967999988585,
+      "response": {
+        "id": "chatcmpl-5ac4b9a22dd44ff3ba16756d",
+        "object": "chat.completion",
+        "created": 1791445941,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "When a user types a domain name into a browser, the process begins with a local cache check. If the IP address is not stored locally, the browser queries a recursive resolver, typically provided by the Internet Service Provider. This resolver acts as an intermediary, handling the complex lookup process on behalf of the client. The resolver first checks its own cache. If the record is missing or expired, it initiates a chain of queries starting from the root name servers. These root servers direct the resolver to the appropriate Top-Level Domain (TLD) servers, such as those for .com or .org. The TLD servers then point to the authoritative name servers for the specific domain.\n\nAuthoritative servers hold the definitive DNS records for a domain, providing the final IP address. In contrast, recursive servers do not store original data but instead fetch answers from authoritative servers and return them to the client. Once the resolver obtains the IP address, it caches the result to speed up future requests. This caching is governed by the Time-to-Live (TTL) value associated with the DNS record. The TTL specifies how long the cached entry remains valid. Once the TTL expires, the resolver must query the authoritative servers again to ensure the information is current. This mechanism balances performance with data accuracy, ensuring users receive up-to-date IP addresses while minimizing unnecessary network traffic."
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 52,
+          "completion_tokens": 272,
+          "total_tokens": 324,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 52,
+          "prompt_ms": 367.5,
+          "prompt_per_token_ms": 7.067,
+          "prompt_per_second": 141.5,
+          "predicted_n": 272,
+          "predicted_ms": 3895.5,
+          "predicted_per_token_ms": 14.322,
+          "predicted_per_second": 69.8,
+          "draft_n": 145,
+          "draft_n_accepted": 120
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "long5k@2",
+      "seconds": 20.870448600006057,
+      "response": {
+        "id": "chatcmpl-8802f35da48344eeb5b6b64e",
+        "object": "chat.completion",
+        "created": 1791445945,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[25, 6, 94, 44, 37]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 5107,
+          "completion_tokens": 20,
+          "total_tokens": 5127,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 5107,
+          "prompt_ms": 20409.3,
+          "prompt_per_token_ms": 3.996,
+          "prompt_per_second": 250.2,
+          "predicted_n": 20,
+          "predicted_ms": 449.2,
+          "predicted_per_token_ms": 22.46,
+          "predicted_per_second": 44.5,
+          "draft_n": 26,
+          "draft_n_accepted": 18
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "cache_first@2",
+      "seconds": 0.34114919998683035,
+      "response": {
+        "id": "chatcmpl-9df0fd587ecb4347b88b26ae",
+        "object": "chat.completion",
+        "created": 1791445966,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "4"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 26,
+          "completion_tokens": 2,
+          "total_tokens": 28,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 26,
+          "prompt_ms": 272.8,
+          "prompt_per_token_ms": 10.492,
+          "prompt_per_second": 95.3,
+          "predicted_n": 2,
+          "predicted_ms": 66.0,
+          "predicted_per_token_ms": 33.0,
+          "predicted_per_second": 30.3,
+          "draft_n": 4,
+          "draft_n_accepted": 4
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "cache_repeat@2",
+      "seconds": 0.11759469998651184,
+      "response": {
+        "id": "chatcmpl-36f066f2a2be405da5245c59",
+        "object": "chat.completion",
+        "created": 1791445966,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "4"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 26,
+          "completion_tokens": 2,
+          "total_tokens": 28,
+          "prompt_tokens_details": {
+            "cached_tokens": 19
+          }
+        },
+        "timings": {
+          "cache_n": 19,
+          "prompt_n": 7,
+          "prompt_ms": 50.2,
+          "prompt_per_token_ms": 7.171,
+          "prompt_per_second": 139.4,
+          "predicted_n": 2,
+          "predicted_ms": 65.4,
+          "predicted_per_token_ms": 32.7,
+          "predicted_per_second": 30.6,
+          "draft_n": 4,
+          "draft_n_accepted": 4
+        }
+      },
+      "valid": true
+    }
+  ],
+  "ok": true,
+  "health": {
+    "status": "ok",
+    "max_context": 8192,
+    "model": "qwen3.8-flash-next",
+    "images": false,
+    "api_key": false,
+    "loaded": true,
+    "service": "strata"
+  },
+  "expected_requests": 18,
+  "cases": [
+    {
+      "key": "qa",
+      "prompt": "Return only a JSON object with keys planet, product, sorted. Set planet to the largest planet in the solar system in English, product to 17 times 23, sorted to the numbers 9, -2, 5, 0 in ascending order.",
+      "max_tokens": 100
+    },
+    {
+      "key": "code",
+      "prompt": "Write only Python code, no explanation. Define stable_unique(items) that removes duplicates from a list of hashable values while preserving first occurrence order. Do not import anything. Use a set to achieve average O(n) time.",
+      "max_tokens": 220
+    },
+    {
+      "key": "medium",
+      "prompt": "Item 0: id=R0000; available=5.\nItem 1: id=R0001; available=18.\nItem 2: id=R0002; available=31.\nItem 3: id=R0003; available=44.\nItem 4: id=R0004; available=57.\nItem 5: id=R0005; available=70.\nItem 6: id=R0006; available=83.\nItem 7: id=R0007; available=7.\nItem 8: id=R0008; available=20.\nItem 9: id=R0009; available=33.\nItem 10: id=R0010; available=46.\nItem 11: id=R0011; available=59.\nItem 12: id=R0012; available=72.\nItem 13: id=R0013; available=85.\nItem 14: id=R0014; available=9.\nItem 15: id=R0015; available=22.\nItem 16: id=R0016; available=35.\nItem 17: id=R0017; available=48.\nItem 18: id=R0018; available=61.\nItem 19: id=R0019; available=74.\nItem 20: id=R0020; available=87.\nItem 21: id=R0021; available=11.\nItem 22: id=R0022; available=24.\nItem 23: id=R0023; available=37.\nItem 24: id=R0024; available=50.\nItem 25: id=R0025; available=63.\nItem 26: id=R0026; available=76.\nItem 27: id=R0027; available=0.\nItem 28: id=R0028; available=13.\nItem 29: id=R0029; available=26.\nItem 30: id=R0030; available=39.\nItem 31: id=R0031; available=52.\nItem 32: id=R0032; available=65.\nItem 33: id=R0033; available=78.\nItem 34: id=R0034; available=2.\nItem 35: id=R0035; available=15.\nItem 36: id=R0036; available=28.\nItem 37: id=R0037; available=41.\nItem 38: id=R0038; available=54.\nItem 39: id=R0039; available=67.\nItem 40: id=R0040; available=80.\nItem 41: id=R0041; available=4.\nItem 42: id=R0042; available=17.\nItem 43: id=R0043; available=30.\nItem 44: id=R0044; available=43.\nItem 45: id=R0045; available=56.\nItem 46: id=R0046; available=69.\nItem 47: id=R0047; available=82.\nItem 48: id=R0048; available=6.\nItem 49: id=R0049; available=19.\nReturn only a JSON array of available values for items 7, 23, 31, 38 and 49, in that order.",
+      "max_tokens": 100
+    },
+    {
+      "key": "long",
+      "prompt": "Record 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nRecord 9: code=K0009; stock=59.\nRecord 10: code=K0010; stock=76.\nRecord 11: code=K0011; stock=93.\nRecord 12: code=K0012; stock=13.\nRecord 13: code=K0013; stock=30.\nRecord 14: code=K0014; stock=47.\nRecord 15: code=K0015; stock=64.\nRecord 16: code=K0016; stock=81.\nRecord 17: code=K0017; stock=1.\nRecord 18: code=K0018; stock=18.\nRecord 19: code=K0019; stock=35.\nRecord 20: code=K0020; stock=52.\nRecord 21: code=K0021; stock=69.\nRecord 22: code=K0022; stock=86.\nRecord 23: code=K0023; stock=6.\nRecord 24: code=K0024; stock=23.\nRecord 25: code=K0025; stock=40.\nRecord 26: code=K0026; stock=57.\nRecord 27: code=K0027; stock=74.\nRecord 28: code=K0028; stock=91.\nRecord 29: code=K0029; stock=11.\nRecord 30: code=K0030; stock=28.\nRecord 31: code=K0031; stock=45.\nRecord 32: code=K0032; stock=62.\nRecord 33: code=K0033; stock=79.\nRecord 34: code=K0034; stock=96.\nRecord 35: code=K0035; stock=16.\nRecord 36: code=K0036; stock=33.\nRecord 37: code=K0037; stock=50.\nRecord 38: code=K0038; stock=67.\nRecord 39: code=K0039; stock=84.\nRecord 40: code=K0040; stock=4.\nRecord 41: code=K0041; stock=21.\nRecord 42: code=K0042; stock=38.\nRecord 43: code=K0043; stock=55.\nRecord 44: code=K0044; stock=72.\nRecord 45: code=K0045; stock=89.\nRecord 46: code=K0046; stock=9.\nRecord 47: code=K0047; stock=26.\nRecord 48: code=K0048; stock=43.\nRecord 49: code=K0049; stock=60.\nRecord 50: code=K0050; stock=77.\nRecord 51: code=K0051; stock=94.\nRecord 52: code=K0052; stock=14.\nRecord 53: code=K0053; stock=31.\nRecord 54: code=K0054; stock=48.\nRecord 55: code=K0055; stock=65.\nRecord 56: code=K0056; stock=82.\nRecord 57: code=K0057; stock=2.\nRecord 58: code=K0058; stock=19.\nRecord 59: code=K0059; stock=36.\nRecord 60: code=K0060; stock=53.\nRecord 61: code=K0061; stock=70.\nRecord 62: code=K0062; stock=87.\nRecord 63: code=K0063; stock=7.\nRecord 64: code=K0064; stock=24.\nRecord 65: code=K0065; stock=41.\nRecord 66: code=K0066; stock=58.\nRecord 67: code=K0067; stock=75.\nRecord 68: code=K0068; stock=92.\nRecord 69: code=K0069; stock=12.\nRecord 70: code=K0070; stock=29.\nRecord 71: code=K0071; stock=46.\nRecord 72: code=K0072; stock=63.\nRecord 73: code=K0073; stock=80.\nRecord 74: code=K0074; stock=0.\nRecord 75: code=K0075; stock=17.\nRecord 76: code=K0076; stock=34.\nRecord 77: code=K0077; stock=51.\nRecord 78: code=K0078; stock=68.\nRecord 79: code=K0079; stock=85.\nRecord 80: code=K0080; stock=5.\nRecord 81: code=K0081; stock=22.\nRecord 82: code=K0082; stock=39.\nRecord 83: code=K0083; stock=56.\nRecord 84: code=K0084; stock=73.\nRecord 85: code=K0085; stock=90.\nRecord 86: code=K0086; stock=10.\nRecord 87: code=K0087; stock=27.\nRecord 88: code=K0088; stock=44.\nRecord 89: code=K0089; stock=61.\nRecord 90: code=K0090; stock=78.\nRecord 91: code=K0091; stock=95.\nRecord 92: code=K0092; stock=15.\nRecord 93: code=K0093; stock=32.\nRecord 94: code=K0094; stock=49.\nRecord 95: code=K0095; stock=66.\nRecord 96: code=K0096; stock=83.\nRecord 97: code=K0097; stock=3.\nRecord 98: code=K0098; stock=20.\nRecord 99: code=K0099; stock=37.\nReturn only a JSON array of stock values for records 7, 23, 51, 88 and 99, in that order.",
+      "max_tokens": 100
+    },
+    {
+      "key": "decode",
+      "prompt": "Return only a JSON array containing the squares of all integers from 1 through 60 inclusive, in ascending order. Do not omit any number.",
+      "max_tokens": 500
+    },
+    {
+      "key": "prose",
+      "prompt": "Explain how a browser resolves a domain name using DNS, including recursive resolvers, caching, TTL expiration, and the difference between authoritative and recursive servers. Use about 220 English words.",
+      "max_tokens": 420
+    },
+    {
+      "key": "long5k",
+      "prompt": "Record 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nRecord 9: code=K0009; stock=59.\nRecord 10: code=K0010; stock=76.\nRecord 11: code=K0011; stock=93.\nRecord 12: code=K0012; stock=13.\nRecord 13: code=K0013; stock=30.\nRecord 14: code=K0014; stock=47.\nRecord 15: code=K0015; stock=64.\nRecord 16: code=K0016; stock=81.\nRecord 17: code=K0017; stock=1.\nRecord 18: code=K0018; stock=18.\nRecord 19: code=K0019; stock=35.\nRecord 20: code=K0020; stock=52.\nRecord 21: code=K0021; stock=69.\nRecord 22: code=K0022; stock=86.\nRecord 23: code=K0023; stock=6.\nRecord 24: code=K0024; stock=23.\nRecord 25: code=K0025; stock=40.\nRecord 26: code=K0026; stock=57.\nRecord 27: code=K0027; stock=74.\nRecord 28: code=K0028; stock=91.\nRecord 29: code=K0029; stock=11.\nRecord 30: code=K0030; stock=28.\nRecord 31: code=K0031; stock=45.\nRecord 32: code=K0032; stock=62.\nRecord 33: code=K0033; stock=79.\nRecord 34: code=K0034; stock=96.\nRecord 35: code=K0035; stock=16.\nRecord 36: code=K0036; stock=33.\nRecord 37: code=K0037; stock=50.\nRecord 38: code=K0038; stock=67.\nRecord 39: code=K0039; stock=84.\nRecord 40: code=K0040; stock=4.\nRecord 41: code=K0041; stock=21.\nRecord 42: code=K0042; stock=38.\nRecord 43: code=K0043; stock=55.\nRecord 44: code=K0044; stock=72.\nRecord 45: code=K0045; stock=89.\nRecord 46: code=K0046; stock=9.\nRecord 47: code=K0047; stock=26.\nRecord 48: code=K0048; stock=43.\nRecord 49: code=K0049; stock=60.\nRecord 50: code=K0050; stock=77.\nRecord 51: code=K0051; stock=94.\nRecord 52: code=K0052; stock=14.\nRecord 53: code=K0053; stock=31.\nRecord 54: code=K0054; stock=48.\nRecord 55: code=K0055; stock=65.\nRecord 56: code=K0056; stock=82.\nRecord 57: code=K0057; stock=2.\nRecord 58: code=K0058; stock=19.\nRecord 59: code=K0059; stock=36.\nRecord 60: code=K0060; stock=53.\nRecord 61: code=K0061; stock=70.\nRecord 62: code=K0062; stock=87.\nRecord 63: code=K0063; stock=7.\nRecord 64: code=K0064; stock=24.\nRecord 65: code=K0065; stock=41.\nRecord 66: code=K0066; stock=58.\nRecord 67: code=K0067; stock=75.\nRecord 68: code=K0068; stock=92.\nRecord 69: code=K0069; stock=12.\nRecord 70: code=K0070; stock=29.\nRecord 71: code=K0071; stock=46.\nRecord 72: code=K0072; stock=63.\nRecord 73: code=K0073; stock=80.\nRecord 74: code=K0074; stock=0.\nRecord 75: code=K0075; stock=17.\nRecord 76: code=K0076; stock=34.\nRecord 77: code=K0077; stock=51.\nRecord 78: code=K0078; stock=68.\nRecord 79: code=K0079; stock=85.\nRecord 80: code=K0080; stock=5.\nRecord 81: code=K0081; stock=22.\nRecord 82: code=K0082; stock=39.\nRecord 83: code=K0083; stock=56.\nRecord 84: code=K0084; stock=73.\nRecord 85: code=K0085; stock=90.\nRecord 86: code=K0086; stock=10.\nRecord 87: code=K0087; stock=27.\nRecord 88: code=K0088; stock=44.\nRecord 89: code=K0089; stock=61.\nRecord 90: code=K0090; stock=78.\nRecord 91: code=K0091; stock=95.\nRecord 92: code=K0092; stock=15.\nRecord 93: code=K0093; stock=32.\nRecord 94: code=K0094; stock=49.\nRecord 95: code=K0095; stock=66.\nRecord 96: code=K0096; stock=83.\nRecord 97: code=K0097; stock=3.\nRecord 98: code=K0098; stock=20.\nRecord 99: code=K0099; stock=37.\nRecord 100: code=K0100; stock=54.\nRecord 101: code=K0101; stock=71.\nRecord 102: code=K0102; stock=88.\nRecord 103: code=K0103; stock=8.\nRecord 104: code=K0104; stock=25.\nRecord 105: code=K0105; stock=42.\nRecord 106: code=K0106; stock=59.\nRecord 107: code=K0107; stock=76.\nRecord 108: code=K0108; stock=93.\nRecord 109: code=K0109; stock=13.\nRecord 110: code=K0110; stock=30.\nRecord 111: code=K0111; stock=47.\nRecord 112: code=K0112; stock=64.\nRecord 113: code=K0113; stock=81.\nRecord 114: code=K0114; stock=1.\nRecord 115: code=K0115; stock=18.\nRecord 116: code=K0116; stock=35.\nRecord 117: code=K0117; stock=52.\nRecord 118: code=K0118; stock=69.\nRecord 119: code=K0119; stock=86.\nRecord 120: code=K0120; stock=6.\nRecord 121: code=K0121; stock=23.\nRecord 122: code=K0122; stock=40.\nRecord 123: code=K0123; stock=57.\nRecord 124: code=K0124; stock=74.\nRecord 125: code=K0125; stock=91.\nRecord 126: code=K0126; stock=11.\nRecord 127: code=K0127; stock=28.\nRecord 128: code=K0128; stock=45.\nRecord 129: code=K0129; stock=62.\nRecord 130: code=K0130; stock=79.\nRecord 131: code=K0131; stock=96.\nRecord 132: code=K0132; stock=16.\nRecord 133: code=K0133; stock=33.\nRecord 134: code=K0134; stock=50.\nRecord 135: code=K0135; stock=67.\nRecord 136: code=K0136; stock=84.\nRecord 137: code=K0137; stock=4.\nRecord 138: code=K0138; stock=21.\nRecord 139: code=K0139; stock=38.\nRecord 140: code=K0140; stock=55.\nRecord 141: code=K0141; stock=72.\nRecord 142: code=K0142; stock=89.\nRecord 143: code=K0143; stock=9.\nRecord 144: code=K0144; stock=26.\nRecord 145: code=K0145; stock=43.\nRecord 146: code=K0146; stock=60.\nRecord 147: code=K0147; stock=77.\nRecord 148: code=K0148; stock=94.\nRecord 149: code=K0149; stock=14.\nRecord 150: code=K0150; stock=31.\nRecord 151: code=K0151; stock=48.\nRecord 152: code=K0152; stock=65.\nRecord 153: code=K0153; stock=82.\nRecord 154: code=K0154; stock=2.\nRecord 155: code=K0155; stock=19.\nRecord 156: code=K0156; stock=36.\nRecord 157: code=K0157; stock=53.\nRecord 158: code=K0158; stock=70.\nRecord 159: code=K0159; stock=87.\nRecord 160: code=K0160; stock=7.\nRecord 161: code=K0161; stock=24.\nRecord 162: code=K0162; stock=41.\nRecord 163: code=K0163; stock=58.\nRecord 164: code=K0164; stock=75.\nRecord 165: code=K0165; stock=92.\nRecord 166: code=K0166; stock=12.\nRecord 167: code=K0167; stock=29.\nRecord 168: code=K0168; stock=46.\nRecord 169: code=K0169; stock=63.\nRecord 170: code=K0170; stock=80.\nRecord 171: code=K0171; stock=0.\nRecord 172: code=K0172; stock=17.\nRecord 173: code=K0173; stock=34.\nRecord 174: code=K0174; stock=51.\nRecord 175: code=K0175; stock=68.\nRecord 176: code=K0176; stock=85.\nRecord 177: code=K0177; stock=5.\nRecord 178: code=K0178; stock=22.\nRecord 179: code=K0179; stock=39.\nRecord 180: code=K0180; stock=56.\nRecord 181: code=K0181; stock=73.\nRecord 182: code=K0182; stock=90.\nRecord 183: code=K0183; stock=10.\nRecord 184: code=K0184; stock=27.\nRecord 185: code=K0185; stock=44.\nRecord 186: code=K0186; stock=61.\nRecord 187: code=K0187; stock=78.\nRecord 188: code=K0188; stock=95.\nRecord 189: code=K0189; stock=15.\nRecord 190: code=K0190; stock=32.\nRecord 191: code=K0191; stock=49.\nRecord 192: code=K0192; stock=66.\nRecord 193: code=K0193; stock=83.\nRecord 194: code=K0194; stock=3.\nRecord 195: code=K0195; stock=20.\nRecord 196: code=K0196; stock=37.\nRecord 197: code=K0197; stock=54.\nRecord 198: code=K0198; stock=71.\nRecord 199: code=K0199; stock=88.\nRecord 200: code=K0200; stock=8.\nRecord 201: code=K0201; stock=25.\nRecord 202: code=K0202; stock=42.\nRecord 203: code=K0203; stock=59.\nRecord 204: code=K0204; stock=76.\nRecord 205: code=K0205; stock=93.\nRecord 206: code=K0206; stock=13.\nRecord 207: code=K0207; stock=30.\nRecord 208: code=K0208; stock=47.\nRecord 209: code=K0209; stock=64.\nRecord 210: code=K0210; stock=81.\nRecord 211: code=K0211; stock=1.\nRecord 212: code=K0212; stock=18.\nRecord 213: code=K0213; stock=35.\nRecord 214: code=K0214; stock=52.\nRecord 215: code=K0215; stock=69.\nRecord 216: code=K0216; stock=86.\nRecord 217: code=K0217; stock=6.\nRecord 218: code=K0218; stock=23.\nRecord 219: code=K0219; stock=40.\nRecord 220: code=K0220; stock=57.\nRecord 221: code=K0221; stock=74.\nRecord 222: code=K0222; stock=91.\nRecord 223: code=K0223; stock=11.\nRecord 224: code=K0224; stock=28.\nRecord 225: code=K0225; stock=45.\nRecord 226: code=K0226; stock=62.\nRecord 227: code=K0227; stock=79.\nRecord 228: code=K0228; stock=96.\nRecord 229: code=K0229; stock=16.\nRecord 230: code=K0230; stock=33.\nRecord 231: code=K0231; stock=50.\nRecord 232: code=K0232; stock=67.\nRecord 233: code=K0233; stock=84.\nRecord 234: code=K0234; stock=4.\nRecord 235: code=K0235; stock=21.\nRecord 236: code=K0236; stock=38.\nRecord 237: code=K0237; stock=55.\nRecord 238: code=K0238; stock=72.\nRecord 239: code=K0239; stock=89.\nRecord 240: code=K0240; stock=9.\nRecord 241: code=K0241; stock=26.\nRecord 242: code=K0242; stock=43.\nRecord 243: code=K0243; stock=60.\nRecord 244: code=K0244; stock=77.\nRecord 245: code=K0245; stock=94.\nRecord 246: code=K0246; stock=14.\nRecord 247: code=K0247; stock=31.\nRecord 248: code=K0248; stock=48.\nRecord 249: code=K0249; stock=65.\nRecord 250: code=K0250; stock=82.\nRecord 251: code=K0251; stock=2.\nRecord 252: code=K0252; stock=19.\nRecord 253: code=K0253; stock=36.\nRecord 254: code=K0254; stock=53.\nRecord 255: code=K0255; stock=70.\nRecord 256: code=K0256; stock=87.\nRecord 257: code=K0257; stock=7.\nRecord 258: code=K0258; stock=24.\nRecord 259: code=K0259; stock=41.\nReturn only a JSON array of stock values for records 7, 23, 51, 88 and 99, in that order.",
+      "max_tokens": 100
+    },
+    {
+      "key": "cache_first",
+      "prompt": "Answer with the number only: what is 2 plus 2?",
+      "max_tokens": 16
+    },
+    {
+      "key": "cache_repeat",
+      "prompt": "Answer with the number only: what is 2 plus 2?",
+      "max_tokens": 16
+    },
+    {
+      "key": "qa@2",
+      "prompt": "Return only a JSON object with keys planet, product, sorted. Set planet to the largest planet in the solar system in English, product to 17 times 23, sorted to the numbers 9, -2, 5, 0 in ascending order.",
+      "max_tokens": 100
+    },
+    {
+      "key": "code@2",
+      "prompt": "Write only Python code, no explanation. Define stable_unique(items) that removes duplicates from a list of hashable values while preserving first occurrence order. Do not import anything. Use a set to achieve average O(n) time.",
+      "max_tokens": 220
+    },
+    {
+      "key": "medium@2",
+      "prompt": "Item 0: id=R0000; available=5.\nItem 1: id=R0001; available=18.\nItem 2: id=R0002; available=31.\nItem 3: id=R0003; available=44.\nItem 4: id=R0004; available=57.\nItem 5: id=R0005; available=70.\nItem 6: id=R0006; available=83.\nItem 7: id=R0007; available=7.\nItem 8: id=R0008; available=20.\nItem 9: id=R0009; available=33.\nItem 10: id=R0010; available=46.\nItem 11: id=R0011; available=59.\nItem 12: id=R0012; available=72.\nItem 13: id=R0013; available=85.\nItem 14: id=R0014; available=9.\nItem 15: id=R0015; available=22.\nItem 16: id=R0016; available=35.\nItem 17: id=R0017; available=48.\nItem 18: id=R0018; available=61.\nItem 19: id=R0019; available=74.\nItem 20: id=R0020; available=87.\nItem 21: id=R0021; available=11.\nItem 22: id=R0022; available=24.\nItem 23: id=R0023; available=37.\nItem 24: id=R0024; available=50.\nItem 25: id=R0025; available=63.\nItem 26: id=R0026; available=76.\nItem 27: id=R0027; available=0.\nItem 28: id=R0028; available=13.\nItem 29: id=R0029; available=26.\nItem 30: id=R0030; available=39.\nItem 31: id=R0031; available=52.\nItem 32: id=R0032; available=65.\nItem 33: id=R0033; available=78.\nItem 34: id=R0034; available=2.\nItem 35: id=R0035; available=15.\nItem 36: id=R0036; available=28.\nItem 37: id=R0037; available=41.\nItem 38: id=R0038; available=54.\nItem 39: id=R0039; available=67.\nItem 40: id=R0040; available=80.\nItem 41: id=R0041; available=4.\nItem 42: id=R0042; available=17.\nItem 43: id=R0043; available=30.\nItem 44: id=R0044; available=43.\nItem 45: id=R0045; available=56.\nItem 46: id=R0046; available=69.\nItem 47: id=R0047; available=82.\nItem 48: id=R0048; available=6.\nItem 49: id=R0049; available=19.\nReturn only a JSON array of available values for items 7, 23, 31, 38 and 49, in that order.",
+      "max_tokens": 100
+    },
+    {
+      "key": "long@2",
+      "prompt": "Record 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nRecord 9: code=K0009; stock=59.\nRecord 10: code=K0010; stock=76.\nRecord 11: code=K0011; stock=93.\nRecord 12: code=K0012; stock=13.\nRecord 13: code=K0013; stock=30.\nRecord 14: code=K0014; stock=47.\nRecord 15: code=K0015; stock=64.\nRecord 16: code=K0016; stock=81.\nRecord 17: code=K0017; stock=1.\nRecord 18: code=K0018; stock=18.\nRecord 19: code=K0019; stock=35.\nRecord 20: code=K0020; stock=52.\nRecord 21: code=K0021; stock=69.\nRecord 22: code=K0022; stock=86.\nRecord 23: code=K0023; stock=6.\nRecord 24: code=K0024; stock=23.\nRecord 25: code=K0025; stock=40.\nRecord 26: code=K0026; stock=57.\nRecord 27: code=K0027; stock=74.\nRecord 28: code=K0028; stock=91.\nRecord 29: code=K0029; stock=11.\nRecord 30: code=K0030; stock=28.\nRecord 31: code=K0031; stock=45.\nRecord 32: code=K0032; stock=62.\nRecord 33: code=K0033; stock=79.\nRecord 34: code=K0034; stock=96.\nRecord 35: code=K0035; stock=16.\nRecord 36: code=K0036; stock=33.\nRecord 37: code=K0037; stock=50.\nRecord 38: code=K0038; stock=67.\nRecord 39: code=K0039; stock=84.\nRecord 40: code=K0040; stock=4.\nRecord 41: code=K0041; stock=21.\nRecord 42: code=K0042; stock=38.\nRecord 43: code=K0043; stock=55.\nRecord 44: code=K0044; stock=72.\nRecord 45: code=K0045; stock=89.\nRecord 46: code=K0046; stock=9.\nRecord 47: code=K0047; stock=26.\nRecord 48: code=K0048; stock=43.\nRecord 49: code=K0049; stock=60.\nRecord 50: code=K0050; stock=77.\nRecord 51: code=K0051; stock=94.\nRecord 52: code=K0052; stock=14.\nRecord 53: code=K0053; stock=31.\nRecord 54: code=K0054; stock=48.\nRecord 55: code=K0055; stock=65.\nRecord 56: code=K0056; stock=82.\nRecord 57: code=K0057; stock=2.\nRecord 58: code=K0058; stock=19.\nRecord 59: code=K0059; stock=36.\nRecord 60: code=K0060; stock=53.\nRecord 61: code=K0061; stock=70.\nRecord 62: code=K0062; stock=87.\nRecord 63: code=K0063; stock=7.\nRecord 64: code=K0064; stock=24.\nRecord 65: code=K0065; stock=41.\nRecord 66: code=K0066; stock=58.\nRecord 67: code=K0067; stock=75.\nRecord 68: code=K0068; stock=92.\nRecord 69: code=K0069; stock=12.\nRecord 70: code=K0070; stock=29.\nRecord 71: code=K0071; stock=46.\nRecord 72: code=K0072; stock=63.\nRecord 73: code=K0073; stock=80.\nRecord 74: code=K0074; stock=0.\nRecord 75: code=K0075; stock=17.\nRecord 76: code=K0076; stock=34.\nRecord 77: code=K0077; stock=51.\nRecord 78: code=K0078; stock=68.\nRecord 79: code=K0079; stock=85.\nRecord 80: code=K0080; stock=5.\nRecord 81: code=K0081; stock=22.\nRecord 82: code=K0082; stock=39.\nRecord 83: code=K0083; stock=56.\nRecord 84: code=K0084; stock=73.\nRecord 85: code=K0085; stock=90.\nRecord 86: code=K0086; stock=10.\nRecord 87: code=K0087; stock=27.\nRecord 88: code=K0088; stock=44.\nRecord 89: code=K0089; stock=61.\nRecord 90: code=K0090; stock=78.\nRecord 91: code=K0091; stock=95.\nRecord 92: code=K0092; stock=15.\nRecord 93: code=K0093; stock=32.\nRecord 94: code=K0094; stock=49.\nRecord 95: code=K0095; stock=66.\nRecord 96: code=K0096; stock=83.\nRecord 97: code=K0097; stock=3.\nRecord 98: code=K0098; stock=20.\nRecord 99: code=K0099; stock=37.\nReturn only a JSON array of stock values for records 7, 23, 51, 88 and 99, in that order.",
+      "max_tokens": 100
+    },
+    {
+      "key": "decode@2",
+      "prompt": "Return only a JSON array containing the squares of all integers from 1 through 60 inclusive, in ascending order. Do not omit any number.",
+      "max_tokens": 500
+    },
+    {
+      "key": "prose@2",
+      "prompt": "Explain how a browser resolves a domain name using DNS, including recursive resolvers, caching, TTL expiration, and the difference between authoritative and recursive servers. Use about 220 English words.",
+      "max_tokens": 420
+    },
+    {
+      "key": "long5k@2",
+      "prompt": "Record 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nRecord 9: code=K0009; stock=59.\nRecord 10: code=K0010; stock=76.\nRecord 11: code=K0011; stock=93.\nRecord 12: code=K0012; stock=13.\nRecord 13: code=K0013; stock=30.\nRecord 14: code=K0014; stock=47.\nRecord 15: code=K0015; stock=64.\nRecord 16: code=K0016; stock=81.\nRecord 17: code=K0017; stock=1.\nRecord 18: code=K0018; stock=18.\nRecord 19: code=K0019; stock=35.\nRecord 20: code=K0020; stock=52.\nRecord 21: code=K0021; stock=69.\nRecord 22: code=K0022; stock=86.\nRecord 23: code=K0023; stock=6.\nRecord 24: code=K0024; stock=23.\nRecord 25: code=K0025; stock=40.\nRecord 26: code=K0026; stock=57.\nRecord 27: code=K0027; stock=74.\nRecord 28: code=K0028; stock=91.\nRecord 29: code=K0029; stock=11.\nRecord 30: code=K0030; stock=28.\nRecord 31: code=K0031; stock=45.\nRecord 32: code=K0032; stock=62.\nRecord 33: code=K0033; stock=79.\nRecord 34: code=K0034; stock=96.\nRecord 35: code=K0035; stock=16.\nRecord 36: code=K0036; stock=33.\nRecord 37: code=K0037; stock=50.\nRecord 38: code=K0038; stock=67.\nRecord 39: code=K0039; stock=84.\nRecord 40: code=K0040; stock=4.\nRecord 41: code=K0041; stock=21.\nRecord 42: code=K0042; stock=38.\nRecord 43: code=K0043; stock=55.\nRecord 44: code=K0044; stock=72.\nRecord 45: code=K0045; stock=89.\nRecord 46: code=K0046; stock=9.\nRecord 47: code=K0047; stock=26.\nRecord 48: code=K0048; stock=43.\nRecord 49: code=K0049; stock=60.\nRecord 50: code=K0050; stock=77.\nRecord 51: code=K0051; stock=94.\nRecord 52: code=K0052; stock=14.\nRecord 53: code=K0053; stock=31.\nRecord 54: code=K0054; stock=48.\nRecord 55: code=K0055; stock=65.\nRecord 56: code=K0056; stock=82.\nRecord 57: code=K0057; stock=2.\nRecord 58: code=K0058; stock=19.\nRecord 59: code=K0059; stock=36.\nRecord 60: code=K0060; stock=53.\nRecord 61: code=K0061; stock=70.\nRecord 62: code=K0062; stock=87.\nRecord 63: code=K0063; stock=7.\nRecord 64: code=K0064; stock=24.\nRecord 65: code=K0065; stock=41.\nRecord 66: code=K0066; stock=58.\nRecord 67: code=K0067; stock=75.\nRecord 68: code=K0068; stock=92.\nRecord 69: code=K0069; stock=12.\nRecord 70: code=K0070; stock=29.\nRecord 71: code=K0071; stock=46.\nRecord 72: code=K0072; stock=63.\nRecord 73: code=K0073; stock=80.\nRecord 74: code=K0074; stock=0.\nRecord 75: code=K0075; stock=17.\nRecord 76: code=K0076; stock=34.\nRecord 77: code=K0077; stock=51.\nRecord 78: code=K0078; stock=68.\nRecord 79: code=K0079; stock=85.\nRecord 80: code=K0080; stock=5.\nRecord 81: code=K0081; stock=22.\nRecord 82: code=K0082; stock=39.\nRecord 83: code=K0083; stock=56.\nRecord 84: code=K0084; stock=73.\nRecord 85: code=K0085; stock=90.\nRecord 86: code=K0086; stock=10.\nRecord 87: code=K0087; stock=27.\nRecord 88: code=K0088; stock=44.\nRecord 89: code=K0089; stock=61.\nRecord 90: code=K0090; stock=78.\nRecord 91: code=K0091; stock=95.\nRecord 92: code=K0092; stock=15.\nRecord 93: code=K0093; stock=32.\nRecord 94: code=K0094; stock=49.\nRecord 95: code=K0095; stock=66.\nRecord 96: code=K0096; stock=83.\nRecord 97: code=K0097; stock=3.\nRecord 98: code=K0098; stock=20.\nRecord 99: code=K0099; stock=37.\nRecord 100: code=K0100; stock=54.\nRecord 101: code=K0101; stock=71.\nRecord 102: code=K0102; stock=88.\nRecord 103: code=K0103; stock=8.\nRecord 104: code=K0104; stock=25.\nRecord 105: code=K0105; stock=42.\nRecord 106: code=K0106; stock=59.\nRecord 107: code=K0107; stock=76.\nRecord 108: code=K0108; stock=93.\nRecord 109: code=K0109; stock=13.\nRecord 110: code=K0110; stock=30.\nRecord 111: code=K0111; stock=47.\nRecord 112: code=K0112; stock=64.\nRecord 113: code=K0113; stock=81.\nRecord 114: code=K0114; stock=1.\nRecord 115: code=K0115; stock=18.\nRecord 116: code=K0116; stock=35.\nRecord 117: code=K0117; stock=52.\nRecord 118: code=K0118; stock=69.\nRecord 119: code=K0119; stock=86.\nRecord 120: code=K0120; stock=6.\nRecord 121: code=K0121; stock=23.\nRecord 122: code=K0122; stock=40.\nRecord 123: code=K0123; stock=57.\nRecord 124: code=K0124; stock=74.\nRecord 125: code=K0125; stock=91.\nRecord 126: code=K0126; stock=11.\nRecord 127: code=K0127; stock=28.\nRecord 128: code=K0128; stock=45.\nRecord 129: code=K0129; stock=62.\nRecord 130: code=K0130; stock=79.\nRecord 131: code=K0131; stock=96.\nRecord 132: code=K0132; stock=16.\nRecord 133: code=K0133; stock=33.\nRecord 134: code=K0134; stock=50.\nRecord 135: code=K0135; stock=67.\nRecord 136: code=K0136; stock=84.\nRecord 137: code=K0137; stock=4.\nRecord 138: code=K0138; stock=21.\nRecord 139: code=K0139; stock=38.\nRecord 140: code=K0140; stock=55.\nRecord 141: code=K0141; stock=72.\nRecord 142: code=K0142; stock=89.\nRecord 143: code=K0143; stock=9.\nRecord 144: code=K0144; stock=26.\nRecord 145: code=K0145; stock=43.\nRecord 146: code=K0146; stock=60.\nRecord 147: code=K0147; stock=77.\nRecord 148: code=K0148; stock=94.\nRecord 149: code=K0149; stock=14.\nRecord 150: code=K0150; stock=31.\nRecord 151: code=K0151; stock=48.\nRecord 152: code=K0152; stock=65.\nRecord 153: code=K0153; stock=82.\nRecord 154: code=K0154; stock=2.\nRecord 155: code=K0155; stock=19.\nRecord 156: code=K0156; stock=36.\nRecord 157: code=K0157; stock=53.\nRecord 158: code=K0158; stock=70.\nRecord 159: code=K0159; stock=87.\nRecord 160: code=K0160; stock=7.\nRecord 161: code=K0161; stock=24.\nRecord 162: code=K0162; stock=41.\nRecord 163: code=K0163; stock=58.\nRecord 164: code=K0164; stock=75.\nRecord 165: code=K0165; stock=92.\nRecord 166: code=K0166; stock=12.\nRecord 167: code=K0167; stock=29.\nRecord 168: code=K0168; stock=46.\nRecord 169: code=K0169; stock=63.\nRecord 170: code=K0170; stock=80.\nRecord 171: code=K0171; stock=0.\nRecord 172: code=K0172; stock=17.\nRecord 173: code=K0173; stock=34.\nRecord 174: code=K0174; stock=51.\nRecord 175: code=K0175; stock=68.\nRecord 176: code=K0176; stock=85.\nRecord 177: code=K0177; stock=5.\nRecord 178: code=K0178; stock=22.\nRecord 179: code=K0179; stock=39.\nRecord 180: code=K0180; stock=56.\nRecord 181: code=K0181; stock=73.\nRecord 182: code=K0182; stock=90.\nRecord 183: code=K0183; stock=10.\nRecord 184: code=K0184; stock=27.\nRecord 185: code=K0185; stock=44.\nRecord 186: code=K0186; stock=61.\nRecord 187: code=K0187; stock=78.\nRecord 188: code=K0188; stock=95.\nRecord 189: code=K0189; stock=15.\nRecord 190: code=K0190; stock=32.\nRecord 191: code=K0191; stock=49.\nRecord 192: code=K0192; stock=66.\nRecord 193: code=K0193; stock=83.\nRecord 194: code=K0194; stock=3.\nRecord 195: code=K0195; stock=20.\nRecord 196: code=K0196; stock=37.\nRecord 197: code=K0197; stock=54.\nRecord 198: code=K0198; stock=71.\nRecord 199: code=K0199; stock=88.\nRecord 200: code=K0200; stock=8.\nRecord 201: code=K0201; stock=25.\nRecord 202: code=K0202; stock=42.\nRecord 203: code=K0203; stock=59.\nRecord 204: code=K0204; stock=76.\nRecord 205: code=K0205; stock=93.\nRecord 206: code=K0206; stock=13.\nRecord 207: code=K0207; stock=30.\nRecord 208: code=K0208; stock=47.\nRecord 209: code=K0209; stock=64.\nRecord 210: code=K0210; stock=81.\nRecord 211: code=K0211; stock=1.\nRecord 212: code=K0212; stock=18.\nRecord 213: code=K0213; stock=35.\nRecord 214: code=K0214; stock=52.\nRecord 215: code=K0215; stock=69.\nRecord 216: code=K0216; stock=86.\nRecord 217: code=K0217; stock=6.\nRecord 218: code=K0218; stock=23.\nRecord 219: code=K0219; stock=40.\nRecord 220: code=K0220; stock=57.\nRecord 221: code=K0221; stock=74.\nRecord 222: code=K0222; stock=91.\nRecord 223: code=K0223; stock=11.\nRecord 224: code=K0224; stock=28.\nRecord 225: code=K0225; stock=45.\nRecord 226: code=K0226; stock=62.\nRecord 227: code=K0227; stock=79.\nRecord 228: code=K0228; stock=96.\nRecord 229: code=K0229; stock=16.\nRecord 230: code=K0230; stock=33.\nRecord 231: code=K0231; stock=50.\nRecord 232: code=K0232; stock=67.\nRecord 233: code=K0233; stock=84.\nRecord 234: code=K0234; stock=4.\nRecord 235: code=K0235; stock=21.\nRecord 236: code=K0236; stock=38.\nRecord 237: code=K0237; stock=55.\nRecord 238: code=K0238; stock=72.\nRecord 239: code=K0239; stock=89.\nRecord 240: code=K0240; stock=9.\nRecord 241: code=K0241; stock=26.\nRecord 242: code=K0242; stock=43.\nRecord 243: code=K0243; stock=60.\nRecord 244: code=K0244; stock=77.\nRecord 245: code=K0245; stock=94.\nRecord 246: code=K0246; stock=14.\nRecord 247: code=K0247; stock=31.\nRecord 248: code=K0248; stock=48.\nRecord 249: code=K0249; stock=65.\nRecord 250: code=K0250; stock=82.\nRecord 251: code=K0251; stock=2.\nRecord 252: code=K0252; stock=19.\nRecord 253: code=K0253; stock=36.\nRecord 254: code=K0254; stock=53.\nRecord 255: code=K0255; stock=70.\nRecord 256: code=K0256; stock=87.\nRecord 257: code=K0257; stock=7.\nRecord 258: code=K0258; stock=24.\nRecord 259: code=K0259; stock=41.\nReturn only a JSON array of stock values for records 7, 23, 51, 88 and 99, in that order.",
+      "max_tokens": 100
+    },
+    {
+      "key": "cache_first@2",
+      "prompt": "Answer with the number only: what is 2 plus 2?",
+      "max_tokens": 16
+    },
+    {
+      "key": "cache_repeat@2",
+      "prompt": "Answer with the number only: what is 2 plus 2?",
+      "max_tokens": 16
+    }
+  ],
+  "status": {
+    "service": "strata",
+    "model": "qwen3.8-flash-next",
+    "loaded": true,
+    "auto_load": true,
+    "structured_output": {
+      "formats": [
+        "json_object",
+        "json_schema"
+      ],
+      "method": "prompt_and_validate",
+      "constrained_decoding": false,
+      "stream_buffered": true
+    },
+    "engine": "0.1.40.3",
+    "started": 1791445838,
+    "uptime_s": 128,
+    "cache_max_tokens": 8192,
+    "cache": {
+      "state": "disabled"
+    },
+    "context": {
+      "native": 8192,
+      "max_positions": 8192
+    },
+    "concurrency": {
+      "serving": 1,
+      "requested": 1
+    },
+    "dialects": [
+      "/v1/chat/completions",
+      "/v1/messages",
+      "/v1/responses"
+    ],
+    "vision": {
+      "enabled": false,
+      "available": false,
+      "error": null
+    },
+    "activity": {
+      "requests": 18,
+      "in_flight": 0,
+      "last_request_at": 1791445966
+    },
+    "last_timings": {
+      "cache_n": 19,
+      "prompt_n": 7,
+      "prompt_ms": 50.2,
+      "prompt_per_token_ms": 7.171,
+      "prompt_per_second": 139.4,
+      "predicted_n": 2,
+      "predicted_ms": 65.4,
+      "predicted_per_token_ms": 32.7,
+      "predicted_per_second": 30.6,
+      "draft_n": 4,
+      "draft_n_accepted": 4,
+      "at": 1791445966
+    },
+    "vram": {
+      "elastic": false
+    },
+    "machine": {
+      "at": 1791445966,
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 2080 Ti",
+        "used_mib": 22457.0,
+        "total_mib": 22528.0,
+        "util_pct": 13,
+        "temp_c": 52,
+        "power_w": 223.157
+      },
+      "ram": {
+        "used_gib": 20.0,
+        "total_gib": 31.6
+      }
+    }
+  }
+}

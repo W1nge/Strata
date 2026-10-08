@@ -1,0 +1,17 @@
+[
+  "C:\\ProgramData\\anaconda3\\python.exe",
+  "-X",
+  "utf8",
+  "C:\\Users\\Winge\\Documents\\Playground\\Strata-optimization-pr\\tools\\bench_part2_tuning.py",
+  "reserve1792-a",
+  "--config",
+  "E:\\strata-setup\\part2-prefill-next\\baseline-coding-config.json",
+  "--out",
+  "E:\\strata-setup\\part2-prefill-next",
+  "--extended",
+  "--medium",
+  "--rounds",
+  "2",
+  "--overrides",
+  "{\"vram_reserve_mib\": 1792}"
+]
