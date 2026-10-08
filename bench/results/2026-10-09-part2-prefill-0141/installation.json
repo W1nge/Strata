@@ -1,0 +1,14 @@
+{
+  "epoch": 1791502891.986429,
+  "config": "C:\\strata-models\\strata-dual-p100-coding.json",
+  "old_config_sha256": "edac91829b59770fd2a67f09bef836a90ee5d95528a3f2b20cccf95a112bde99",
+  "config_sha256": "00a3579dc5383deb67bf58e968b9c080773f55346465755d9478dd92802b2de4",
+  "exe": "E:\\strata-setup\\part2-prefill-0141-20261009\\upstream-0141\\strata.exe",
+  "exe_sha256": "9fcc7cd90f0e8dad13463846e464f5b54fbe262fc9eeff90e98797de403dbae2",
+  "rollback_config": "E:\\strata-setup\\part2-prefill-0141-20261009\\rollback-coding-config.json",
+  "old_exe_sha256": "7722a6d34f8efded911dd0eeef091461972fa5958bf75725767172a3678f2a25",
+  "daily_source_commit": "62a04cc14e6be3d4646a2edfd3a0bcf625d3ff45",
+  "tested_source_commit": "26a119378f2fb28525dad29f00ada36dba9e249c",
+  "audit_sha256": "d59c6e2b2f686b45ff46574667bf0ee2425b5a6b1a930cca381e15d0d03d184a",
+  "gpu": "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W\n1, Tesla P100-PCIE-16GB, 537.13, 250.00 W"
+}

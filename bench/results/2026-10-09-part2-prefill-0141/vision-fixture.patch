@@ -1,0 +1,21 @@
+commit 9e1b2eca4410758ddf6a99396a265d3343f743b0
+Author:     W1nge <railgun4@outlook.com>
+AuthorDate: Fri Oct 9 06:59:19 2026 +0800
+Commit:     W1nge <railgun4@outlook.com>
+CommitDate: Fri Oct 9 07:44:53 2026 +0800
+
+    test: keep vision device isolation independent of local GPU order
+
+diff --git a/serve/test_server.py b/serve/test_server.py
+index 60e909e..996ad17 100644
+--- a/serve/test_server.py
++++ b/serve/test_server.py
+@@ -1651,7 +1651,7 @@ class GpuChoice(unittest.TestCase):
+     def test_vision_device(self):
+         # #408: the image encoder on its own card; the engine's environment stays as it was
+         from serve.server import child_env, vision_env
+-        cfg = {"gpu": [0, 1], "vision": {"exe": "v", "cuda_device": 2}}
++        cfg = {"gpu": [0, 1], "gpu_order": "as_given", "vision": {"exe": "v", "cuda_device": 2}}
+         env = child_env(cfg)
+         venv = vision_env(cfg, env)
+         self.assertEqual(venv["CUDA_VISIBLE_DEVICES"], "2")

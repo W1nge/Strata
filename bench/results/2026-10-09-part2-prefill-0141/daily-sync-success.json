@@ -1,0 +1,15 @@
+{
+  "epoch": 1791503711.8130703,
+  "daily_head": "62a04cc14e6be3d4646a2edfd3a0bcf625d3ff45",
+  "integration_head": "4e4adfa2c5590825481b9febe473b1c4a70523ea",
+  "source_paths": [
+    "src",
+    "include",
+    "serve",
+    "tools/strata_tokenizer.py",
+    "CMakeLists.txt",
+    "setup.py"
+  ],
+  "source_diff_empty": true,
+  "note": "The earlier daily-sync.log records merge conflicts; they were resolved in 62a04cc."
+}

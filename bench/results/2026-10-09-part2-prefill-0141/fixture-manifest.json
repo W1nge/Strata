@@ -1,0 +1,95 @@
+{
+  "prefill_sha256": "ee6b62023c2aef01fdc2d411202946d181129700aec8694bb9681321f1d5ab78",
+  "sessions_sha256": "c7e86546f7d5470b3a89ede0eac481c6d259dcea48f9c151924db40593aeb840",
+  "requests": 11,
+  "cases": [
+    {
+      "key": "warm",
+      "expected": 4
+    },
+    {
+      "key": "records-small-r1",
+      "expected": [
+        25,
+        30,
+        35
+      ]
+    },
+    {
+      "key": "records-medium-r1",
+      "expected": [
+        25,
+        6,
+        45,
+        67,
+        55
+      ]
+    },
+    {
+      "key": "source-2k-r1",
+      "expected": [
+        "request_body",
+        "ask"
+      ]
+    },
+    {
+      "key": "source-3k5-r1",
+      "expected": [
+        "corpus",
+        "validate"
+      ]
+    },
+    {
+      "key": "records-5k-r1",
+      "expected": [
+        25,
+        6,
+        94,
+        44,
+        37
+      ]
+    },
+    {
+      "key": "records-5k-r2",
+      "expected": [
+        25,
+        6,
+        94,
+        44,
+        37
+      ]
+    },
+    {
+      "key": "source-3k5-r2",
+      "expected": [
+        "corpus",
+        "validate"
+      ]
+    },
+    {
+      "key": "source-2k-r2",
+      "expected": [
+        "request_body",
+        "ask"
+      ]
+    },
+    {
+      "key": "records-medium-r2",
+      "expected": [
+        25,
+        6,
+        45,
+        67,
+        55
+      ]
+    },
+    {
+      "key": "records-small-r2",
+      "expected": [
+        25,
+        30,
+        35
+      ]
+    }
+  ]
+}

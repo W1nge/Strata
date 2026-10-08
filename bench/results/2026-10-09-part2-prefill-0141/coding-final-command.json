@@ -1,0 +1,16 @@
+[
+  "C:\\ProgramData\\anaconda3\\python.exe",
+  "-X",
+  "utf8",
+  "C:\\Users\\Winge\\Documents\\Playground\\Strata-optimization-pr\\tools\\bench_part2_tuning.py",
+  "coding-final",
+  "--config",
+  "E:\\strata-setup\\part2-prefill-0141-20261009\\v141-direct-base.json",
+  "--out",
+  "E:\\strata-setup\\part2-prefill-0141-20261009",
+  "--coding",
+  "--coding-long",
+  "--coding-edit",
+  "--rounds",
+  "1"
+]

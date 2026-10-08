@@ -1,0 +1,12 @@
+{
+  "source_commit": "26a119378f2fb28525dad29f00ada36dba9e249c",
+  "sha256": "9fcc7cd90f0e8dad13463846e464f5b54fbe262fc9eeff90e98797de403dbae2",
+  "bytes": 65586688,
+  "cuda": "12.4.131",
+  "architectures": [
+    "sm60",
+    "sm75"
+  ],
+  "driver": "537.13",
+  "build_exit_code": 0
+}
