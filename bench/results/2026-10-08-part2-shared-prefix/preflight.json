@@ -1,0 +1,102 @@
+[
+  {
+    "key": "warm",
+    "tokens": 24,
+    "expected": 4
+  },
+  {
+    "key": "prefix-0",
+    "tokens": 2058,
+    "expected": [
+      "request_body",
+      "ask"
+    ]
+  },
+  {
+    "key": "prefix-1",
+    "tokens": 2057,
+    "expected": [
+      "split",
+      "joined"
+    ]
+  },
+  {
+    "key": "prefix-2",
+    "tokens": 2050,
+    "expected": 128
+  },
+  {
+    "key": "prefix-3",
+    "tokens": 2057,
+    "expected": [
+      "on",
+      "off"
+    ]
+  },
+  {
+    "key": "prefix-changed",
+    "tokens": 2050,
+    "expected": 192
+  },
+  {
+    "key": "prefix-original",
+    "tokens": 2050,
+    "expected": 128
+  },
+  {
+    "key": "A0",
+    "tokens": 2307,
+    "expected": [
+      "request_body",
+      "ask"
+    ]
+  },
+  {
+    "key": "B0",
+    "tokens": 3739,
+    "expected": [
+      "corpus",
+      "validate"
+    ]
+  },
+  {
+    "key": "A1",
+    "tokens": 2343,
+    "expected": 128
+  },
+  {
+    "key": "B1",
+    "tokens": 3772,
+    "expected": 18997
+  },
+  {
+    "key": "A2",
+    "tokens": 2429,
+    "expected": 3
+  },
+  {
+    "key": "B2",
+    "tokens": 3860,
+    "expected": 7
+  },
+  {
+    "key": "A3",
+    "tokens": 2429,
+    "expected": 5
+  },
+  {
+    "key": "B3",
+    "tokens": 3860,
+    "expected": 9
+  },
+  {
+    "key": "A4",
+    "tokens": 2457,
+    "expected": 5
+  },
+  {
+    "key": "B4",
+    "tokens": 3888,
+    "expected": 9
+  }
+]

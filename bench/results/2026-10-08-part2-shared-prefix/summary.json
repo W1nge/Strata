@@ -1,0 +1,283 @@
+{
+  "baseline-c": {
+    "all": {
+      "count": 17,
+      "wall_s": 314.0373155000002,
+      "ttft_median_s": 19.06511599999976,
+      "wall_min_s": 0.7634945999998308,
+      "wall_max_s": 22.357074099999863,
+      "cached": 0,
+      "read": 41090,
+      "hits": 0
+    },
+    "prefix_repeat": {
+      "count": 3,
+      "wall_s": 59.726281899999776,
+      "ttft_median_s": 20.40111999999999,
+      "wall_min_s": 18.27800180000031,
+      "wall_max_s": 20.90123629999971,
+      "cached": 0,
+      "read": 6170,
+      "hits": 0
+    },
+    "session_return": {
+      "count": 8,
+      "wall_s": 152.48830540000063,
+      "ttft_median_s": 18.862756399999853,
+      "wall_min_s": 17.912537000000157,
+      "wall_max_s": 20.83320350000031,
+      "cached": 0,
+      "read": 23178,
+      "hits": 0
+    },
+    "session_plain": {
+      "count": 4,
+      "wall_s": 74.08534270000018,
+      "ttft_median_s": 18.375724149999996,
+      "wall_min_s": 17.912537000000157,
+      "wall_max_s": 19.146423700000014,
+      "cached": 0,
+      "read": 11530,
+      "hits": 0
+    },
+    "session_tool_edit": {
+      "count": 4,
+      "wall_s": 78.40296270000044,
+      "ttft_median_s": 19.63149989999988,
+      "wall_min_s": 18.11007860000018,
+      "wall_max_s": 20.83320350000031,
+      "cached": 0,
+      "read": 11648,
+      "hits": 0
+    },
+    "memory": {
+      "sample_count": 311,
+      "available_min_gib": 12.153533935546875,
+      "available_median_gib": 12.673110961914062,
+      "c_drive_read_gib": 242.7373628616333
+    },
+    "cache_log": {
+      "skips": 0,
+      "restores": 0,
+      "parked_bytes_max": 0,
+      "snapshot_bytes_max": 0
+    },
+    "gpu": [
+      "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W, 22528 MiB\n1, Tesla P100-PCIE-16GB, 537.13, 250.00 W, 16384 MiB",
+      "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W\n1, Tesla P100-PCIE-16GB, 537.13, 250.00 W"
+    ]
+  },
+  "cache-a": {
+    "all": {
+      "count": 17,
+      "wall_s": 249.26323019999927,
+      "ttft_median_s": 19.12034390000008,
+      "wall_min_s": 0.43953620000002047,
+      "wall_max_s": 24.414901799999825,
+      "cached": 8104,
+      "read": 32986,
+      "hits": 4
+    },
+    "prefix_repeat": {
+      "count": 3,
+      "wall_s": 1.470972100000381,
+      "ttft_median_s": 0.335469699999976,
+      "wall_min_s": 0.43953620000002047,
+      "wall_max_s": 0.5439201000003777,
+      "cached": 6078,
+      "read": 92,
+      "hits": 3
+    },
+    "session_return": {
+      "count": 8,
+      "wall_s": 159.60210339999912,
+      "ttft_median_s": 19.14251545000002,
+      "wall_min_s": 18.2946751999998,
+      "wall_max_s": 23.17846329999975,
+      "cached": 0,
+      "read": 23178,
+      "hits": 0
+    },
+    "session_plain": {
+      "count": 4,
+      "wall_s": 76.71922589999986,
+      "ttft_median_s": 19.14251545000002,
+      "wall_min_s": 18.2946751999998,
+      "wall_max_s": 19.930879800000184,
+      "cached": 0,
+      "read": 11530,
+      "hits": 0
+    },
+    "session_tool_edit": {
+      "count": 4,
+      "wall_s": 82.88287749999927,
+      "ttft_median_s": 20.21766075000005,
+      "wall_min_s": 19.037781099999847,
+      "wall_max_s": 23.17846329999975,
+      "cached": 0,
+      "read": 11648,
+      "hits": 0
+    },
+    "memory": {
+      "sample_count": 247,
+      "available_min_gib": 11.003616333007812,
+      "available_median_gib": 11.889537811279297,
+      "c_drive_read_gib": 183.94212675094604
+    },
+    "cache_log": {
+      "skips": 9,
+      "restores": 1,
+      "parked_bytes_max": 771514540,
+      "snapshot_bytes_max": 385784740
+    },
+    "gpu": [
+      "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W, 22528 MiB\n1, Tesla P100-PCIE-16GB, 537.13, 250.00 W, 16384 MiB",
+      "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W\n1, Tesla P100-PCIE-16GB, 537.13, 250.00 W"
+    ]
+  },
+  "fixed-a": {
+    "all": {
+      "count": 17,
+      "wall_s": 96.2031049000002,
+      "ttft_median_s": 0.8291408000000047,
+      "wall_min_s": 0.44248400000014954,
+      "wall_max_s": 25.823589499999798,
+      "cached": 30770,
+      "read": 10320,
+      "hits": 12
+    },
+    "prefix_repeat": {
+      "count": 3,
+      "wall_s": 1.3942157000001316,
+      "ttft_median_s": 0.338250500000413,
+      "wall_min_s": 0.44248400000014954,
+      "wall_max_s": 0.48795620000009876,
+      "cached": 6078,
+      "read": 92,
+      "hits": 3
+    },
+    "session_return": {
+      "count": 8,
+      "wall_s": 5.76633479999964,
+      "ttft_median_s": 0.6231888999998318,
+      "wall_min_s": 0.45827060000010533,
+      "wall_max_s": 1.016920300000038,
+      "cached": 22666,
+      "read": 512,
+      "hits": 8
+    },
+    "session_plain": {
+      "count": 4,
+      "wall_s": 1.931701399999838,
+      "ttft_median_s": 0.41029299999991053,
+      "wall_min_s": 0.45827060000010533,
+      "wall_max_s": 0.5243943999998919,
+      "cached": 11400,
+      "read": 130,
+      "hits": 4
+    },
+    "session_tool_edit": {
+      "count": 4,
+      "wall_s": 3.8346333999998024,
+      "ttft_median_s": 0.9056349499999214,
+      "wall_min_s": 0.8928912999999739,
+      "wall_max_s": 1.016920300000038,
+      "cached": 11266,
+      "read": 382,
+      "hits": 4
+    },
+    "memory": {
+      "sample_count": 95,
+      "available_min_gib": 10.954696655273438,
+      "available_median_gib": 11.889659881591797,
+      "c_drive_read_gib": 61.42200231552124
+    },
+    "cache_log": {
+      "skips": 0,
+      "restores": 9,
+      "parked_bytes_max": 1113076632,
+      "snapshot_bytes_max": 632588168
+    },
+    "gpu": [
+      "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W, 22528 MiB\n1, Tesla P100-PCIE-16GB, 537.13, 250.00 W, 16384 MiB",
+      "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W\n1, Tesla P100-PCIE-16GB, 537.13, 250.00 W"
+    ]
+  },
+  "fixed-b": {
+    "all": {
+      "count": 17,
+      "wall_s": 88.26214479999999,
+      "ttft_median_s": 0.8151818000005733,
+      "wall_min_s": 0.385955699999613,
+      "wall_max_s": 20.82036599999992,
+      "cached": 30770,
+      "read": 10320,
+      "hits": 12
+    },
+    "prefix_repeat": {
+      "count": 3,
+      "wall_s": 1.169970199999625,
+      "ttft_median_s": 0.29617139999936626,
+      "wall_min_s": 0.385955699999613,
+      "wall_max_s": 0.3938336999999592,
+      "cached": 6078,
+      "read": 92,
+      "hits": 3
+    },
+    "session_return": {
+      "count": 8,
+      "wall_s": 6.5056449999992765,
+      "ttft_median_s": 0.7247320499996022,
+      "wall_min_s": 0.5020352999999886,
+      "wall_max_s": 1.1245267000003878,
+      "cached": 22666,
+      "read": 512,
+      "hits": 8
+    },
+    "session_plain": {
+      "count": 4,
+      "wall_s": 2.122053699999924,
+      "ttft_median_s": 0.4449295500003245,
+      "wall_min_s": 0.5020352999999886,
+      "wall_max_s": 0.5749954000002617,
+      "cached": 11400,
+      "read": 130,
+      "hits": 4
+    },
+    "session_tool_edit": {
+      "count": 4,
+      "wall_s": 4.3835912999993525,
+      "ttft_median_s": 1.028525599999739,
+      "wall_min_s": 1.0700275999997757,
+      "wall_max_s": 1.1245267000003878,
+      "cached": 11266,
+      "read": 382,
+      "hits": 4
+    },
+    "memory": {
+      "sample_count": 87,
+      "available_min_gib": 10.627361297607422,
+      "available_median_gib": 11.787040710449219,
+      "c_drive_read_gib": 61.52727031707764
+    },
+    "cache_log": {
+      "skips": 0,
+      "restores": 9,
+      "parked_bytes_max": 1113076632,
+      "snapshot_bytes_max": 632588168
+    },
+    "gpu": [
+      "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W, 22528 MiB\n1, Tesla P100-PCIE-16GB, 537.13, 250.00 W, 16384 MiB",
+      "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W\n1, Tesla P100-PCIE-16GB, 537.13, 250.00 W"
+    ]
+  },
+  "parity": {
+    "identical_answers": {
+      "baseline-c": 17,
+      "cache-a": 17,
+      "fixed-a": 17,
+      "fixed-b": 17
+    },
+    "requests_equal_except_prefix": true
+  }
+}
