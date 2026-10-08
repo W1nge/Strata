@@ -1,0 +1,33 @@
+[
+  [
+    "cpu-auto-a",
+    {
+      "pool_affinity": "auto"
+    },
+    [
+      "--coding-long"
+    ],
+    2
+  ],
+  [
+    "editing-base-a",
+    {},
+    [
+      "--coding-edit",
+      "--coding-cases",
+      "probe,edit_utilities"
+    ],
+    2
+  ],
+  [
+    "suffix-a",
+    {
+      "suffix_draft": 3
+    },
+    [
+      "--coding-long",
+      "--coding-edit"
+    ],
+    2
+  ]
+]

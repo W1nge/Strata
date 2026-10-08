@@ -1,0 +1,286 @@
+{
+  "label": "short1024-a",
+  "overrides": {
+    "short_read": 1024
+  },
+  "requests": [
+    {
+      "key": "probe",
+      "seconds": 1.4043244999920717,
+      "response": {
+        "id": "chatcmpl-d5e4bee994e84916ab32303b",
+        "object": "chat.completion",
+        "created": 1791435368,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef stable_unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n```"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 41,
+          "completion_tokens": 53,
+          "total_tokens": 94,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 41,
+          "prompt_ms": 750.0,
+          "prompt_per_token_ms": 18.293,
+          "prompt_per_second": 54.7,
+          "predicted_n": 53,
+          "predicted_ms": 648.8,
+          "predicted_per_token_ms": 12.242,
+          "predicted_per_second": 81.7,
+          "draft_n": 46,
+          "draft_n_accepted": 45
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "edit_utilities",
+      "seconds": 18.323507300010533,
+      "response": {
+        "id": "chatcmpl-b33a409c8ced4b1aaf08378e",
+        "object": "chat.completion",
+        "created": 1791435369,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def stable_unique(items):\n    \"\"\"Return a list of hashable values from items, preserving first occurrence order.\"\"\"\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\n\ndef frequencies(items):\n    \"\"\"Return a dict mapping each hashable value in items to its occurrence count.\"\"\"\n    counts = {}\n    for item in items:\n        counts[item] = counts.get(item, 0) + 1\n    return counts\n\n\ndef chunked(items, size):\n    \"\"\"Split items into chunks of given size; last chunk may be shorter. Raise ValueError if size <= 0.\"\"\"\n    if size <= 0:\n        raise ValueError(\"size must be positive\")\n    items = list(items)\n    if not items:\n        return []\n    return [items[i:i + size] for i in range(0, len(items), size)]\n\n\ndef running_totals(numbers):\n    \"\"\"Return a list of cumulative sums of numbers. Empty input yields [].\"\"\"\n    result = []\n    total = 0\n    for num in numbers:\n        total += num\n        result.append(total)\n    return result\n\n\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping or touching [start, end] intervals and return sorted non-overlapping intervals.\"\"\"\n    if not intervals:\n        return []\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    merged = [list(sorted_intervals[0])]\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            merged[-1][1] = max(last_end, end)\n        else:\n            merged.append([start, end])\n    return merged\n\n\ndef lower_bound(values, target):\n    \"\"\"Return the first index in ascending sorted values where value >= target, or len(values).\"\"\"\n    lo, hi = 0, len(values)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if values[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n\n\ndef rotate_right(items, k):\n    \"\"\"Return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\"\"\"\n    items = list(items)\n    n = len(items)\n    if n == 0:\n        return []\n    k = k % n\n    if k == 0:\n        return items[:]\n    return items[-k:] + items[:-k]\n\n\ndef moving_average(numbers, window):\n    \"\"\"Return means of complete consecutive windows using a linear sliding window. Raise ValueError if window <= 0.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    numbers = list(numbers)\n    n = len(numbers)\n    if window > n:\n        return []\n    result = []\n    window_sum = 0\n    for i in range(n):\n        window_sum += numbers[i]\n        if i >= window:\n            window_sum -= numbers[i - window]\n        if i >= window - 1:\n            result.append(window_sum / window)\n    return result\n\n\ndef window_minimum(numbers, window):\n    \"\"\"Return the minimum of each complete consecutive window, in order. Empty input or window > len(numbers) returns []. Raise ValueError if window <= 0. Do not modify numbers. Use an O(n) monotonic queue implemented with a list and a head index, without imports.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    numbers = list(numbers)\n    n = len(numbers)\n    if n == 0 or window > n:\n        return []\n    result = []\n    queue = []\n    head = 0\n    for i in range(n):\n        while head < len(queue) and numbers[queue[-1]] >= numbers[i]:\n            queue.pop()\n        queue.append(i)\n        if queue[head] <= i - window:\n            head += 1\n        if i >= window - 1:\n            result.append(numbers[queue[head]])\n    return result"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 878,
+          "completion_tokens": 931,
+          "total_tokens": 1809,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 878,
+          "prompt_ms": 7562.7,
+          "prompt_per_token_ms": 8.614,
+          "prompt_per_second": 116.1,
+          "predicted_n": 931,
+          "predicted_ms": 10755.1,
+          "predicted_per_token_ms": 11.552,
+          "predicted_per_second": 86.6,
+          "draft_n": 806,
+          "draft_n_accepted": 748
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "probe@2",
+      "seconds": 0.8259126000048127,
+      "response": {
+        "id": "chatcmpl-f00a6e9cbb0e4753a140540b",
+        "object": "chat.completion",
+        "created": 1791435388,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef stable_unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n```"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 41,
+          "completion_tokens": 53,
+          "total_tokens": 94,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 41,
+          "prompt_ms": 317.0,
+          "prompt_per_token_ms": 7.732,
+          "prompt_per_second": 129.3,
+          "predicted_n": 53,
+          "predicted_ms": 506.8,
+          "predicted_per_token_ms": 9.562,
+          "predicted_per_second": 104.6,
+          "draft_n": 46,
+          "draft_n_accepted": 45
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "edit_utilities@2",
+      "seconds": 17.25270840000303,
+      "response": {
+        "id": "chatcmpl-3ce20e2c7fa24dadbf5da216",
+        "object": "chat.completion",
+        "created": 1791435389,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def stable_unique(items):\n    \"\"\"Return a list of hashable values from items, preserving first occurrence order.\"\"\"\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\n\ndef frequencies(items):\n    \"\"\"Return a dict mapping each hashable value in items to its occurrence count.\"\"\"\n    counts = {}\n    for item in items:\n        counts[item] = counts.get(item, 0) + 1\n    return counts\n\n\ndef chunked(items, size):\n    \"\"\"Split items into chunks of given size; last chunk may be shorter. Raise ValueError if size <= 0.\"\"\"\n    if size <= 0:\n        raise ValueError(\"size must be positive\")\n    items = list(items)\n    if not items:\n        return []\n    return [items[i:i + size] for i in range(0, len(items), size)]\n\n\ndef running_totals(numbers):\n    \"\"\"Return a list of cumulative sums of numbers. Empty input yields [].\"\"\"\n    result = []\n    total = 0\n    for num in numbers:\n        total += num\n        result.append(total)\n    return result\n\n\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping or touching [start, end] intervals and return sorted non-overlapping intervals.\"\"\"\n    if not intervals:\n        return []\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    merged = [list(sorted_intervals[0])]\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            merged[-1][1] = max(last_end, end)\n        else:\n            merged.append([start, end])\n    return merged\n\n\ndef lower_bound(values, target):\n    \"\"\"Return the first index in ascending sorted values where value >= target, or len(values).\"\"\"\n    lo, hi = 0, len(values)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if values[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n\n\ndef rotate_right(items, k):\n    \"\"\"Return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\"\"\"\n    items = list(items)\n    n = len(items)\n    if n == 0:\n        return []\n    k = k % n\n    if k == 0:\n        return items[:]\n    return items[-k:] + items[:-k]\n\n\ndef moving_average(numbers, window):\n    \"\"\"Return means of complete consecutive windows using a linear sliding window. Raise ValueError if window <= 0.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    numbers = list(numbers)\n    n = len(numbers)\n    if window > n:\n        return []\n    result = []\n    window_sum = 0\n    for i in range(n):\n        window_sum += numbers[i]\n        if i >= window:\n            window_sum -= numbers[i - window]\n        if i >= window - 1:\n            result.append(window_sum / window)\n    return result\n\n\ndef window_minimum(numbers, window):\n    \"\"\"Return the minimum of each complete consecutive window, in order. Empty input or window > len(numbers) returns []. Raise ValueError if window <= 0. Do not modify numbers. Use an O(n) monotonic queue implemented with a list and a head index, without imports.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    numbers = list(numbers)\n    n = len(numbers)\n    if n == 0 or window > n:\n        return []\n    result = []\n    queue = []\n    head = 0\n    for i in range(n):\n        while head < len(queue) and numbers[queue[-1]] >= numbers[i]:\n            queue.pop()\n        queue.append(i)\n        if queue[head] <= i - window:\n            head += 1\n        if i >= window - 1:\n            result.append(numbers[queue[head]])\n    return result"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 878,
+          "completion_tokens": 931,
+          "total_tokens": 1809,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 878,
+          "prompt_ms": 6929.1,
+          "prompt_per_token_ms": 7.892,
+          "prompt_per_second": 126.7,
+          "predicted_n": 931,
+          "predicted_ms": 10321.2,
+          "predicted_per_token_ms": 11.086,
+          "predicted_per_second": 90.2,
+          "draft_n": 806,
+          "draft_n_accepted": 748
+        }
+      },
+      "valid": true
+    }
+  ],
+  "ok": true,
+  "health": {
+    "status": "ok",
+    "max_context": 8192,
+    "model": "qwen3.8-flash-next",
+    "images": false,
+    "api_key": false,
+    "loaded": true,
+    "service": "strata"
+  },
+  "expected_requests": 4,
+  "cases": [
+    {
+      "key": "probe",
+      "prompt": "Write only Python code. Define stable_unique(items) removing duplicates from hashable items while preserving their first occurrence. Use a set. No imports.",
+      "max_tokens": 160
+    },
+    {
+      "key": "edit_utilities",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nEdit the Python module below. Preserve the behavior of all eight existing functions and return the complete module, including those functions. Add one function:\nwindow_minimum(numbers, window): return the minimum of each complete consecutive window, in order. Empty input or window > len(numbers) returns []. Raise ValueError if window <= 0. Do not modify numbers. Use an O(n) monotonic queue implemented with a list and a head index, without imports. Include a docstring.\n\nExisting module:\ndef stable_unique(items):\n    \"\"\"Return a list of hashable values from items, preserving first occurrence order.\"\"\"\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\n\ndef frequencies(items):\n    \"\"\"Return a dict mapping each hashable value in items to its occurrence count.\"\"\"\n    counts = {}\n    for item in items:\n        counts[item] = counts.get(item, 0) + 1\n    return counts\n\n\ndef chunked(items, size):\n    \"\"\"Split items into chunks of given size; last chunk may be shorter. Raise ValueError if size <= 0.\"\"\"\n    if size <= 0:\n        raise ValueError(\"size must be positive\")\n    items = list(items)\n    if not items:\n        return []\n    return [items[i:i + size] for i in range(0, len(items), size)]\n\n\ndef running_totals(numbers):\n    \"\"\"Return a list of cumulative sums of numbers. Empty input yields [].\"\"\"\n    result = []\n    total = 0\n    for num in numbers:\n        total += num\n        result.append(total)\n    return result\n\n\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping or touching [start, end] intervals and return sorted non-overlapping intervals.\"\"\"\n    if not intervals:\n        return []\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    merged = [list(sorted_intervals[0])]\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            merged[-1][1] = max(last_end, end)\n        else:\n            merged.append([start, end])\n    return merged\n\n\ndef lower_bound(values, target):\n    \"\"\"Return the first index in ascending sorted values where value >= target, or len(values).\"\"\"\n    lo, hi = 0, len(values)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if values[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n\n\ndef rotate_right(items, k):\n    \"\"\"Return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\"\"\"\n    items = list(items)\n    n = len(items)\n    if n == 0:\n        return []\n    k = k % n\n    if k == 0:\n        return items[:]\n    return items[-k:] + items[:-k]\n\n\ndef moving_average(numbers, window):\n    \"\"\"Return means of complete consecutive windows using a linear sliding window. Raise ValueError if window <= 0.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    numbers = list(numbers)\n    n = len(numbers)\n    if window > n:\n        return []\n    result = []\n    window_sum = 0\n    for i in range(n):\n        window_sum += numbers[i]\n        if i >= window:\n            window_sum -= numbers[i - window]\n        if i >= window - 1:\n            result.append(window_sum / window)\n    return result\n",
+      "max_tokens": 3072
+    },
+    {
+      "key": "probe@2",
+      "prompt": "Write only Python code. Define stable_unique(items) removing duplicates from hashable items while preserving their first occurrence. Use a set. No imports.",
+      "max_tokens": 160
+    },
+    {
+      "key": "edit_utilities@2",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nEdit the Python module below. Preserve the behavior of all eight existing functions and return the complete module, including those functions. Add one function:\nwindow_minimum(numbers, window): return the minimum of each complete consecutive window, in order. Empty input or window > len(numbers) returns []. Raise ValueError if window <= 0. Do not modify numbers. Use an O(n) monotonic queue implemented with a list and a head index, without imports. Include a docstring.\n\nExisting module:\ndef stable_unique(items):\n    \"\"\"Return a list of hashable values from items, preserving first occurrence order.\"\"\"\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\n\ndef frequencies(items):\n    \"\"\"Return a dict mapping each hashable value in items to its occurrence count.\"\"\"\n    counts = {}\n    for item in items:\n        counts[item] = counts.get(item, 0) + 1\n    return counts\n\n\ndef chunked(items, size):\n    \"\"\"Split items into chunks of given size; last chunk may be shorter. Raise ValueError if size <= 0.\"\"\"\n    if size <= 0:\n        raise ValueError(\"size must be positive\")\n    items = list(items)\n    if not items:\n        return []\n    return [items[i:i + size] for i in range(0, len(items), size)]\n\n\ndef running_totals(numbers):\n    \"\"\"Return a list of cumulative sums of numbers. Empty input yields [].\"\"\"\n    result = []\n    total = 0\n    for num in numbers:\n        total += num\n        result.append(total)\n    return result\n\n\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping or touching [start, end] intervals and return sorted non-overlapping intervals.\"\"\"\n    if not intervals:\n        return []\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    merged = [list(sorted_intervals[0])]\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            merged[-1][1] = max(last_end, end)\n        else:\n            merged.append([start, end])\n    return merged\n\n\ndef lower_bound(values, target):\n    \"\"\"Return the first index in ascending sorted values where value >= target, or len(values).\"\"\"\n    lo, hi = 0, len(values)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if values[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n\n\ndef rotate_right(items, k):\n    \"\"\"Return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\"\"\"\n    items = list(items)\n    n = len(items)\n    if n == 0:\n        return []\n    k = k % n\n    if k == 0:\n        return items[:]\n    return items[-k:] + items[:-k]\n\n\ndef moving_average(numbers, window):\n    \"\"\"Return means of complete consecutive windows using a linear sliding window. Raise ValueError if window <= 0.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    numbers = list(numbers)\n    n = len(numbers)\n    if window > n:\n        return []\n    result = []\n    window_sum = 0\n    for i in range(n):\n        window_sum += numbers[i]\n        if i >= window:\n            window_sum -= numbers[i - window]\n        if i >= window - 1:\n            result.append(window_sum / window)\n    return result\n",
+      "max_tokens": 3072
+    }
+  ],
+  "status": {
+    "service": "strata",
+    "model": "qwen3.8-flash-next",
+    "loaded": true,
+    "auto_load": true,
+    "structured_output": {
+      "formats": [
+        "json_object",
+        "json_schema"
+      ],
+      "method": "prompt_and_validate",
+      "constrained_decoding": false,
+      "stream_buffered": true
+    },
+    "engine": "0.1.40.3",
+    "started": 1791435367,
+    "uptime_s": 38,
+    "cache_max_tokens": 8192,
+    "cache": {
+      "state": "disabled"
+    },
+    "context": {
+      "native": 8192,
+      "max_positions": 8192
+    },
+    "concurrency": {
+      "serving": 1,
+      "requested": 1
+    },
+    "dialects": [
+      "/v1/chat/completions",
+      "/v1/messages",
+      "/v1/responses"
+    ],
+    "vision": {
+      "enabled": false,
+      "available": false,
+      "error": null
+    },
+    "activity": {
+      "requests": 4,
+      "in_flight": 0,
+      "last_request_at": 1791435406
+    },
+    "last_timings": {
+      "cache_n": 0,
+      "prompt_n": 878,
+      "prompt_ms": 6929.1,
+      "prompt_per_token_ms": 7.892,
+      "prompt_per_second": 126.7,
+      "predicted_n": 931,
+      "predicted_ms": 10321.2,
+      "predicted_per_token_ms": 11.086,
+      "predicted_per_second": 90.2,
+      "draft_n": 806,
+      "draft_n_accepted": 748,
+      "at": 1791435406
+    },
+    "vram": {
+      "elastic": false
+    },
+    "machine": {
+      "at": 1791435406,
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 2080 Ti",
+        "used_mib": 22466.0,
+        "total_mib": 22528.0,
+        "util_pct": 100,
+        "temp_c": 59,
+        "power_w": 233.686
+      },
+      "ram": {
+        "used_gib": 20.0,
+        "total_gib": 31.6
+      }
+    }
+  }
+}

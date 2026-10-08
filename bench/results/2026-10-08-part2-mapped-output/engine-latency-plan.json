@@ -1,0 +1,25 @@
+[
+  [
+    "mapped-output-a",
+    {
+      "exe": "E:\\strata-setup\\part2-coding-next\\mapped-output\\strata.exe"
+    },
+    [
+      "--coding-long",
+      "--coding-edit"
+    ],
+    2
+  ],
+  [
+    "short1024-a",
+    {
+      "short_read": 1024
+    },
+    [
+      "--coding-edit",
+      "--coding-cases",
+      "probe,edit_utilities"
+    ],
+    2
+  ]
+]

@@ -1,0 +1,25 @@
+{
+  "checked_at": "2026-10-08T13:29:56.6298379+08:00",
+  "gpu": [
+    {
+      "index": "0",
+      "name": "NVIDIA GeForce RTX 2080 Ti",
+      "driver": "537.13",
+      "power_limit_w": "310.00",
+      "memory_used_mib": "354"
+    },
+    {
+      "index": "1",
+      "name": "Tesla P100-PCIE-16GB",
+      "driver": "537.13",
+      "power_limit_w": "250.00",
+      "memory_used_mib": "0"
+    }
+  ],
+  "model_processes": 0,
+  "benchmark_processes": 0,
+  "port_18997_listeners": 0,
+  "protected_audit_sha256": "d59c6e2b2f686b45ff46574667bf0ee2425b5a6b1a930cca381e15d0d03d184a",
+  "python_syntax_check": "passed",
+  "engine_build_exit_code": 0
+}

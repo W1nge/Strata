@@ -1,0 +1,5 @@
+[
+  ["combined-a", {"exe":"E:\\strata-setup\\part2-coding-next\\mapped-output\\strata.exe", "short_read":1024}, ["--coding-long","--coding-edit"], 2],
+  ["mapped-control-b", {}, ["--coding-long","--coding-edit"], 2],
+  ["mapped-copy-fallback", {"exe":"E:\\strata-setup\\part2-coding-next\\mapped-output\\strata.exe", "env":{"STRATA_REMOTE_ZEROCOPY":"0"}}, ["--coding-long","--coding-cases","probe,utilities,matrices"], 1]
+]

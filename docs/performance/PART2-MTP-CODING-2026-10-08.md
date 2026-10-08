@@ -1,5 +1,7 @@
 # Part2: MTP for longer code generation — 2026-10-08
 
+后续引擎与代码编辑更新见 [PART2-MAPPED-OUTPUT-2026-10-08.md](PART2-MAPPED-OUTPUT-2026-10-08.md)。下文保留本阶段的原始测量与配置，当前 coding 配置已在后续阶段更新。
+
 追测此前的 115.3 token/s 后，为短提示、长代码输出采用独立配置：**原专家画像 + `--spec 8 --spec-min-p 0.9`**。四类代码任务各重复两轮，输出加权吞吐从 **83.79 提高到 89.21 token/s（+6.47%）**，两个候选轮次分别为 89.12、89.30。这里没有建立长输出持续 115 token/s 的结论。
 
 代码配置已保存到 `C:/strata-models/strata-dual-p100-coding.json`，启动文件为 `C:/strata-models/run-iq3xxs-dual-p100-coding.bat`。它使用已有的稳定引擎 `E:/strata-setup/part2-helper-resident/strata.exe`，引擎源代码提交为 `4cda6e0`。本轮不增加生产引擎代码；MTP 置信度截断是已有功能。

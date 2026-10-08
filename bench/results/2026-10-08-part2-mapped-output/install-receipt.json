@@ -1,0 +1,23 @@
+{
+  "engine_source_commit": "b71819def39f82fa320887a37da0d514efe59fa4",
+  "executable": "E:\\strata-setup\\part2-mapped-output-20261008\\strata.exe",
+  "executable_sha256": "38ad7934bb1e3cbbe29a3bcd1da5d749a648c51de5b4dc628dc52a6212f7d0b8",
+  "rollback_executable": "E:\\strata-setup\\part2-helper-resident\\strata.exe",
+  "rollback_executable_sha256": "7e5f2d45b92b888e910954b3a9b03ac758872cedd8645764af6cf1626ee141b9",
+  "configs": {
+    "general": {
+      "path": "C:\\strata-models\\strata-dual-p100-experimental.json",
+      "sha256": "360ed3d01dea155e6280b99ef10b672ff9389b94bdda89fa0fee70960d7bfc21",
+      "action": "retained original engine; no measured general speedup"
+    },
+    "coding": {
+      "path": "C:\\strata-models\\strata-dual-p100-coding.json",
+      "sha256": "b19b73a7a75f3fc00a139354359ae1cca3ac38b72413b49a337f9fbfaafa322d"
+    }
+  },
+  "protected_files": {
+    "C:\\strata-models\\strata-256k-int8.json": "943eb8db5f3da2e53d23382a799c524ca640dbb65aa553aa10db636bc0cfd397",
+    "C:\\strata-models\\strata-dual-p100-coding.shared-settings.json": "bd9bcf34da7484152e18d97a3436ce50dd771c8766cbf5c4ef2cc6fc6efe9682",
+    "C:\\strata-models\\strata-dual-p100-experimental.json": "360ed3d01dea155e6280b99ef10b672ff9389b94bdda89fa0fee70960d7bfc21"
+  }
+}
