@@ -267,6 +267,14 @@ void test_complement_plan() {
             "GPU-resident expert lost mmap fallback");
     require(cache_complement_blob_or_fallback(4, offsets, resident, mapped) == resident + 11,
             "CPU miss did not use resident complement");
+    require(make_cache_complement_plan(2, 3, {3, 5}, {{0, 1}, {1, 2}}, {{0, 2}, {1, 0}},
+                                       offsets, bytes, error), error);
+    require(bytes == 8 && offsets == std::vector<uint64_t>{0, kNoCacheComplement, kNoCacheComplement,
+                                                          kNoCacheComplement, 3, kNoCacheComplement},
+            "RAM must exclude both primary and helper experts, retaining every CPU expert");
+    require(cache_complement_blob_or_fallback(2, offsets, resident, mapped) == mapped &&
+            cache_complement_blob_or_fallback(4, offsets, resident, mapped) == resident + 3,
+            "helper fallback or remaining CPU expert lookup changed");
     require(!make_cache_complement_plan(2, 3, {3, 5}, {{0, 1}, {0, 1}}, {}, offsets, bytes, error)
             && offsets.empty() && bytes == 0, "duplicate pair accepted");
     require(!make_cache_complement_plan(2, 3, {3, 5}, {{0, 1}}, {{0, 1}}, offsets, bytes, error),

@@ -2016,8 +2016,10 @@ int main(int argc, char** argv) {
                                o.expert_cache_remote[2] > 0;
     // A layer split keeps the resident RAM mode: every stage's GPU cache is left out of the RAM copy, and an adaptive
     // swap copies an evicted expert back from the card that owns its layer (resident_stage_swaps).
-    if (o.resident_cpu_experts && remote_caches) {
-        std::fprintf(stderr, "strata generate: --resident-cpu-experts does not support remote expert caches\n");
+    // The RAM complement can omit fixed helper caches. Helper adaptation would
+    // need to return evicted experts to that complement before changing ownership.
+    if (o.resident_cpu_experts && remote_caches && o.adapt_every > 0 && o.adapt_swaps > 0) {
+        std::fprintf(stderr, "strata generate: resident RAM with helper caches needs adaptation disabled (--adapt-every 0)\n");
         return 2;
     }
     // the helper-GPU expert caches (--expert-cache-remote, docs/SECOND_GPU.md): CUDA1..3 on one GPU; with a layer
@@ -6043,6 +6045,16 @@ int main(int argc, char** argv) {
             for (int64_t l = st->lb; l < st->le; ++l)
                 for (int64_t e = 0; e < g.n_expert; ++e)
                     if (st->cache.slot_of(l, e) >= 0) stage_pairs.emplace_back((int32_t) l, (int32_t) e);
+        // Helpers are filled before this point and are disjoint from every stage.
+        // Keep only experts absent from all GPU caches in the resident RAM copy.
+        if (remote_caches)
+            for (int64_t l = 0; l < g.n_layers; ++l)
+                for (int64_t e = 0; e < g.n_expert; ++e)
+                    for (int r = 0; r < drive.d.remote_count; ++r)
+                        if (drive.d.remote[r]->holds(l, (int32_t) e)) {
+                            stage_pairs.emplace_back((int32_t) l, (int32_t) e);
+                            break;
+                        }
         const std::vector<std::pair<int32_t, int32_t>>& rank_all = profile_all.empty() ? profile : profile_all;
         bool resident_ok = src.pin_cache_complement(xcache, err, o.resident_pin, stage_pairs, lend_from,
                                                     o.resident_headroom, o.resident_budget, &rank_all);
