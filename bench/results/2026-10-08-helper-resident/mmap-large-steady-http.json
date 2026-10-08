@@ -1,0 +1,205 @@
+{
+  "label": "mmap-large-steady",
+  "gpu": [
+    0,
+    1
+  ],
+  "health": {
+    "status": "ok",
+    "max_context": 8192,
+    "model": "qwen3.8-flash-next",
+    "images": false,
+    "api_key": false,
+    "loaded": true,
+    "service": "strata"
+  },
+  "first": {
+    "id": "chatcmpl-7753b3728873488d88f93090",
+    "object": "chat.completion",
+    "created": 1791425436,
+    "model": "qwen3.8-flash-next",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "4"
+        },
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 26,
+      "completion_tokens": 2,
+      "total_tokens": 28,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 26,
+      "prompt_ms": 1698.3,
+      "prompt_per_token_ms": 65.319,
+      "prompt_per_second": 15.3,
+      "predicted_n": 2,
+      "predicted_ms": 857.1,
+      "predicted_per_token_ms": 428.55,
+      "predicted_per_second": 2.3,
+      "draft_n": 3,
+      "draft_n_accepted": 3
+    }
+  },
+  "repeat": {
+    "id": "chatcmpl-3428a098172b4bc690c5b818",
+    "object": "chat.completion",
+    "created": 1791425438,
+    "model": "qwen3.8-flash-next",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "4"
+        },
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 26,
+      "completion_tokens": 2,
+      "total_tokens": 28,
+      "prompt_tokens_details": {
+        "cached_tokens": 19
+      }
+    },
+    "timings": {
+      "cache_n": 19,
+      "prompt_n": 7,
+      "prompt_ms": 127.6,
+      "prompt_per_token_ms": 18.229,
+      "prompt_per_second": 54.9,
+      "predicted_n": 2,
+      "predicted_ms": 188.3,
+      "predicted_per_token_ms": 94.15,
+      "predicted_per_second": 10.6,
+      "draft_n": 3,
+      "draft_n_accepted": 3
+    }
+  },
+  "workload": {
+    "id": "chatcmpl-1398d68d5d174a3d83fff3b0",
+    "object": "chat.completion",
+    "created": 1791425439,
+    "model": "qwen3.8-flash-next",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100"
+        },
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 1232,
+      "completion_tokens": 391,
+      "total_tokens": 1623,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 1232,
+      "prompt_ms": 28971.1,
+      "prompt_per_token_ms": 23.516,
+      "prompt_per_second": 42.5,
+      "predicted_n": 391,
+      "predicted_ms": 9257.6,
+      "predicted_per_token_ms": 23.677,
+      "predicted_per_second": 42.2,
+      "draft_n": 294,
+      "draft_n_accepted": 294
+    }
+  },
+  "status": {
+    "service": "strata",
+    "model": "qwen3.8-flash-next",
+    "loaded": true,
+    "auto_load": true,
+    "structured_output": {
+      "formats": [
+        "json_object",
+        "json_schema"
+      ],
+      "method": "prompt_and_validate",
+      "constrained_decoding": false,
+      "stream_buffered": true
+    },
+    "engine": "0.1.40.3",
+    "started": 1791425435,
+    "uptime_s": 42,
+    "cache_max_tokens": 8192,
+    "cache": {
+      "state": "disabled"
+    },
+    "context": {
+      "native": 8192,
+      "max_positions": 8192
+    },
+    "concurrency": {
+      "serving": 1,
+      "requested": 1
+    },
+    "dialects": [
+      "/v1/chat/completions",
+      "/v1/messages",
+      "/v1/responses"
+    ],
+    "vision": {
+      "enabled": false,
+      "available": false,
+      "error": null
+    },
+    "activity": {
+      "requests": 3,
+      "in_flight": 0,
+      "last_request_at": 1791425477
+    },
+    "last_timings": {
+      "cache_n": 0,
+      "prompt_n": 1232,
+      "prompt_ms": 28971.1,
+      "prompt_per_token_ms": 23.516,
+      "prompt_per_second": 42.5,
+      "predicted_n": 391,
+      "predicted_ms": 9257.6,
+      "predicted_per_token_ms": 23.677,
+      "predicted_per_second": 42.2,
+      "draft_n": 294,
+      "draft_n_accepted": 294,
+      "at": 1791425477
+    },
+    "vram": {
+      "elastic": false
+    },
+    "machine": {
+      "at": 1791425477,
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 2080 Ti",
+        "used_mib": 21890.0,
+        "total_mib": 22528.0,
+        "util_pct": 99,
+        "temp_c": 44,
+        "power_w": 181.406
+      },
+      "ram": {
+        "used_gib": 31.4,
+        "total_gib": 31.6
+      }
+    }
+  },
+  "ok": true
+}

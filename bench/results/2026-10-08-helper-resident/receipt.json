@@ -1,0 +1,88 @@
+{
+  "source_commit": "4cda6e0b4dd04de60766086178d3bc2d4d0e69b7",
+  "daily_commit": "c7f7a2569c31c24868de87092ed0366cd674f403",
+  "related_upstream_pr": "https://github.com/Niko1221/Strata/pull/1184",
+  "config": "C:\\strata-models\\strata-dual-p100-experimental.json",
+  "rollback_config": "C:\\strata-models\\strata-dual-p100-mmap.json",
+  "results": [
+    {
+      "name": "resident-helper",
+      "cache_n": 0,
+      "prompt_n": 268,
+      "prompt_ms": 3038.7,
+      "prompt_per_token_ms": 11.338,
+      "prompt_per_second": 88.2,
+      "predicted_n": 31,
+      "predicted_ms": 375.3,
+      "predicted_per_token_ms": 12.106,
+      "predicted_per_second": 82.6,
+      "draft_n": 24,
+      "draft_n_accepted": 24
+    },
+    {
+      "name": "resident-large",
+      "cache_n": 0,
+      "prompt_n": 1228,
+      "prompt_ms": 21381.9,
+      "prompt_per_token_ms": 17.412,
+      "prompt_per_second": 57.4,
+      "predicted_n": 31,
+      "predicted_ms": 533.6,
+      "predicted_per_token_ms": 17.213,
+      "predicted_per_second": 58.1,
+      "draft_n": 24,
+      "draft_n_accepted": 24
+    },
+    {
+      "name": "mmap-large",
+      "cache_n": 0,
+      "prompt_n": 1228,
+      "prompt_ms": 25182.5,
+      "prompt_per_token_ms": 20.507,
+      "prompt_per_second": 48.8,
+      "predicted_n": 31,
+      "predicted_ms": 1041.5,
+      "predicted_per_token_ms": 33.597,
+      "predicted_per_second": 29.8,
+      "draft_n": 24,
+      "draft_n_accepted": 24
+    },
+    {
+      "name": "resident-large-steady",
+      "cache_n": 0,
+      "prompt_n": 1232,
+      "prompt_ms": 21520.9,
+      "prompt_per_token_ms": 17.468,
+      "prompt_per_second": 57.2,
+      "predicted_n": 391,
+      "predicted_ms": 5094.6,
+      "predicted_per_token_ms": 13.03,
+      "predicted_per_second": 76.7,
+      "draft_n": 294,
+      "draft_n_accepted": 294
+    },
+    {
+      "name": "mmap-large-steady",
+      "cache_n": 0,
+      "prompt_n": 1232,
+      "prompt_ms": 28971.1,
+      "prompt_per_token_ms": 23.516,
+      "prompt_per_second": 42.5,
+      "predicted_n": 391,
+      "predicted_ms": 9257.6,
+      "predicted_per_token_ms": 23.677,
+      "predicted_per_second": 42.2,
+      "draft_n": 294,
+      "draft_n_accepted": 294
+    }
+  ],
+  "sha256": {
+    "C:\\strata-models\\strata-dual-p100-experimental.json": "360ed3d01dea155e6280b99ef10b672ff9389b94bdda89fa0fee70960d7bfc21",
+    "E:\\strata-setup\\part2-helper-resident\\strata.exe": "7e5f2d45b92b888e910954b3a9b03ac758872cedd8645764af6cf1626ee141b9",
+    "E:\\strata-setup\\part2-dual\\resident-helper-engine.log": "4d93e4f63f098ba46436fbc084f9d4c2871fc0c364973066b4374c7fc75aea07",
+    "E:\\strata-setup\\part2-dual\\resident-large-engine.log": "7f22a1a83ceccf6429bd548655df1ffdf6e6201aacf2753e66253e7a7f72efa4",
+    "E:\\strata-setup\\part2-dual\\mmap-large-engine.log": "adca276cd7c2cd4cba4df0ea8ae4a91fa9212249d183602797847ec7a799e155",
+    "E:\\strata-setup\\part2-dual\\resident-large-steady-engine.log": "418745932cd595b21230502fbabce719554df67d8b2bd60f2df7c5f88b2c3664",
+    "E:\\strata-setup\\part2-dual\\mmap-large-steady-engine.log": "d3f93f71509cb9d776100776f7e3d499432262ed7f9837160fb9281fb72c6581"
+  }
+}
