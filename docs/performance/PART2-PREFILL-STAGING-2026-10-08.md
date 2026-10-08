@@ -49,4 +49,6 @@
 
 原始记录在 `E:/strata-setup/part2-prefill-next`，归档为 [bench/results/2026-10-08-part2-prefill-staging](../../bench/results/2026-10-08-part2-prefill-staging)。保留每轮配置、完整响应、engine/server 日志、每秒监测、构建与测试记录、安装回执、回退配置和补丁；较大日志 gzip 压缩，清单同时记录压缩前后 SHA256。程序、模型和 dump 不提交。`summarize_final.py` 可从 JSON 和 gzip 监测日志重算汇总；`receipt.json` 记录最终文件清单。独立 PR 分支 `codex/windows-prefill-staging-release` 基于 `6674a00`，单提交 `9ee824e4cfb620246a01e8dea14fdb1635068f76`，只包含上述三文件差异。
 
+已提交并核对 [PR #1520](https://github.com/Niko1221/Strata/pull/1520)，OPEN、非草稿，head 为上述 `9ee824e`，三文件 +18/−12，等待上游审阅。证据提交 `ea07f9d16506b96cce26d4eb444a208048e4ba6b` 已推送到个人 fork；PR 不包含证据目录。归档的 114 个证据文件均通过压缩前后 SHA256 校验，Git 中的原始字节也已核对。
+
 复现实验时使用同一模型、可用的兼容程序、空闲端口和新 label，并保持串行。在其他机器先修改归档配置的绝对路径；本机选择不推为通用性能默认值。前轮映射 helper 输出及 short-read1024 的来源见 [PART2-MAPPED-OUTPUT-2026-10-08.md](PART2-MAPPED-OUTPUT-2026-10-08.md)。
