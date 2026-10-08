@@ -1,0 +1,11 @@
+{
+  "config": "C:\\strata-models\\strata-dual-p100-experimental.json",
+  "sha256": "d9e24c51f8377cf2f095ecc8c5168a433816ef46cfbddbab7a75005a0ea1fd12",
+  "layer_split_backup": "C:\\strata-models\\strata-dual-p100-layer-split.json",
+  "exe": "E:\\strata-setup\\part2-dual\\build\\strata.exe",
+  "driver": "537.13",
+  "power_watts": [
+    310,
+    250
+  ]
+}
