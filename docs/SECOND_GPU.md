@@ -128,6 +128,27 @@ existing decode path remains in use. This does not optimize the separate
 `--peer-device` path below or change its existing incompatibility with helper
 caches.
 
+## Resident RAM with fixed helper caches (local adaptation)
+
+With `--adapt-every 0`, helper caches can be combined with `--resident-experts`.
+The RAM copy excludes experts held by the primary GPU and every helper, using
+the existing cache-complement planner. Normal memory headroom checks and the
+partial/file fallback still apply. With helpers, adaptive swapping is rejected
+when both its interval and swap count are enabled: this local version does not
+maintain the complement when helper ownership changes.
+
+This overlaps the helper-residency work in community PR #1184; it is a minimal
+local adaptation with a stricter static-ownership scope, not a separate upstream
+feature claim. Tested on Windows with RTX 2080 Ti + Tesla P100, driver 537.13:
+10.77–10.83 GiB of remaining IQ3_XXS experts were locked in host RAM. CUDA host
+pinning was refused and the existing Windows VirtualLock fallback succeeded.
+The distinction matters: locked CPU memory is not necessarily DMA-mapped memory.
+
+This does not eliminate model startup reads, PLE reads, or prompt streaming of
+GPU-resident experts through their mapped-file fallback. It stabilizes the CPU
+expert source. The file source remains available if a GPU-owned expert is needed
+by the prompt path. Other hardware and dynamic helper ownership are unvalidated.
+
 ## Peer tier (`--peer-device`)
 
 `--peer-device N` puts a second adaptive expert cache on CUDA device N. It
