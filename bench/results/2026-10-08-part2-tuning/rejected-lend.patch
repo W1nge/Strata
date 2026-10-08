@@ -1,0 +1,76 @@
+diff --git a/src/core/expert_source.cpp b/src/core/expert_source.cpp
+index fcf8b71..4289910 100644
+--- a/src/core/expert_source.cpp
++++ b/src/core/expert_source.cpp
+@@ -2147,7 +2147,9 @@ bool FileExpertSource::pin_cache_complement(
+         lend_from_slot = -1;
+     }
+ 
+-    const bool lend = lend_from_slot >= 0 && lend_from_slot < n_slots && additional_gpu_pairs.empty();
++    // Additional GPU owners remain excluded when the plan is rebuilt below. Only
++    // primary slots that may be borrowed need a second copy, within the RAM budget.
++    const bool lend = lend_from_slot >= 0 && lend_from_slot < n_slots;
+     uint64_t budget = std::numeric_limits<uint64_t>::max();
+     if (bytes > 0 || lend) {
+         // #403: with a budget, the reading it was sized from - a second reading a few MB lower (the engine's own
+diff --git a/src/program/generate.cpp b/src/program/generate.cpp
+index 730bab5..63e01b2 100644
+--- a/src/program/generate.cpp
++++ b/src/program/generate.cpp
+@@ -6039,7 +6039,7 @@ int main(int argc, char** argv) {
+             if (k > 0) lend_from = xcache.slots() - k;
+         }
+         // a layer split: the experts every later stage's cache holds are left out of the RAM copy, as CUDA0's are
+-        // (with them the copy keeps no lend region: pin_cache_complement turns the loan off)
++        // The primary cache's lend region can also be copied within the RAM budget.
+         std::vector<std::pair<int32_t, int32_t>> stage_pairs;
+         for (auto& st : stages)
+             for (int64_t l = st->lb; l < st->le; ++l)
+diff --git a/tests/core/file_expert_source_test.cpp b/tests/core/file_expert_source_test.cpp
+index f80e6cc..79b3907 100644
+--- a/tests/core/file_expert_source_test.cpp
++++ b/tests/core/file_expert_source_test.cpp
+@@ -601,6 +601,35 @@ void test_io_prefetch() {
+     source.close();
+ }
+ 
++void test_additional_gpu_lend() {
++    using namespace strata::core;
++    using namespace strata::kernels::cpu;
++    TempDirectory dir;
++    std::string err;
++    require(expert_layout_load(dir.path.string(), 1, 5, err), err);
++    create_pack(dir.path, 5 * (uint64_t) BLOB, {{0, 'a'}, {BLOB, 'b'}, {2 * BLOB, 'c'}, {3 * BLOB, 'd'}, {4 * BLOB, 'e'}});
++    FileExpertSource src;
++    require(src.open(dir.path.string(), 1, 5, err), err);
++    std::vector<std::vector<uint8_t>> truth(5, std::vector<uint8_t>((size_t) BLOB));
++    for (int e = 0; e < 5; ++e) require(src.copy_blob(0, e, truth[e].data()), "read fixture");
++    ExpertCache cache;
++    require(cache.open(2, 1, 5, BLOB, err), err);
++    for (int e : {0, 1}) {
++        int slot = cache.admit(0, e);
++        require(slot >= 0 && cache.fill_slot_blocking(slot, truth[e].data(), err), err);
++    }
++    // Expert 2 belongs to a helper. Primary slot 1 is borrowed during prefill;
++    // it must be available in RAM without duplicating the helper's weights.
++    require(src.pin_cache_complement(cache, err, false, {{0, 2}}, 1, 0), err);
++    require(src.resident_lent_slots() == 1, "helper disabled the primary lend copy");
++    for (int e = 0; e < 5; ++e) {
++        require(src.has_resident(0, e) == (e == 1 || e >= 3), "wrong complement ownership");
++        std::vector<uint8_t> actual((size_t) BLOB);
++        require(src.copy_blob(0, e, actual.data()) && actual == truth[e], "lend or fallback bytes changed");
++    }
++    require(cache.verify_slot(1, src.blob(0, 1), err), err);
++}
++
+ void test_rotating_source(bool rotate, bool pin) {
+     using namespace strata::core;
+     using namespace strata::kernels::cpu;
+@@ -706,6 +735,7 @@ int main(int argc, char** argv) {
+         test_native_variable_layout();
+ #endif
+         if (argc == 2 && std::string(argv[1]) == "--rotation-gpu") {
++            test_additional_gpu_lend();
+             test_rotating_source(false, true);
+             test_rotating_source(true, true);
+             test_rotating_source(true, false);

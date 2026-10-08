@@ -1,0 +1,851 @@
+{
+  "label": "short1024",
+  "overrides": {
+    "short_read": 1024
+  },
+  "requests": [
+    {
+      "key": "qa",
+      "seconds": 1.7171376000042073,
+      "response": {
+        "id": "chatcmpl-956bc1f3ae6b475194f52337",
+        "object": "chat.completion",
+        "created": 1791428479,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\n  \"planet\": \"Jupiter\",\n  \"product\": 391,\n  \"sorted\": [-2, 0, 5, 9]\n}"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 67,
+          "completion_tokens": 40,
+          "total_tokens": 107,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 67,
+          "prompt_ms": 1233.7,
+          "prompt_per_token_ms": 18.413,
+          "prompt_per_second": 54.3,
+          "predicted_n": 40,
+          "predicted_ms": 477.3,
+          "predicted_per_token_ms": 11.933,
+          "predicted_per_second": 83.8,
+          "draft_n": 30,
+          "draft_n_accepted": 30
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "code",
+      "seconds": 1.0553227000054903,
+      "response": {
+        "id": "chatcmpl-3e8f56babb5f4f29acdd481d",
+        "object": "chat.completion",
+        "created": 1791428481,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef stable_unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n```"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 57,
+          "completion_tokens": 53,
+          "total_tokens": 110,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 57,
+          "prompt_ms": 503.1,
+          "prompt_per_token_ms": 8.826,
+          "prompt_per_second": 113.3,
+          "predicted_n": 53,
+          "predicted_ms": 549.5,
+          "predicted_per_token_ms": 10.368,
+          "predicted_per_second": 96.5,
+          "draft_n": 40,
+          "draft_n_accepted": 40
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "medium",
+      "seconds": 10.71974990000308,
+      "response": {
+        "id": "chatcmpl-6df9a802404949cba98bc86d",
+        "object": "chat.completion",
+        "created": 1791428482,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[7, 37, 52, 54, 19]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 928,
+          "completion_tokens": 20,
+          "total_tokens": 948,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 928,
+          "prompt_ms": 10469.4,
+          "prompt_per_token_ms": 11.282,
+          "prompt_per_second": 88.6,
+          "predicted_n": 20,
+          "predicted_ms": 246.7,
+          "predicted_per_token_ms": 12.335,
+          "predicted_per_second": 81.1,
+          "draft_n": 15,
+          "draft_n_accepted": 15
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "long",
+      "seconds": 24.128198500009603,
+      "response": {
+        "id": "chatcmpl-0b66ffd8855142c0b04beac2",
+        "object": "chat.completion",
+        "created": 1791428493,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[25, 6, 94, 44, 37]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 1924,
+          "completion_tokens": 20,
+          "total_tokens": 1944,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 1924,
+          "prompt_ms": 23723.2,
+          "prompt_per_token_ms": 12.33,
+          "prompt_per_second": 81.1,
+          "predicted_n": 20,
+          "predicted_ms": 399.5,
+          "predicted_per_token_ms": 19.975,
+          "predicted_per_second": 50.1,
+          "draft_n": 15,
+          "draft_n_accepted": 15
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "decode",
+      "seconds": 4.47524980000162,
+      "response": {
+        "id": "chatcmpl-ce885ab5c4a641318a0d3869",
+        "object": "chat.completion",
+        "created": 1791428517,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400, 441, 484, 529, 576, 625, 676, 729, 784, 841, 900, 961, 1024, 1089, 1156, 1225, 1296, 1369, 1444, 1521, 1600, 1681, 1764, 1849, 1936, 2025, 2116, 2209, 2304, 2401, 2500, 2601, 2704, 2809, 2916, 3025, 3136, 3249, 3364, 3481, 3600]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 42,
+          "completion_tokens": 318,
+          "total_tokens": 360,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 42,
+          "prompt_ms": 532.0,
+          "prompt_per_token_ms": 12.667,
+          "prompt_per_second": 78.9,
+          "predicted_n": 318,
+          "predicted_ms": 3935.4,
+          "predicted_per_token_ms": 12.375,
+          "predicted_per_second": 80.8,
+          "draft_n": 239,
+          "draft_n_accepted": 238
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "prose",
+      "seconds": 4.808957199988072,
+      "response": {
+        "id": "chatcmpl-e3228f8b1d6c455c9d96f7a4",
+        "object": "chat.completion",
+        "created": 1791428521,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "When a user types a domain name into a browser, the process begins with a local cache check. If the IP address is not stored locally, the browser queries a recursive resolver, typically provided by the Internet Service Provider or a public service like Cloudflare. This recursive server acts as an intermediary, handling the complex lookup process on behalf of the client. It first checks its own cache for a valid record. If the entry exists and has not expired, it returns the IP address immediately, significantly speeding up the connection.\n\nIf the cache is empty or the Time-to-Live (TTL) value has expired, the resolver must perform a fresh lookup. It starts by querying root name servers, which direct it to the appropriate Top-Level Domain (TLD) servers, such as those for .com or .org. These TLD servers then point to the authoritative name servers for the specific domain. Authoritative servers hold the definitive DNS records for a domain, providing the final IP address. Unlike recursive servers, which gather information from multiple sources, authoritative servers only answer questions about their own zones.\n\nOnce the recursive resolver obtains the IP address from the authoritative server, it caches this result for the duration specified by the TTL. This caching mechanism reduces network traffic and latency for subsequent requests. Finally, the resolver returns the IP address to the browser, which then establishes a connection to the web server. This hierarchical system ensures efficient, scalable, and reliable internet navigation by balancing speed through caching with accuracy through authoritative data."
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 52,
+          "completion_tokens": 303,
+          "total_tokens": 355,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 52,
+          "prompt_ms": 477.7,
+          "prompt_per_token_ms": 9.187,
+          "prompt_per_second": 108.9,
+          "predicted_n": 303,
+          "predicted_ms": 4309.3,
+          "predicted_per_token_ms": 14.222,
+          "predicted_per_second": 70.3,
+          "draft_n": 185,
+          "draft_n_accepted": 142
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "long5k",
+      "seconds": 20.282454200001666,
+      "response": {
+        "id": "chatcmpl-4bfa95598fad43ba8a844e80",
+        "object": "chat.completion",
+        "created": 1791428526,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[25, 6, 94, 44, 37]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 5107,
+          "completion_tokens": 20,
+          "total_tokens": 5127,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 5107,
+          "prompt_ms": 19916.7,
+          "prompt_per_token_ms": 3.9,
+          "prompt_per_second": 256.4,
+          "predicted_n": 20,
+          "predicted_ms": 352.1,
+          "predicted_per_token_ms": 17.605,
+          "predicted_per_second": 56.8,
+          "draft_n": 15,
+          "draft_n_accepted": 15
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "cache_first",
+      "seconds": 0.44072980000055395,
+      "response": {
+        "id": "chatcmpl-a777492c8a8e41c49eb810f0",
+        "object": "chat.completion",
+        "created": 1791428547,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "4"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 26,
+          "completion_tokens": 2,
+          "total_tokens": 28,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 26,
+          "prompt_ms": 360.2,
+          "prompt_per_token_ms": 13.854,
+          "prompt_per_second": 72.2,
+          "predicted_n": 2,
+          "predicted_ms": 72.9,
+          "predicted_per_token_ms": 36.45,
+          "predicted_per_second": 27.4,
+          "draft_n": 3,
+          "draft_n_accepted": 3
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "cache_repeat",
+      "seconds": 0.14349960000254214,
+      "response": {
+        "id": "chatcmpl-752a93891d9d40aa9107223c",
+        "object": "chat.completion",
+        "created": 1791428547,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "4"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 26,
+          "completion_tokens": 2,
+          "total_tokens": 28,
+          "prompt_tokens_details": {
+            "cached_tokens": 19
+          }
+        },
+        "timings": {
+          "cache_n": 19,
+          "prompt_n": 7,
+          "prompt_ms": 72.6,
+          "prompt_per_token_ms": 10.371,
+          "prompt_per_second": 96.4,
+          "predicted_n": 2,
+          "predicted_ms": 68.8,
+          "predicted_per_token_ms": 34.4,
+          "predicted_per_second": 29.1,
+          "draft_n": 3,
+          "draft_n_accepted": 3
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "qa@2",
+      "seconds": 1.3713463000021875,
+      "response": {
+        "id": "chatcmpl-f2f36ec124d84ef3833e1aa2",
+        "object": "chat.completion",
+        "created": 1791428547,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\n  \"planet\": \"Jupiter\",\n  \"product\": 391,\n  \"sorted\": [-2, 0, 5, 9]\n}"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 67,
+          "completion_tokens": 40,
+          "total_tokens": 107,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 67,
+          "prompt_ms": 805.8,
+          "prompt_per_token_ms": 12.027,
+          "prompt_per_second": 83.1,
+          "predicted_n": 40,
+          "predicted_ms": 562.5,
+          "predicted_per_token_ms": 14.062,
+          "predicted_per_second": 71.1,
+          "draft_n": 30,
+          "draft_n_accepted": 30
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "code@2",
+      "seconds": 1.220814700005576,
+      "response": {
+        "id": "chatcmpl-ff754ce10d804c5585660ead",
+        "object": "chat.completion",
+        "created": 1791428549,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef stable_unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n```"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 57,
+          "completion_tokens": 53,
+          "total_tokens": 110,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 57,
+          "prompt_ms": 573.9,
+          "prompt_per_token_ms": 10.068,
+          "prompt_per_second": 99.3,
+          "predicted_n": 53,
+          "predicted_ms": 644.4,
+          "predicted_per_token_ms": 12.158,
+          "predicted_per_second": 82.2,
+          "draft_n": 40,
+          "draft_n_accepted": 40
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "medium@2",
+      "seconds": 11.24305020000611,
+      "response": {
+        "id": "chatcmpl-e494fe28b65046ab9baffb47",
+        "object": "chat.completion",
+        "created": 1791428550,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[7, 37, 52, 54, 19]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 928,
+          "completion_tokens": 20,
+          "total_tokens": 948,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 928,
+          "prompt_ms": 10981.5,
+          "prompt_per_token_ms": 11.834,
+          "prompt_per_second": 84.5,
+          "predicted_n": 20,
+          "predicted_ms": 254.2,
+          "predicted_per_token_ms": 12.71,
+          "predicted_per_second": 78.7,
+          "draft_n": 15,
+          "draft_n_accepted": 15
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "long@2",
+      "seconds": 20.755116299988003,
+      "response": {
+        "id": "chatcmpl-4ea6bb300c44430387fd5477",
+        "object": "chat.completion",
+        "created": 1791428561,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[25, 6, 94, 44, 37]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 1924,
+          "completion_tokens": 20,
+          "total_tokens": 1944,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 1924,
+          "prompt_ms": 20468.2,
+          "prompt_per_token_ms": 10.638,
+          "prompt_per_second": 94.0,
+          "predicted_n": 20,
+          "predicted_ms": 277.1,
+          "predicted_per_token_ms": 13.855,
+          "predicted_per_second": 72.2,
+          "draft_n": 15,
+          "draft_n_accepted": 15
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "decode@2",
+      "seconds": 4.6294562999974005,
+      "response": {
+        "id": "chatcmpl-49e6f821245148a3a5762b45",
+        "object": "chat.completion",
+        "created": 1791428582,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400, 441, 484, 529, 576, 625, 676, 729, 784, 841, 900, 961, 1024, 1089, 1156, 1225, 1296, 1369, 1444, 1521, 1600, 1681, 1764, 1849, 1936, 2025, 2116, 2209, 2304, 2401, 2500, 2601, 2704, 2809, 2916, 3025, 3136, 3249, 3364, 3481, 3600]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 42,
+          "completion_tokens": 318,
+          "total_tokens": 360,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 42,
+          "prompt_ms": 467.7,
+          "prompt_per_token_ms": 11.136,
+          "prompt_per_second": 89.8,
+          "predicted_n": 318,
+          "predicted_ms": 4156.4,
+          "predicted_per_token_ms": 13.07,
+          "predicted_per_second": 76.5,
+          "draft_n": 239,
+          "draft_n_accepted": 238
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "prose@2",
+      "seconds": 5.163852999990922,
+      "response": {
+        "id": "chatcmpl-9938918129fe4621b9f07e1e",
+        "object": "chat.completion",
+        "created": 1791428586,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "When a user types a domain name into a browser, the process begins with a local cache check. If the IP address is not stored locally, the browser queries a recursive resolver, typically provided by the Internet Service Provider or a public service like Cloudflare. This recursive server acts as an intermediary, handling the complex lookup process on behalf of the client. It first checks its own cache for a valid record. If the entry exists and has not expired, it returns the IP address immediately, significantly speeding up the connection.\n\nIf the cache is empty or the Time-to-Live (TTL) value has expired, the resolver must perform a fresh lookup. It starts by querying root name servers, which direct it to the appropriate Top-Level Domain (TLD) servers, such as those for .com or .org. These TLD servers then point to the authoritative name servers for the specific domain. Authoritative servers hold the definitive DNS records for a domain, providing the final IP address. Unlike recursive servers, which gather information from multiple sources, authoritative servers only answer questions about their own zones.\n\nOnce the recursive resolver obtains the IP address from the authoritative server, it caches this result for the duration specified by the TTL. This caching mechanism reduces network traffic and latency for subsequent requests. Finally, the resolver returns the IP address to the browser, which then establishes a connection to the web server. This hierarchical system ensures efficient, scalable, and reliable internet navigation by balancing speed through caching with accuracy through authoritative data."
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 52,
+          "completion_tokens": 303,
+          "total_tokens": 355,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 52,
+          "prompt_ms": 507.6,
+          "prompt_per_token_ms": 9.762,
+          "prompt_per_second": 102.4,
+          "predicted_n": 303,
+          "predicted_ms": 4653.7,
+          "predicted_per_token_ms": 15.359,
+          "predicted_per_second": 65.1,
+          "draft_n": 185,
+          "draft_n_accepted": 142
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "long5k@2",
+      "seconds": 21.95913940000173,
+      "response": {
+        "id": "chatcmpl-9ebf00c9d258450daf40bc19",
+        "object": "chat.completion",
+        "created": 1791428592,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[25, 6, 94, 44, 37]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 5107,
+          "completion_tokens": 20,
+          "total_tokens": 5127,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 5107,
+          "prompt_ms": 21593.1,
+          "prompt_per_token_ms": 4.228,
+          "prompt_per_second": 236.5,
+          "predicted_n": 20,
+          "predicted_ms": 354.9,
+          "predicted_per_token_ms": 17.745,
+          "predicted_per_second": 56.4,
+          "draft_n": 15,
+          "draft_n_accepted": 15
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "cache_first@2",
+      "seconds": 0.376502300001448,
+      "response": {
+        "id": "chatcmpl-724d3ae05685491591186f39",
+        "object": "chat.completion",
+        "created": 1791428613,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "4"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 26,
+          "completion_tokens": 2,
+          "total_tokens": 28,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 26,
+          "prompt_ms": 309.0,
+          "prompt_per_token_ms": 11.885,
+          "prompt_per_second": 84.1,
+          "predicted_n": 2,
+          "predicted_ms": 62.1,
+          "predicted_per_token_ms": 31.05,
+          "predicted_per_second": 32.2,
+          "draft_n": 3,
+          "draft_n_accepted": 3
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "cache_repeat@2",
+      "seconds": 0.12517109999316745,
+      "response": {
+        "id": "chatcmpl-5c45025b7a3d48718c0578d5",
+        "object": "chat.completion",
+        "created": 1791428614,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "4"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 26,
+          "completion_tokens": 2,
+          "total_tokens": 28,
+          "prompt_tokens_details": {
+            "cached_tokens": 19
+          }
+        },
+        "timings": {
+          "cache_n": 19,
+          "prompt_n": 7,
+          "prompt_ms": 64.4,
+          "prompt_per_token_ms": 9.2,
+          "prompt_per_second": 108.7,
+          "predicted_n": 2,
+          "predicted_ms": 58.7,
+          "predicted_per_token_ms": 29.35,
+          "predicted_per_second": 34.1,
+          "draft_n": 3,
+          "draft_n_accepted": 3
+        }
+      },
+      "valid": true
+    }
+  ],
+  "ok": true,
+  "health": {
+    "status": "ok",
+    "max_context": 8192,
+    "model": "qwen3.8-flash-next",
+    "images": false,
+    "api_key": false,
+    "loaded": true,
+    "service": "strata"
+  },
+  "status": {
+    "service": "strata",
+    "model": "qwen3.8-flash-next",
+    "loaded": true,
+    "auto_load": true,
+    "structured_output": {
+      "formats": [
+        "json_object",
+        "json_schema"
+      ],
+      "method": "prompt_and_validate",
+      "constrained_decoding": false,
+      "stream_buffered": true
+    },
+    "engine": "0.1.40.3",
+    "started": 1791428479,
+    "uptime_s": 134,
+    "cache_max_tokens": 8192,
+    "cache": {
+      "state": "disabled"
+    },
+    "context": {
+      "native": 8192,
+      "max_positions": 8192
+    },
+    "concurrency": {
+      "serving": 1,
+      "requested": 1
+    },
+    "dialects": [
+      "/v1/chat/completions",
+      "/v1/messages",
+      "/v1/responses"
+    ],
+    "vision": {
+      "enabled": false,
+      "available": false,
+      "error": null
+    },
+    "activity": {
+      "requests": 18,
+      "in_flight": 0,
+      "last_request_at": 1791428614
+    },
+    "last_timings": {
+      "cache_n": 19,
+      "prompt_n": 7,
+      "prompt_ms": 64.4,
+      "prompt_per_token_ms": 9.2,
+      "prompt_per_second": 108.7,
+      "predicted_n": 2,
+      "predicted_ms": 58.7,
+      "predicted_per_token_ms": 29.35,
+      "predicted_per_second": 34.1,
+      "draft_n": 3,
+      "draft_n_accepted": 3,
+      "at": 1791428614
+    },
+    "vram": {
+      "elastic": false
+    },
+    "machine": {
+      "at": 1791428614,
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 2080 Ti",
+        "used_mib": 21897.0,
+        "total_mib": 22528.0,
+        "util_pct": 4,
+        "temp_c": 51,
+        "power_w": 119.746
+      },
+      "ram": {
+        "used_gib": 31.5,
+        "total_gib": 31.6
+      }
+    }
+  }
+}
