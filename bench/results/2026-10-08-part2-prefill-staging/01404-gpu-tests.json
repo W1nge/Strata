@@ -1,0 +1,68 @@
+[
+  {
+    "device": "0",
+    "name": "mmvq_multi_parity",
+    "args": [],
+    "returncode": 0,
+    "seconds": 0.6475082999968436,
+    "log": "E:\\strata-setup\\part2-prefill-next\\01404-gpu0-mmvq_multi_parity.log",
+    "executable_sha256": "e5cb6986e6cfaa7e51d54b95bffeda6aa241cb1bc06e0635ca7593d9d2cd48b7"
+  },
+  {
+    "device": "0",
+    "name": "pdl_parity",
+    "args": [],
+    "returncode": 2,
+    "seconds": 0.45095680000667926,
+    "log": "E:\\strata-setup\\part2-prefill-next\\01404-gpu0-pdl_parity.log",
+    "executable_sha256": "0fc2196519375eb3d03cc133e06e27bbfb8ef3543ff79def1c77e1de0e5626f7"
+  },
+  {
+    "device": "0",
+    "name": "native_expert_parity",
+    "args": [
+      "C:/strata-models/hf/IQ3_XXS/Qwen3.8-Flash-Next-GSQ-RCO-IQ3_XXS-00001-of-00002.gguf",
+      "0",
+      "1",
+      "8",
+      "12"
+    ],
+    "returncode": 0,
+    "seconds": 0.5435520000028191,
+    "log": "E:\\strata-setup\\part2-prefill-next\\01404-gpu0-native_expert_parity.log",
+    "executable_sha256": "f7eb1cd9ac79f24e41f908d03c92b8700eabe43de2f928eee68fc55bf26b6cf8"
+  },
+  {
+    "device": "1",
+    "name": "mmvq_multi_parity",
+    "args": [],
+    "returncode": 0,
+    "seconds": 0.5677142999920761,
+    "log": "E:\\strata-setup\\part2-prefill-next\\01404-gpu1-mmvq_multi_parity.log",
+    "executable_sha256": "e5cb6986e6cfaa7e51d54b95bffeda6aa241cb1bc06e0635ca7593d9d2cd48b7"
+  },
+  {
+    "device": "1",
+    "name": "pdl_parity",
+    "args": [],
+    "returncode": 2,
+    "seconds": 0.3900054999976419,
+    "log": "E:\\strata-setup\\part2-prefill-next\\01404-gpu1-pdl_parity.log",
+    "executable_sha256": "0fc2196519375eb3d03cc133e06e27bbfb8ef3543ff79def1c77e1de0e5626f7"
+  },
+  {
+    "device": "1",
+    "name": "native_expert_parity",
+    "args": [
+      "C:/strata-models/hf/IQ3_XXS/Qwen3.8-Flash-Next-GSQ-RCO-IQ3_XXS-00001-of-00002.gguf",
+      "0",
+      "1",
+      "8",
+      "12"
+    ],
+    "returncode": 0,
+    "seconds": 0.5038967000000412,
+    "log": "E:\\strata-setup\\part2-prefill-next\\01404-gpu1-native_expert_parity.log",
+    "executable_sha256": "f7eb1cd9ac79f24e41f908d03c92b8700eabe43de2f928eee68fc55bf26b6cf8"
+  }
+]

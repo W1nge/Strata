@@ -1,0 +1,35 @@
+{
+  "installed_at_utc": "2026-10-08T08:54:06Z",
+  "engine_source_commit": "25377113e1172d67822fb068333393a59699d248",
+  "upstream_commit": "6674a0065fb96bacde33e3eb10f91a1df86f95f2",
+  "exe": "E:\\strata-setup\\part2-prefill-next\\prefill-release-01404\\strata.exe",
+  "exe_sha256": "f2c666401bf8264ed666a616cee19c852f86b321bc0c9cc61d8fa784fd07f63f",
+  "live_config": "C:\\strata-models\\strata-dual-p100-coding.json",
+  "installed_config_sha256": "1e1041b39bfc9c51b06b265733a6b84f3183e6affbe81c9c2c3b36c75340c013",
+  "original_config_sha256": "b19b73a7a75f3fc00a139354359ae1cca3ac38b72413b49a337f9fbfaafa322d",
+  "rollback_config": "E:\\strata-setup\\part2-prefill-next\\rollback-coding-config.json",
+  "rollback_exe": "E:\\strata-setup\\part2-mapped-output-20261008\\strata.exe",
+  "rollback_exe_sha256": "38ad7934bb1e3cbbe29a3bcd1da5d749a648c51de5b4dc628dc52a6212f7d0b8",
+  "changes": {
+    "exe": "E:/strata-setup/part2-prefill-next/prefill-release-01404/strata.exe",
+    "env": {
+      "STRATA_FILE_RELEASE": "1"
+    }
+  },
+  "preserved": [
+    {
+      "path": "C:\\strata-models\\strata-dual-p100-experimental.json",
+      "sha256": "360ed3d01dea155e6280b99ef10b672ff9389b94bdda89fa0fee70960d7bfc21"
+    },
+    {
+      "path": "C:\\strata-models\\strata-256k-int8.json",
+      "sha256": "943eb8db5f3da2e53d23382a799c524ca640dbb65aa553aa10db636bc0cfd397"
+    },
+    {
+      "path": "C:\\Users\\Winge\\.zcode\\workspace\\default\\Strata\\docs\\performance\\UPSTREAM-OPTIMIZATION-AUDIT-2026-10-08.md",
+      "sha256": "d59c6e2b2f686b45ff46574667bf0ee2425b5a6b1a930cca381e15d0d03d184a"
+    }
+  ],
+  "no_background_model": true,
+  "daily_launcher": "C:/strata-models/run-iq3xxs-dual-p100-coding.bat"
+}

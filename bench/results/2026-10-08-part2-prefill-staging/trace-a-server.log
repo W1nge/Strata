@@ -1,0 +1,55 @@
+loading the model (the first start takes a minute or two) ...
+[strata] starting the engine: reading the model's weights ...
+[strata] loading the experts the GPU does not hold into RAM (of about 47 GB) and locking part of them for the GPU.
+         YOUR PC CAN BE SLOW OR STOP RESPONDING FOR 1-3 MINUTES NOW - this is normal.
+         Please wait and don't close this window; the browser opens when it is ready.
+[strata] filling the GPU's expert cache (9158 experts, 14.84 GiB of VRAM) ...
+[strata] still starting (28 s) - please wait ...
+[strata] still starting (48 s) - please wait ...
+[strata] still starting (68 s) - please wait ...
+[strata] still starting (88 s) - please wait ...
+[strata] almost ready ...
+[strata] still starting (120 s) - please wait ...
+[strata] still starting (140 s) - please wait ...
+ready: http://127.0.0.1:18997/v1  (OpenAI: /v1/chat/completions, Anthropic: /v1/messages, context 8192 tokens)
+       open http://127.0.0.1:18997/ in a browser to chat; close this window to stop the model
+[strata] answering: 2 of max 100 tokens, 43.3 tok/s, 1 s
+[strata] done: 40 tokens in 1 s (97.6 tok/s) (stop, cancel=False), expert cache 64.6% hit (+39.3% of the routed experts over PCIe)
+[strata] answering: 51 of max 220 tokens, 89.1 tok/s, 1 s
+[strata] done: 53 tokens in 1 s (92.5 tok/s) (stop, cancel=False), expert cache 80.9% hit (+32.9% of the routed experts over PCIe)
+[strata] reading the prompt: 921 of 928 tokens, 9 s so far
+[strata] done: 20 tokens in 9 s (62.9 tok/s) (stop, cancel=False), expert cache 62.5% hit (+42.2% of the routed experts over PCIe)
+[strata] reading the prompt: 1,924 tokens, 10 s so far
+[strata] reading the prompt: 1,924 tokens, 20 s so far
+[strata] reading the prompt: 1,924 tokens, 30 s so far
+[strata] reading the prompt: 1,924 tokens, 40 s so far
+[strata] reading the prompt: 1,924 tokens, 50 s so far
+[strata] reading the prompt: 1,924 tokens, 60 s so far
+[strata] reading the prompt: 1,924 tokens, 70 s so far
+[strata] reading the prompt: 1,923 of 1,924 tokens, 72 s so far
+[strata] done: 20 tokens in 72 s (54.2 tok/s) (stop, cancel=False), expert cache 63.0% hit (+46.3% of the routed experts over PCIe)
+[strata] answering: 37 of max 500 tokens, 68.6 tok/s, 1 s
+[strata] answering: 126 of max 500 tokens, 79.9 tok/s, 2 s
+[strata] answering: 210 of max 500 tokens, 80.1 tok/s, 3 s
+[strata] answering: 293 of max 500 tokens, 80.6 tok/s, 4 s
+[strata] done: 318 tokens in 4 s (80.3 tok/s) (stop, cancel=False), expert cache 35.5% hit (+46.1% of the routed experts over PCIe)
+[strata] answering: 36 of max 420 tokens, 64.4 tok/s, 1 s
+[strata] answering: 99 of max 420 tokens, 63.3 tok/s, 2 s
+[strata] answering: 169 of max 420 tokens, 65.6 tok/s, 3 s
+[strata] answering: 237 of max 420 tokens, 65.9 tok/s, 4 s
+[strata] done: 272 tokens in 5 s (65.1 tok/s) (stop, cancel=False), expert cache 94.4% hit (+21.8% of the routed experts over PCIe)
+[strata] reading the prompt: 5,107 tokens, 10 s so far
+[strata] reading the prompt: 5,107 tokens, 20 s so far
+[strata] reading the prompt: 5,107 tokens, 30 s so far
+[strata] reading the prompt: 5,107 tokens, 40 s so far
+[strata] reading the prompt: 5,107 tokens, 50 s so far
+[strata] reading the prompt: 5,107 tokens, 60 s so far
+[strata] reading the prompt: 5,107 tokens, 70 s so far
+[strata] reading the prompt: 5,107 tokens, 80 s so far
+[strata] reading the prompt: 5,107 tokens, 90 s so far
+[strata] reading the prompt: 5,107 tokens, 100 s so far
+[strata] the engine stopped unexpectedly (exit code None). The engine stopped itself because it had stopped making progress - a hang it caught. Its log line: strata serve: no progress for 60 s during a request (reading the prompt (batched): layer 19 of the prompt chunk from token 0) - stopping the engine so the server starts it again (issue #29) - please report it at github.com/Niko1221/Strata/issues. The next request starts the engine again. Its log: E:\strata-setup\part2-prefill-next\trace-a-engine.log
+[strata] done: 0 tokens in 108 s (0.0 tok/s) (error, cancel=False)
+
+[strata] stopping (Ctrl+C again to end the engine at once) ...
+[strata] stopped

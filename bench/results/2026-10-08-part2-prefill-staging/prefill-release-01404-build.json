@@ -1,0 +1,13 @@
+{
+  "head": "25377113e1172d67822fb068333393a59699d248",
+  "upstream": "6674a0065fb96bacde33e3eb10f91a1df86f95f2",
+  "candidate_exe": "E:\\strata-setup\\part2-prefill-next\\prefill-release-01404\\strata.exe",
+  "candidate_sha256": "f2c666401bf8264ed666a616cee19c852f86b321bc0c9cc61d8fa784fd07f63f",
+  "source_sha256": "c206dc909cbcb0e1ff463943333140b27de271d315e72438eb7714436ee345a4",
+  "cmake_cache_sha256": "071a4055a6fe3d31e50356467d1a2ec3442b806143e04038f6dcfc408482e725",
+  "build_log_sha256": "4e9f02e6538be2596cf7fbfd7b76feef5b4b7d7048409b275f619e24cc8f9b5e",
+  "driver": [
+    "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W, 22528 MiB",
+    "1, Tesla P100-PCIE-16GB, 537.13, 250.00 W, 16384 MiB"
+  ]
+}

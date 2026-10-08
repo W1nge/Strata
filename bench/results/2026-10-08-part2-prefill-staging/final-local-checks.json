@@ -1,0 +1,34 @@
+{
+  "checked_at_utc": "2026-10-08T08:55:08Z",
+  "integration_head": "4b9504857113880ac4ec046e97c226a264022ba1",
+  "daily_head": "4328d7b1f8eac4dd4f4c00fd9708076d32f277d3",
+  "upstream_patch_commit": "9ee824e4cfb620246a01e8dea14fdb1635068f76",
+  "upstream_patch_sha256": "0e01a218b9c342ac61ea9ccafc9947346595581e9b44783cf3bfbcea07659b69",
+  "engine_source_commit": "25377113e1172d67822fb068333393a59699d248",
+  "engine_source_sha256": "c206dc909cbcb0e1ff463943333140b27de271d315e72438eb7714436ee345a4",
+  "integration_daily_engine_source_equal": true,
+  "installed_exe_sha256": "f2c666401bf8264ed666a616cee19c852f86b321bc0c9cc61d8fa784fd07f63f",
+  "installed_config_sha256": "1e1041b39bfc9c51b06b265733a6b84f3183e6affbe81c9c2c3b36c75340c013",
+  "preserved": [
+    {
+      "path": "C:\\strata-models\\strata-dual-p100-experimental.json",
+      "sha256": "360ed3d01dea155e6280b99ef10b672ff9389b94bdda89fa0fee70960d7bfc21"
+    },
+    {
+      "path": "C:\\strata-models\\strata-256k-int8.json",
+      "sha256": "943eb8db5f3da2e53d23382a799c524ca640dbb65aa553aa10db636bc0cfd397"
+    },
+    {
+      "path": "C:\\Users\\Winge\\.zcode\\workspace\\default\\Strata\\docs\\performance\\UPSTREAM-OPTIMIZATION-AUDIT-2026-10-08.md",
+      "sha256": "d59c6e2b2f686b45ff46574667bf0ee2425b5a6b1a930cca381e15d0d03d184a"
+    }
+  ],
+  "gpu": [
+    "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W, 22528 MiB",
+    "1, Tesla P100-PCIE-16GB, 537.13, 250.00 W, 16384 MiB"
+  ],
+  "active_model_or_build_processes": [],
+  "test_port_listeners": [],
+  "daily_tracked_status": "M docs/performance/UPSTREAM-OPTIMIZATION-AUDIT-2026-10-08.md",
+  "test_harness_sha256": "0f41f85b90611182e756876aaa9afb9facdc06558b879a30e781984ee3ecdefd"
+}

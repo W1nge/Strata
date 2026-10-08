@@ -1,0 +1,9 @@
+{
+  "head": "94e7c827840c112522b07446e1b77daa5519411a",
+  "patch_sha256": "4d3870dd4bf1bef1bc41b9a37b8fb193d424d37af9cc6c4fd2852e16fc846d60",
+  "candidate_exe": "E:\\strata-setup\\part2-prefill-next\\prefill-release\\strata.exe",
+  "candidate_sha256": "22b4dbc1796e69fcd457b40726e7c7f5562cf1f938133ca60e86a37d4cac109e",
+  "stable_sha256": "38ad7934bb1e3cbbe29a3bcd1da5d749a648c51de5b4dc628dc52a6212f7d0b8",
+  "source_sha256": "c206dc909cbcb0e1ff463943333140b27de271d315e72438eb7714436ee345a4",
+  "cmake_cache_sha256": "6251506e1cd9c15a8a40917c457553f90f47d4820ecb288f895e275d6cf8c12e"
+}
