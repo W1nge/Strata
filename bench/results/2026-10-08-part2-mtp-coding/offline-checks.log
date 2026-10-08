@@ -1,0 +1,14 @@
+PASS captured responses: mtp4-a 4
+PASS captured responses: mtp4-b 10
+PASS captured responses: mtp6-a 4
+PASS captured responses: mtp8-a 4
+PASS captured responses: mtp8-confidence 13
+PASS captured responses: mtp8-p90-b 10
+PASS captured responses: mtp8-p90-profile 10
+PASS validator rejects: wrong result
+PASS validator rejects: import
+PASS validator stops a nonterminating response
+PASS installed config equals measured config except log; stable engine and model paths verified
+PASS coding defaults normalize to the benchmark template for all five prompts
+PASS Python syntax
+PASS all 55 responses revalidated, 3 negative fixtures, installed config, and defaults parity

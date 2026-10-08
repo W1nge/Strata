@@ -1,0 +1,709 @@
+{
+  "label": "mtp8-confidence",
+  "overrides": {
+    "spec": 8
+  },
+  "requests": [
+    {
+      "key": "probe",
+      "seconds": 1.457612500002142,
+      "response": {
+        "id": "chatcmpl-a9e5c759c77e43f884d8f20e",
+        "object": "chat.completion",
+        "created": 1791431014,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef stable_unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n```"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 41,
+          "completion_tokens": 53,
+          "total_tokens": 94,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 41,
+          "prompt_ms": 785.7,
+          "prompt_per_token_ms": 19.163,
+          "prompt_per_second": 52.2,
+          "predicted_n": 53,
+          "predicted_ms": 664.5,
+          "predicted_per_token_ms": 12.538,
+          "predicted_per_second": 79.8,
+          "draft_n": 48,
+          "draft_n_accepted": 45
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "utilities",
+      "seconds": 10.312703100004,
+      "response": {
+        "id": "chatcmpl-d3eca4a8cde745f987851c90",
+        "object": "chat.completion",
+        "created": 1791431016,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def stable_unique(items):\n    \"\"\"Return a list of hashable values from items, preserving first occurrence order.\"\"\"\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\n\ndef frequencies(items):\n    \"\"\"Return a dict mapping each hashable value in items to its occurrence count.\"\"\"\n    counts = {}\n    for item in items:\n        counts[item] = counts.get(item, 0) + 1\n    return counts\n\n\ndef chunked(items, size):\n    \"\"\"Split items into chunks of the given size. Raise ValueError if size <= 0.\"\"\"\n    if size <= 0:\n        raise ValueError(\"size must be positive\")\n    result = []\n    for i in range(0, len(items), size):\n        result.append(list(items[i:i + size]))\n    return result\n\n\ndef running_totals(numbers):\n    \"\"\"Return a list of cumulative sums of numbers.\"\"\"\n    result = []\n    total = 0\n    for num in numbers:\n        total += num\n        result.append(total)\n    return result\n\n\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping or touching intervals and return sorted non-overlapping intervals.\"\"\"\n    if not intervals:\n        return []\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    merged = [list(sorted_intervals[0])]\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            merged[-1][1] = max(last_end, end)\n        else:\n            merged.append([start, end])\n    return merged\n\n\ndef lower_bound(values, target):\n    \"\"\"Return the first index in the sorted list values where value >= target, or len(values).\"\"\"\n    lo = 0\n    hi = len(values)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if values[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n\n\ndef rotate_right(items, k):\n    \"\"\"Return a new list rotated right by k modulo its length. Negative k rotates left.\"\"\"\n    if not items:\n        return []\n    n = len(items)\n    k = k % n\n    if k == 0:\n        return list(items)\n    return list(items[-k:]) + list(items[:-k])\n\n\ndef moving_average(numbers, window):\n    \"\"\"Return the moving averages of complete consecutive windows using a sliding window.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    n = len(numbers)\n    if window > n:\n        return []\n    result = []\n    window_sum = sum(numbers[:window])\n    result.append(window_sum / window)\n    for i in range(window, n):\n        window_sum += numbers[i] - numbers[i - window]\n        result.append(window_sum / window)\n    return result"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 303,
+          "completion_tokens": 671,
+          "total_tokens": 974,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 303,
+          "prompt_ms": 2511.9,
+          "prompt_per_token_ms": 8.29,
+          "prompt_per_second": 120.6,
+          "predicted_n": 671,
+          "predicted_ms": 7796.9,
+          "predicted_per_token_ms": 11.62,
+          "predicted_per_second": 86.1,
+          "draft_n": 600,
+          "draft_n_accepted": 524
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "ttl_cache",
+      "seconds": 7.833438300003763,
+      "response": {
+        "id": "chatcmpl-496242b64ec7454fb02d36bc",
+        "object": "chat.completion",
+        "created": 1791431026,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "class TTLCache:\n    \"\"\"A cache with time-to-live expiration and LRU eviction.\"\"\"\n\n    def __init__(self, capacity):\n        \"\"\"Initialize the cache with a positive integer capacity.\"\"\"\n        if not isinstance(capacity, int) or capacity <= 0:\n            raise ValueError(\"capacity must be a positive integer\")\n        self.capacity = capacity\n        self._data = {}\n\n    def put(self, key, value, now, ttl):\n        \"\"\"Insert or replace a key-value pair with a TTL, evicting LRU if needed.\"\"\"\n        if ttl <= 0:\n            raise ValueError(\"ttl must be > 0\")\n        self.purge(now)\n        if key in self._data:\n            del self._data[key]\n        self._data[key] = (value, now + ttl)\n        if len(self._data) > self.capacity:\n            oldest_key = next(iter(self._data))\n            del self._data[oldest_key]\n\n    def get(self, key, now, default=None):\n        \"\"\"Return the value for key if not expired, marking it as most recently used.\"\"\"\n        self.purge(now)\n        if key not in self._data:\n            return default\n        value, expires_at = self._data[key]\n        del self._data[key]\n        self._data[key] = (value, expires_at)\n        return value\n\n    def delete(self, key):\n        \"\"\"Remove a key from the cache if present, returning True if removed.\"\"\"\n        if key in self._data:\n            del self._data[key]\n            return True\n        return False\n\n    def purge(self, now):\n        \"\"\"Remove all entries expiring at or before now, returning the count removed.\"\"\"\n        to_remove = [k for k, (_, exp) in self._data.items() if exp <= now]\n        for k in to_remove:\n            del self._data[k]\n        return len(to_remove)\n\n    def size(self, now):\n        \"\"\"Return the number of live (non-expired) entries after purging.\"\"\"\n        self.purge(now)\n        return len(self._data)\n\n    def clear(self):\n        \"\"\"Remove all entries from the cache.\"\"\"\n        self._data.clear()"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 292,
+          "completion_tokens": 490,
+          "total_tokens": 782,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 292,
+          "prompt_ms": 2187.5,
+          "prompt_per_token_ms": 7.491,
+          "prompt_per_second": 133.5,
+          "predicted_n": 490,
+          "predicted_ms": 5642.3,
+          "predicted_per_token_ms": 11.515,
+          "predicted_per_second": 86.8,
+          "draft_n": 436,
+          "draft_n_accepted": 373
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "algorithms",
+      "seconds": 12.818880999999237,
+      "response": {
+        "id": "chatcmpl-bc980857fe864696b6eb2e18",
+        "object": "chat.completion",
+        "created": 1791431034,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def topological_sort(n, edges):\n    \"\"\"\n    Perform a topological sort on a directed graph with nodes 0..n-1.\n    Always chooses the smallest currently available node (Kahn's algorithm with min-heap behavior via list).\n    Raises ValueError if a cycle is detected.\n    Time complexity: O(n^2 + len(edges)) due to linear search for min node.\n    \"\"\"\n    if n == 0:\n        return []\n    \n    # Build adjacency list and in-degree array\n    adj = [[] for _ in range(n)]\n    in_degree = [0] * n\n    for u, v in edges:\n        adj[u].append(v)\n        in_degree[v] += 1\n    \n    # Find all nodes with in-degree 0\n    available = [i for i in range(n) if in_degree[i] == 0]\n    result = []\n    \n    while available:\n        # Choose the smallest available node\n        min_node = min(available)\n        available.remove(min_node)\n        result.append(min_node)\n        \n        for neighbor in adj[min_node]:\n            in_degree[neighbor] -= 1\n            if in_degree[neighbor] == 0:\n                available.append(neighbor)\n    \n    if len(result) != n:\n        raise ValueError(\"Cycle detected in graph\")\n    \n    return result\n\n\ndef shortest_paths(n, edges, start):\n    \"\"\"\n    Compute shortest paths from start to all nodes using Dijkstra's algorithm.\n    Edges are directed with nonnegative weights. Parallel edges allowed.\n    Returns a list of distances, with float('inf') for unreachable nodes.\n    Time complexity: O(n^2 + len(edges)) using a simple array-based Dijkstra.\n    \"\"\"\n    INF = float('inf')\n    dist = [INF] * n\n    dist[start] = 0\n    visited = [False] * n\n    \n    # Build adjacency list\n    adj = [[] for _ in range(n)]\n    for u, v, w in edges:\n        adj[u].append((v, w))\n    \n    for _ in range(n):\n        # Find the unvisited node with the smallest distance\n        min_dist = INF\n        min_node = -1\n        for i in range(n):\n            if not visited[i] and dist[i] < min_dist:\n                min_dist = dist[i]\n                min_node = i\n        \n        if min_node == -1:\n            break\n        \n        visited[min_node] = True\n        \n        for neighbor, weight in adj[min_node]:\n            new_dist = dist[min_node] + weight\n            if new_dist < dist[neighbor]:\n                dist[neighbor] = new_dist\n    \n    return dist\n\n\ndef longest_common_subsequence(a, b):\n    \"\"\"\n    Compute the longest common subsequence of strings a and b using dynamic programming.\n    Returns one such subsequence as a string.\n    Time complexity: O(len(a) * len(b)).\n    \"\"\"\n    m = len(a)\n    n = len(b)\n    \n    if m == 0 or n == 0:\n        return \"\"\n    \n    # dp[i][j] = length of LCS of a[:i] and b[:j]\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    \n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if a[i - 1] == b[j - 1]:\n                dp[i][j] = dp[i - 1][j - 1] + 1\n            else:\n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])\n    \n    # Reconstruct the LCS\n    lcs = []\n    i, j = m, n\n    while i > 0 and j > 0:\n        if a[i - 1] == b[j - 1]:\n            lcs.append(a[i - 1])\n            i -= 1\n            j -= 1\n        elif dp[i - 1][j] >= dp[i][j - 1]:\n            i -= 1\n        else:\n            j -= 1\n    \n    lcs.reverse()\n    return \"\".join(lcs)"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 256,
+          "completion_tokens": 946,
+          "total_tokens": 1202,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 256,
+          "prompt_ms": 1941.4,
+          "prompt_per_token_ms": 7.584,
+          "prompt_per_second": 131.9,
+          "predicted_n": 946,
+          "predicted_ms": 10874.1,
+          "predicted_per_token_ms": 11.495,
+          "predicted_per_second": 87.0,
+          "draft_n": 866,
+          "draft_n_accepted": 727
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "utilities:p0",
+      "seconds": 12.007405999989714,
+      "response": {
+        "id": "chatcmpl-f0fc3a1a7c52421ea7e4e913",
+        "object": "chat.completion",
+        "created": 1791431047,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def stable_unique(items):\n    \"\"\"Return a list of hashable values from items, preserving first occurrence order.\"\"\"\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\n\ndef frequencies(items):\n    \"\"\"Return a dict mapping each hashable value in items to its occurrence count.\"\"\"\n    counts = {}\n    for item in items:\n        counts[item] = counts.get(item, 0) + 1\n    return counts\n\n\ndef chunked(items, size):\n    \"\"\"Split items into chunks of given size; last chunk may be shorter. Raise ValueError if size <= 0.\"\"\"\n    if size <= 0:\n        raise ValueError(\"size must be positive\")\n    items = list(items)\n    if not items:\n        return []\n    result = []\n    for i in range(0, len(items), size):\n        result.append(items[i:i + size])\n    return result\n\n\ndef running_totals(numbers):\n    \"\"\"Return a list of cumulative sums of numbers. Empty input yields [].\"\"\"\n    result = []\n    total = 0\n    for num in numbers:\n        total += num\n        result.append(total)\n    return result\n\n\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping or touching [start, end] intervals and return sorted non-overlapping intervals.\"\"\"\n    if not intervals:\n        return []\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    merged = []\n    current_start, current_end = sorted_intervals[0][0], sorted_intervals[0][1]\n    for start, end in sorted_intervals[1:]:\n        if start <= current_end:\n            current_end = max(current_end, end)\n        else:\n            merged.append([current_start, current_end])\n            current_start, current_end = start, end\n    merged.append([current_start, current_end])\n    return merged\n\n\ndef lower_bound(values, target):\n    \"\"\"Return the first index in ascending sorted values where value >= target, or len(values).\"\"\"\n    lo, hi = 0, len(values)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if values[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n\n\ndef rotate_right(items, k):\n    \"\"\"Return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\"\"\"\n    items = list(items)\n    n = len(items)\n    if n == 0:\n        return []\n    k = k % n\n    if k == 0:\n        return items[:]\n    return items[-k:] + items[:-k]\n\n\ndef moving_average(numbers, window):\n    \"\"\"Return means of complete consecutive windows using a linear sliding window. Raise ValueError if window <= 0.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    numbers = list(numbers)\n    n = len(numbers)\n    if window > n:\n        return []\n    result = []\n    window_sum = 0\n    for i in range(n):\n        window_sum += numbers[i]\n        if i >= window:\n            window_sum -= numbers[i - window]\n        if i >= window - 1:\n            result.append(window_sum / window)\n    return result"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 303,
+          "completion_tokens": 756,
+          "total_tokens": 1059,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 303,
+          "prompt_ms": 2138.8,
+          "prompt_per_token_ms": 7.059,
+          "prompt_per_second": 141.7,
+          "predicted_n": 756,
+          "predicted_ms": 9865.1,
+          "predicted_per_token_ms": 13.049,
+          "predicted_per_second": 76.6,
+          "draft_n": 973,
+          "draft_n_accepted": 616
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "ttl_cache:p0",
+      "seconds": 8.955105699991691,
+      "response": {
+        "id": "chatcmpl-25ce7d112e9b4c60a9dd1ae4",
+        "object": "chat.completion",
+        "created": 1791431059,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "class TTLCache:\n    \"\"\"A cache with time-to-live expiration and LRU eviction.\"\"\"\n\n    def __init__(self, capacity):\n        \"\"\"Initialize the cache with a positive integer capacity.\"\"\"\n        if not isinstance(capacity, int) or capacity <= 0:\n            raise ValueError(\"capacity must be a positive integer\")\n        self.capacity = capacity\n        self._data = {}\n\n    def put(self, key, value, now, ttl):\n        \"\"\"Insert or replace a key-value pair with a TTL, evicting LRU if needed.\"\"\"\n        if ttl <= 0:\n            raise ValueError(\"ttl must be > 0\")\n        self.purge(now)\n        if key in self._data:\n            del self._data[key]\n        self._data[key] = (value, now + ttl)\n        while len(self._data) > self.capacity:\n            oldest_key = next(iter(self._data))\n            del self._data[oldest_key]\n\n    def get(self, key, now, default=None):\n        \"\"\"Return the value for key if not expired, marking it as most recently used.\"\"\"\n        self.purge(now)\n        if key not in self._data:\n            return default\n        value, expires_at = self._data[key]\n        del self._data[key]\n        self._data[key] = (value, expires_at)\n        return value\n\n    def delete(self, key):\n        \"\"\"Remove a key from the cache if present, returning True if removed.\"\"\"\n        if key in self._data:\n            del self._data[key]\n            return True\n        return False\n\n    def purge(self, now):\n        \"\"\"Remove all entries expiring at or before now, returning the count removed.\"\"\"\n        to_remove = [k for k, (_, exp) in self._data.items() if exp <= now]\n        for k in to_remove:\n            del self._data[k]\n        return len(to_remove)\n\n    def size(self, now):\n        \"\"\"Return the number of live (non-expired) entries after purging.\"\"\"\n        self.purge(now)\n        return len(self._data)\n\n    def clear(self):\n        \"\"\"Remove all entries from the cache.\"\"\"\n        self._data.clear()"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 292,
+          "completion_tokens": 490,
+          "total_tokens": 782,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 292,
+          "prompt_ms": 2093.5,
+          "prompt_per_token_ms": 7.17,
+          "prompt_per_second": 139.5,
+          "predicted_n": 490,
+          "predicted_ms": 6858.1,
+          "predicted_per_token_ms": 13.996,
+          "predicted_per_second": 71.4,
+          "draft_n": 700,
+          "draft_n_accepted": 392
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "algorithms:p0",
+      "seconds": 16.02318910000031,
+      "response": {
+        "id": "chatcmpl-4a6983a4ad0f47468c3866f7",
+        "object": "chat.completion",
+        "created": 1791431068,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def topological_sort(n, edges):\n    \"\"\"\n    Perform a topological sort on a directed graph with nodes 0..n-1.\n    Always chooses the smallest currently available node (Kahn's algorithm with min-heap behavior via list).\n    Raises ValueError if a cycle is detected.\n    Time complexity: O(n + len(edges)) for building graph, O(n^2) for selecting min node each step.\n    \"\"\"\n    if n == 0:\n        return []\n    \n    # Build adjacency list and in-degree count\n    adj = [[] for _ in range(n)]\n    in_degree = [0] * n\n    for u, v in edges:\n        adj[u].append(v)\n        in_degree[v] += 1\n    \n    # Find all nodes with in-degree 0\n    available = [i for i in range(n) if in_degree[i] == 0]\n    available.sort()\n    \n    result = []\n    while available:\n        # Pick the smallest available node\n        node = available.pop(0)\n        result.append(node)\n        \n        # Reduce in-degree of neighbors\n        for neighbor in adj[node]:\n            in_degree[neighbor] -= 1\n            if in_degree[neighbor] == 0:\n                available.append(neighbor)\n                available.sort()\n    \n    if len(result) != n:\n        raise ValueError(\"Cycle detected in graph\")\n    \n    return result\n\n\ndef shortest_paths(n, edges, start):\n    \"\"\"\n    Compute shortest paths from start to all nodes using Dijkstra's algorithm.\n    Edges are directed with nonnegative weights. Parallel edges allowed.\n    Returns a list of distances, with float('inf') for unreachable nodes.\n    Time complexity: O(n^2 + len(edges)) using a simple array-based Dijkstra.\n    \"\"\"\n    INF = float('inf')\n    dist = [INF] * n\n    dist[start] = 0\n    visited = [False] * n\n    \n    # Build adjacency list\n    adj = [[] for _ in range(n)]\n    for u, v, w in edges:\n        adj[u].append((v, w))\n    \n    for _ in range(n):\n        # Find the unvisited node with the smallest distance\n        min_dist = INF\n        min_node = -1\n        for i in range(n):\n            if not visited[i] and dist[i] < min_dist:\n                min_dist = dist[i]\n                min_node = i\n        \n        if min_node == -1:\n            break\n        \n        visited[min_node] = True\n        \n        # Relax edges from min_node\n        for neighbor, weight in adj[min_node]:\n            if not visited[neighbor]:\n                new_dist = dist[min_node] + weight\n                if new_dist < dist[neighbor]:\n                    dist[neighbor] = new_dist\n    \n    return dist\n\n\ndef longest_common_subsequence(a, b):\n    \"\"\"\n    Compute the longest common subsequence of strings a and b using dynamic programming.\n    Returns one such subsequence as a string.\n    Time complexity: O(len(a) * len(b)).\n    Space complexity: O(len(a) * len(b)).\n    \"\"\"\n    m = len(a)\n    n = len(b)\n    \n    if m == 0 or n == 0:\n        return \"\"\n    \n    # dp[i][j] = length of LCS of a[0..i-1] and b[0..j-1]\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    \n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if a[i - 1] == b[j - 1]:\n                dp[i][j] = dp[i - 1][j - 1] + 1\n            else:\n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])\n    \n    # Reconstruct the LCS\n    lcs = []\n    i, j = m, n\n    while i > 0 and j > 0:\n        if a[i - 1] == b[j - 1]:\n            lcs.append(a[i - 1])\n            i -= 1\n            j -= 1\n        elif dp[i - 1][j] >= dp[i][j - 1]:\n            i -= 1\n        else:\n            j -= 1\n    \n    lcs.reverse()\n    return \"\".join(lcs)"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 256,
+          "completion_tokens": 998,
+          "total_tokens": 1254,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 256,
+          "prompt_ms": 1829.6,
+          "prompt_per_token_ms": 7.147,
+          "prompt_per_second": 139.9,
+          "predicted_n": 998,
+          "predicted_ms": 14190.1,
+          "predicted_per_token_ms": 14.219,
+          "predicted_per_second": 70.3,
+          "draft_n": 1435,
+          "draft_n_accepted": 792
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "utilities:p50",
+      "seconds": 11.73413119999168,
+      "response": {
+        "id": "chatcmpl-10facaee22344bb2ab330c8a",
+        "object": "chat.completion",
+        "created": 1791431084,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def stable_unique(items):\n    \"\"\"Return a list of hashable values from items, preserving first occurrence order.\"\"\"\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\n\ndef frequencies(items):\n    \"\"\"Return a dict mapping each hashable value in items to its occurrence count.\"\"\"\n    counts = {}\n    for item in items:\n        counts[item] = counts.get(item, 0) + 1\n    return counts\n\n\ndef chunked(items, size):\n    \"\"\"Split items into chunks of given size; last chunk may be shorter. Raise ValueError if size <= 0.\"\"\"\n    if size <= 0:\n        raise ValueError(\"size must be positive\")\n    items = list(items)\n    if not items:\n        return []\n    result = []\n    for i in range(0, len(items), size):\n        result.append(items[i:i + size])\n    return result\n\n\ndef running_totals(numbers):\n    \"\"\"Return a list of cumulative sums of numbers. Empty input yields [].\"\"\"\n    numbers = list(numbers)\n    if not numbers:\n        return []\n    result = []\n    total = 0\n    for num in numbers:\n        total += num\n        result.append(total)\n    return result\n\n\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping or touching [start, end] intervals and return sorted non-overlapping intervals.\"\"\"\n    intervals = list(intervals)\n    if not intervals:\n        return []\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    merged = []\n    current_start, current_end = sorted_intervals[0][0], sorted_intervals[0][1]\n    for start, end in sorted_intervals[1:]:\n        if start <= current_end:\n            current_end = max(current_end, end)\n        else:\n            merged.append([current_start, current_end])\n            current_start, current_end = start, end\n    merged.append([current_start, current_end])\n    return merged\n\n\ndef lower_bound(values, target):\n    \"\"\"Return the first index in ascending sorted values where value >= target, or len(values).\"\"\"\n    values = list(values)\n    lo, hi = 0, len(values)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if values[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n\n\ndef rotate_right(items, k):\n    \"\"\"Return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\"\"\"\n    items = list(items)\n    if not items:\n        return []\n    n = len(items)\n    k = k % n\n    if k == 0:\n        return items[:]\n    return items[-k:] + items[:-k]\n\n\ndef moving_average(numbers, window):\n    \"\"\"Return means of complete consecutive windows using a linear sliding window. Raise ValueError if window <= 0.\"\"\"\n    numbers = list(numbers)\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    if window > len(numbers):\n        return []\n    result = []\n    window_sum = 0\n    for i in range(len(numbers)):\n        window_sum += numbers[i]\n        if i >= window:\n            window_sum -= numbers[i - window]\n        if i >= window - 1:\n            result.append(window_sum / window)\n    return result"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 303,
+          "completion_tokens": 781,
+          "total_tokens": 1084,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 303,
+          "prompt_ms": 2128.9,
+          "prompt_per_token_ms": 7.026,
+          "prompt_per_second": 142.3,
+          "predicted_n": 781,
+          "predicted_ms": 9601.7,
+          "predicted_per_token_ms": 12.294,
+          "predicted_per_second": 81.3,
+          "draft_n": 915,
+          "draft_n_accepted": 629
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "ttl_cache:p50",
+      "seconds": 8.093409900000552,
+      "response": {
+        "id": "chatcmpl-d739a3ebe5a6424db0dee790",
+        "object": "chat.completion",
+        "created": 1791431096,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "class TTLCache:\n    \"\"\"A cache with time-to-live expiration and LRU eviction.\"\"\"\n\n    def __init__(self, capacity):\n        \"\"\"Initialize the cache with a positive integer capacity.\"\"\"\n        if not isinstance(capacity, int) or capacity <= 0:\n            raise ValueError(\"capacity must be a positive integer\")\n        self.capacity = capacity\n        self._data = {}\n\n    def put(self, key, value, now, ttl):\n        \"\"\"Insert or replace a key-value pair with a TTL, evicting LRU if needed.\"\"\"\n        if ttl <= 0:\n            raise ValueError(\"ttl must be > 0\")\n        self.purge(now)\n        if key in self._data:\n            del self._data[key]\n        self._data[key] = (value, now + ttl)\n        if len(self._data) > self.capacity:\n            oldest_key = next(iter(self._data))\n            del self._data[oldest_key]\n\n    def get(self, key, now, default=None):\n        \"\"\"Return the value for key if not expired, marking it as most recently used.\"\"\"\n        self.purge(now)\n        if key not in self._data:\n            return default\n        value, expires_at = self._data[key]\n        del self._data[key]\n        self._data[key] = (value, expires_at)\n        return value\n\n    def delete(self, key):\n        \"\"\"Remove a key from the cache if present, returning True if removed.\"\"\"\n        if key in self._data:\n            del self._data[key]\n            return True\n        return False\n\n    def purge(self, now):\n        \"\"\"Remove all entries expiring at or before now, returning the count removed.\"\"\"\n        to_remove = [k for k, (_, expires_at) in self._data.items() if expires_at <= now]\n        for k in to_remove:\n            del self._data[k]\n        return len(to_remove)\n\n    def size(self, now):\n        \"\"\"Return the number of live entries after purging expired ones.\"\"\"\n        self.purge(now)\n        return len(self._data)\n\n    def clear(self):\n        \"\"\"Remove all entries from the cache.\"\"\"\n        self._data.clear()"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 292,
+          "completion_tokens": 489,
+          "total_tokens": 781,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 292,
+          "prompt_ms": 2082.2,
+          "prompt_per_token_ms": 7.131,
+          "prompt_per_second": 140.2,
+          "predicted_n": 489,
+          "predicted_ms": 6007.7,
+          "predicted_per_token_ms": 12.286,
+          "predicted_per_second": 81.4,
+          "draft_n": 557,
+          "draft_n_accepted": 389
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "algorithms:p50",
+      "seconds": 13.50834099999338,
+      "response": {
+        "id": "chatcmpl-1e3b955fa75046d1ac59e83c",
+        "object": "chat.completion",
+        "created": 1791431104,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def topological_sort(n, edges):\n    \"\"\"\n    Perform a topological sort on a directed graph with nodes 0..n-1.\n    Always chooses the smallest currently available node (Kahn's algorithm with min-heap behavior via list).\n    Raises ValueError if a cycle is detected.\n    Time complexity: O(n^2 + len(edges)) due to linear search for min node.\n    \"\"\"\n    if n == 0:\n        return []\n    \n    # Build adjacency list and in-degree array\n    adj = [[] for _ in range(n)]\n    in_degree = [0] * n\n    for u, v in edges:\n        adj[u].append(v)\n        in_degree[v] += 1\n    \n    # Find all nodes with in-degree 0\n    available = [i for i in range(n) if in_degree[i] == 0]\n    result = []\n    \n    while available:\n        # Choose the smallest available node\n        min_node = min(available)\n        available.remove(min_node)\n        result.append(min_node)\n        \n        for neighbor in adj[min_node]:\n            in_degree[neighbor] -= 1\n            if in_degree[neighbor] == 0:\n                available.append(neighbor)\n    \n    if len(result) != n:\n        raise ValueError(\"Cycle detected in graph\")\n    \n    return result\n\n\ndef shortest_paths(n, edges, start):\n    \"\"\"\n    Compute shortest paths from start to all nodes using Dijkstra's algorithm.\n    Edges are directed with nonnegative weights. Parallel edges allowed.\n    Returns a list of distances, with float('inf') for unreachable nodes.\n    Time complexity: O(n^2 + len(edges)) using a simple array-based Dijkstra.\n    \"\"\"\n    INF = float('inf')\n    dist = [INF] * n\n    dist[start] = 0\n    visited = [False] * n\n    \n    # Build adjacency list\n    adj = [[] for _ in range(n)]\n    for u, v, w in edges:\n        adj[u].append((v, w))\n    \n    for _ in range(n):\n        # Find the unvisited node with the smallest distance\n        min_dist = INF\n        min_node = -1\n        for i in range(n):\n            if not visited[i] and dist[i] < min_dist:\n                min_dist = dist[i]\n                min_node = i\n        \n        if min_node == -1:\n            break\n        \n        visited[min_node] = True\n        \n        for neighbor, weight in adj[min_node]:\n            new_dist = dist[min_node] + weight\n            if new_dist < dist[neighbor]:\n                dist[neighbor] = new_dist\n    \n    return dist\n\n\ndef longest_common_subsequence(a, b):\n    \"\"\"\n    Compute the longest common subsequence of strings a and b using dynamic programming.\n    Returns one such subsequence as a string.\n    Time complexity: O(len(a) * len(b)).\n    \"\"\"\n    m = len(a)\n    n = len(b)\n    \n    if m == 0 or n == 0:\n        return \"\"\n    \n    # dp[i][j] = length of LCS of a[:i] and b[:j]\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    \n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if a[i - 1] == b[j - 1]:\n                dp[i][j] = dp[i - 1][j - 1] + 1\n            else:\n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])\n    \n    # Reconstruct the LCS\n    lcs = []\n    i, j = m, n\n    while i > 0 and j > 0:\n        if a[i - 1] == b[j - 1]:\n            lcs.append(a[i - 1])\n            i -= 1\n            j -= 1\n        elif dp[i - 1][j] >= dp[i][j - 1]:\n            i -= 1\n        else:\n            j -= 1\n    \n    lcs.reverse()\n    return \"\".join(lcs)"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 256,
+          "completion_tokens": 946,
+          "total_tokens": 1202,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 256,
+          "prompt_ms": 1834.6,
+          "prompt_per_token_ms": 7.166,
+          "prompt_per_second": 139.5,
+          "predicted_n": 946,
+          "predicted_ms": 11670.5,
+          "predicted_per_token_ms": 12.337,
+          "predicted_per_second": 81.1,
+          "draft_n": 1062,
+          "draft_n_accepted": 756
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "utilities:p90",
+      "seconds": 10.122203000006266,
+      "response": {
+        "id": "chatcmpl-68e37ada01ea4d069797e71d",
+        "object": "chat.completion",
+        "created": 1791431118,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def stable_unique(items):\n    \"\"\"Return a list of hashable values from items, preserving first occurrence order.\"\"\"\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\n\ndef frequencies(items):\n    \"\"\"Return a dict mapping each hashable value in items to its occurrence count.\"\"\"\n    counts = {}\n    for item in items:\n        counts[item] = counts.get(item, 0) + 1\n    return counts\n\n\ndef chunked(items, size):\n    \"\"\"Split items into chunks of given size; last chunk may be shorter. Raise ValueError if size <= 0.\"\"\"\n    if size <= 0:\n        raise ValueError(\"size must be positive\")\n    items = list(items)\n    if not items:\n        return []\n    return [items[i:i + size] for i in range(0, len(items), size)]\n\n\ndef running_totals(numbers):\n    \"\"\"Return a list of cumulative sums of numbers. Empty input yields [].\"\"\"\n    result = []\n    total = 0\n    for num in numbers:\n        total += num\n        result.append(total)\n    return result\n\n\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping or touching [start, end] intervals and return sorted non-overlapping intervals.\"\"\"\n    if not intervals:\n        return []\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    merged = [list(sorted_intervals[0])]\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            merged[-1][1] = max(last_end, end)\n        else:\n            merged.append([start, end])\n    return merged\n\n\ndef lower_bound(values, target):\n    \"\"\"Return the first index in ascending sorted values where value >= target, or len(values).\"\"\"\n    lo, hi = 0, len(values)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if values[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n\n\ndef rotate_right(items, k):\n    \"\"\"Return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\"\"\"\n    items = list(items)\n    n = len(items)\n    if n == 0:\n        return []\n    k = k % n\n    if k == 0:\n        return items[:]\n    return items[-k:] + items[:-k]\n\n\ndef moving_average(numbers, window):\n    \"\"\"Return means of complete consecutive windows using a linear sliding window. Raise ValueError if window <= 0.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    numbers = list(numbers)\n    n = len(numbers)\n    if window > n:\n        return []\n    result = []\n    window_sum = 0\n    for i in range(n):\n        window_sum += numbers[i]\n        if i >= window:\n            window_sum -= numbers[i - window]\n        if i >= window - 1:\n            result.append(window_sum / window)\n    return result"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 303,
+          "completion_tokens": 721,
+          "total_tokens": 1024,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 303,
+          "prompt_ms": 2172.9,
+          "prompt_per_token_ms": 7.171,
+          "prompt_per_second": 139.4,
+          "predicted_n": 721,
+          "predicted_ms": 7945.8,
+          "predicted_per_token_ms": 11.021,
+          "predicted_per_second": 90.7,
+          "draft_n": 618,
+          "draft_n_accepted": 558
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "ttl_cache:p90",
+      "seconds": 7.757894700000179,
+      "response": {
+        "id": "chatcmpl-c4aa503082ec4723880e0a92",
+        "object": "chat.completion",
+        "created": 1791431128,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "class TTLCache:\n    \"\"\"A cache with time-to-live expiration and LRU eviction.\"\"\"\n\n    def __init__(self, capacity):\n        \"\"\"Initialize the cache with a positive integer capacity.\"\"\"\n        if not isinstance(capacity, int) or capacity <= 0:\n            raise ValueError(\"capacity must be a positive integer\")\n        self.capacity = capacity\n        self._data = {}\n\n    def put(self, key, value, now, ttl):\n        \"\"\"Insert or replace a key-value pair with a TTL, purging expired entries first.\"\"\"\n        if not isinstance(ttl, (int, float)) or ttl <= 0:\n            raise ValueError(\"ttl must be > 0\")\n        self.purge(now)\n        expires_at = now + ttl\n        if key in self._data:\n            del self._data[key]\n        self._data[key] = (value, expires_at)\n        while len(self._data) > self.capacity:\n            oldest_key = next(iter(self._data))\n            del self._data[oldest_key]\n\n    def get(self, key, now, default=None):\n        \"\"\"Return the value for key if present and not expired, marking it as most recently used.\"\"\"\n        self.purge(now)\n        if key not in self._data:\n            return default\n        value, expires_at = self._data[key]\n        del self._data[key]\n        self._data[key] = (value, expires_at)\n        return value\n\n    def delete(self, key):\n        \"\"\"Remove key if present and return True, else False.\"\"\"\n        if key in self._data:\n            del self._data[key]\n            return True\n        return False\n\n    def purge(self, now):\n        \"\"\"Remove all entries expiring at or before now and return the number removed.\"\"\"\n        to_remove = []\n        for key, (value, expires_at) in self._data.items():\n            if expires_at <= now:\n                to_remove.append(key)\n        for key in to_remove:\n            del self._data[key]\n        return len(to_remove)\n\n    def size(self, now):\n        \"\"\"Purge expired entries and return the live count.\"\"\"\n        self.purge(now)\n        return len(self._data)\n\n    def clear(self):\n        \"\"\"Remove all entries.\"\"\"\n        self._data.clear()"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 292,
+          "completion_tokens": 511,
+          "total_tokens": 803,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 292,
+          "prompt_ms": 2159.9,
+          "prompt_per_token_ms": 7.397,
+          "prompt_per_second": 135.2,
+          "predicted_n": 511,
+          "predicted_ms": 5594.4,
+          "predicted_per_token_ms": 10.948,
+          "predicted_per_second": 91.3,
+          "draft_n": 418,
+          "draft_n_accepted": 391
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "algorithms:p90",
+      "seconds": 12.772317599999951,
+      "response": {
+        "id": "chatcmpl-a4481babb609405e80b14d93",
+        "object": "chat.completion",
+        "created": 1791431136,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def topological_sort(n, edges):\n    \"\"\"\n    Perform a topological sort on a directed graph with nodes 0..n-1.\n    Always chooses the smallest currently available node (Kahn's algorithm with min-heap behavior via list).\n    Raises ValueError if a cycle is detected.\n    Time complexity: O(n^2 + len(edges)) due to linear search for min node.\n    \"\"\"\n    if n == 0:\n        return []\n    \n    # Build adjacency list and in-degree array\n    adj = [[] for _ in range(n)]\n    in_degree = [0] * n\n    for u, v in edges:\n        adj[u].append(v)\n        in_degree[v] += 1\n    \n    # Find all nodes with in-degree 0\n    available = [i for i in range(n) if in_degree[i] == 0]\n    result = []\n    \n    while available:\n        # Choose the smallest available node\n        min_node = min(available)\n        available.remove(min_node)\n        result.append(min_node)\n        \n        for neighbor in adj[min_node]:\n            in_degree[neighbor] -= 1\n            if in_degree[neighbor] == 0:\n                available.append(neighbor)\n    \n    if len(result) != n:\n        raise ValueError(\"Cycle detected in graph\")\n    \n    return result\n\n\ndef shortest_paths(n, edges, start):\n    \"\"\"\n    Compute shortest paths from start to all nodes using Dijkstra's algorithm.\n    Edges are directed with nonnegative weights. Parallel edges allowed.\n    Returns a list of distances, with float('inf') for unreachable nodes.\n    Time complexity: O(n^2 + len(edges)) using a simple array-based Dijkstra.\n    \"\"\"\n    INF = float('inf')\n    dist = [INF] * n\n    dist[start] = 0\n    visited = [False] * n\n    \n    # Build adjacency list\n    adj = [[] for _ in range(n)]\n    for u, v, w in edges:\n        adj[u].append((v, w))\n    \n    for _ in range(n):\n        # Find the unvisited node with the smallest distance\n        min_dist = INF\n        min_node = -1\n        for i in range(n):\n            if not visited[i] and dist[i] < min_dist:\n                min_dist = dist[i]\n                min_node = i\n        \n        if min_node == -1:\n            break\n        \n        visited[min_node] = True\n        \n        for neighbor, weight in adj[min_node]:\n            if not visited[neighbor]:\n                new_dist = dist[min_node] + weight\n                if new_dist < dist[neighbor]:\n                    dist[neighbor] = new_dist\n    \n    return dist\n\n\ndef longest_common_subsequence(a, b):\n    \"\"\"\n    Compute the longest common subsequence of strings a and b using dynamic programming.\n    Returns one such subsequence as a string.\n    Time complexity: O(len(a) * len(b)).\n    \"\"\"\n    m = len(a)\n    n = len(b)\n    \n    if m == 0 or n == 0:\n        return \"\"\n    \n    # dp[i][j] = length of LCS of a[0..i-1] and b[0..j-1]\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    \n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if a[i - 1] == b[j - 1]:\n                dp[i][j] = dp[i - 1][j - 1] + 1\n            else:\n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])\n    \n    # Reconstruct the LCS\n    lcs = []\n    i, j = m, n\n    while i > 0 and j > 0:\n        if a[i - 1] == b[j - 1]:\n            lcs.append(a[i - 1])\n            i -= 1\n            j -= 1\n        elif dp[i - 1][j] >= dp[i][j - 1]:\n            i -= 1\n        else:\n            j -= 1\n    \n    lcs.reverse()\n    return \"\".join(lcs)"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 256,
+          "completion_tokens": 962,
+          "total_tokens": 1218,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 256,
+          "prompt_ms": 1881.4,
+          "prompt_per_token_ms": 7.349,
+          "prompt_per_second": 136.1,
+          "predicted_n": 962,
+          "predicted_ms": 10887.1,
+          "predicted_per_token_ms": 11.317,
+          "predicted_per_second": 88.4,
+          "draft_n": 803,
+          "draft_n_accepted": 726
+        }
+      },
+      "valid": true
+    }
+  ],
+  "ok": true,
+  "health": {
+    "status": "ok",
+    "max_context": 8192,
+    "model": "qwen3.8-flash-next",
+    "images": false,
+    "api_key": false,
+    "loaded": true,
+    "service": "strata"
+  },
+  "expected_requests": 13,
+  "cases": [
+    {
+      "key": "probe",
+      "prompt": "Write only Python code. Define stable_unique(items) removing duplicates from hashable items while preserving their first occurrence. Use a set. No imports.",
+      "max_tokens": 160
+    },
+    {
+      "key": "utilities",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement these eight independent functions without modifying the inputs:\n1. stable_unique(items): list of hashable values, first occurrences in order.\n2. frequencies(items): dict mapping each hashable value to its occurrence count.\n3. chunked(items, size): list of list chunks, last chunk may be shorter; raise ValueError if size <= 0. Empty input yields [].\n4. running_totals(numbers): list of cumulative sums, empty input yields [].\n5. merge_intervals(intervals): input list of [start, end] pairs with start <= end, possibly unsorted. Return sorted non-overlapping intervals as lists; merge overlaps and touching endpoints. Empty input yields [].\n6. lower_bound(values, target): binary search on an ascending sorted list; return first index whose value is >= target or len(values).\n7. rotate_right(items, k): return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\n8. moving_average(numbers, window): means of complete consecutive windows only. Return [] when window > len(numbers); raise ValueError if window <= 0.\nUse a linear sliding window for moving_average and binary search for lower_bound.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "ttl_cache",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement one class TTLCache with these methods:\n__init__(capacity): capacity must be a positive integer, else raise ValueError.\nput(key, value, now, ttl): ttl must be > 0, else raise ValueError without changing the cache. now is an explicit numeric timestamp; never read a real clock. First purge all entries with expires_at <= now. Insert or replace the key with expires_at = now + ttl and mark it most recently used. When capacity is exceeded, evict least recently used entries.\nget(key, now, default=None): purge expired entries; return default for a missing key, otherwise return its value and mark it most recently used without extending its expiration time.\ndelete(key): remove key if present and return True, else False.\npurge(now): remove all entries expiring at or before now and return the number removed.\nsize(now): purge expired entries and return the live count.\nclear(): remove all entries.\nKeys are hashable. Values may be None. Timestamps are nondecreasing. Use the insertion order of a normal Python dict to track LRU order; do not import OrderedDict.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "algorithms",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement these three independent functions:\ntopological_sort(n, edges): nodes are integers 0..n-1. edges is a list of unique directed (u,v) pairs. Return a topological order, always choosing the smallest currently available node. Include isolated nodes. Raise ValueError on a cycle. n=0 yields [].\nshortest_paths(n, edges, start): edges is a list of directed (u,v,weight) triples with nonnegative weights; parallel edges are allowed. Return distances from start as a list with float('inf') for unreachable nodes. n>=1 and start is valid. An O(n*n + len(edges)) Dijkstra implementation is acceptable; do not import heapq.\nlongest_common_subsequence(a, b): return any one longest common subsequence as a string. Empty inputs yield ''. Use dynamic programming and reconstruct the subsequence, not only its length.\nDo not modify any input. Include docstrings explaining the algorithm and time complexity.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "utilities:p0",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement these eight independent functions without modifying the inputs:\n1. stable_unique(items): list of hashable values, first occurrences in order.\n2. frequencies(items): dict mapping each hashable value to its occurrence count.\n3. chunked(items, size): list of list chunks, last chunk may be shorter; raise ValueError if size <= 0. Empty input yields [].\n4. running_totals(numbers): list of cumulative sums, empty input yields [].\n5. merge_intervals(intervals): input list of [start, end] pairs with start <= end, possibly unsorted. Return sorted non-overlapping intervals as lists; merge overlaps and touching endpoints. Empty input yields [].\n6. lower_bound(values, target): binary search on an ascending sorted list; return first index whose value is >= target or len(values).\n7. rotate_right(items, k): return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\n8. moving_average(numbers, window): means of complete consecutive windows only. Return [] when window > len(numbers); raise ValueError if window <= 0.\nUse a linear sliding window for moving_average and binary search for lower_bound.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "ttl_cache:p0",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement one class TTLCache with these methods:\n__init__(capacity): capacity must be a positive integer, else raise ValueError.\nput(key, value, now, ttl): ttl must be > 0, else raise ValueError without changing the cache. now is an explicit numeric timestamp; never read a real clock. First purge all entries with expires_at <= now. Insert or replace the key with expires_at = now + ttl and mark it most recently used. When capacity is exceeded, evict least recently used entries.\nget(key, now, default=None): purge expired entries; return default for a missing key, otherwise return its value and mark it most recently used without extending its expiration time.\ndelete(key): remove key if present and return True, else False.\npurge(now): remove all entries expiring at or before now and return the number removed.\nsize(now): purge expired entries and return the live count.\nclear(): remove all entries.\nKeys are hashable. Values may be None. Timestamps are nondecreasing. Use the insertion order of a normal Python dict to track LRU order; do not import OrderedDict.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "algorithms:p0",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement these three independent functions:\ntopological_sort(n, edges): nodes are integers 0..n-1. edges is a list of unique directed (u,v) pairs. Return a topological order, always choosing the smallest currently available node. Include isolated nodes. Raise ValueError on a cycle. n=0 yields [].\nshortest_paths(n, edges, start): edges is a list of directed (u,v,weight) triples with nonnegative weights; parallel edges are allowed. Return distances from start as a list with float('inf') for unreachable nodes. n>=1 and start is valid. An O(n*n + len(edges)) Dijkstra implementation is acceptable; do not import heapq.\nlongest_common_subsequence(a, b): return any one longest common subsequence as a string. Empty inputs yield ''. Use dynamic programming and reconstruct the subsequence, not only its length.\nDo not modify any input. Include docstrings explaining the algorithm and time complexity.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "utilities:p50",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement these eight independent functions without modifying the inputs:\n1. stable_unique(items): list of hashable values, first occurrences in order.\n2. frequencies(items): dict mapping each hashable value to its occurrence count.\n3. chunked(items, size): list of list chunks, last chunk may be shorter; raise ValueError if size <= 0. Empty input yields [].\n4. running_totals(numbers): list of cumulative sums, empty input yields [].\n5. merge_intervals(intervals): input list of [start, end] pairs with start <= end, possibly unsorted. Return sorted non-overlapping intervals as lists; merge overlaps and touching endpoints. Empty input yields [].\n6. lower_bound(values, target): binary search on an ascending sorted list; return first index whose value is >= target or len(values).\n7. rotate_right(items, k): return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\n8. moving_average(numbers, window): means of complete consecutive windows only. Return [] when window > len(numbers); raise ValueError if window <= 0.\nUse a linear sliding window for moving_average and binary search for lower_bound.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "ttl_cache:p50",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement one class TTLCache with these methods:\n__init__(capacity): capacity must be a positive integer, else raise ValueError.\nput(key, value, now, ttl): ttl must be > 0, else raise ValueError without changing the cache. now is an explicit numeric timestamp; never read a real clock. First purge all entries with expires_at <= now. Insert or replace the key with expires_at = now + ttl and mark it most recently used. When capacity is exceeded, evict least recently used entries.\nget(key, now, default=None): purge expired entries; return default for a missing key, otherwise return its value and mark it most recently used without extending its expiration time.\ndelete(key): remove key if present and return True, else False.\npurge(now): remove all entries expiring at or before now and return the number removed.\nsize(now): purge expired entries and return the live count.\nclear(): remove all entries.\nKeys are hashable. Values may be None. Timestamps are nondecreasing. Use the insertion order of a normal Python dict to track LRU order; do not import OrderedDict.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "algorithms:p50",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement these three independent functions:\ntopological_sort(n, edges): nodes are integers 0..n-1. edges is a list of unique directed (u,v) pairs. Return a topological order, always choosing the smallest currently available node. Include isolated nodes. Raise ValueError on a cycle. n=0 yields [].\nshortest_paths(n, edges, start): edges is a list of directed (u,v,weight) triples with nonnegative weights; parallel edges are allowed. Return distances from start as a list with float('inf') for unreachable nodes. n>=1 and start is valid. An O(n*n + len(edges)) Dijkstra implementation is acceptable; do not import heapq.\nlongest_common_subsequence(a, b): return any one longest common subsequence as a string. Empty inputs yield ''. Use dynamic programming and reconstruct the subsequence, not only its length.\nDo not modify any input. Include docstrings explaining the algorithm and time complexity.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "utilities:p90",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement these eight independent functions without modifying the inputs:\n1. stable_unique(items): list of hashable values, first occurrences in order.\n2. frequencies(items): dict mapping each hashable value to its occurrence count.\n3. chunked(items, size): list of list chunks, last chunk may be shorter; raise ValueError if size <= 0. Empty input yields [].\n4. running_totals(numbers): list of cumulative sums, empty input yields [].\n5. merge_intervals(intervals): input list of [start, end] pairs with start <= end, possibly unsorted. Return sorted non-overlapping intervals as lists; merge overlaps and touching endpoints. Empty input yields [].\n6. lower_bound(values, target): binary search on an ascending sorted list; return first index whose value is >= target or len(values).\n7. rotate_right(items, k): return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\n8. moving_average(numbers, window): means of complete consecutive windows only. Return [] when window > len(numbers); raise ValueError if window <= 0.\nUse a linear sliding window for moving_average and binary search for lower_bound.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "ttl_cache:p90",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement one class TTLCache with these methods:\n__init__(capacity): capacity must be a positive integer, else raise ValueError.\nput(key, value, now, ttl): ttl must be > 0, else raise ValueError without changing the cache. now is an explicit numeric timestamp; never read a real clock. First purge all entries with expires_at <= now. Insert or replace the key with expires_at = now + ttl and mark it most recently used. When capacity is exceeded, evict least recently used entries.\nget(key, now, default=None): purge expired entries; return default for a missing key, otherwise return its value and mark it most recently used without extending its expiration time.\ndelete(key): remove key if present and return True, else False.\npurge(now): remove all entries expiring at or before now and return the number removed.\nsize(now): purge expired entries and return the live count.\nclear(): remove all entries.\nKeys are hashable. Values may be None. Timestamps are nondecreasing. Use the insertion order of a normal Python dict to track LRU order; do not import OrderedDict.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "algorithms:p90",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement these three independent functions:\ntopological_sort(n, edges): nodes are integers 0..n-1. edges is a list of unique directed (u,v) pairs. Return a topological order, always choosing the smallest currently available node. Include isolated nodes. Raise ValueError on a cycle. n=0 yields [].\nshortest_paths(n, edges, start): edges is a list of directed (u,v,weight) triples with nonnegative weights; parallel edges are allowed. Return distances from start as a list with float('inf') for unreachable nodes. n>=1 and start is valid. An O(n*n + len(edges)) Dijkstra implementation is acceptable; do not import heapq.\nlongest_common_subsequence(a, b): return any one longest common subsequence as a string. Empty inputs yield ''. Use dynamic programming and reconstruct the subsequence, not only its length.\nDo not modify any input. Include docstrings explaining the algorithm and time complexity.",
+      "max_tokens": 2048
+    }
+  ],
+  "status": {
+    "service": "strata",
+    "model": "qwen3.8-flash-next",
+    "loaded": true,
+    "auto_load": true,
+    "structured_output": {
+      "formats": [
+        "json_object",
+        "json_schema"
+      ],
+      "method": "prompt_and_validate",
+      "constrained_decoding": false,
+      "stream_buffered": true
+    },
+    "engine": "0.1.40.3",
+    "started": 1791431014,
+    "uptime_s": 134,
+    "cache_max_tokens": 8192,
+    "cache": {
+      "state": "disabled"
+    },
+    "context": {
+      "native": 8192,
+      "max_positions": 8192
+    },
+    "concurrency": {
+      "serving": 1,
+      "requested": 1
+    },
+    "dialects": [
+      "/v1/chat/completions",
+      "/v1/messages",
+      "/v1/responses"
+    ],
+    "vision": {
+      "enabled": false,
+      "available": false,
+      "error": null
+    },
+    "activity": {
+      "requests": 13,
+      "in_flight": 0,
+      "last_request_at": 1791431148
+    },
+    "last_timings": {
+      "cache_n": 0,
+      "prompt_n": 256,
+      "prompt_ms": 1881.4,
+      "prompt_per_token_ms": 7.349,
+      "prompt_per_second": 136.1,
+      "predicted_n": 962,
+      "predicted_ms": 10887.1,
+      "predicted_per_token_ms": 11.317,
+      "predicted_per_second": 88.4,
+      "draft_n": 803,
+      "draft_n_accepted": 726,
+      "at": 1791431148
+    },
+    "vram": {
+      "elastic": false
+    },
+    "machine": {
+      "at": 1791431148,
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 2080 Ti",
+        "used_mib": 22464.0,
+        "total_mib": 22528.0,
+        "util_pct": 100,
+        "temp_c": 70,
+        "power_w": 228.001
+      },
+      "ram": {
+        "used_gib": 19.7,
+        "total_gib": 31.6
+      }
+    }
+  }
+}
