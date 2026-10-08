@@ -1,0 +1,15 @@
+{
+  "installed_at": "2026-10-08T20:43:56.048739+08:00",
+  "config": "C:\\strata-models\\strata-dual-p100-coding.json",
+  "before_sha256": "1e1041b39bfc9c51b06b265733a6b84f3183e6affbe81c9c2c3b36c75340c013",
+  "after_sha256": "edac91829b59770fd2a67f09bef836a90ee5d95528a3f2b20cccf95a112bde99",
+  "backup": "E:\\strata-setup\\part2-prefix-20261008\\rollback-coding-config.json",
+  "exe": "E:\\strata-setup\\part2-prefix-20261008\\pin-lifetime\\strata.exe",
+  "exe_sha256": "7722a6d34f8efded911dd0eeef091461972fa5958bf75725767172a3678f2a25",
+  "source_commit": "99bed00de0201fa6a484cf3a3b3b18a169702191",
+  "upstream_pr_commit": "7a8f2b292255c089322f3ef97cc4fc5117229e52",
+  "preserved_configs": {
+    "C:\\strata-models\\strata-dual-p100-experimental.json": "360ed3d01dea155e6280b99ef10b672ff9389b94bdda89fa0fee70960d7bfc21",
+    "C:\\strata-models\\strata-256k-int8.json": "943eb8db5f3da2e53d23382a799c524ca640dbb65aa553aa10db636bc0cfd397"
+  }
+}

@@ -1,0 +1,110 @@
+diff --git a/include/strata/core/conversation_cache.hpp b/include/strata/core/conversation_cache.hpp
+index 305d352..1ab5d21 100644
+--- a/include/strata/core/conversation_cache.hpp
++++ b/include/strata/core/conversation_cache.hpp
+@@ -188,6 +188,18 @@ int64_t conversation_prefix(const ConversationCheckpoint& c, const std::vector<T
+     return (int64_t) n;
+ }
+ 
++// A new explicit pin replaces the previous one. Keep its matching checkpoints;
++// older documents remain reusable, but no longer prevent ordinary eviction.
++template<class Token>
++void conversation_unpin_other_prefixes(std::vector<ConversationCheckpoint>& checkpoints,
++                                      const std::vector<Token>& prompt,
++                                      const std::vector<ConversationImageKey>& images,
++                                      int64_t pin, bool same_cvec) {
++    for (auto& c : checkpoints)
++        if (c.pinned && (!same_cvec || (int64_t) c.ids.size() != pin || conversation_prefix(c, prompt, images) != pin))
++            c.pinned = false;
++}
++
+ class ConversationCache {
+ public:
+     struct Match {
+@@ -255,6 +267,13 @@ public:
+         return out;
+     }
+ 
++    template<class Token>
++    void unpin_other_prefixes(const std::vector<Token>& prompt, const std::vector<ConversationImageKey>& images,
++                              int64_t pin, bool cvec) {
++        for (auto& e : entries_)
++            conversation_unpin_other_prefixes(e.checkpoints, prompt, images, pin, e.cvec == cvec);
++    }
++
+     // Reserve before allocating a snapshot. held is an incoming image removed
+     // with take() but still alive during the exchange; count it against RAM too.
+     bool make_room(size_t incoming, size_t held = 0) {
+diff --git a/src/core/conversation_cache_test.cpp b/src/core/conversation_cache_test.cpp
+index c4883fe..1090c3a 100644
+--- a/src/core/conversation_cache_test.cpp
++++ b/src/core/conversation_cache_test.cpp
+@@ -325,5 +325,49 @@ int main() {
+         check(tiny.put(std::move(p2)), "a pinned one fits an empty cache");
+         check(!tiny.put(image({7,8,9})) && tiny.size() == 1, "nothing else fits beside it: parking is refused, the pin stays");
+     }
++    {   // Replacing a document must not leave every parked slot permanently pinned.
++        auto first = image({1,2,3}), second = image({9,8,7});
++        first.checkpoints.push_back(first.live);
++        second.checkpoints.push_back(second.live);
++        first.checkpoints.back().ids = {1,2};
++        second.checkpoints.back().ids = {9,8};
++        first.checkpoints.back().pinned = second.checkpoints.back().pinned = true;
++        ConversationCache cache(4096, 2);
++        check(cache.put(std::move(first)) && cache.put(std::move(second)), "two old document pins fill the slots");
++        check(!cache.make_room(image({4,5,6}).bytes()), "stale pins would prevent all further parking");
++        const size_t bytes = cache.bytes();
++        cache.unpin_other_prefixes(b, {}, 2, true);
++        check(cache.size() == 2 && cache.bytes() == bytes && cache.evictions() == 0,
++              "selecting a new pin changes protection, not stored state or accounting");
++        check(cache.best(a, {}, true).tokens == 3, "the old document remains reusable until evicted");
++        check(cache.put(image({4,5,6})), "a new conversation can be parked after replacing the pin");
++        check(cache.best(a, {}, true).tokens == 0 && cache.best(b, {}, true).tokens == 3,
++              "pressure evicts the old pin and preserves the selected document");
++        auto selected = cache.take(cache.best(b, {}, true).index);
++        check(selected.pinned(), "the matching incoming image keeps its pin when taken");
++    }
++    {   // Active and batch checkpoint chains use the same token/image/mode rule.
++        ConversationCheckpoint cp;
++        cp.ids = {1,2}; cp.imgs = {{1,11}}; cp.pinned = true;
++        cp.gdn = {7,8};
++        std::vector<ConversationCheckpoint> chain{cp};
++        conversation_unpin_other_prefixes(chain, a, {{1,11},{3,99}}, 2, true);
++        check(chain[0].pinned, "same prefix stays pinned; later images do not matter");
++        conversation_unpin_other_prefixes(chain, a, {{1,12}}, 2, true);
++        check(!chain[0].pinned && chain[0].ids == cp.ids && chain[0].gdn == cp.gdn,
++              "a changed prefix image releases only the pin");
++        chain = {cp};
++        conversation_unpin_other_prefixes(chain, a, {{1,11}}, 1, true);
++        check(!chain[0].pinned, "a different boundary replaces the old pin");
++        chain = {cp};
++        conversation_unpin_other_prefixes(chain, b, {{1,11}}, 2, true);
++        check(!chain[0].pinned, "equal boundary lengths do not confuse different documents");
++        chain = {cp};
++        conversation_unpin_other_prefixes(chain, a, {{1,11}}, 2, false);
++        check(!chain[0].pinned, "a different steering mode replaces the old pin");
++        chain[0].pinned = false;
++        conversation_unpin_other_prefixes(chain, a, {{1,11}}, 2, true);
++        check(!chain[0].pinned, "matching an ordinary checkpoint does not create a pin");
++    }
+     std::printf("conversation_cache_test: %d checks passed\n", checks);
+ }
+diff --git a/src/program/generate.cpp b/src/program/generate.cpp
+index 730bab5..b77521e 100644
+--- a/src/program/generate.cpp
++++ b/src/program/generate.cpp
+@@ -9095,6 +9095,14 @@ int main(int argc, char** argv) {
+                 return imgs_below(req_imgs, L) == pre_imgs;
+             };
+             const bool want_cvec = strata::kernels::cvec().loaded() ? req_cvec != 0 : true;
++            // Replace an explicit shared prefix before choosing/taking a parked image:
++            // otherwise old pins can fill every slot and permanently prevent parking.
++            if (req_pin > 0 && req_pin < n - 1 && req_ckpt && o.prompt_cache >= 3) {
++                strata::core::conversation_unpin_other_prefixes(checks, ids, req_imgs, req_pin, cvec_cached == want_cvec);
++                for (auto& sl : bs)
++                    strata::core::conversation_unpin_other_prefixes(sl.checks, ids, req_imgs, req_pin, sl.cvec == want_cvec);
++                conversations.unpin_other_prefixes(ids, req_imgs, req_pin, want_cvec);
++            }
+             // the last request's final commit may still be running on the verifier's stream (set_commit_async):
+             // everything below reads, restores or zeroes the session from other streams and the host (the end of the
+             // last request waited already; this covers a request that ended on an error path)
