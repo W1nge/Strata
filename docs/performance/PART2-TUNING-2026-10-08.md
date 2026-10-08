@@ -4,6 +4,8 @@
 
 当前使用 `C:/strata-models/strata-dual-p100-experimental.json` 和 `E:/strata-setup/part2-helper-resident/strata.exe`。主要设置为 `--gpu 0,1 --expert-cache auto --expert-cache-device1 auto --remote-expert-opt --mmap-experts --resident-experts --prefill auto --short-read 448 --spec 4 --spec-min-p 0.8`，关闭动态专家交换，保留 6 GiB 的 resident 内存余量。原专家画像不变。这个双卡配置的上下文上限仍为 **8192**；原单卡 256K 配置没有被替换。
 
+后续对短提示、长代码输出的专项追测采用了独立的 spec8 / 0.9 配置，两轮加权吞吐 83.79 → 89.21 token/s；通用配置继续沿用本页结论。见 [MTP 代码生成追测](PART2-MTP-CODING-2026-10-08.md)。
+
 ## 硬件与方法
 
 - i7-13850HX，32 GB RAM；2080 Ti 22 GiB / 310 W，P100 16 GiB / 250 W；Windows WDDM，无 P2P。驱动 537.13 未变。

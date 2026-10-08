@@ -1,0 +1,4 @@
+[
+ ["mtp8-p90-b", {"spec":8,"spec_min_p":0.9}, 2, ["--coding-long"]],
+ ["mtp4-b", {}, 2, ["--coding-long"]]
+]

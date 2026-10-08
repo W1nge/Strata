@@ -1,0 +1,554 @@
+{
+  "runs": {
+    "mtp4-a": {
+      "phases": {
+        "default": {
+          "requests": 3,
+          "output_tokens": 2227,
+          "weighted_tps": 81.03279517660201,
+          "request_seconds": 35.535327099991264,
+          "drafts": 1648,
+          "accepted": 1532
+        }
+      },
+      "rounds": {
+        "1": {
+          "requests": 3,
+          "output_tokens": 2227,
+          "weighted_tps": 81.03279517660201,
+          "request_seconds": 35.535327099991264,
+          "drafts": 1648,
+          "accepted": 1532
+        }
+      }
+    },
+    "mtp4-b": {
+      "phases": {
+        "default": {
+          "requests": 8,
+          "output_tokens": 7366,
+          "weighted_tps": 83.78614173120869,
+          "request_seconds": 108.61039620001975,
+          "drafts": 5452,
+          "accepted": 5118
+        }
+      },
+      "rounds": {
+        "1": {
+          "requests": 4,
+          "output_tokens": 3683,
+          "weighted_tps": 83.79081190407398,
+          "request_seconds": 54.548876000000746,
+          "drafts": 2726,
+          "accepted": 2559
+        },
+        "2": {
+          "requests": 4,
+          "output_tokens": 3683,
+          "weighted_tps": 83.78147207890882,
+          "request_seconds": 54.061520200019004,
+          "drafts": 2726,
+          "accepted": 2559
+        }
+      }
+    },
+    "mtp6-a": {
+      "phases": {
+        "default": {
+          "requests": 3,
+          "output_tokens": 2204,
+          "weighted_tps": 87.49364837398373,
+          "request_seconds": 31.991274800006067,
+          "drafts": 1878,
+          "accepted": 1644
+        }
+      },
+      "rounds": {
+        "1": {
+          "requests": 3,
+          "output_tokens": 2204,
+          "weighted_tps": 87.49364837398373,
+          "request_seconds": 31.991274800006067,
+          "drafts": 1878,
+          "accepted": 1644
+        }
+      }
+    },
+    "mtp8-a": {
+      "phases": {
+        "default": {
+          "requests": 3,
+          "output_tokens": 2107,
+          "weighted_tps": 88.36159898008823,
+          "request_seconds": 30.05862780001189,
+          "drafts": 1902,
+          "accepted": 1624
+        }
+      },
+      "rounds": {
+        "1": {
+          "requests": 3,
+          "output_tokens": 2107,
+          "weighted_tps": 88.36159898008823,
+          "request_seconds": 30.05862780001189,
+          "drafts": 1902,
+          "accepted": 1624
+        }
+      }
+    },
+    "mtp8-confidence": {
+      "phases": {
+        "default": {
+          "requests": 3,
+          "output_tokens": 2107,
+          "weighted_tps": 86.66038752452361,
+          "request_seconds": 30.965022400007,
+          "drafts": 1902,
+          "accepted": 1624
+        },
+        "p0": {
+          "requests": 3,
+          "output_tokens": 2244,
+          "weighted_tps": 72.59011493434863,
+          "request_seconds": 36.985700799981714,
+          "drafts": 3108,
+          "accepted": 1800
+        },
+        "p50": {
+          "requests": 3,
+          "output_tokens": 2216,
+          "weighted_tps": 81.23196932540075,
+          "request_seconds": 33.33588209998561,
+          "drafts": 2534,
+          "accepted": 1774
+        },
+        "p90": {
+          "requests": 3,
+          "output_tokens": 2194,
+          "weighted_tps": 89.8175402111572,
+          "request_seconds": 30.652415300006396,
+          "drafts": 1839,
+          "accepted": 1675
+        }
+      },
+      "rounds": {
+        "1": {
+          "requests": 3,
+          "output_tokens": 2107,
+          "weighted_tps": 86.66038752452361,
+          "request_seconds": 30.965022400007,
+          "drafts": 1902,
+          "accepted": 1624
+        }
+      }
+    },
+    "mtp8-p90-b": {
+      "phases": {
+        "default": {
+          "requests": 8,
+          "output_tokens": 6992,
+          "weighted_tps": 89.20756835376822,
+          "request_seconds": 95.55532129999483,
+          "drafts": 5902,
+          "accepted": 5368
+        }
+      },
+      "rounds": {
+        "1": {
+          "requests": 4,
+          "output_tokens": 3496,
+          "weighted_tps": 89.1188804058274,
+          "request_seconds": 48.0473662000004,
+          "drafts": 2951,
+          "accepted": 2684
+        },
+        "2": {
+          "requests": 4,
+          "output_tokens": 3496,
+          "weighted_tps": 89.29643299574718,
+          "request_seconds": 47.50795509999443,
+          "drafts": 2951,
+          "accepted": 2684
+        }
+      }
+    },
+    "mtp8-p90-profile": {
+      "phases": {
+        "default": {
+          "requests": 8,
+          "output_tokens": 7200,
+          "weighted_tps": 89.73036026739648,
+          "request_seconds": 97.91667289999896,
+          "drafts": 6158,
+          "accepted": 5494
+        }
+      },
+      "rounds": {
+        "1": {
+          "requests": 4,
+          "output_tokens": 3600,
+          "weighted_tps": 87.25791986814359,
+          "request_seconds": 50.50739520000934,
+          "drafts": 3079,
+          "accepted": 2747
+        },
+        "2": {
+          "requests": 4,
+          "output_tokens": 3600,
+          "weighted_tps": 92.34699897905261,
+          "request_seconds": 47.409277699989616,
+          "drafts": 3079,
+          "accepted": 2747
+        }
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "baseline": "mtp4-b",
+      "candidate": "mtp8-p90-b",
+      "cases": [
+        {
+          "case": "utilities",
+          "measurements": [
+            {
+              "requests": 2,
+              "output_tokens": 1562,
+              "weighted_tps": 81.23231818938258,
+              "request_seconds": 24.78445410000859,
+              "drafts": 1184,
+              "accepted": 1088
+            },
+            {
+              "requests": 2,
+              "output_tokens": 1442,
+              "weighted_tps": 90.82835205119645,
+              "request_seconds": 20.435312599991448,
+              "drafts": 1236,
+              "accepted": 1116
+            }
+          ],
+          "output_tokens": [
+            [
+              781,
+              781
+            ],
+            [
+              721,
+              721
+            ]
+          ],
+          "speedup_percent": 11.813074002691826,
+          "mean_request_seconds": [
+            12.392227050004294,
+            10.217656299995724
+          ]
+        },
+        {
+          "case": "ttl_cache",
+          "measurements": [
+            {
+              "requests": 2,
+              "output_tokens": 1000,
+              "weighted_tps": 83.7205408346938,
+              "request_seconds": 17.164241899983608,
+              "drafts": 732,
+              "accepted": 686
+            },
+            {
+              "requests": 2,
+              "output_tokens": 1022,
+              "weighted_tps": 89.67665511341201,
+              "request_seconds": 15.662591000000248,
+              "drafts": 836,
+              "accepted": 782
+            }
+          ],
+          "output_tokens": [
+            [
+              500,
+              500
+            ],
+            [
+              511,
+              511
+            ]
+          ],
+          "speedup_percent": 7.114280700214981,
+          "mean_request_seconds": [
+            8.582120949991804,
+            7.831295500000124
+          ]
+        },
+        {
+          "case": "algorithms",
+          "measurements": [
+            {
+              "requests": 2,
+              "output_tokens": 1892,
+              "weighted_tps": 83.32048882527799,
+              "request_seconds": 27.216080900019733,
+              "drafts": 1380,
+              "accepted": 1290
+            },
+            {
+              "requests": 2,
+              "output_tokens": 1924,
+              "weighted_tps": 88.45814329851405,
+              "request_seconds": 25.559384000007412,
+              "drafts": 1606,
+              "accepted": 1452
+            }
+          ],
+          "output_tokens": [
+            [
+              946,
+              946
+            ],
+            [
+              962,
+              962
+            ]
+          ],
+          "speedup_percent": 6.1661357796515714,
+          "mean_request_seconds": [
+            13.608040450009867,
+            12.779692000003706
+          ]
+        },
+        {
+          "case": "matrices",
+          "measurements": [
+            {
+              "requests": 2,
+              "output_tokens": 2912,
+              "weighted_tps": 85.56275434498362,
+              "request_seconds": 39.44561930000782,
+              "drafts": 2156,
+              "accepted": 2054
+            },
+            {
+              "requests": 2,
+              "output_tokens": 2604,
+              "weighted_tps": 88.70418313121678,
+              "request_seconds": 33.89803369999572,
+              "drafts": 2224,
+              "accepted": 2018
+            }
+          ],
+          "output_tokens": [
+            [
+              1456,
+              1456
+            ],
+            [
+              1302,
+              1302
+            ]
+          ],
+          "speedup_percent": 3.6714909545421115,
+          "mean_request_seconds": [
+            19.72280965000391,
+            16.94901684999786
+          ]
+        }
+      ],
+      "overall": {
+        "measurements": [
+          {
+            "requests": 8,
+            "output_tokens": 7366,
+            "weighted_tps": 83.78614173120869,
+            "request_seconds": 108.61039620001975,
+            "drafts": 5452,
+            "accepted": 5118
+          },
+          {
+            "requests": 8,
+            "output_tokens": 6992,
+            "weighted_tps": 89.20756835376822,
+            "request_seconds": 95.55532129999483,
+            "drafts": 5902,
+            "accepted": 5368
+          }
+        ],
+        "speedup_percent": 6.470552898773896,
+        "request_time_reduction_percent": 12.02009693066799
+      }
+    },
+    {
+      "baseline": "mtp8-p90-b",
+      "candidate": "mtp8-p90-profile",
+      "cases": [
+        {
+          "case": "utilities",
+          "measurements": [
+            {
+              "requests": 2,
+              "output_tokens": 1442,
+              "weighted_tps": 90.82835205119645,
+              "request_seconds": 20.435312599991448,
+              "drafts": 1236,
+              "accepted": 1116
+            },
+            {
+              "requests": 2,
+              "output_tokens": 1422,
+              "weighted_tps": 92.49021112744397,
+              "request_seconds": 20.12197059999744,
+              "drafts": 1232,
+              "accepted": 1102
+            }
+          ],
+          "output_tokens": [
+            [
+              721,
+              721
+            ],
+            [
+              711,
+              711
+            ]
+          ],
+          "speedup_percent": 1.8296699639676284,
+          "mean_request_seconds": [
+            10.217656299995724,
+            10.06098529999872
+          ]
+        },
+        {
+          "case": "ttl_cache",
+          "measurements": [
+            {
+              "requests": 2,
+              "output_tokens": 1022,
+              "weighted_tps": 89.67665511341201,
+              "request_seconds": 15.662591000000248,
+              "drafts": 836,
+              "accepted": 782
+            },
+            {
+              "requests": 2,
+              "output_tokens": 978,
+              "weighted_tps": 81.80677540777917,
+              "request_seconds": 16.353097700004582,
+              "drafts": 826,
+              "accepted": 730
+            }
+          ],
+          "output_tokens": [
+            [
+              511,
+              511
+            ],
+            [
+              489,
+              489
+            ]
+          ],
+          "speedup_percent": -8.775839928106134,
+          "mean_request_seconds": [
+            7.831295500000124,
+            8.176548850002291
+          ]
+        },
+        {
+          "case": "algorithms",
+          "measurements": [
+            {
+              "requests": 2,
+              "output_tokens": 1924,
+              "weighted_tps": 88.45814329851405,
+              "request_seconds": 25.559384000007412,
+              "drafts": 1606,
+              "accepted": 1452
+            },
+            {
+              "requests": 2,
+              "output_tokens": 1980,
+              "weighted_tps": 87.02608145289604,
+              "request_seconds": 26.675176800010377,
+              "drafts": 1654,
+              "accepted": 1460
+            }
+          ],
+          "output_tokens": [
+            [
+              962,
+              962
+            ],
+            [
+              990,
+              990
+            ]
+          ],
+          "speedup_percent": -1.61891465524584,
+          "mean_request_seconds": [
+            12.779692000003706,
+            13.337588400005188
+          ]
+        },
+        {
+          "case": "matrices",
+          "measurements": [
+            {
+              "requests": 2,
+              "output_tokens": 2604,
+              "weighted_tps": 88.70418313121678,
+              "request_seconds": 33.89803369999572,
+              "drafts": 2224,
+              "accepted": 2018
+            },
+            {
+              "requests": 2,
+              "output_tokens": 2820,
+              "weighted_tps": 93.5044265393415,
+              "request_seconds": 34.76642779998656,
+              "drafts": 2446,
+              "accepted": 2202
+            }
+          ],
+          "output_tokens": [
+            [
+              1302,
+              1302
+            ],
+            [
+              1410,
+              1410
+            ]
+          ],
+          "speedup_percent": 5.411518643967317,
+          "mean_request_seconds": [
+            16.94901684999786,
+            17.38321389999328
+          ]
+        }
+      ],
+      "overall": {
+        "measurements": [
+          {
+            "requests": 8,
+            "output_tokens": 6992,
+            "weighted_tps": 89.20756835376822,
+            "request_seconds": 95.55532129999483,
+            "drafts": 5902,
+            "accepted": 5368
+          },
+          {
+            "requests": 8,
+            "output_tokens": 7200,
+            "weighted_tps": 89.73036026739648,
+            "request_seconds": 97.91667289999896,
+            "drafts": 6158,
+            "accepted": 5494
+          }
+        ],
+        "speedup_percent": 0.5860398655358923,
+        "request_time_reduction_percent": -2.4711879651272195
+      }
+    }
+  ],
+  "responses": 55,
+  "long_responses": 45
+}

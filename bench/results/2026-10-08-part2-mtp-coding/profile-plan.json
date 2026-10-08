@@ -1,0 +1,3 @@
+[
+ ["mtp8-p90-profile", {"spec":8,"spec_min_p":0.9,"expert_profile":"E:/strata-setup/part2-tuning/trained-profile.bin"}, 2, ["--coding-long"]]
+]

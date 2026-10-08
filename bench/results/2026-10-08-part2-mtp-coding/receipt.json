@@ -1,0 +1,250 @@
+{
+  "engine_source_commit": "4cda6e0",
+  "repository_parent_commit": "bc762d278f3b489d380dba7ac49f8d10066ad8b4",
+  "raw_directory": "E:\\strata-setup\\part2-mtp-coding",
+  "hardware": {
+    "cpu": "Intel Core i7-13850HX",
+    "ram_gib": 32,
+    "gpu0": "RTX 2080 Ti 22 GiB, 310 W",
+    "gpu1": "Tesla P100 16 GiB, 250 W",
+    "driver": "537.13",
+    "os": "Windows WDDM",
+    "p2p": false
+  },
+  "decision": "Use the original expert profile with spec 8 and confidence 0.9 for short-prompt long-output coding. Keep the spec 4 general config. Do not adopt the new expert profile.",
+  "selected_run": "mtp8-p90-b",
+  "validation": {
+    "responses": 55,
+    "long_responses": 45,
+    "all_functional_checks_passed": true,
+    "all_finish_reasons_stop": true,
+    "offline_revalidation_responses": 55,
+    "negative_validator_fixtures": 3,
+    "default_template_parity_prompts": 5,
+    "model_processes_stopped": true
+  },
+  "files": {
+    "general-config.json": {
+      "bytes": 1638,
+      "sha256": "360ed3d01dea155e6280b99ef10b672ff9389b94bdda89fa0fee70960d7bfc21"
+    },
+    "mtp4-a-config.json": {
+      "bytes": 1638,
+      "sha256": "0d36040c2d5da4342fd283c5ea61af7cc52bd4b884bafc2d6a28580f81e9e73d"
+    },
+    "mtp4-a-engine.log": {
+      "bytes": 9336,
+      "sha256": "8ac8e049e7685aabf34ebece9f1b73c332cc7381be94e05bb7f289de9ba51719"
+    },
+    "mtp4-a-result.json": {
+      "bytes": 15597,
+      "sha256": "3b94cecde332525785d7ad206bcc7d05f3f2a0da36c38b90e181816260337e10"
+    },
+    "mtp4-a-server.log": {
+      "bytes": 3313,
+      "sha256": "6581c1b32817a0bc976fe36c44aaf9c81f3696307e8506632c44354a2cd31270"
+    },
+    "mtp4-b-config.json": {
+      "bytes": 1638,
+      "sha256": "ea5d421c015217a05b843f7407071232d82ae7b9bc6ef7d0894a1941efd96e82"
+    },
+    "mtp4-b-engine.log": {
+      "bytes": 14006,
+      "sha256": "93b5743f2f0b0d4b21278122bf1da8921e33e91a7ba4337040145fecd14dcb76"
+    },
+    "mtp4-b-result.json": {
+      "bytes": 55353,
+      "sha256": "36c1fc1806545e7334cc5fbf0a3b5097c4dc159aa5620edf7cf07c743ac3b3e1"
+    },
+    "mtp4-b-server.log": {
+      "bytes": 7928,
+      "sha256": "63755b80614ac4f4eda74eaae86e0dc3160f56b87dc23d950fb1caa930040762"
+    },
+    "mtp6-a-config.json": {
+      "bytes": 1638,
+      "sha256": "bb204d3256c0c8f4e9674e23f668a549f3e334f5ce3d09e37c853ae48183fc43"
+    },
+    "mtp6-a-engine.log": {
+      "bytes": 9624,
+      "sha256": "88f61e0ece3f9329bf91d751e9ce07c60a482934baa1c93dfbf83a6bac08a559"
+    },
+    "mtp6-a-result.json": {
+      "bytes": 15422,
+      "sha256": "01e694db7ce833fe0aa7b94b30270c660339de58a84a1c105ac6788e1b7d4bb0"
+    },
+    "mtp6-a-server.log": {
+      "bytes": 3253,
+      "sha256": "4c8d2c06128cd258820cbf6f6c14daa31409e3c038bfe4cdc9df2f412919e139"
+    },
+    "mtp8-a-config.json": {
+      "bytes": 1638,
+      "sha256": "ea2e34048f2e6eb6b47ba7cba6056e49f53e1817d5cb7c6811c8016d7dd9f834"
+    },
+    "mtp8-a-engine.log": {
+      "bytes": 9907,
+      "sha256": "f4e38ae7f6774edace68161e01c892d7080da9aae0b7f1f53049a2ce629bd020"
+    },
+    "mtp8-a-result.json": {
+      "bytes": 15037,
+      "sha256": "1688fc01bef416368a7e9e7a2cf200089d0ea50dee4d8e40b9f672fef0700afd"
+    },
+    "mtp8-a-server.log": {
+      "bytes": 3178,
+      "sha256": "d8450b6705055912d333a786bbc05533d88760b89932cb578e4c7ff25216fe20"
+    },
+    "mtp8-confidence-config.json": {
+      "bytes": 1647,
+      "sha256": "fac409d5e8f722468a97728a7b023df9231533e870091031fa750b0a0b6d0a5a"
+    },
+    "mtp8-confidence-engine.log": {
+      "bytes": 16926,
+      "sha256": "0c6d62a7ee9a5daaf00a93547af00e729370aead4bbb01fa0c8b958dec8d68d5"
+    },
+    "mtp8-confidence-result.json": {
+      "bytes": 68239,
+      "sha256": "986a6627257bc4f4ffba3cc1434cd2669750d8b17aa42bdbd61dd507b860c409"
+    },
+    "mtp8-confidence-server.log": {
+      "bytes": 9514,
+      "sha256": "123738194edf08f430478819f8494ab4ae7ee0077b5add4c16d1006e58a7d0de"
+    },
+    "mtp8-p90-b-config.json": {
+      "bytes": 1642,
+      "sha256": "b9445a01339240b6e1ae3c153d8b0b1de8121c1dcd7304ec43307f32ee0add9d"
+    },
+    "mtp8-p90-b-engine.log": {
+      "bytes": 14574,
+      "sha256": "b176d9caeb5d3337d9f27076ce3069f20b1578f7313fc5f5872730114b8c3ef5"
+    },
+    "mtp8-p90-b-result.json": {
+      "bytes": 53741,
+      "sha256": "da0ba2fc278945387674b24541aafffcda65132a41fb4381147501d10a721920"
+    },
+    "mtp8-p90-b-server.log": {
+      "bytes": 7299,
+      "sha256": "7d072b332bb151e005ee0d039b5a8f10c9cad1da65eb11790c8dc3df02e4c462"
+    },
+    "mtp8-p90-profile-config.json": {
+      "bytes": 1649,
+      "sha256": "56878798484a405466b9351f8171baedb28716220fd8656e318111b0bfcc9876"
+    },
+    "mtp8-p90-profile-engine.log": {
+      "bytes": 14575,
+      "sha256": "2930c1ae3c965ea4f8bd7c1ec94e410b34e7ec22270c4826bc5a23e71a3c5d39"
+    },
+    "mtp8-p90-profile-result.json": {
+      "bytes": 54682,
+      "sha256": "8f1984c06ce9a94a24dd6e3b44249d6b1a28c496a819ec095f92be11e1e9eb1c"
+    },
+    "mtp8-p90-profile-server.log": {
+      "bytes": 7477,
+      "sha256": "932bdc84bacfca5ea037dd0fd5bde86573ea2f72b539de8d199979c49954a57c"
+    },
+    "offline-checks.log": {
+      "bytes": 681,
+      "sha256": "421e80a43e06b6c8b020a4a22e1ab07b7326564727707bd4b919c6973a61bd09"
+    },
+    "profile-plan.json": {
+      "bytes": 145,
+      "sha256": "9da98085f971a979f4d2ac5c9d1e7634996558af8a4f935b06be35dd80f935d5"
+    },
+    "run-iq3xxs-dual-p100-coding.bat": {
+      "bytes": 471,
+      "sha256": "fc29dcdc39f7848babe09c99ce5f954e6eea721de36d90cdedfe785fdd3e59bb"
+    },
+    "screen-plan.json": {
+      "bytes": 59,
+      "sha256": "4137361f313f4fabe5f88d43cef6bf52735843ffe9679663ab6c3d36c4cbda02"
+    },
+    "strata-dual-p100-coding.json": {
+      "bytes": 1573,
+      "sha256": "e0383c419379d91536156f10dae82d9e87d8c6c32d9fbf94c1723a5f76adb85c"
+    },
+    "strata-dual-p100-coding.shared-settings.json": {
+      "bytes": 53,
+      "sha256": "bd9bcf34da7484152e18d97a3436ce50dd771c8766cbf5c4ef2cc6fc6efe9682"
+    },
+    "summary.json": {
+      "bytes": 14851,
+      "sha256": "c282592e41eac9eb0976b8bfb223291e71c4e337c824bd7562ca387a62fcb78c"
+    },
+    "verify-plan.json": {
+      "bytes": 110,
+      "sha256": "66b7d21e778278ee5b09e97433d3062128fa3a1f5efaaf8f41ad5688313cb33b"
+    }
+  },
+  "installed": {
+    "C:\\strata-models\\strata-dual-p100-coding.json": {
+      "bytes": 1573,
+      "sha256": "e0383c419379d91536156f10dae82d9e87d8c6c32d9fbf94c1723a5f76adb85c"
+    },
+    "C:\\strata-models\\strata-dual-p100-coding.shared-settings.json": {
+      "bytes": 53,
+      "sha256": "bd9bcf34da7484152e18d97a3436ce50dd771c8766cbf5c4ef2cc6fc6efe9682"
+    },
+    "C:\\strata-models\\run-iq3xxs-dual-p100-coding.bat": {
+      "bytes": 471,
+      "sha256": "fc29dcdc39f7848babe09c99ce5f954e6eea721de36d90cdedfe785fdd3e59bb"
+    }
+  },
+  "external_inputs": {
+    "C:\\strata-models\\strata-dual-p100-experimental.json": {
+      "bytes": 1638,
+      "sha256": "360ed3d01dea155e6280b99ef10b672ff9389b94bdda89fa0fee70960d7bfc21"
+    },
+    "C:\\strata-models\\strata-256k-int8.json": {
+      "bytes": 1708,
+      "sha256": "943eb8db5f3da2e53d23382a799c524ca640dbb65aa553aa10db636bc0cfd397"
+    },
+    "C:\\strata-models\\decode10\\expert-profile.bin": {
+      "bytes": 196632,
+      "sha256": "379b95cceec9a460cbeb6fe100c90f7b92a4b4c8efd5df184cfb518c715feda4"
+    },
+    "E:\\strata-setup\\part2-tuning\\trained-profile.bin": {
+      "bytes": 196632,
+      "sha256": "33b764b9008fa81932bb0309828dfedf9c7424365140f8c1016b689726e2b168"
+    },
+    "E:\\strata-setup\\part2-tuning\\train.routing": {
+      "bytes": 4346496,
+      "sha256": "2f8f36bce86a6231bfef471330cd1c12c1cc5d2ef78bc7b0ab3057a63af48106"
+    },
+    "E:\\strata-setup\\part2-helper-resident\\strata.exe": {
+      "bytes": 65414656,
+      "sha256": "7e5f2d45b92b888e910954b3a9b03ac758872cedd8645764af6cf1626ee141b9"
+    },
+    "E:\\strata-setup\\part2-dual\\build\\strata.exe": {
+      "bytes": 65414656,
+      "sha256": "7e5f2d45b92b888e910954b3a9b03ac758872cedd8645764af6cf1626ee141b9"
+    }
+  },
+  "expert_file_source_counters": {
+    "mtp4-a-engine.log": {
+      "request_counters": 4,
+      "max_file_source_blob_reads": 0
+    },
+    "mtp4-b-engine.log": {
+      "request_counters": 10,
+      "max_file_source_blob_reads": 0
+    },
+    "mtp6-a-engine.log": {
+      "request_counters": 4,
+      "max_file_source_blob_reads": 0
+    },
+    "mtp8-a-engine.log": {
+      "request_counters": 4,
+      "max_file_source_blob_reads": 0
+    },
+    "mtp8-confidence-engine.log": {
+      "request_counters": 13,
+      "max_file_source_blob_reads": 0
+    },
+    "mtp8-p90-b-engine.log": {
+      "request_counters": 10,
+      "max_file_source_blob_reads": 0
+    },
+    "mtp8-p90-profile-engine.log": {
+      "request_counters": 10,
+      "max_file_source_blob_reads": 0
+    }
+  }
+}

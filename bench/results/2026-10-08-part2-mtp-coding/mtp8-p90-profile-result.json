@@ -1,0 +1,570 @@
+{
+  "label": "mtp8-p90-profile",
+  "overrides": {
+    "spec": 8,
+    "spec_min_p": 0.9,
+    "expert_profile": "E:/strata-setup/part2-tuning/trained-profile.bin"
+  },
+  "requests": [
+    {
+      "key": "probe",
+      "seconds": 1.3309428000065964,
+      "response": {
+        "id": "chatcmpl-99c6132079564bd18a9145d3",
+        "object": "chat.completion",
+        "created": 1791432098,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef stable_unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n```"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 41,
+          "completion_tokens": 53,
+          "total_tokens": 94,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 41,
+          "prompt_ms": 750.2,
+          "prompt_per_token_ms": 18.298,
+          "prompt_per_second": 54.7,
+          "predicted_n": 53,
+          "predicted_ms": 573.1,
+          "predicted_per_token_ms": 10.813,
+          "predicted_per_second": 92.5,
+          "draft_n": 45,
+          "draft_n_accepted": 45
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "utilities",
+      "seconds": 10.548668100003852,
+      "response": {
+        "id": "chatcmpl-c5d0f31383da40d882f3e43e",
+        "object": "chat.completion",
+        "created": 1791432100,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def stable_unique(items):\n    \"\"\"Return a list of hashable values from items, preserving first occurrence order.\"\"\"\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\n\ndef frequencies(items):\n    \"\"\"Return a dict mapping each hashable value in items to its occurrence count.\"\"\"\n    counts = {}\n    for item in items:\n        counts[item] = counts.get(item, 0) + 1\n    return counts\n\n\ndef chunked(items, size):\n    \"\"\"Split items into chunks of given size; last chunk may be shorter. Raise ValueError if size <= 0.\"\"\"\n    if size <= 0:\n        raise ValueError(\"size must be positive\")\n    if not items:\n        return []\n    result = []\n    for i in range(0, len(items), size):\n        result.append(items[i:i + size])\n    return result\n\n\ndef running_totals(numbers):\n    \"\"\"Return a list of cumulative sums of numbers. Empty input yields [].\"\"\"\n    result = []\n    total = 0\n    for num in numbers:\n        total += num\n        result.append(total)\n    return result\n\n\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping or touching [start, end] intervals and return sorted non-overlapping intervals.\"\"\"\n    if not intervals:\n        return []\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    merged = [list(sorted_intervals[0])]\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            merged[-1][1] = max(last_end, end)\n        else:\n            merged.append([start, end])\n    return merged\n\n\ndef lower_bound(values, target):\n    \"\"\"Return the first index in ascending sorted values where value >= target, or len(values).\"\"\"\n    lo = 0\n    hi = len(values)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if values[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n\n\ndef rotate_right(items, k):\n    \"\"\"Return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\"\"\"\n    if not items:\n        return []\n    n = len(items)\n    k = k % n\n    if k == 0:\n        return list(items)\n    return items[-k:] + items[:-k]\n\n\ndef moving_average(numbers, window):\n    \"\"\"Return means of complete consecutive windows using a linear sliding window. Raise ValueError if window <= 0.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    n = len(numbers)\n    if window > n:\n        return []\n    result = []\n    window_sum = 0\n    for i in range(n):\n        window_sum += numbers[i]\n        if i >= window:\n            window_sum -= numbers[i - window]\n        if i >= window - 1:\n            result.append(window_sum / window)\n    return result"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 303,
+          "completion_tokens": 711,
+          "total_tokens": 1014,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 303,
+          "prompt_ms": 2558.6,
+          "prompt_per_token_ms": 8.444,
+          "prompt_per_second": 118.4,
+          "predicted_n": 711,
+          "predicted_ms": 7986.3,
+          "predicted_per_token_ms": 11.232,
+          "predicted_per_second": 89.0,
+          "draft_n": 616,
+          "draft_n_accepted": 551
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "ttl_cache",
+      "seconds": 8.886070200009272,
+      "response": {
+        "id": "chatcmpl-b1564703790e410ca3098ce7",
+        "object": "chat.completion",
+        "created": 1791432110,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "class TTLCache:\n    \"\"\"A cache with time-to-live expiration and LRU eviction.\"\"\"\n\n    def __init__(self, capacity):\n        \"\"\"Initialize the cache with a positive integer capacity.\"\"\"\n        if not isinstance(capacity, int) or capacity <= 0:\n            raise ValueError(\"capacity must be a positive integer\")\n        self.capacity = capacity\n        self._data = {}\n\n    def put(self, key, value, now, ttl):\n        \"\"\"Insert or replace a key-value pair with a TTL, evicting LRU if needed.\"\"\"\n        if ttl <= 0:\n            raise ValueError(\"ttl must be > 0\")\n        self.purge(now)\n        if key in self._data:\n            del self._data[key]\n        self._data[key] = (value, now + ttl)\n        while len(self._data) > self.capacity:\n            oldest_key = next(iter(self._data))\n            del self._data[oldest_key]\n\n    def get(self, key, now, default=None):\n        \"\"\"Return the value for key if not expired, marking it as most recently used.\"\"\"\n        self.purge(now)\n        if key not in self._data:\n            return default\n        value, expires_at = self._data[key]\n        del self._data[key]\n        self._data[key] = (value, expires_at)\n        return value\n\n    def delete(self, key):\n        \"\"\"Remove a key from the cache, returning True if it existed.\"\"\"\n        if key in self._data:\n            del self._data[key]\n            return True\n        return False\n\n    def purge(self, now):\n        \"\"\"Remove all entries expiring at or before now, returning the count removed.\"\"\"\n        to_remove = [k for k, (_, exp) in self._data.items() if exp <= now]\n        for k in to_remove:\n            del self._data[k]\n        return len(to_remove)\n\n    def size(self, now):\n        \"\"\"Return the number of live (non-expired) entries after purging.\"\"\"\n        self.purge(now)\n        return len(self._data)\n\n    def clear(self):\n        \"\"\"Remove all entries from the cache.\"\"\"\n        self._data.clear()"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 292,
+          "completion_tokens": 489,
+          "total_tokens": 781,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 292,
+          "prompt_ms": 2287.6,
+          "prompt_per_token_ms": 7.834,
+          "prompt_per_second": 127.6,
+          "predicted_n": 489,
+          "predicted_ms": 6594.7,
+          "predicted_per_token_ms": 13.486,
+          "predicted_per_second": 74.2,
+          "draft_n": 413,
+          "draft_n_accepted": 365
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "algorithms",
+      "seconds": 13.651395900000352,
+      "response": {
+        "id": "chatcmpl-ec1fadd2ef534896a6b91fd4",
+        "object": "chat.completion",
+        "created": 1791432119,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def topological_sort(n, edges):\n    \"\"\"\n    Perform a topological sort on a directed graph with nodes 0..n-1.\n    Always chooses the smallest currently available node (Kahn's algorithm with min-heap behavior via list).\n    Raises ValueError if a cycle is detected.\n    Time complexity: O(n + len(edges)) for building graph, O(n^2) for selecting min node each step.\n    \"\"\"\n    if n == 0:\n        return []\n    \n    # Build adjacency list and in-degree count\n    adj = [[] for _ in range(n)]\n    in_degree = [0] * n\n    for u, v in edges:\n        adj[u].append(v)\n        in_degree[v] += 1\n    \n    # Find all nodes with in-degree 0\n    available = [i for i in range(n) if in_degree[i] == 0]\n    available.sort()\n    \n    result = []\n    while available:\n        # Pick the smallest available node\n        node = available.pop(0)\n        result.append(node)\n        \n        # Reduce in-degree of neighbors\n        for neighbor in adj[node]:\n            in_degree[neighbor] -= 1\n            if in_degree[neighbor] == 0:\n                available.append(neighbor)\n                available.sort()\n    \n    if len(result) != n:\n        raise ValueError(\"Cycle detected in graph\")\n    \n    return result\n\n\ndef shortest_paths(n, edges, start):\n    \"\"\"\n    Compute shortest paths from start to all nodes using Dijkstra's algorithm.\n    Edges are directed with nonnegative weights. Parallel edges allowed.\n    Returns a list of distances, with float('inf') for unreachable nodes.\n    Time complexity: O(n^2 + len(edges)) using a simple array-based Dijkstra.\n    \"\"\"\n    INF = float('inf')\n    dist = [INF] * n\n    dist[start] = 0\n    visited = [False] * n\n    \n    # Build adjacency list\n    adj = [[] for _ in range(n)]\n    for u, v, w in edges:\n        adj[u].append((v, w))\n    \n    for _ in range(n):\n        # Find the unvisited node with the smallest distance\n        min_dist = INF\n        min_node = -1\n        for i in range(n):\n            if not visited[i] and dist[i] < min_dist:\n                min_dist = dist[i]\n                min_node = i\n        \n        if min_node == -1:\n            break\n        \n        visited[min_node] = True\n        \n        # Relax edges from min_node\n        for neighbor, weight in adj[min_node]:\n            if not visited[neighbor]:\n                new_dist = dist[min_node] + weight\n                if new_dist < dist[neighbor]:\n                    dist[neighbor] = new_dist\n    \n    return dist\n\n\ndef longest_common_subsequence(a, b):\n    \"\"\"\n    Compute the longest common subsequence of strings a and b using dynamic programming.\n    Returns one such subsequence as a string.\n    Time complexity: O(len(a) * len(b)).\n    Space complexity: O(len(a) * len(b)).\n    \"\"\"\n    m = len(a)\n    n = len(b)\n    \n    if m == 0 or n == 0:\n        return \"\"\n    \n    # dp[i][j] = length of LCS of a[:i] and b[:j]\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    \n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if a[i - 1] == b[j - 1]:\n                dp[i][j] = dp[i - 1][j - 1] + 1\n            else:\n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])\n    \n    # Reconstruct the LCS\n    lcs = []\n    i, j = m, n\n    while i > 0 and j > 0:\n        if a[i - 1] == b[j - 1]:\n            lcs.append(a[i - 1])\n            i -= 1\n            j -= 1\n        elif dp[i - 1][j] >= dp[i][j - 1]:\n            i -= 1\n        else:\n            j -= 1\n    \n    lcs.reverse()\n    return \"\".join(lcs)"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 256,
+          "completion_tokens": 990,
+          "total_tokens": 1246,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 256,
+          "prompt_ms": 2046.1,
+          "prompt_per_token_ms": 7.993,
+          "prompt_per_second": 125.1,
+          "predicted_n": 990,
+          "predicted_ms": 11601.9,
+          "predicted_per_token_ms": 11.719,
+          "predicted_per_second": 85.3,
+          "draft_n": 827,
+          "draft_n_accepted": 730
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "matrices",
+      "seconds": 17.421260999995866,
+      "response": {
+        "id": "chatcmpl-54a50e1f07544341bc2a85e5",
+        "object": "chat.completion",
+        "created": 1791432133,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def validate_matrix(matrix):\n    \"\"\"Validate that matrix is a non-empty list of non-empty lists of numbers with uniform row lengths. Returns (row_count, column_count). Raises ValueError if invalid.\"\"\"\n    if not isinstance(matrix, list) or len(matrix) == 0:\n        raise ValueError(\"Matrix must be a non-empty list of lists\")\n    row_count = len(matrix)\n    column_count = None\n    for row in matrix:\n        if not isinstance(row, list) or len(row) == 0:\n            raise ValueError(\"Each row must be a non-empty list\")\n        if column_count is None:\n            column_count = len(row)\n        elif len(row) != column_count:\n            raise ValueError(\"Matrix must be rectangular (all rows same length)\")\n        for cell in row:\n            if not isinstance(cell, (int, float)):\n                raise ValueError(\"All elements must be real numbers\")\n    return (row_count, column_count)\n\ndef zeros(rows, cols):\n    \"\"\"Return a rows x cols matrix of zeros. rows and cols must be positive integers. Raises ValueError otherwise.\"\"\"\n    if not isinstance(rows, int) or not isinstance(cols, int):\n        raise ValueError(\"rows and cols must be integers\")\n    if rows <= 0 or cols <= 0:\n        raise ValueError(\"rows and cols must be positive integers\")\n    return [[0.0 for _ in range(cols)] for _ in range(rows)]\n\ndef identity(n):\n    \"\"\"Return an n x n identity matrix. n must be a positive integer. Raises ValueError otherwise.\"\"\"\n    if not isinstance(n, int):\n        raise ValueError(\"n must be an integer\")\n    if n <= 0:\n        raise ValueError(\"n must be a positive integer\")\n    result = [[0.0 for _ in range(n)] for _ in range(n)]\n    for i in range(n):\n        result[i][i] = 1.0\n    return result\n\ndef transpose(matrix):\n    \"\"\"Return the transpose of the given matrix. Validates the input matrix.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    return [[matrix[i][j] for i in range(rows)] for j in range(cols)]\n\ndef add(a, b):\n    \"\"\"Return the elementwise sum of matrices a and b. Both must have the same shape. Raises ValueError if shapes differ or inputs are invalid.\"\"\"\n    a_rows, a_cols = validate_matrix(a)\n    b_rows, b_cols = validate_matrix(b)\n    if a_rows != b_rows or a_cols != b_cols:\n        raise ValueError(\"Matrices must have the same dimensions for addition\")\n    return [[a[i][j] + b[i][j] for j in range(a_cols)] for i in range(a_rows)]\n\ndef subtract(a, b):\n    \"\"\"Return the elementwise difference a - b. Both must have the same shape. Raises ValueError if shapes differ or inputs are invalid.\"\"\"\n    a_rows, a_cols = validate_matrix(a)\n    b_rows, b_cols = validate_matrix(b)\n    if a_rows != b_rows or a_cols != b_cols:\n        raise ValueError(\"Matrices must have the same dimensions for subtraction\")\n    return [[a[i][j] - b[i][j] for j in range(a_cols)] for i in range(a_rows)]\n\ndef scale(matrix, scalar):\n    \"\"\"Return a new matrix where every element is multiplied by scalar. Validates the input matrix.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    if not isinstance(scalar, (int, float)):\n        raise ValueError(\"scalar must be a real number\")\n    return [[matrix[i][j] * scalar for j in range(cols)] for i in range(rows)]\n\ndef matmul(a, b):\n    \"\"\"Return the matrix product a * b. The number of columns of a must equal the number of rows of b. Raises ValueError if dimensions are incompatible or inputs are invalid.\"\"\"\n    a_rows, a_cols = validate_matrix(a)\n    b_rows, b_cols = validate_matrix(b)\n    if a_cols != b_rows:\n        raise ValueError(\"Number of columns of a must equal number of rows of b for matrix multiplication\")\n    result = [[0.0 for _ in range(b_cols)] for _ in range(a_rows)]\n    for i in range(a_rows):\n        for j in range(b_cols):\n            total = 0.0\n            for k in range(a_cols):\n                total += a[i][k] * b[k][j]\n            result[i][j] = total\n    return result\n\ndef row_sums(matrix):\n    \"\"\"Return a list of the sum of each row in the matrix. Validates the input matrix.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    return [sum(matrix[i]) for i in range(rows)]\n\ndef col_sums(matrix):\n    \"\"\"Return a list of the sum of each column in the matrix. Validates the input matrix.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    return [sum(matrix[i][j] for i in range(rows)) for j in range(cols)]\n\ndef trace(matrix):\n    \"\"\"Return the sum of the diagonal elements of a square matrix. Raises ValueError if the matrix is not square or invalid.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    if rows != cols:\n        raise ValueError(\"Matrix must be square for trace\")\n    return sum(matrix[i][i] for i in range(rows))\n\ndef matrix_power(matrix, exponent):\n    \"\"\"Return the matrix raised to a nonnegative integer exponent using exponentiation by squaring. The matrix must be square. Raises ValueError if matrix is not square, exponent is not a nonnegative integer, or inputs are invalid.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    if rows != cols:\n        raise ValueError(\"Matrix must be square for matrix_power\")\n    if not isinstance(exponent, int):\n        raise ValueError(\"exponent must be an integer\")\n    if exponent < 0:\n        raise ValueError(\"exponent must be a nonnegative integer\")\n    n = rows\n    if exponent == 0:\n        return identity(n)\n    if exponent == 1:\n        return [row[:] for row in matrix]\n    result = identity(n)\n    base = [row[:] for row in matrix]\n    exp = exponent\n    while exp > 0:\n        if exp % 2 == 1:\n            result = matmul(result, base)\n        base = matmul(base, base)\n        exp //= 2\n    return result"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 303,
+          "completion_tokens": 1410,
+          "total_tokens": 1713,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 303,
+          "prompt_ms": 2343.3,
+          "prompt_per_token_ms": 7.734,
+          "prompt_per_second": 129.3,
+          "predicted_n": 1410,
+          "predicted_ms": 15074.1,
+          "predicted_per_token_ms": 10.691,
+          "predicted_per_second": 93.5,
+          "draft_n": 1223,
+          "draft_n_accepted": 1101
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "probe@2",
+      "seconds": 0.788971500005573,
+      "response": {
+        "id": "chatcmpl-42bc9d812502406e905cbd3f",
+        "object": "chat.completion",
+        "created": 1791432150,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef stable_unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n```"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 41,
+          "completion_tokens": 53,
+          "total_tokens": 94,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 41,
+          "prompt_ms": 324.8,
+          "prompt_per_token_ms": 7.922,
+          "prompt_per_second": 126.2,
+          "predicted_n": 53,
+          "predicted_ms": 462.0,
+          "predicted_per_token_ms": 8.717,
+          "predicted_per_second": 114.7,
+          "draft_n": 45,
+          "draft_n_accepted": 45
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "utilities@2",
+      "seconds": 9.573302499993588,
+      "response": {
+        "id": "chatcmpl-cdfc51cbb47c48268f30bdeb",
+        "object": "chat.completion",
+        "created": 1791432151,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def stable_unique(items):\n    \"\"\"Return a list of hashable values from items, preserving first occurrence order.\"\"\"\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\n\ndef frequencies(items):\n    \"\"\"Return a dict mapping each hashable value in items to its occurrence count.\"\"\"\n    counts = {}\n    for item in items:\n        counts[item] = counts.get(item, 0) + 1\n    return counts\n\n\ndef chunked(items, size):\n    \"\"\"Split items into chunks of given size; last chunk may be shorter. Raise ValueError if size <= 0.\"\"\"\n    if size <= 0:\n        raise ValueError(\"size must be positive\")\n    if not items:\n        return []\n    result = []\n    for i in range(0, len(items), size):\n        result.append(items[i:i + size])\n    return result\n\n\ndef running_totals(numbers):\n    \"\"\"Return a list of cumulative sums of numbers. Empty input yields [].\"\"\"\n    result = []\n    total = 0\n    for num in numbers:\n        total += num\n        result.append(total)\n    return result\n\n\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping or touching [start, end] intervals and return sorted non-overlapping intervals.\"\"\"\n    if not intervals:\n        return []\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    merged = [list(sorted_intervals[0])]\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            merged[-1][1] = max(last_end, end)\n        else:\n            merged.append([start, end])\n    return merged\n\n\ndef lower_bound(values, target):\n    \"\"\"Return the first index in ascending sorted values where value >= target, or len(values).\"\"\"\n    lo = 0\n    hi = len(values)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if values[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n\n\ndef rotate_right(items, k):\n    \"\"\"Return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\"\"\"\n    if not items:\n        return []\n    n = len(items)\n    k = k % n\n    if k == 0:\n        return list(items)\n    return items[-k:] + items[:-k]\n\n\ndef moving_average(numbers, window):\n    \"\"\"Return means of complete consecutive windows using a linear sliding window. Raise ValueError if window <= 0.\"\"\"\n    if window <= 0:\n        raise ValueError(\"window must be positive\")\n    n = len(numbers)\n    if window > n:\n        return []\n    result = []\n    window_sum = 0\n    for i in range(n):\n        window_sum += numbers[i]\n        if i >= window:\n            window_sum -= numbers[i - window]\n        if i >= window - 1:\n            result.append(window_sum / window)\n    return result"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 303,
+          "completion_tokens": 711,
+          "total_tokens": 1014,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 303,
+          "prompt_ms": 2181.4,
+          "prompt_per_token_ms": 7.199,
+          "prompt_per_second": 138.9,
+          "predicted_n": 711,
+          "predicted_ms": 7388.3,
+          "predicted_per_token_ms": 10.391,
+          "predicted_per_second": 96.2,
+          "draft_n": 616,
+          "draft_n_accepted": 551
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "ttl_cache@2",
+      "seconds": 7.467027499995311,
+      "response": {
+        "id": "chatcmpl-44b32111daf24d8fbc629285",
+        "object": "chat.completion",
+        "created": 1791432161,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "class TTLCache:\n    \"\"\"A cache with time-to-live expiration and LRU eviction.\"\"\"\n\n    def __init__(self, capacity):\n        \"\"\"Initialize the cache with a positive integer capacity.\"\"\"\n        if not isinstance(capacity, int) or capacity <= 0:\n            raise ValueError(\"capacity must be a positive integer\")\n        self.capacity = capacity\n        self._data = {}\n\n    def put(self, key, value, now, ttl):\n        \"\"\"Insert or replace a key-value pair with a TTL, evicting LRU if needed.\"\"\"\n        if ttl <= 0:\n            raise ValueError(\"ttl must be > 0\")\n        self.purge(now)\n        if key in self._data:\n            del self._data[key]\n        self._data[key] = (value, now + ttl)\n        while len(self._data) > self.capacity:\n            oldest_key = next(iter(self._data))\n            del self._data[oldest_key]\n\n    def get(self, key, now, default=None):\n        \"\"\"Return the value for key if not expired, marking it as most recently used.\"\"\"\n        self.purge(now)\n        if key not in self._data:\n            return default\n        value, expires_at = self._data[key]\n        del self._data[key]\n        self._data[key] = (value, expires_at)\n        return value\n\n    def delete(self, key):\n        \"\"\"Remove a key from the cache, returning True if it existed.\"\"\"\n        if key in self._data:\n            del self._data[key]\n            return True\n        return False\n\n    def purge(self, now):\n        \"\"\"Remove all entries expiring at or before now, returning the count removed.\"\"\"\n        to_remove = [k for k, (_, exp) in self._data.items() if exp <= now]\n        for k in to_remove:\n            del self._data[k]\n        return len(to_remove)\n\n    def size(self, now):\n        \"\"\"Return the number of live (non-expired) entries after purging.\"\"\"\n        self.purge(now)\n        return len(self._data)\n\n    def clear(self):\n        \"\"\"Remove all entries from the cache.\"\"\"\n        self._data.clear()"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 292,
+          "completion_tokens": 489,
+          "total_tokens": 781,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 292,
+          "prompt_ms": 2103.3,
+          "prompt_per_token_ms": 7.203,
+          "prompt_per_second": 138.8,
+          "predicted_n": 489,
+          "predicted_ms": 5360.3,
+          "predicted_per_token_ms": 10.962,
+          "predicted_per_second": 91.2,
+          "draft_n": 413,
+          "draft_n_accepted": 365
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "algorithms@2",
+      "seconds": 13.023780900010024,
+      "response": {
+        "id": "chatcmpl-99fae946255244b5b3e2114a",
+        "object": "chat.completion",
+        "created": 1791432168,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def topological_sort(n, edges):\n    \"\"\"\n    Perform a topological sort on a directed graph with nodes 0..n-1.\n    Always chooses the smallest currently available node (Kahn's algorithm with min-heap behavior via list).\n    Raises ValueError if a cycle is detected.\n    Time complexity: O(n + len(edges)) for building graph, O(n^2) for selecting min node each step.\n    \"\"\"\n    if n == 0:\n        return []\n    \n    # Build adjacency list and in-degree count\n    adj = [[] for _ in range(n)]\n    in_degree = [0] * n\n    for u, v in edges:\n        adj[u].append(v)\n        in_degree[v] += 1\n    \n    # Find all nodes with in-degree 0\n    available = [i for i in range(n) if in_degree[i] == 0]\n    available.sort()\n    \n    result = []\n    while available:\n        # Pick the smallest available node\n        node = available.pop(0)\n        result.append(node)\n        \n        # Reduce in-degree of neighbors\n        for neighbor in adj[node]:\n            in_degree[neighbor] -= 1\n            if in_degree[neighbor] == 0:\n                available.append(neighbor)\n                available.sort()\n    \n    if len(result) != n:\n        raise ValueError(\"Cycle detected in graph\")\n    \n    return result\n\n\ndef shortest_paths(n, edges, start):\n    \"\"\"\n    Compute shortest paths from start to all nodes using Dijkstra's algorithm.\n    Edges are directed with nonnegative weights. Parallel edges allowed.\n    Returns a list of distances, with float('inf') for unreachable nodes.\n    Time complexity: O(n^2 + len(edges)) using a simple array-based Dijkstra.\n    \"\"\"\n    INF = float('inf')\n    dist = [INF] * n\n    dist[start] = 0\n    visited = [False] * n\n    \n    # Build adjacency list\n    adj = [[] for _ in range(n)]\n    for u, v, w in edges:\n        adj[u].append((v, w))\n    \n    for _ in range(n):\n        # Find the unvisited node with the smallest distance\n        min_dist = INF\n        min_node = -1\n        for i in range(n):\n            if not visited[i] and dist[i] < min_dist:\n                min_dist = dist[i]\n                min_node = i\n        \n        if min_node == -1:\n            break\n        \n        visited[min_node] = True\n        \n        # Relax edges from min_node\n        for neighbor, weight in adj[min_node]:\n            if not visited[neighbor]:\n                new_dist = dist[min_node] + weight\n                if new_dist < dist[neighbor]:\n                    dist[neighbor] = new_dist\n    \n    return dist\n\n\ndef longest_common_subsequence(a, b):\n    \"\"\"\n    Compute the longest common subsequence of strings a and b using dynamic programming.\n    Returns one such subsequence as a string.\n    Time complexity: O(len(a) * len(b)).\n    Space complexity: O(len(a) * len(b)).\n    \"\"\"\n    m = len(a)\n    n = len(b)\n    \n    if m == 0 or n == 0:\n        return \"\"\n    \n    # dp[i][j] = length of LCS of a[:i] and b[:j]\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    \n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if a[i - 1] == b[j - 1]:\n                dp[i][j] = dp[i - 1][j - 1] + 1\n            else:\n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])\n    \n    # Reconstruct the LCS\n    lcs = []\n    i, j = m, n\n    while i > 0 and j > 0:\n        if a[i - 1] == b[j - 1]:\n            lcs.append(a[i - 1])\n            i -= 1\n            j -= 1\n        elif dp[i - 1][j] >= dp[i][j - 1]:\n            i -= 1\n        else:\n            j -= 1\n    \n    lcs.reverse()\n    return \"\".join(lcs)"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 256,
+          "completion_tokens": 990,
+          "total_tokens": 1246,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 256,
+          "prompt_ms": 1870.6,
+          "prompt_per_token_ms": 7.307,
+          "prompt_per_second": 136.9,
+          "predicted_n": 990,
+          "predicted_ms": 11149.9,
+          "predicted_per_token_ms": 11.263,
+          "predicted_per_second": 88.8,
+          "draft_n": 827,
+          "draft_n_accepted": 730
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "matrices@2",
+      "seconds": 17.345166799990693,
+      "response": {
+        "id": "chatcmpl-8c17f561b53247ab96257ebf",
+        "object": "chat.completion",
+        "created": 1791432181,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "def validate_matrix(matrix):\n    \"\"\"Validate that matrix is a non-empty list of non-empty lists of numbers with uniform row lengths. Returns (row_count, column_count). Raises ValueError if invalid.\"\"\"\n    if not isinstance(matrix, list) or len(matrix) == 0:\n        raise ValueError(\"Matrix must be a non-empty list of lists\")\n    row_count = len(matrix)\n    column_count = None\n    for row in matrix:\n        if not isinstance(row, list) or len(row) == 0:\n            raise ValueError(\"Each row must be a non-empty list\")\n        if column_count is None:\n            column_count = len(row)\n        elif len(row) != column_count:\n            raise ValueError(\"Matrix must be rectangular (all rows same length)\")\n        for cell in row:\n            if not isinstance(cell, (int, float)):\n                raise ValueError(\"All elements must be real numbers\")\n    return (row_count, column_count)\n\ndef zeros(rows, cols):\n    \"\"\"Return a rows x cols matrix of zeros. rows and cols must be positive integers. Raises ValueError otherwise.\"\"\"\n    if not isinstance(rows, int) or not isinstance(cols, int):\n        raise ValueError(\"rows and cols must be integers\")\n    if rows <= 0 or cols <= 0:\n        raise ValueError(\"rows and cols must be positive integers\")\n    return [[0.0 for _ in range(cols)] for _ in range(rows)]\n\ndef identity(n):\n    \"\"\"Return an n x n identity matrix. n must be a positive integer. Raises ValueError otherwise.\"\"\"\n    if not isinstance(n, int):\n        raise ValueError(\"n must be an integer\")\n    if n <= 0:\n        raise ValueError(\"n must be a positive integer\")\n    result = [[0.0 for _ in range(n)] for _ in range(n)]\n    for i in range(n):\n        result[i][i] = 1.0\n    return result\n\ndef transpose(matrix):\n    \"\"\"Return the transpose of the given matrix. Validates the input matrix.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    return [[matrix[i][j] for i in range(rows)] for j in range(cols)]\n\ndef add(a, b):\n    \"\"\"Return the elementwise sum of matrices a and b. Both must have the same shape. Raises ValueError if shapes differ or inputs are invalid.\"\"\"\n    a_rows, a_cols = validate_matrix(a)\n    b_rows, b_cols = validate_matrix(b)\n    if a_rows != b_rows or a_cols != b_cols:\n        raise ValueError(\"Matrices must have the same dimensions for addition\")\n    return [[a[i][j] + b[i][j] for j in range(a_cols)] for i in range(a_rows)]\n\ndef subtract(a, b):\n    \"\"\"Return the elementwise difference a - b. Both must have the same shape. Raises ValueError if shapes differ or inputs are invalid.\"\"\"\n    a_rows, a_cols = validate_matrix(a)\n    b_rows, b_cols = validate_matrix(b)\n    if a_rows != b_rows or a_cols != b_cols:\n        raise ValueError(\"Matrices must have the same dimensions for subtraction\")\n    return [[a[i][j] - b[i][j] for j in range(a_cols)] for i in range(a_rows)]\n\ndef scale(matrix, scalar):\n    \"\"\"Return a new matrix where every element is multiplied by scalar. Validates the input matrix.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    if not isinstance(scalar, (int, float)):\n        raise ValueError(\"scalar must be a real number\")\n    return [[matrix[i][j] * scalar for j in range(cols)] for i in range(rows)]\n\ndef matmul(a, b):\n    \"\"\"Return the matrix product a * b. The number of columns of a must equal the number of rows of b. Raises ValueError if dimensions are incompatible or inputs are invalid.\"\"\"\n    a_rows, a_cols = validate_matrix(a)\n    b_rows, b_cols = validate_matrix(b)\n    if a_cols != b_rows:\n        raise ValueError(\"Number of columns of a must equal number of rows of b for matrix multiplication\")\n    result = [[0.0 for _ in range(b_cols)] for _ in range(a_rows)]\n    for i in range(a_rows):\n        for j in range(b_cols):\n            total = 0.0\n            for k in range(a_cols):\n                total += a[i][k] * b[k][j]\n            result[i][j] = total\n    return result\n\ndef row_sums(matrix):\n    \"\"\"Return a list of the sum of each row in the matrix. Validates the input matrix.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    return [sum(matrix[i]) for i in range(rows)]\n\ndef col_sums(matrix):\n    \"\"\"Return a list of the sum of each column in the matrix. Validates the input matrix.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    return [sum(matrix[i][j] for i in range(rows)) for j in range(cols)]\n\ndef trace(matrix):\n    \"\"\"Return the sum of the diagonal elements of a square matrix. Raises ValueError if the matrix is not square or invalid.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    if rows != cols:\n        raise ValueError(\"Matrix must be square for trace\")\n    return sum(matrix[i][i] for i in range(rows))\n\ndef matrix_power(matrix, exponent):\n    \"\"\"Return the matrix raised to a nonnegative integer exponent using exponentiation by squaring. The matrix must be square. Raises ValueError if matrix is not square, exponent is not a nonnegative integer, or inputs are invalid.\"\"\"\n    rows, cols = validate_matrix(matrix)\n    if rows != cols:\n        raise ValueError(\"Matrix must be square for matrix_power\")\n    if not isinstance(exponent, int):\n        raise ValueError(\"exponent must be an integer\")\n    if exponent < 0:\n        raise ValueError(\"exponent must be a nonnegative integer\")\n    n = rows\n    if exponent == 0:\n        return identity(n)\n    if exponent == 1:\n        return [row[:] for row in matrix]\n    result = identity(n)\n    base = [row[:] for row in matrix]\n    exp = exponent\n    while exp > 0:\n        if exp % 2 == 1:\n            result = matmul(result, base)\n        base = matmul(base, base)\n        exp //= 2\n    return result"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 303,
+          "completion_tokens": 1410,
+          "total_tokens": 1713,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 303,
+          "prompt_ms": 2256.6,
+          "prompt_per_token_ms": 7.448,
+          "prompt_per_second": 134.3,
+          "predicted_n": 1410,
+          "predicted_ms": 15084.9,
+          "predicted_per_token_ms": 10.699,
+          "predicted_per_second": 93.5,
+          "draft_n": 1223,
+          "draft_n_accepted": 1101
+        }
+      },
+      "valid": true
+    }
+  ],
+  "ok": true,
+  "health": {
+    "status": "ok",
+    "max_context": 8192,
+    "model": "qwen3.8-flash-next",
+    "images": false,
+    "api_key": false,
+    "loaded": true,
+    "service": "strata"
+  },
+  "expected_requests": 10,
+  "cases": [
+    {
+      "key": "probe",
+      "prompt": "Write only Python code. Define stable_unique(items) removing duplicates from hashable items while preserving their first occurrence. Use a set. No imports.",
+      "max_tokens": 160
+    },
+    {
+      "key": "utilities",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement these eight independent functions without modifying the inputs:\n1. stable_unique(items): list of hashable values, first occurrences in order.\n2. frequencies(items): dict mapping each hashable value to its occurrence count.\n3. chunked(items, size): list of list chunks, last chunk may be shorter; raise ValueError if size <= 0. Empty input yields [].\n4. running_totals(numbers): list of cumulative sums, empty input yields [].\n5. merge_intervals(intervals): input list of [start, end] pairs with start <= end, possibly unsorted. Return sorted non-overlapping intervals as lists; merge overlaps and touching endpoints. Empty input yields [].\n6. lower_bound(values, target): binary search on an ascending sorted list; return first index whose value is >= target or len(values).\n7. rotate_right(items, k): return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\n8. moving_average(numbers, window): means of complete consecutive windows only. Return [] when window > len(numbers); raise ValueError if window <= 0.\nUse a linear sliding window for moving_average and binary search for lower_bound.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "ttl_cache",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement one class TTLCache with these methods:\n__init__(capacity): capacity must be a positive integer, else raise ValueError.\nput(key, value, now, ttl): ttl must be > 0, else raise ValueError without changing the cache. now is an explicit numeric timestamp; never read a real clock. First purge all entries with expires_at <= now. Insert or replace the key with expires_at = now + ttl and mark it most recently used. When capacity is exceeded, evict least recently used entries.\nget(key, now, default=None): purge expired entries; return default for a missing key, otherwise return its value and mark it most recently used without extending its expiration time.\ndelete(key): remove key if present and return True, else False.\npurge(now): remove all entries expiring at or before now and return the number removed.\nsize(now): purge expired entries and return the live count.\nclear(): remove all entries.\nKeys are hashable. Values may be None. Timestamps are nondecreasing. Use the insertion order of a normal Python dict to track LRU order; do not import OrderedDict.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "algorithms",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement these three independent functions:\ntopological_sort(n, edges): nodes are integers 0..n-1. edges is a list of unique directed (u,v) pairs. Return a topological order, always choosing the smallest currently available node. Include isolated nodes. Raise ValueError on a cycle. n=0 yields [].\nshortest_paths(n, edges, start): edges is a list of directed (u,v,weight) triples with nonnegative weights; parallel edges are allowed. Return distances from start as a list with float('inf') for unreachable nodes. n>=1 and start is valid. An O(n*n + len(edges)) Dijkstra implementation is acceptable; do not import heapq.\nlongest_common_subsequence(a, b): return any one longest common subsequence as a string. Empty inputs yield ''. Use dynamic programming and reconstruct the subsequence, not only its length.\nDo not modify any input. Include docstrings explaining the algorithm and time complexity.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "matrices",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement a small matrix module with twelve functions. Matrices are lists of lists of real numbers. Arithmetic functions must reject empty or ragged matrices with ValueError, reject incompatible dimensions with ValueError, and never modify inputs. No imports.\nvalidate_matrix(matrix): return (row_count, column_count); reject empty rows too.\nzeros(rows, cols): positive integer dimensions required, otherwise ValueError. Return independent rows of zeros.\nidentity(n): positive integer n required, otherwise ValueError. Return an n by n identity matrix.\ntranspose(matrix): return the transpose.\nadd(a,b) and subtract(a,b): elementwise operations on equal shapes.\nscale(matrix, scalar): multiply every cell by scalar.\nmatmul(a,b): matrix multiplication, validating that columns of a equal rows of b.\nrow_sums(matrix) and col_sums(matrix): return one-dimensional lists of sums.\ntrace(matrix): sum of the diagonal, requiring a square matrix.\nmatrix_power(matrix, exponent): square matrix raised to a nonnegative integer exponent, otherwise ValueError. Power zero returns identity. Use exponentiation by squaring and the above functions.\nAdd docstrings for every function describing validation and behavior. Implement every function completely.",
+      "max_tokens": 3072
+    },
+    {
+      "key": "probe@2",
+      "prompt": "Write only Python code. Define stable_unique(items) removing duplicates from hashable items while preserving their first occurrence. Use a set. No imports.",
+      "max_tokens": 160
+    },
+    {
+      "key": "utilities@2",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement these eight independent functions without modifying the inputs:\n1. stable_unique(items): list of hashable values, first occurrences in order.\n2. frequencies(items): dict mapping each hashable value to its occurrence count.\n3. chunked(items, size): list of list chunks, last chunk may be shorter; raise ValueError if size <= 0. Empty input yields [].\n4. running_totals(numbers): list of cumulative sums, empty input yields [].\n5. merge_intervals(intervals): input list of [start, end] pairs with start <= end, possibly unsorted. Return sorted non-overlapping intervals as lists; merge overlaps and touching endpoints. Empty input yields [].\n6. lower_bound(values, target): binary search on an ascending sorted list; return first index whose value is >= target or len(values).\n7. rotate_right(items, k): return a new list rotated right by k modulo its length; negative k rotates left. Empty input yields [].\n8. moving_average(numbers, window): means of complete consecutive windows only. Return [] when window > len(numbers); raise ValueError if window <= 0.\nUse a linear sliding window for moving_average and binary search for lower_bound.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "ttl_cache@2",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement one class TTLCache with these methods:\n__init__(capacity): capacity must be a positive integer, else raise ValueError.\nput(key, value, now, ttl): ttl must be > 0, else raise ValueError without changing the cache. now is an explicit numeric timestamp; never read a real clock. First purge all entries with expires_at <= now. Insert or replace the key with expires_at = now + ttl and mark it most recently used. When capacity is exceeded, evict least recently used entries.\nget(key, now, default=None): purge expired entries; return default for a missing key, otherwise return its value and mark it most recently used without extending its expiration time.\ndelete(key): remove key if present and return True, else False.\npurge(now): remove all entries expiring at or before now and return the number removed.\nsize(now): purge expired entries and return the live count.\nclear(): remove all entries.\nKeys are hashable. Values may be None. Timestamps are nondecreasing. Use the insertion order of a normal Python dict to track LRU order; do not import OrderedDict.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "algorithms@2",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement these three independent functions:\ntopological_sort(n, edges): nodes are integers 0..n-1. edges is a list of unique directed (u,v) pairs. Return a topological order, always choosing the smallest currently available node. Include isolated nodes. Raise ValueError on a cycle. n=0 yields [].\nshortest_paths(n, edges, start): edges is a list of directed (u,v,weight) triples with nonnegative weights; parallel edges are allowed. Return distances from start as a list with float('inf') for unreachable nodes. n>=1 and start is valid. An O(n*n + len(edges)) Dijkstra implementation is acceptable; do not import heapq.\nlongest_common_subsequence(a, b): return any one longest common subsequence as a string. Empty inputs yield ''. Use dynamic programming and reconstruct the subsequence, not only its length.\nDo not modify any input. Include docstrings explaining the algorithm and time complexity.",
+      "max_tokens": 2048
+    },
+    {
+      "key": "matrices@2",
+      "prompt": "Write only executable Python code, with no markdown fences, explanation, imports, type annotations, example calls or test code. Use only builtins. Include a short docstring for each public function or method. Implement every requirement.\nImplement a small matrix module with twelve functions. Matrices are lists of lists of real numbers. Arithmetic functions must reject empty or ragged matrices with ValueError, reject incompatible dimensions with ValueError, and never modify inputs. No imports.\nvalidate_matrix(matrix): return (row_count, column_count); reject empty rows too.\nzeros(rows, cols): positive integer dimensions required, otherwise ValueError. Return independent rows of zeros.\nidentity(n): positive integer n required, otherwise ValueError. Return an n by n identity matrix.\ntranspose(matrix): return the transpose.\nadd(a,b) and subtract(a,b): elementwise operations on equal shapes.\nscale(matrix, scalar): multiply every cell by scalar.\nmatmul(a,b): matrix multiplication, validating that columns of a equal rows of b.\nrow_sums(matrix) and col_sums(matrix): return one-dimensional lists of sums.\ntrace(matrix): sum of the diagonal, requiring a square matrix.\nmatrix_power(matrix, exponent): square matrix raised to a nonnegative integer exponent, otherwise ValueError. Power zero returns identity. Use exponentiation by squaring and the above functions.\nAdd docstrings for every function describing validation and behavior. Implement every function completely.",
+      "max_tokens": 3072
+    }
+  ],
+  "status": {
+    "service": "strata",
+    "model": "qwen3.8-flash-next",
+    "loaded": true,
+    "auto_load": true,
+    "structured_output": {
+      "formats": [
+        "json_object",
+        "json_schema"
+      ],
+      "method": "prompt_and_validate",
+      "constrained_decoding": false,
+      "stream_buffered": true
+    },
+    "engine": "0.1.40.3",
+    "started": 1791432097,
+    "uptime_s": 101,
+    "cache_max_tokens": 8192,
+    "cache": {
+      "state": "disabled"
+    },
+    "context": {
+      "native": 8192,
+      "max_positions": 8192
+    },
+    "concurrency": {
+      "serving": 1,
+      "requested": 1
+    },
+    "dialects": [
+      "/v1/chat/completions",
+      "/v1/messages",
+      "/v1/responses"
+    ],
+    "vision": {
+      "enabled": false,
+      "available": false,
+      "error": null
+    },
+    "activity": {
+      "requests": 10,
+      "in_flight": 0,
+      "last_request_at": 1791432199
+    },
+    "last_timings": {
+      "cache_n": 0,
+      "prompt_n": 303,
+      "prompt_ms": 2256.6,
+      "prompt_per_token_ms": 7.448,
+      "prompt_per_second": 134.3,
+      "predicted_n": 1410,
+      "predicted_ms": 15084.9,
+      "predicted_per_token_ms": 10.699,
+      "predicted_per_second": 93.5,
+      "draft_n": 1223,
+      "draft_n_accepted": 1101,
+      "at": 1791432199
+    },
+    "vram": {
+      "elastic": false
+    },
+    "machine": {
+      "at": 1791432199,
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 2080 Ti",
+        "used_mib": 22494.0,
+        "total_mib": 22528.0,
+        "util_pct": 100,
+        "temp_c": 68,
+        "power_w": 247.014
+      },
+      "ram": {
+        "used_gib": 19.8,
+        "total_gib": 31.6
+      }
+    }
+  }
+}

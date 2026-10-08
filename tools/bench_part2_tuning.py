@@ -72,7 +72,8 @@ def validate(key, answer):
             assert ns['stable_unique'](values) == expected
 
 
-def worker(label, overrides, training, extended, thresholds, rounds, medium):
+def worker(label, overrides, training, extended, thresholds, rounds, medium, suite=None, coding_thresholds=()):
+    cases_for, check_response = suite or (corpus, validate)
     OUT.mkdir(parents=True, exist_ok=True)
     config = json.loads(BASE.read_text(encoding='utf-8'))
     args = config['args']
@@ -111,12 +112,17 @@ def worker(label, overrides, training, extended, thresholds, rounds, medium):
                     if time.monotonic() > deadline:
                         raise
                     time.sleep(1)
-            cases = corpus(training, extended, medium)
+            cases = cases_for(training, extended, medium)
             cases += [(f'{key}@{round_number}', prompt, limit) for round_number in range(2, rounds+1)
-                      for key, prompt, limit in corpus(training, extended, medium)]
+                      for key, prompt, limit in cases_for(training, extended, medium)]
             if thresholds:
                 cases += [(f'{key}:p{percent}', prompt, limit) for percent in (90, 95)
                           for key, prompt, limit in corpus(False, True) if key in ('code', 'decode', 'prose')]
+            if coding_thresholds:
+                cases += [(f'{key}:p{percent}', prompt, limit) for percent in coding_thresholds
+                          for key, prompt, limit in cases_for() if key != 'probe']
+            result['expected_requests'] = len(cases)
+            result['cases'] = [dict(key=key, prompt=prompt, max_tokens=limit) for key, prompt, limit in cases]
             for key, prompt, limit in cases:
                 start = time.monotonic()
                 base_key = key.split('@')[0].split(':')[0]
@@ -128,7 +134,9 @@ def worker(label, overrides, training, extended, thresholds, rounds, medium):
                 result['requests'].append(entry)
                 try:
                     if not training:
-                        validate(base_key, response['choices'][0]['message']['content'])
+                        check_response(base_key, response['choices'][0]['message']['content'])
+                        if suite is not None:
+                            assert response['choices'][0]['finish_reason'] == 'stop', 'code output was truncated'
                         if base_key == 'cache_repeat':
                             assert response['timings']['cache_n'] > 0, 'repeat did not reuse the prompt cache'
                     entry['valid'] = True
@@ -161,13 +169,27 @@ if __name__ == '__main__':
     parser.add_argument('--thresholds', action='store_true')
     parser.add_argument('--rounds', type=int, choices=(1, 2, 3), default=1)
     parser.add_argument('--medium', action='store_true')
+    parser.add_argument('--coding', action='store_true', help='Long Python code tasks with functional checks')
+    parser.add_argument('--coding-long', action='store_true', help='Add a held-out, larger matrix module')
+    parser.add_argument('--coding-thresholds', default='', help='Extra coding passes at comma-separated confidence percentages')
     parser.add_argument('--worker', action='store_true')
     opts = parser.parse_args()
     BASE, OUT, PORT = opts.config.resolve(), opts.out.resolve(), opts.port
+    suite = None
+    coding_thresholds = [int(p) for p in opts.coding_thresholds.split(',') if p]
+    if any(p < 0 or p > 100 for p in coding_thresholds):
+        parser.error('confidence percentages must be in 0..100')
+    if (opts.coding_long or coding_thresholds) and not opts.coding:
+        parser.error('coding options require --coding')
+    if opts.coding:
+        if opts.training or opts.extended or opts.medium or opts.thresholds:
+            parser.error('--coding is a separate suite; use --rounds and --overrides with it')
+        from bench_mtp_coding import corpus as coding_corpus, validate as coding_validate
+        suite = (lambda *_: coding_corpus(long=opts.coding_long), coding_validate)
     if not opts.worker and (OUT/(opts.label+'-result.json')).exists():
         parser.error('this label already has a result; choose a new label to preserve it')
     if opts.worker:
-        worker(opts.label, json.loads(opts.overrides), opts.training, opts.extended, opts.thresholds, opts.rounds, opts.medium)
+        worker(opts.label, json.loads(opts.overrides), opts.training, opts.extended, opts.thresholds, opts.rounds, opts.medium, suite, coding_thresholds)
     else:
         OUT.mkdir(parents=True, exist_ok=True)
         with (OUT/(opts.label+'-server.log')).open('w', encoding='utf-8') as log:
