@@ -48,7 +48,7 @@ short-read1024 也有取舍：在另一轮只改引擎、仍用448的复测中�
 
 新引擎关闭共享映射的回退路径另跑了探针、工具函数、矩阵模块三项，全部通过，并与原版对应输出逐字一致。安装程序核对可执行文件哈希，以及所用配置与 `combined-a` 除 exe/cwd/log 外完全相同。旧引擎仍在原路径，原 coding 配置保存在 `E:/strata-setup/part2-coding-next/rollback-coding-config.json`；恢复它即可回到旧引擎和448。测试进程及端口18997监听均已结束；驱动、功率上限和原单卡256K配置的状态已核对。
 
-原始记录位于 `E:/strata-setup/part2-coding-next`，仓库归档为 [bench/results/2026-10-08-part2-mapped-output](../../bench/results/2026-10-08-part2-mapped-output)。归档包括实际配置、完整响应、日志、构建记录、原补丁、安装与回退配置以及 SHA256 清单。可执行文件和模型不提交。生产改动单独提交；上游分支 `codex/remote-reduced-mapped-output` 从 `d5ea713` 起，只包含相同的六行差异（提交 `2edbb0535633bd9a78f899286b57b831e2381bf1`），不捎带本地 resident helper 改动、基准文件或本机配置。
+原始记录位于 `E:/strata-setup/part2-coding-next`，仓库归档为 [bench/results/2026-10-08-part2-mapped-output](../../bench/results/2026-10-08-part2-mapped-output)。归档包括实际配置、完整响应、日志、构建记录、原补丁、安装与回退配置以及 SHA256 清单。可执行文件和模型不提交。生产改动单独提交；上游分支 `codex/remote-reduced-mapped-output` 从 `d5ea713` 起，只包含相同的六行差异（提交 `2edbb0535633bd9a78f899286b57b831e2381bf1`），不捎带本地 resident helper 改动、基准文件或本机配置。已提交 [PR #1499](https://github.com/Niko1221/Strata/pull/1499)，PR 同时披露代码收益和通用场景未提速的结果，等待上游审阅。
 
 在仓库根目录用相同模型、兼容引擎、空闲端口和新 label 串行复现；归档配置保留了本机绝对路径，在其他机器上需要修改路径并重新测量：
 
