@@ -1,0 +1,11 @@
+{
+  "epoch": 1791502891.5733376,
+  "server_exit_code": 0,
+  "python_tests": 283,
+  "core_ctest_passed": 2,
+  "conversation_cache_checks": 4221,
+  "cache_retention_checks": 17,
+  "model_starts": 9,
+  "model_responses": 100,
+  "initial_server_fixture_failure": "GpuChoice.test_vision_device: host-dependent GPU ordering; fixed by 4e4adfa"
+}

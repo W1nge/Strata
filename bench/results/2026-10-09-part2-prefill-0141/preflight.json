@@ -1,0 +1,12 @@
+{
+  "epoch": 1791499941.749246,
+  "integration_base": "07c4d8c65c0dccc169025c3ee79958062d7a04bc",
+  "upstream": "fb58e0dbc8399662c0e47c76578c6e878b14f6cf",
+  "merged_commit": "26a119378f2fb28525dad29f00ada36dba9e249c",
+  "daily_commit": "bdba23a1334ff737c8618a79a2ff888e1d2e82c6",
+  "baseline_config_sha256": "edac91829b59770fd2a67f09bef836a90ee5d95528a3f2b20cccf95a112bde99",
+  "baseline_exe_sha256": "7722a6d34f8efded911dd0eeef091461972fa5958bf75725767172a3678f2a25",
+  "audit_sha256": "d59c6e2b2f686b45ff46574667bf0ee2425b5a6b1a930cca381e15d0d03d184a",
+  "inherited_strata_env": {},
+  "gpu": "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W, 22528 MiB\n1, Tesla P100-PCIE-16GB, 537.13, 250.00 W, 16384 MiB"
+}

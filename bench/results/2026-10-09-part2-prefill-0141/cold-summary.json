@@ -1,0 +1,733 @@
+{
+  "runs": {
+    "baseline-a": {
+      "ok": true,
+      "requests": 11,
+      "expected_requests": 11,
+      "startup_s": 99.67159366607666,
+      "cold_requests": 10,
+      "all_valid": true,
+      "all_cold_cache_misses": true,
+      "request_wall_s": 153.97259370000052,
+      "cold_wall_s": 153.12088240000048,
+      "cold_prompt_s": 150.083,
+      "exe_sha256": "7722a6d34f8efded911dd0eeef091461972fa5958bf75725767172a3678f2a25",
+      "config_sha256": "e957f9f81093428eedb20d3727a05fa9ec1877ce64712aa2f12f474203d43b3d",
+      "fixture_sha256": "ee6b62023c2aef01fdc2d411202946d181129700aec8694bb9681321f1d5ab78",
+      "per_case": {
+        "records-small": {
+          "n": 2,
+          "prompt_n": [
+            422,
+            422
+          ],
+          "prompt_s": [
+            3.6743,
+            3.8851
+          ],
+          "prompt_median_s": 3.7797,
+          "ttft_median_s": 3.8002226499999097,
+          "wall_median_s": 4.020621900000037
+        },
+        "records-medium": {
+          "n": 2,
+          "prompt_n": [
+            884,
+            884
+          ],
+          "prompt_s": [
+            8.234200000000001,
+            8.641200000000001
+          ],
+          "prompt_median_s": 8.437700000000001,
+          "ttft_median_s": 8.459298250000074,
+          "wall_median_s": 8.825023550000083
+        },
+        "source-2k": {
+          "n": 2,
+          "prompt_n": [
+            2067,
+            2067
+          ],
+          "prompt_s": [
+            26.6062,
+            18.462400000000002
+          ],
+          "prompt_median_s": 22.5343,
+          "ttft_median_s": 22.568188700000178,
+          "wall_median_s": 22.738871050000057
+        },
+        "source-3k5": {
+          "n": 2,
+          "prompt_n": [
+            3500,
+            3500
+          ],
+          "prompt_s": [
+            20.280099999999997,
+            19.3416
+          ],
+          "prompt_median_s": 19.81085,
+          "ttft_median_s": 19.85856805000003,
+          "wall_median_s": 20.050222050000002
+        },
+        "records-5k": {
+          "n": 2,
+          "prompt_n": [
+            5127,
+            5127
+          ],
+          "prompt_s": [
+            20.659599999999998,
+            20.298299999999998
+          ],
+          "prompt_median_s": 20.478949999999998,
+          "ttft_median_s": 20.5657927499999,
+          "wall_median_s": 20.925702650000062
+        }
+      },
+      "memory": {
+        "sample_count": 153,
+        "available_min_gib": 8.68328857421875,
+        "available_median_gib": 10.266765594482422,
+        "physical_disk_reads_gib": {
+          "PhysicalDrive0": 0.01593780517578125,
+          "PhysicalDrive1": 0.0,
+          "PhysicalDrive2": 95.72656345367432
+        }
+      }
+    },
+    "baseline-b": {
+      "ok": true,
+      "requests": 11,
+      "expected_requests": 11,
+      "startup_s": 193.45022082328796,
+      "cold_requests": 10,
+      "all_valid": true,
+      "all_cold_cache_misses": true,
+      "request_wall_s": 159.16673549999996,
+      "cold_wall_s": 158.11486800000011,
+      "cold_prompt_s": 155.0564,
+      "exe_sha256": "7722a6d34f8efded911dd0eeef091461972fa5958bf75725767172a3678f2a25",
+      "config_sha256": "390380436997f299159deea1f80be68ffec6c6c459abd36215b5b70bd2c2c351",
+      "fixture_sha256": "ee6b62023c2aef01fdc2d411202946d181129700aec8694bb9681321f1d5ab78",
+      "per_case": {
+        "records-small": {
+          "n": 2,
+          "prompt_n": [
+            422,
+            422
+          ],
+          "prompt_s": [
+            4.0232,
+            3.8653000000000004
+          ],
+          "prompt_median_s": 3.9442500000000003,
+          "ttft_median_s": 3.966702499999883,
+          "wall_median_s": 4.203840700000001
+        },
+        "records-medium": {
+          "n": 2,
+          "prompt_n": [
+            884,
+            884
+          ],
+          "prompt_s": [
+            8.622200000000001,
+            8.280899999999999
+          ],
+          "prompt_median_s": 8.451550000000001,
+          "ttft_median_s": 8.473137400000041,
+          "wall_median_s": 8.819366050000099
+        },
+        "source-2k": {
+          "n": 2,
+          "prompt_n": [
+            2067,
+            2067
+          ],
+          "prompt_s": [
+            23.062900000000003,
+            21.9987
+          ],
+          "prompt_median_s": 22.5308,
+          "ttft_median_s": 22.562098399999968,
+          "wall_median_s": 22.723885849999988
+        },
+        "source-3k5": {
+          "n": 2,
+          "prompt_n": [
+            3500,
+            3500
+          ],
+          "prompt_s": [
+            22.9656,
+            19.9479
+          ],
+          "prompt_median_s": 21.45675,
+          "ttft_median_s": 21.539654000000155,
+          "wall_median_s": 21.73544220000008
+        },
+        "records-5k": {
+          "n": 2,
+          "prompt_n": [
+            5127,
+            5127
+          ],
+          "prompt_s": [
+            21.4265,
+            20.8632
+          ],
+          "prompt_median_s": 21.144849999999998,
+          "ttft_median_s": 21.184920049999846,
+          "wall_median_s": 21.57489919999989
+        }
+      },
+      "memory": {
+        "sample_count": 157,
+        "available_min_gib": 9.654953002929688,
+        "available_median_gib": 11.208106994628906,
+        "physical_disk_reads_gib": {
+          "PhysicalDrive0": 0.01725006103515625,
+          "PhysicalDrive1": 0.0,
+          "PhysicalDrive2": 94.58817625045776
+        }
+      }
+    },
+    "v141-default-a": {
+      "ok": true,
+      "requests": 11,
+      "expected_requests": 11,
+      "startup_s": 177.67548990249634,
+      "cold_requests": 10,
+      "all_valid": true,
+      "all_cold_cache_misses": true,
+      "request_wall_s": 161.7304978000002,
+      "cold_wall_s": 161.07251800000017,
+      "cold_prompt_s": 158.09,
+      "exe_sha256": "9fcc7cd90f0e8dad13463846e464f5b54fbe262fc9eeff90e98797de403dbae2",
+      "config_sha256": "bed85a5371e48ec0ab879be073be7a6dd98bbdf5142668cb8b728845fa61afce",
+      "fixture_sha256": "ee6b62023c2aef01fdc2d411202946d181129700aec8694bb9681321f1d5ab78",
+      "per_case": {
+        "records-small": {
+          "n": 2,
+          "prompt_n": [
+            422,
+            422
+          ],
+          "prompt_s": [
+            4.1015,
+            3.9645
+          ],
+          "prompt_median_s": 4.0329999999999995,
+          "ttft_median_s": 4.0541999000000715,
+          "wall_median_s": 4.296639400000004
+        },
+        "records-medium": {
+          "n": 2,
+          "prompt_n": [
+            884,
+            884
+          ],
+          "prompt_s": [
+            8.630700000000001,
+            8.549700000000001
+          ],
+          "prompt_median_s": 8.590200000000001,
+          "ttft_median_s": 8.611866200000122,
+          "wall_median_s": 8.972742500000095
+        },
+        "source-2k": {
+          "n": 2,
+          "prompt_n": [
+            2067,
+            2067
+          ],
+          "prompt_s": [
+            23.627,
+            21.1157
+          ],
+          "prompt_median_s": 22.37135,
+          "ttft_median_s": 22.403644949999943,
+          "wall_median_s": 22.56317864999994
+        },
+        "source-3k5": {
+          "n": 2,
+          "prompt_n": [
+            3500,
+            3500
+          ],
+          "prompt_s": [
+            23.4002,
+            19.9991
+          ],
+          "prompt_median_s": 21.69965,
+          "ttft_median_s": 21.769317900000033,
+          "wall_median_s": 21.92898839999998
+        },
+        "records-5k": {
+          "n": 2,
+          "prompt_n": [
+            5127,
+            5127
+          ],
+          "prompt_s": [
+            23.9567,
+            20.7449
+          ],
+          "prompt_median_s": 22.3508,
+          "ttft_median_s": 22.407864750000044,
+          "wall_median_s": 22.774710050000067
+        }
+      },
+      "memory": {
+        "sample_count": 160,
+        "available_min_gib": 9.407516479492188,
+        "available_median_gib": 11.048486709594727,
+        "physical_disk_reads_gib": {
+          "PhysicalDrive0": 0.021516799926757812,
+          "PhysicalDrive1": 0.0,
+          "PhysicalDrive2": 95.33736371994019
+        }
+      }
+    },
+    "v141-direct-a": {
+      "ok": true,
+      "requests": 11,
+      "expected_requests": 11,
+      "startup_s": 44.041231632232666,
+      "cold_requests": 10,
+      "all_valid": true,
+      "all_cold_cache_misses": true,
+      "request_wall_s": 92.74337590000164,
+      "cold_wall_s": 92.23225100000172,
+      "cold_prompt_s": 89.6097,
+      "exe_sha256": "9fcc7cd90f0e8dad13463846e464f5b54fbe262fc9eeff90e98797de403dbae2",
+      "config_sha256": "d8a3b23f29f781a3a7e80e3129b53ecf2157751231dca583c58ba27ce36029f1",
+      "fixture_sha256": "ee6b62023c2aef01fdc2d411202946d181129700aec8694bb9681321f1d5ab78",
+      "per_case": {
+        "records-small": {
+          "n": 2,
+          "prompt_n": [
+            422,
+            422
+          ],
+          "prompt_s": [
+            3.7605999999999997,
+            3.7251999999999996
+          ],
+          "prompt_median_s": 3.7428999999999997,
+          "ttft_median_s": 3.7648241500002086,
+          "wall_median_s": 3.984431200000131
+        },
+        "records-medium": {
+          "n": 2,
+          "prompt_n": [
+            884,
+            884
+          ],
+          "prompt_s": [
+            8.145,
+            8.364799999999999
+          ],
+          "prompt_median_s": 8.2549,
+          "ttft_median_s": 8.274881700000037,
+          "wall_median_s": 8.611225200000149
+        },
+        "source-2k": {
+          "n": 2,
+          "prompt_n": [
+            2067,
+            2067
+          ],
+          "prompt_s": [
+            10.3189,
+            9.5069
+          ],
+          "prompt_median_s": 9.9129,
+          "ttft_median_s": 9.937813050000159,
+          "wall_median_s": 10.060147400000005
+        },
+        "source-3k5": {
+          "n": 2,
+          "prompt_n": [
+            3500,
+            3500
+          ],
+          "prompt_s": [
+            13.5306,
+            10.1305
+          ],
+          "prompt_median_s": 11.830549999999999,
+          "ttft_median_s": 11.858496950000244,
+          "wall_median_s": 12.025201550000247
+        },
+        "records-5k": {
+          "n": 2,
+          "prompt_n": [
+            5127,
+            5127
+          ],
+          "prompt_s": [
+            11.256,
+            10.8712
+          ],
+          "prompt_median_s": 11.063600000000001,
+          "ttft_median_s": 11.088985550000189,
+          "wall_median_s": 11.43512015000033
+        }
+      },
+      "memory": {
+        "sample_count": 91,
+        "available_min_gib": 9.20046615600586,
+        "available_median_gib": 9.562812805175781,
+        "physical_disk_reads_gib": {
+          "PhysicalDrive0": 0.000888824462890625,
+          "PhysicalDrive1": 0.0,
+          "PhysicalDrive2": 103.66723442077637
+        }
+      }
+    },
+    "v141-direct-b": {
+      "ok": true,
+      "requests": 11,
+      "expected_requests": 11,
+      "startup_s": 44.0089795589447,
+      "cold_requests": 10,
+      "all_valid": true,
+      "all_cold_cache_misses": true,
+      "request_wall_s": 92.71305450000045,
+      "cold_wall_s": 92.11855620000051,
+      "cold_prompt_s": 89.5054,
+      "exe_sha256": "9fcc7cd90f0e8dad13463846e464f5b54fbe262fc9eeff90e98797de403dbae2",
+      "config_sha256": "614f9a6f205d8d5eaed390634494332fafbc5ccc28c0f43792cd8715f7a59dc2",
+      "fixture_sha256": "ee6b62023c2aef01fdc2d411202946d181129700aec8694bb9681321f1d5ab78",
+      "per_case": {
+        "records-small": {
+          "n": 2,
+          "prompt_n": [
+            422,
+            422
+          ],
+          "prompt_s": [
+            3.6696,
+            3.8009
+          ],
+          "prompt_median_s": 3.7352499999999997,
+          "ttft_median_s": 3.7551043999999365,
+          "wall_median_s": 3.9729318500001227
+        },
+        "records-medium": {
+          "n": 2,
+          "prompt_n": [
+            884,
+            884
+          ],
+          "prompt_s": [
+            8.1462,
+            8.3917
+          ],
+          "prompt_median_s": 8.26895,
+          "ttft_median_s": 8.289232900000115,
+          "wall_median_s": 8.629270850000012
+        },
+        "source-2k": {
+          "n": 2,
+          "prompt_n": [
+            2067,
+            2067
+          ],
+          "prompt_s": [
+            12.828700000000001,
+            9.5191
+          ],
+          "prompt_median_s": 11.1739,
+          "ttft_median_s": 11.19953610000016,
+          "wall_median_s": 11.324968800000079
+        },
+        "source-3k5": {
+          "n": 2,
+          "prompt_n": [
+            3500,
+            3500
+          ],
+          "prompt_s": [
+            10.961799999999998,
+            10.0886
+          ],
+          "prompt_median_s": 10.525199999999998,
+          "ttft_median_s": 10.554472450000048,
+          "wall_median_s": 10.725504600000022
+        },
+        "records-5k": {
+          "n": 2,
+          "prompt_n": [
+            5127,
+            5127
+          ],
+          "prompt_s": [
+            11.170399999999999,
+            10.9284
+          ],
+          "prompt_median_s": 11.049399999999999,
+          "ttft_median_s": 11.07284639999989,
+          "wall_median_s": 11.40660200000002
+        }
+      },
+      "memory": {
+        "sample_count": 91,
+        "available_min_gib": 9.3836669921875,
+        "available_median_gib": 9.67446517944336,
+        "physical_disk_reads_gib": {
+          "PhysicalDrive0": 2.6702880859375e-05,
+          "PhysicalDrive1": 0.0,
+          "PhysicalDrive2": 103.6835880279541
+        }
+      }
+    },
+    "v141-direct-share-a": {
+      "ok": true,
+      "requests": 11,
+      "expected_requests": 11,
+      "startup_s": 36.15221190452576,
+      "cold_requests": 10,
+      "all_valid": true,
+      "all_cold_cache_misses": true,
+      "request_wall_s": 90.22522529999878,
+      "cold_wall_s": 89.62680639999871,
+      "cold_prompt_s": 87.0543,
+      "exe_sha256": "9fcc7cd90f0e8dad13463846e464f5b54fbe262fc9eeff90e98797de403dbae2",
+      "config_sha256": "04c828a1ea03b046ab42edee0fd813f2aa96fdcb6f898798dc305955b8ecd652",
+      "fixture_sha256": "ee6b62023c2aef01fdc2d411202946d181129700aec8694bb9681321f1d5ab78",
+      "per_case": {
+        "records-small": {
+          "n": 2,
+          "prompt_n": [
+            422,
+            422
+          ],
+          "prompt_s": [
+            3.7811,
+            3.7836
+          ],
+          "prompt_median_s": 3.78235,
+          "ttft_median_s": 3.8034868999998253,
+          "wall_median_s": 4.019874449999861
+        },
+        "records-medium": {
+          "n": 2,
+          "prompt_n": [
+            884,
+            884
+          ],
+          "prompt_s": [
+            8.1195,
+            8.195200000000002
+          ],
+          "prompt_median_s": 8.157350000000001,
+          "ttft_median_s": 8.178731299999981,
+          "wall_median_s": 8.513548850000006
+        },
+        "source-2k": {
+          "n": 2,
+          "prompt_n": [
+            2067,
+            2067
+          ],
+          "prompt_s": [
+            12.5385,
+            9.5749
+          ],
+          "prompt_median_s": 11.0567,
+          "ttft_median_s": 11.087691249999807,
+          "wall_median_s": 11.241944249999733
+        },
+        "source-3k5": {
+          "n": 2,
+          "prompt_n": [
+            3500,
+            3500
+          ],
+          "prompt_s": [
+            9.9506,
+            9.706700000000001
+          ],
+          "prompt_median_s": 9.82865,
+          "ttft_median_s": 9.85950419999972,
+          "wall_median_s": 10.037239049999698
+        },
+        "records-5k": {
+          "n": 2,
+          "prompt_n": [
+            5127,
+            5127
+          ],
+          "prompt_s": [
+            10.7663,
+            10.6379
+          ],
+          "prompt_median_s": 10.7021,
+          "ttft_median_s": 10.725025049999886,
+          "wall_median_s": 11.000796600000058
+        }
+      },
+      "memory": {
+        "sample_count": 89,
+        "available_min_gib": 9.12533187866211,
+        "available_median_gib": 9.373668670654297,
+        "physical_disk_reads_gib": {
+          "PhysicalDrive0": 0.0,
+          "PhysicalDrive1": 0.0,
+          "PhysicalDrive2": 99.5118989944458
+        }
+      }
+    },
+    "v141-direct-short128-a": {
+      "ok": true,
+      "requests": 11,
+      "expected_requests": 11,
+      "startup_s": 36.148104429244995,
+      "cold_requests": 10,
+      "all_valid": true,
+      "all_cold_cache_misses": true,
+      "request_wall_s": 97.56755929999963,
+      "cold_wall_s": 96.94220289999976,
+      "cold_prompt_s": 94.2027,
+      "exe_sha256": "9fcc7cd90f0e8dad13463846e464f5b54fbe262fc9eeff90e98797de403dbae2",
+      "config_sha256": "bc5e39ccf63c3e9809d1c9b9b8aae6676616f9b7502b6545473fd3e87e769191",
+      "fixture_sha256": "ee6b62023c2aef01fdc2d411202946d181129700aec8694bb9681321f1d5ab78",
+      "per_case": {
+        "records-small": {
+          "n": 2,
+          "prompt_n": [
+            422,
+            422
+          ],
+          "prompt_s": [
+            7.2023,
+            6.9722
+          ],
+          "prompt_median_s": 7.08725,
+          "ttft_median_s": 7.112363499999901,
+          "wall_median_s": 7.358038299999862
+        },
+        "records-medium": {
+          "n": 2,
+          "prompt_n": [
+            884,
+            884
+          ],
+          "prompt_s": [
+            8.1968,
+            6.9544
+          ],
+          "prompt_median_s": 7.5756,
+          "ttft_median_s": 7.597305499999948,
+          "wall_median_s": 7.936759449999954
+        },
+        "source-2k": {
+          "n": 2,
+          "prompt_n": [
+            2067,
+            2067
+          ],
+          "prompt_s": [
+            9.7441,
+            11.0106
+          ],
+          "prompt_median_s": 10.37735,
+          "ttft_median_s": 10.404174799999964,
+          "wall_median_s": 10.535404749999998
+        },
+        "source-3k5": {
+          "n": 2,
+          "prompt_n": [
+            3500,
+            3500
+          ],
+          "prompt_s": [
+            10.5737,
+            9.7947
+          ],
+          "prompt_median_s": 10.1842,
+          "ttft_median_s": 10.211894450000045,
+          "wall_median_s": 10.37696464999999
+        },
+        "records-5k": {
+          "n": 2,
+          "prompt_n": [
+            5127,
+            5127
+          ],
+          "prompt_s": [
+            12.649899999999999,
+            11.104
+          ],
+          "prompt_median_s": 11.876949999999999,
+          "ttft_median_s": 11.907935250000264,
+          "wall_median_s": 12.263934300000074
+        }
+      },
+      "memory": {
+        "sample_count": 96,
+        "available_min_gib": 9.120445251464844,
+        "available_median_gib": 9.40669059753418,
+        "physical_disk_reads_gib": {
+          "PhysicalDrive0": 4.1961669921875e-05,
+          "PhysicalDrive1": 0.0,
+          "PhysicalDrive2": 140.62243509292603
+        }
+      }
+    }
+  },
+  "comparison": {
+    "baseline-b": {
+      "common_requests": 11,
+      "requests_identical": true,
+      "answers_identical": true,
+      "token_counts_identical": true,
+      "different_answers": [],
+      "cold_prompt_reduction_percent": -3.313766382601635
+    },
+    "v141-default-a": {
+      "common_requests": 11,
+      "requests_identical": true,
+      "answers_identical": true,
+      "token_counts_identical": true,
+      "different_answers": [],
+      "cold_prompt_reduction_percent": -5.335047940139792
+    },
+    "v141-direct-a": {
+      "common_requests": 11,
+      "requests_identical": true,
+      "answers_identical": true,
+      "token_counts_identical": true,
+      "different_answers": [],
+      "cold_prompt_reduction_percent": 40.293237741782875
+    },
+    "v141-direct-b": {
+      "common_requests": 11,
+      "requests_identical": true,
+      "answers_identical": true,
+      "token_counts_identical": true,
+      "different_answers": [],
+      "cold_prompt_reduction_percent": 40.362732621282895
+    },
+    "v141-direct-share-a": {
+      "common_requests": 11,
+      "requests_identical": true,
+      "answers_identical": true,
+      "token_counts_identical": true,
+      "different_answers": [],
+      "cold_prompt_reduction_percent": 41.99589560443221
+    },
+    "v141-direct-short128-a": {
+      "common_requests": 11,
+      "requests_identical": true,
+      "answers_identical": true,
+      "token_counts_identical": true,
+      "different_answers": [],
+      "cold_prompt_reduction_percent": 37.23293111145167
+    }
+  }
+}

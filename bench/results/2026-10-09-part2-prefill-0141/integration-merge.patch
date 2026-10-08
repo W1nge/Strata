@@ -1,0 +1,142 @@
+commit 26a119378f2fb28525dad29f00ada36dba9e249c
+Merge: 07c4d8c fb58e0d
+Author:     W1nge <railgun4@outlook.com>
+AuthorDate: Fri Oct 9 06:49:57 2026 +0800
+Commit:     W1nge <railgun4@outlook.com>
+CommitDate: Fri Oct 9 06:49:57 2026 +0800
+
+    Merge Strata 0.1.41 and retain verified local memory reuse
+
+diff --cc src/prefill/prefill.cpp
+index 95ba366,4e03dc8..7a40de1
+--- a/src/prefill/prefill.cpp
++++ b/src/prefill/prefill.cpp
+@@@ -363,8 -401,11 +394,11 @@@ struct Stager 
+      // D-5: the pinned ring's depth (STRATA_STAGER_RING, default 16) - how far the host copies can run ahead of the
+      // DMAs of the unpinned experts' blobs
+      int kRing = 16;
++     // pp-opt: the jobs a thread claims at once (STRATA_STAGER_BATCH; set by init's caller, at most kMaxBatch and kRing)
++     static constexpr int kMaxBatch = 32;
++     int batch = 1;
+ -    // `from` set: the blob is copied by the source itself (CS-T: a GGUF read in place assembles it from its three
+ -    // role slices; a pointer to it would not live as long as the queue)
+ +    // A null `src` is copied by `from` (CS-T: a GGUF read in place assembles its three role slices).
+ +    // Keep the source and expert id for stable blobs too, so their file pages can be released after the host copy.
+      struct Job { const uint8_t* src; size_t bytes; core::ExpertSource* from = nullptr; int32_t l = 0, e = 0; };
+      std::vector<uint8_t*> buf;
+      std::vector<char> pinned;
+@@@ -426,34 -467,41 +460,49 @@@
+              }
+              for (;;) {
+                  active.fetch_add(1, std::memory_order_acq_rel);
+-                 const int j = claim(seen);
++                 // pp-opt: a run of up to `batch` consecutive jobs (batch <= kRing, so the earliest unfinished run
++                 // never waits for a buffer of its own)
++                 int k = 1;
++                 const int j = claim(seen, batch, k);
+                  if (j < 0) { active.fetch_sub(1, std::memory_order_acq_rel); break; }
+-                 const int b = j % kRing;
+-                 // The copies run ahead of the DMAs, so most of these threads spend most of a prompt waiting here: sleep
+-                 // (atomic wait, and a blocking-sync event below), not a yield spin - 32 spinners took every core
+-                 // (Linux; see stager_sleep for Windows).
+-                 if (j >= kRing) {   // job j - kRing's DMA from this buffer is queued
+-                     if (stager_sleep())
+-                         for (int i; (i = issued.load(std::memory_order_acquire)) <= j - kRing;) issued.wait(i);
+-                     else
+-                         while (issued.load(std::memory_order_acquire) <= j - kRing) std::this_thread::yield();
++                 for (int i = j; i < j + k; ++i) {
++                     // The copies run ahead of the DMAs, so most of these threads spend most of a prompt waiting here: sleep
++                     // (atomic wait, and a blocking-sync event below), not a yield spin - 32 spinners took every core
++                     // (Linux; see stager_sleep for Windows).
++                     if (i >= kRing) {   // job i - kRing's DMA from this buffer is queued
++                         if (stager_sleep())
++                             for (int x; (x = issued.load(std::memory_order_acquire)) <= i - kRing;) issued.wait(x);
++                         else
++                             while (issued.load(std::memory_order_acquire) <= i - kRing) std::this_thread::yield();
++                     }
++                     // and done - for a generation's first kRing jobs that is the previous generation's last DMA from
++                     // the buffer, which nothing else waits for when a chunk ends without a sync (no MTP) or the DMA
++                     // was a ring entry the routing skipped (an event never recorded returns at once)
++                     cudaEventSynchronize(dma_done[i % kRing]);
++                 }
++                 int32_t rl[kMaxBatch], re[kMaxBatch];
++                 uint8_t* rd[kMaxBatch];
++                 size_t nr = 0;
++                 core::ExpertSource* from = nullptr;
++                 for (int i = j; i < j + k; ++i) {
++                     const Job& jb = jobs[(size_t) i];
+ -                    if (jb.from == nullptr) { std::memcpy(buf[i % kRing], jb.src, jb.bytes); continue; }
+++                    if (jb.src != nullptr) { std::memcpy(buf[i % kRing], jb.src, jb.bytes); continue; }
++                     from = jb.from;
++                     rl[nr] = jb.l; re[nr] = jb.e; rd[nr] = buf[i % kRing]; ++nr;
+                  }
+-                 // and done - for a generation's first kRing jobs that is the previous generation's last DMA from
+-                 // the buffer, which nothing else waits for when a chunk ends without a sync (no MTP) or the DMA
+-                 // was a ring entry the routing skipped (an event never recorded returns at once)
+-                 cudaEventSynchronize(dma_done[b]);
+-                 const Job& jb = jobs[(size_t) j];
+-                 if (jb.src != nullptr) std::memcpy(buf[b], jb.src, jb.bytes);
+-                 else if (!jb.from->copy_blob(jb.l, jb.e, buf[b])) {
+-                     std::fprintf(stderr, "prefill: the expert source could not copy expert %d of layer %d\n", jb.e, jb.l);
++                 if (nr > 0 && !from->copy_blobs(rl, re, rd, nr)) {
++                     std::fprintf(stderr, "prefill: the expert source could not copy experts %d.. of layer %d\n", re[0], rl[0]);
+                      std::abort();
+                  }
+ -                for (int i = j; i < j + k; ++i) ready[(size_t) i].store(1, std::memory_order_release);
+++                for (int i = j; i < j + k; ++i) {
+ +#if defined(_WIN32)
+-                 // DMA reads the staging buffer now; STRATA_FILE_RELEASE=1 can trim the source's file pages.
+-                 // It leaves the mapping, resident RAM copies and pinned buffers intact.
+-                 if (jb.from != nullptr) jb.from->release(jb.l, jb.e);
+++                    // DMA reads the staging buffer now; STRATA_FILE_RELEASE=1 can trim the source's file pages.
+++                    // It leaves the mapping, resident RAM copies and pinned buffers intact.
+++                    const Job& jb = jobs[(size_t) i];
+++                    if (jb.from != nullptr) jb.from->release(jb.l, jb.e);
+ +#endif
+-                 ready[(size_t) j].store(1, std::memory_order_release);
+++                    ready[(size_t) i].store(1, std::memory_order_release);
+++                }
+                  active.fetch_sub(1, std::memory_order_acq_rel);
+              }
+          }
+diff --cc tools/strata_tokenizer.py
+index 82a40e0,4b6afb7..209f2c5
+--- a/tools/strata_tokenizer.py
++++ b/tools/strata_tokenizer.py
+@@@ -211,18 -208,29 +211,29 @@@ class Tokenizer
+                      heapq.heappush(heap, (r2, p, parts[p], parts[i]))
+          return [s for s in parts if s is not None]
+  
++     PIECE_CACHE_MAX = 200_000    # pre-tokenizer pieces remembered (an agent resends its whole history every turn)
++ 
+      def _encode_plain(self, text: str) -> list[int]:
+          out: list[int] = []
++         # A piece's ids depend on the piece alone, so repeated pieces (most of a resent conversation) are looked up
++         # instead of merged again.  The ids are the ones _bpe gives: this only skips the work.
++         cache = self.__dict__.setdefault("_piece_ids", {})
+          for piece in self._re.findall(text):
+-             mapped = "".join(BYTE_TO_UNICODE[b] for b in piece.encode("utf-8"))
+-             for tok in self._bpe(mapped):
+-                 i = self.ids.get(tok)
+-                 if i is None:
+-                     raise KeyError("BPE produced a token outside the vocabulary: %r" % tok)
+-                 out.append(i)
++             got = cache.get(piece)
++             if got is None:
++                 mapped = "".join(BYTE_TO_UNICODE[b] for b in piece.encode("utf-8"))
++                 got = []
++                 for tok in self._bpe(mapped):
++                     i = self.ids.get(tok)
++                     if i is None:
++                         raise KeyError("BPE produced a token outside the vocabulary: %r" % tok)
++                     got.append(i)
++                 if len(cache) < self.PIECE_CACHE_MAX:
++                     cache[piece] = got
++             out.extend(got)
+          return out
+  
+ -    def _encode_matching(self, text: str, pat, plain=()) -> list[int]:
+ +    def _encode_matching(self, text: str, pat, plain=(), marks=None) -> list[int]:
+          """Encode `text`, emitting any literal `pat` matches as single tokens and BPE-ing the rest.
+  
+          The split happens on the RAW text, before the byte mapping, because a special token's string is a

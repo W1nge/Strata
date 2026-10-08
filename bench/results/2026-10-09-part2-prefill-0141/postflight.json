@@ -1,0 +1,46 @@
+{
+  "epoch": 1791503711.813587,
+  "identities": {
+    "config_sha256": "00a3579dc5383deb67bf58e968b9c080773f55346465755d9478dd92802b2de4",
+    "exe_sha256": "9fcc7cd90f0e8dad13463846e464f5b54fbe262fc9eeff90e98797de403dbae2",
+    "audit_sha256": "d59c6e2b2f686b45ff46574667bf0ee2425b5a6b1a930cca381e15d0d03d184a",
+    "old_config_sha256": "edac91829b59770fd2a67f09bef836a90ee5d95528a3f2b20cccf95a112bde99",
+    "old_exe_sha256": "7722a6d34f8efded911dd0eeef091461972fa5958bf75725767172a3678f2a25"
+  },
+  "gpu": [
+    {
+      "index": "0",
+      "name": "NVIDIA GeForce RTX 2080 Ti",
+      "driver": "537.13",
+      "power_w": "310.00",
+      "memory_mib": "22528"
+    },
+    {
+      "index": "1",
+      "name": "Tesla P100-PCIE-16GB",
+      "driver": "537.13",
+      "power_w": "250.00",
+      "memory_mib": "16384"
+    }
+  ],
+  "idle": {
+    "listeners_18997": [],
+    "strata_processes": []
+  },
+  "source_sync": {
+    "epoch": 1791503711.8130703,
+    "daily_head": "62a04cc14e6be3d4646a2edfd3a0bcf625d3ff45",
+    "integration_head": "4e4adfa2c5590825481b9febe473b1c4a70523ea",
+    "source_paths": [
+      "src",
+      "include",
+      "serve",
+      "tools/strata_tokenizer.py",
+      "CMakeLists.txt",
+      "setup.py"
+    ],
+    "source_diff_empty": true,
+    "note": "The earlier daily-sync.log records merge conflicts; they were resolved in 62a04cc."
+  },
+  "verification": "Read-only postflight; no model, build, installation or driver change."
+}
