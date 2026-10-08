@@ -1,0 +1,124 @@
+{
+  "source_head": "4ea4a5479043bd7242315932e4aa8e74966e27d5",
+  "driver": "537.13",
+  "toolkit": "12.4.131",
+  "arch": [
+    "60-real",
+    "75-real"
+  ],
+  "experimental_sm60": true,
+  "config": "C:\\strata-models\\strata-dual-p100-experimental.json",
+  "sha256": {
+    "C:\\strata-models\\strata-dual-p100-experimental.json": "f0efd93ab3c0f8fe1ce2c93129e143195fc497c5d5b28febc0d40f5c537c5a7c",
+    "E:\\strata-setup\\part2-dual\\build\\strata.exe": "98c95893554fae405e2598cd6ec8a1783a8488b3e593581cb838ffa59473b92e"
+  },
+  "results": [
+    {
+      "label": "single",
+      "gpu": [
+        0
+      ],
+      "prompt_ms": 51380.8,
+      "decode_tps": 7.0,
+      "input_tokens": 268,
+      "output_tokens": 31,
+      "answer": "apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple",
+      "split": []
+    },
+    {
+      "label": "single-r2",
+      "gpu": [
+        0
+      ],
+      "prompt_ms": 53347.1,
+      "decode_tps": 7.0,
+      "input_tokens": 268,
+      "output_tokens": 31,
+      "answer": "apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple",
+      "split": []
+    },
+    {
+      "label": "dual-forward",
+      "gpu": [
+        0,
+        1
+      ],
+      "prompt_ms": 51244.9,
+      "decode_tps": 7.4,
+      "input_tokens": 268,
+      "output_tokens": 31,
+      "answer": "apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple",
+      "split": [
+        "strata generate: layer split auto: K=47 - predicted 38.2 ms per decode window; the caches hold 10578 of 24576 profiled pairs (~97.5% of the routed mass), best of 93 placements",
+        "strata generate: layer split: CUDA1 runs layers 47-47, expert cache 512 slots (1.04 GiB), 512 of its 512 profiled pairs; slot 0 verified",
+        "strata generate: layer split: CUDA0 runs layers 0-46"
+      ]
+    },
+    {
+      "label": "dual-reverse",
+      "gpu": [
+        1,
+        0
+      ],
+      "prompt_ms": 48286.8,
+      "decode_tps": 7.6,
+      "input_tokens": 268,
+      "output_tokens": 31,
+      "answer": "apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple",
+      "split": [
+        "strata generate: layer split auto: K=2 - predicted 38.6 ms per decode window; the caches hold 10348 of 24576 profiled pairs (~97.4% of the routed mass), best of 93 placements",
+        "strata generate: layer split: CUDA1 runs layers 2-47, expert cache 9196 slots (14.97 GiB), 9196 of its 23552 profiled pairs; slot 0 verified",
+        "strata generate: layer split: CUDA0 runs layers 0-1"
+      ]
+    },
+    {
+      "label": "dual-fixed28",
+      "gpu": [
+        0,
+        1
+      ],
+      "prompt_ms": 16581.5,
+      "decode_tps": 38.9,
+      "input_tokens": 268,
+      "output_tokens": 31,
+      "answer": "apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple",
+      "split": [
+        "strata generate: layer split: CUDA1 runs layers 28-47, expert cache 4790 slots (9.07 GiB), 4790 of its 10240 profiled pairs; slot 0 verified",
+        "strata generate: layer split: CUDA0 runs layers 0-27"
+      ]
+    },
+    {
+      "label": "dual-fixed28-r2",
+      "gpu": [
+        0,
+        1
+      ],
+      "prompt_ms": 17393.1,
+      "decode_tps": 36.5,
+      "input_tokens": 268,
+      "output_tokens": 31,
+      "answer": "apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple",
+      "split": [
+        "strata generate: layer split: CUDA1 runs layers 28-47, expert cache 4790 slots (9.07 GiB), 4790 of its 10240 profiled pairs; slot 0 verified",
+        "strata generate: layer split: CUDA0 runs layers 0-27"
+      ]
+    },
+    {
+      "label": "dual-coverage",
+      "gpu": [
+        0,
+        1
+      ],
+      "prompt_ms": 17617.4,
+      "decode_tps": 36.3,
+      "input_tokens": 268,
+      "output_tokens": 31,
+      "answer": "apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple",
+      "split": [
+        "strata generate: layer split auto: K=32 - predicted 46.4 ms per decode window; the caches hold 15778 of 24576 profiled pairs (~95.4% of the routed mass), best of 93 placements",
+        "strata generate: layer split: CUDA1 runs layers 32-47, expert cache 4849 slots (9.08 GiB), 4849 of its 8192 profiled pairs; slot 0 verified",
+        "strata generate: layer split: CUDA0 runs layers 0-31"
+      ]
+    }
+  ]
+}
