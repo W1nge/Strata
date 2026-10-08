@@ -1,0 +1,12 @@
+[
+  [
+    "reserve2048-a",
+    {
+      "vram_reserve_mib": 2048
+    }
+  ],
+  [
+    "baseline-a",
+    {}
+  ]
+]

@@ -1,0 +1,11 @@
+{
+  "binary": "E:\\strata-setup\\part2-coding-next\\mapped-output\\strata.exe",
+  "sha256": "38ad7934bb1e3cbbe29a3bcd1da5d749a648c51de5b4dc628dc52a6212f7d0b8",
+  "source_parent": "54d2453a2d3809669f4cc152d4366df6ceb570e9",
+  "patch": "mapped-output.patch",
+  "architectures": [
+    "60-real",
+    "75-real"
+  ],
+  "build_exit_code": 0
+}

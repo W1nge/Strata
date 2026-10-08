@@ -78,6 +78,9 @@ def worker(label, overrides, training, extended, thresholds, rounds, medium, sui
     config = json.loads(BASE.read_text(encoding='utf-8'))
     args = config['args']
     for name, value in overrides.items():
+        if name == 'env':
+            config['env'] = {**config.get('env', {}), **value}
+            continue
         if name == 'exe':
             config['exe'] = value
             continue
@@ -170,7 +173,9 @@ if __name__ == '__main__':
     parser.add_argument('--rounds', type=int, choices=(1, 2, 3), default=1)
     parser.add_argument('--medium', action='store_true')
     parser.add_argument('--coding', action='store_true', help='Long Python code tasks with functional checks')
-    parser.add_argument('--coding-long', action='store_true', help='Add a held-out, larger matrix module')
+    parser.add_argument('--coding-long', action='store_true', help='Add a larger matrix module')
+    parser.add_argument('--coding-edit', action='store_true', help='Add a complete-module editing task')
+    parser.add_argument('--coding-cases', default='', help='Select comma-separated coding case names')
     parser.add_argument('--coding-thresholds', default='', help='Extra coding passes at comma-separated confidence percentages')
     parser.add_argument('--worker', action='store_true')
     opts = parser.parse_args()
@@ -179,13 +184,20 @@ if __name__ == '__main__':
     coding_thresholds = [int(p) for p in opts.coding_thresholds.split(',') if p]
     if any(p < 0 or p > 100 for p in coding_thresholds):
         parser.error('confidence percentages must be in 0..100')
-    if (opts.coding_long or coding_thresholds) and not opts.coding:
+    if (opts.coding_long or opts.coding_edit or opts.coding_cases or coding_thresholds) and not opts.coding:
         parser.error('coding options require --coding')
     if opts.coding:
         if opts.training or opts.extended or opts.medium or opts.thresholds:
             parser.error('--coding is a separate suite; use --rounds and --overrides with it')
         from bench_mtp_coding import corpus as coding_corpus, validate as coding_validate
-        suite = (lambda *_: coding_corpus(long=opts.coding_long), coding_validate)
+        coding_cases = coding_corpus(long=opts.coding_long, editing=opts.coding_edit)
+        if opts.coding_cases:
+            selected = set(opts.coding_cases.split(','))
+            unknown = selected - {key for key, _, _ in coding_cases}
+            if unknown:
+                parser.error('unknown coding cases: ' + ', '.join(sorted(unknown)))
+            coding_cases = [case for case in coding_cases if case[0] in selected]
+        suite = (lambda *_: list(coding_cases), coding_validate)
     if not opts.worker and (OUT/(opts.label+'-result.json')).exists():
         parser.error('this label already has a result; choose a new label to preserve it')
     if opts.worker:

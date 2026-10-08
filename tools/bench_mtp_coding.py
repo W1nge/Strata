@@ -13,7 +13,7 @@ import sys
 import tempfile
 
 
-def corpus(*_args, long=False):
+def corpus(*_args, long=False, editing=False):
     intro = ('Write only executable Python code, with no markdown fences, explanation, imports, '
              'type annotations, example calls or test code. Use only builtins. Include a short '
              'docstring for each public function or method. Implement every requirement.\n')
@@ -57,6 +57,13 @@ row_sums(matrix) and col_sums(matrix): return one-dimensional lists of sums.
 trace(matrix): sum of the diagonal, requiring a square matrix.
 matrix_power(matrix, exponent): square matrix raised to a nonnegative integer exponent, otherwise ValueError. Power zero returns identity. Use exponentiation by squaring and the above functions.
 Add docstrings for every function describing validation and behavior. Implement every function completely.''', 3072))
+    if editing:
+        source = (Path(__file__).resolve().parents[1] / 'bench/fixtures/mtp-edit-utilities.py').read_text(encoding='utf-8')
+        cases.append(('edit_utilities', intro + '''Edit the Python module below. Preserve the behavior of all eight existing functions and return the complete module, including those functions. Add one function:
+window_minimum(numbers, window): return the minimum of each complete consecutive window, in order. Empty input or window > len(numbers) returns []. Raise ValueError if window <= 0. Do not modify numbers. Use an O(n) monotonic queue implemented with a list and a head index, without imports. Include a docstring.
+
+Existing module:
+''' + source, 3072))
     return cases
 
 
@@ -100,6 +107,9 @@ def raises_value_error(call):
 
 
 def checks(key, answer):
+    editing = key == 'edit_utilities'
+    if editing:
+        key = 'utilities'
     ns = load_code(answer)
     if key in ('probe', 'utilities'):
         for items, expected in [([], []), ([3, 1, 3, 2, 1], [3, 1, 2]), (['b', 'a', 'b'], ['b', 'a']), ([None, 0, None], [None, 0])]:
@@ -211,6 +221,16 @@ def checks(key, answer):
         raises_value_error(lambda: ns['matrix_power'](m, -1))
         raises_value_error(lambda: ns['matrix_power'](a, 2))
         assert a == [[1, 2, 3], [4, 5, 6]] and m == [[1, 1], [1, 0]]
+
+    if editing:
+        for values in ([], [1], [5, 3, 3, 4, -2, 7], list(range(12)), list(range(12, 0, -1))):
+            original = values[:]
+            for width in range(1, 15):
+                expected = [min(values[i:i + width]) for i in range(len(values) - width + 1)]
+                assert ns['window_minimum'](values, width) == expected
+                assert values == original
+        for width in (0, -1):
+            raises_value_error(lambda: ns['window_minimum']([1], width))
 
 
 def validate(key, answer):
