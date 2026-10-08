@@ -1,0 +1,4 @@
+[
+ ["spec6", {"spec":6}, false, true, ["--thresholds"]],
+ ["baseline-b", {}, false, true, ["--rounds","2"]]
+]

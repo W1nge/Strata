@@ -1,0 +1,7 @@
+[
+ ["chunk2048", {"prefill":2048}, false],
+ ["lend-auto", {"exe":"E:/strata-setup/part2-dual/build/strata.exe"}, false],
+ ["spec2", {"spec":2}, false],
+ ["helper6000", {"expert_cache_device1":6000}, false],
+ ["train", {}, true]
+]

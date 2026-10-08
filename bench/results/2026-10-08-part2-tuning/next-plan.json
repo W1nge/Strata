@@ -1,0 +1,4 @@
+[
+ ["spec8", {"spec":8}, false, true],
+ ["profile", {"expert_profile":"E:/strata-setup/part2-tuning/trained-profile.bin"}, false, true]
+]

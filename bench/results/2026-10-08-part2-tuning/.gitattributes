@@ -1,0 +1,3 @@
+# Keep evidence bytes and unified-diff context lines intact.
+*.log -text -whitespace
+rejected-lend.patch -text -whitespace

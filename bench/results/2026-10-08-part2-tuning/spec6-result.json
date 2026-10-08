@@ -1,0 +1,683 @@
+{
+  "label": "spec6",
+  "overrides": {
+    "spec": 6
+  },
+  "requests": [
+    {
+      "key": "qa",
+      "seconds": 1.462645599996904,
+      "response": {
+        "id": "chatcmpl-9d1c83ec073b4ab081f39bc7",
+        "object": "chat.completion",
+        "created": 1791427745,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\n  \"planet\": \"Jupiter\",\n  \"product\": 391,\n  \"sorted\": [-2, 0, 5, 9]\n}"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 67,
+          "completion_tokens": 40,
+          "total_tokens": 107,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 67,
+          "prompt_ms": 993.1,
+          "prompt_per_token_ms": 14.822,
+          "prompt_per_second": 67.5,
+          "predicted_n": 40,
+          "predicted_ms": 463.4,
+          "predicted_per_token_ms": 11.585,
+          "predicted_per_second": 86.3,
+          "draft_n": 35,
+          "draft_n_accepted": 35
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "code",
+      "seconds": 0.9225631000008434,
+      "response": {
+        "id": "chatcmpl-0e126e89db3740b7ac20c4d6",
+        "object": "chat.completion",
+        "created": 1791427746,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef stable_unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n```"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 57,
+          "completion_tokens": 53,
+          "total_tokens": 110,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 57,
+          "prompt_ms": 444.6,
+          "prompt_per_token_ms": 7.8,
+          "prompt_per_second": 128.2,
+          "predicted_n": 53,
+          "predicted_ms": 475.5,
+          "predicted_per_token_ms": 8.972,
+          "predicted_per_second": 111.5,
+          "draft_n": 45,
+          "draft_n_accepted": 45
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "long",
+      "seconds": 22.727075100003276,
+      "response": {
+        "id": "chatcmpl-d9585a6923e14fd2bc0f53f0",
+        "object": "chat.completion",
+        "created": 1791427747,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[25, 6, 94, 44, 37]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 1924,
+          "completion_tokens": 20,
+          "total_tokens": 1944,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 1924,
+          "prompt_ms": 22193.4,
+          "prompt_per_token_ms": 11.535,
+          "prompt_per_second": 86.7,
+          "predicted_n": 20,
+          "predicted_ms": 528.0,
+          "predicted_per_token_ms": 26.4,
+          "predicted_per_second": 37.9,
+          "draft_n": 20,
+          "draft_n_accepted": 18
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "decode",
+      "seconds": 4.451515199994901,
+      "response": {
+        "id": "chatcmpl-2ec4a275eaf241b4a5befd9c",
+        "object": "chat.completion",
+        "created": 1791427770,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400, 441, 484, 529, 576, 625, 676, 729, 784, 841, 900, 961, 1024, 1089, 1156, 1225, 1296, 1369, 1444, 1521, 1600, 1681, 1764, 1849, 1936, 2025, 2116, 2209, 2304, 2401, 2500, 2601, 2704, 2809, 2916, 3025, 3136, 3249, 3364, 3481, 3600]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 42,
+          "completion_tokens": 318,
+          "total_tokens": 360,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 42,
+          "prompt_ms": 407.1,
+          "prompt_per_token_ms": 9.693,
+          "prompt_per_second": 103.2,
+          "predicted_n": 318,
+          "predicted_ms": 4038.8,
+          "predicted_per_token_ms": 12.701,
+          "predicted_per_second": 78.7,
+          "draft_n": 274,
+          "draft_n_accepted": 262
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "prose",
+      "seconds": 4.804667900010827,
+      "response": {
+        "id": "chatcmpl-10e596f494484a4cb6d169ef",
+        "object": "chat.completion",
+        "created": 1791427774,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "When a user types a domain name into a browser, the process begins with a local DNS lookup. The browser first checks its own cache and the operating system’s hosts file. If the address is not found, the request is sent to a recursive resolver, typically provided by the Internet Service Provider or a public service like Cloudflare. This recursive server acts as an intermediary, handling the complex task of finding the IP address on behalf of the client.\n\nThe recursive resolver checks its own cache for a valid record. If the entry exists and has not expired, it returns the IP address immediately, significantly speeding up the process. However, if the cache is empty or the Time-to-Live (TTL) value has expired, the resolver must query authoritative name servers. These authoritative servers hold the definitive DNS records for specific domains and are responsible for providing the actual IP addresses.\n\nThe recursive resolver starts by querying root servers, then top-level domain servers, and finally the authoritative nameservers for the specific domain. Once the authoritative server provides the IP address, the recursive resolver caches this result for the duration specified by the TTL. This caching mechanism reduces network traffic and improves performance for subsequent requests. Finally, the recursive resolver returns the IP address to the browser, which then establishes a connection to the web server. This hierarchical system ensures efficient, reliable, and scalable domain resolution across the global internet infrastructure."
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 52,
+          "completion_tokens": 279,
+          "total_tokens": 331,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 52,
+          "prompt_ms": 430.9,
+          "prompt_per_token_ms": 8.287,
+          "prompt_per_second": 120.7,
+          "predicted_n": 279,
+          "predicted_ms": 4368.7,
+          "predicted_per_token_ms": 15.658,
+          "predicted_per_second": 63.9,
+          "draft_n": 199,
+          "draft_n_accepted": 134
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "long5k",
+      "seconds": 22.90980999999738,
+      "response": {
+        "id": "chatcmpl-2d4ceeb3c9b641ed8f9678a0",
+        "object": "chat.completion",
+        "created": 1791427779,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[25, 6, 94, 44, 37]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 5107,
+          "completion_tokens": 20,
+          "total_tokens": 5127,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 5107,
+          "prompt_ms": 22507.3,
+          "prompt_per_token_ms": 4.407,
+          "prompt_per_second": 226.9,
+          "predicted_n": 20,
+          "predicted_ms": 390.0,
+          "predicted_per_token_ms": 19.5,
+          "predicted_per_second": 51.3,
+          "draft_n": 23,
+          "draft_n_accepted": 17
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "cache_first",
+      "seconds": 0.404402600004687,
+      "response": {
+        "id": "chatcmpl-b6959c11e05c416bb2493e21",
+        "object": "chat.completion",
+        "created": 1791427802,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "4"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 26,
+          "completion_tokens": 2,
+          "total_tokens": 28,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 26,
+          "prompt_ms": 320.9,
+          "prompt_per_token_ms": 12.342,
+          "prompt_per_second": 81.0,
+          "predicted_n": 2,
+          "predicted_ms": 74.8,
+          "predicted_per_token_ms": 37.4,
+          "predicted_per_second": 26.7,
+          "draft_n": 4,
+          "draft_n_accepted": 4
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "cache_repeat",
+      "seconds": 0.13009890000103042,
+      "response": {
+        "id": "chatcmpl-7f050d87768948dc96f03aa0",
+        "object": "chat.completion",
+        "created": 1791427802,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "4"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 26,
+          "completion_tokens": 2,
+          "total_tokens": 28,
+          "prompt_tokens_details": {
+            "cached_tokens": 19
+          }
+        },
+        "timings": {
+          "cache_n": 19,
+          "prompt_n": 7,
+          "prompt_ms": 53.7,
+          "prompt_per_token_ms": 7.671,
+          "prompt_per_second": 130.4,
+          "predicted_n": 2,
+          "predicted_ms": 74.3,
+          "predicted_per_token_ms": 37.15,
+          "predicted_per_second": 26.9,
+          "draft_n": 4,
+          "draft_n_accepted": 4
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "code:p90",
+      "seconds": 1.0685482999979286,
+      "response": {
+        "id": "chatcmpl-58fb2e5229264e5ca7d2a918",
+        "object": "chat.completion",
+        "created": 1791427803,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef stable_unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n```"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 57,
+          "completion_tokens": 53,
+          "total_tokens": 110,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 57,
+          "prompt_ms": 485.2,
+          "prompt_per_token_ms": 8.512,
+          "prompt_per_second": 117.5,
+          "predicted_n": 53,
+          "predicted_ms": 567.3,
+          "predicted_per_token_ms": 10.704,
+          "predicted_per_second": 93.4,
+          "draft_n": 45,
+          "draft_n_accepted": 45
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "decode:p90",
+      "seconds": 5.893085999996401,
+      "response": {
+        "id": "chatcmpl-9e134ac1a32343aa8804906d",
+        "object": "chat.completion",
+        "created": 1791427804,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400, 441, 484, 529, 576, 625, 676, 729, 784, 841, 900, 961, 1024, 1089, 1156, 1225, 1296, 1369, 1444, 1521, 1600, 1681, 1764, 1849, 1936, 2025, 2116, 2209, 2304, 2401, 2500, 2601, 2704, 2809, 2916, 3025, 3136, 3249, 3364, 3481, 3600]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 42,
+          "completion_tokens": 318,
+          "total_tokens": 360,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 42,
+          "prompt_ms": 375.1,
+          "prompt_per_token_ms": 8.931,
+          "prompt_per_second": 112.0,
+          "predicted_n": 318,
+          "predicted_ms": 5515.0,
+          "predicted_per_token_ms": 17.343,
+          "predicted_per_second": 57.7,
+          "draft_n": 266,
+          "draft_n_accepted": 261
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "prose:p90",
+      "seconds": 5.044969700000365,
+      "response": {
+        "id": "chatcmpl-0ff5b52ab05a4115bb98c2b1",
+        "object": "chat.completion",
+        "created": 1791427810,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "When a user types a domain name into a browser, the process begins with a local DNS lookup. The browser first checks its own cache and the operating system’s hosts file. If the address is not found, the request is sent to a recursive resolver, typically provided by the Internet Service Provider or a public service like Cloudflare. This recursive server acts as an intermediary, tasked with finding the final IP address on behalf of the client.\n\nThe recursive resolver checks its own cache. If the record is missing or expired, it initiates a chain of queries starting from the root name servers. These root servers direct the resolver to the appropriate Top-Level Domain (TLD) servers, such as those for .com or .org. The TLD servers then point to the authoritative name servers for the specific domain. Authoritative servers hold the definitive DNS records for a domain, providing the exact IP address. Unlike recursive servers, they do not query other servers; they simply answer based on their stored data.\n\nOnce the recursive resolver obtains the IP address from the authoritative server, it returns this information to the browser. Crucially, the resolver caches this result to speed up future requests. Each DNS record includes a Time-to-Live (TTL) value, which dictates how long the cached entry remains valid. After the TTL expires, the resolver must query the authoritative servers again to ensure the information is current. This balance between caching efficiency and data accuracy ensures fast browsing while maintaining up-to-date network configurations."
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 52,
+          "completion_tokens": 301,
+          "total_tokens": 353,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 52,
+          "prompt_ms": 426.8,
+          "prompt_per_token_ms": 8.208,
+          "prompt_per_second": 121.8,
+          "predicted_n": 301,
+          "predicted_ms": 4615.5,
+          "predicted_per_token_ms": 15.334,
+          "predicted_per_second": 65.2,
+          "draft_n": 165,
+          "draft_n_accepted": 139
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "code:p95",
+      "seconds": 0.9731709000043338,
+      "response": {
+        "id": "chatcmpl-a293465929164f1aba7fbec3",
+        "object": "chat.completion",
+        "created": 1791427815,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef stable_unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n```"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 57,
+          "completion_tokens": 53,
+          "total_tokens": 110,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 57,
+          "prompt_ms": 449.6,
+          "prompt_per_token_ms": 7.888,
+          "prompt_per_second": 126.8,
+          "predicted_n": 53,
+          "predicted_ms": 521.3,
+          "predicted_per_token_ms": 9.836,
+          "predicted_per_second": 101.7,
+          "draft_n": 43,
+          "draft_n_accepted": 43
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "decode:p95",
+      "seconds": 4.085726399993291,
+      "response": {
+        "id": "chatcmpl-94a0c38b49e24c299354997f",
+        "object": "chat.completion",
+        "created": 1791427816,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400, 441, 484, 529, 576, 625, 676, 729, 784, 841, 900, 961, 1024, 1089, 1156, 1225, 1296, 1369, 1444, 1521, 1600, 1681, 1764, 1849, 1936, 2025, 2116, 2209, 2304, 2401, 2500, 2601, 2704, 2809, 2916, 3025, 3136, 3249, 3364, 3481, 3600]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 42,
+          "completion_tokens": 318,
+          "total_tokens": 360,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 42,
+          "prompt_ms": 349.4,
+          "prompt_per_token_ms": 8.319,
+          "prompt_per_second": 120.2,
+          "predicted_n": 318,
+          "predicted_ms": 3734.1,
+          "predicted_per_token_ms": 11.742,
+          "predicted_per_second": 85.2,
+          "draft_n": 265,
+          "draft_n_accepted": 260
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "prose:p95",
+      "seconds": 4.866958700004034,
+      "response": {
+        "id": "chatcmpl-05cfe1a46b16467ea3966df1",
+        "object": "chat.completion",
+        "created": 1791427820,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "When a user types a domain name into a browser, the process begins with a local DNS lookup. The browser first checks its own cache and the operating system’s hosts file. If the address is not found, the request is sent to a recursive resolver, typically provided by the Internet Service Provider or a public service like Cloudflare. This recursive server acts as an intermediary, tasked with finding the final IP address on behalf of the client.\n\nThe recursive resolver checks its own cache for a valid record. If the entry exists and has not expired, it returns the IP address immediately, significantly speeding up the process. However, if the cache is empty or the Time-to-Live (TTL) value has expired, the resolver must query authoritative servers. These authoritative servers hold the definitive DNS records for specific domains and are responsible for providing the actual IP addresses.\n\nThe recursive resolver starts by querying root servers, which direct it to the appropriate Top-Level Domain (TLD) servers, such as those for .com or .org. The TLD servers then point to the specific authoritative name servers for the requested domain. Once the authoritative server provides the IP address, the recursive resolver caches this result for the duration specified by the TTL. Finally, the resolver returns the IP address to the browser, allowing the connection to the website to proceed. This hierarchical system ensures efficient, scalable, and reliable internet navigation."
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 52,
+          "completion_tokens": 281,
+          "total_tokens": 333,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 52,
+          "prompt_ms": 403.1,
+          "prompt_per_token_ms": 7.752,
+          "prompt_per_second": 129.0,
+          "predicted_n": 281,
+          "predicted_ms": 4461.6,
+          "predicted_per_token_ms": 15.878,
+          "predicted_per_second": 63.0,
+          "draft_n": 119,
+          "draft_n_accepted": 108
+        }
+      },
+      "valid": true
+    }
+  ],
+  "ok": true,
+  "health": {
+    "status": "ok",
+    "max_context": 8192,
+    "model": "qwen3.8-flash-next",
+    "images": false,
+    "api_key": false,
+    "loaded": true,
+    "service": "strata"
+  },
+  "status": {
+    "service": "strata",
+    "model": "qwen3.8-flash-next",
+    "loaded": true,
+    "auto_load": true,
+    "structured_output": {
+      "formats": [
+        "json_object",
+        "json_schema"
+      ],
+      "method": "prompt_and_validate",
+      "constrained_decoding": false,
+      "stream_buffered": true
+    },
+    "engine": "0.1.40.3",
+    "started": 1791427745,
+    "uptime_s": 79,
+    "cache_max_tokens": 8192,
+    "cache": {
+      "state": "disabled"
+    },
+    "context": {
+      "native": 8192,
+      "max_positions": 8192
+    },
+    "concurrency": {
+      "serving": 1,
+      "requested": 1
+    },
+    "dialects": [
+      "/v1/chat/completions",
+      "/v1/messages",
+      "/v1/responses"
+    ],
+    "vision": {
+      "enabled": false,
+      "available": false,
+      "error": null
+    },
+    "activity": {
+      "requests": 14,
+      "in_flight": 0,
+      "last_request_at": 1791427825
+    },
+    "last_timings": {
+      "cache_n": 0,
+      "prompt_n": 52,
+      "prompt_ms": 403.1,
+      "prompt_per_token_ms": 7.752,
+      "prompt_per_second": 129.0,
+      "predicted_n": 281,
+      "predicted_ms": 4461.6,
+      "predicted_per_token_ms": 15.878,
+      "predicted_per_second": 63.0,
+      "draft_n": 119,
+      "draft_n_accepted": 108,
+      "at": 1791427825
+    },
+    "vram": {
+      "elastic": false
+    },
+    "machine": {
+      "at": 1791427825,
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 2080 Ti",
+        "used_mib": 22221.0,
+        "total_mib": 22528.0,
+        "util_pct": 99,
+        "temp_c": 55,
+        "power_w": 224.014
+      },
+      "ram": {
+        "used_gib": 31.2,
+        "total_gib": 31.6
+      }
+    }
+  }
+}

@@ -1,0 +1,4 @@
+[
+ ["baseline-c", {}, false, true, ["--medium", "--rounds", "2"]],
+ ["short1024", {"short_read":1024}, false, true, ["--medium", "--rounds", "2"]]
+]

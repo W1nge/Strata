@@ -1,0 +1,263 @@
+{
+  "label": "spec2",
+  "overrides": {
+    "spec": 2
+  },
+  "requests": [
+    {
+      "key": "qa",
+      "seconds": 2.215686600000481,
+      "response": {
+        "id": "chatcmpl-60187a8043f6451185abcb3a",
+        "object": "chat.completion",
+        "created": 1791426901,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\n  \"planet\": \"Jupiter\",\n  \"product\": 391,\n  \"sorted\": [-2, 0, 5, 9]\n}"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 67,
+          "completion_tokens": 40,
+          "total_tokens": 107,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 67,
+          "prompt_ms": 1496.4,
+          "prompt_per_token_ms": 22.334,
+          "prompt_per_second": 44.8,
+          "predicted_n": 40,
+          "predicted_ms": 713.1,
+          "predicted_per_token_ms": 17.828,
+          "predicted_per_second": 56.1,
+          "draft_n": 19,
+          "draft_n_accepted": 19
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "code",
+      "seconds": 1.563713600000483,
+      "response": {
+        "id": "chatcmpl-f2f2b45a9f924114b9f9b038",
+        "object": "chat.completion",
+        "created": 1791426903,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef stable_unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n```"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 57,
+          "completion_tokens": 53,
+          "total_tokens": 110,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 57,
+          "prompt_ms": 747.5,
+          "prompt_per_token_ms": 13.114,
+          "prompt_per_second": 76.3,
+          "predicted_n": 53,
+          "predicted_ms": 813.6,
+          "predicted_per_token_ms": 15.351,
+          "predicted_per_second": 65.1,
+          "draft_n": 26,
+          "draft_n_accepted": 26
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "long",
+      "seconds": 22.901222400003462,
+      "response": {
+        "id": "chatcmpl-61de0a340b654b0bacea40c2",
+        "object": "chat.completion",
+        "created": 1791426905,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[25, 6, 94, 44, 37]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 1924,
+          "completion_tokens": 20,
+          "total_tokens": 1944,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 1924,
+          "prompt_ms": 22449.0,
+          "prompt_per_token_ms": 11.668,
+          "prompt_per_second": 85.7,
+          "predicted_n": 20,
+          "predicted_ms": 446.2,
+          "predicted_per_token_ms": 22.31,
+          "predicted_per_second": 44.8,
+          "draft_n": 10,
+          "draft_n_accepted": 10
+        }
+      },
+      "valid": true
+    },
+    {
+      "key": "decode",
+      "seconds": 6.108311599993613,
+      "response": {
+        "id": "chatcmpl-3fad9ec45a724f0fb73a55ca",
+        "object": "chat.completion",
+        "created": 1791426928,
+        "model": "qwen3.8-flash-next",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "[1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400, 441, 484, 529, 576, 625, 676, 729, 784, 841, 900, 961, 1024, 1089, 1156, 1225, 1296, 1369, 1444, 1521, 1600, 1681, 1764, 1849, 1936, 2025, 2116, 2209, 2304, 2401, 2500, 2601, 2704, 2809, 2916, 3025, 3136, 3249, 3364, 3481, 3600]"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 42,
+          "completion_tokens": 318,
+          "total_tokens": 360,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 42,
+          "prompt_ms": 621.2,
+          "prompt_per_token_ms": 14.79,
+          "prompt_per_second": 67.6,
+          "predicted_n": 318,
+          "predicted_ms": 5482.3,
+          "predicted_per_token_ms": 17.24,
+          "predicted_per_second": 58.0,
+          "draft_n": 159,
+          "draft_n_accepted": 159
+        }
+      },
+      "valid": true
+    }
+  ],
+  "ok": true,
+  "health": {
+    "status": "ok",
+    "max_context": 8192,
+    "model": "qwen3.8-flash-next",
+    "images": false,
+    "api_key": false,
+    "loaded": true,
+    "service": "strata"
+  },
+  "status": {
+    "service": "strata",
+    "model": "qwen3.8-flash-next",
+    "loaded": true,
+    "auto_load": true,
+    "structured_output": {
+      "formats": [
+        "json_object",
+        "json_schema"
+      ],
+      "method": "prompt_and_validate",
+      "constrained_decoding": false,
+      "stream_buffered": true
+    },
+    "engine": "0.1.40.3",
+    "started": 1791426901,
+    "uptime_s": 33,
+    "cache_max_tokens": 8192,
+    "cache": {
+      "state": "disabled"
+    },
+    "context": {
+      "native": 8192,
+      "max_positions": 8192
+    },
+    "concurrency": {
+      "serving": 1,
+      "requested": 1
+    },
+    "dialects": [
+      "/v1/chat/completions",
+      "/v1/messages",
+      "/v1/responses"
+    ],
+    "vision": {
+      "enabled": false,
+      "available": false,
+      "error": null
+    },
+    "activity": {
+      "requests": 4,
+      "in_flight": 0,
+      "last_request_at": 1791426934
+    },
+    "last_timings": {
+      "cache_n": 0,
+      "prompt_n": 42,
+      "prompt_ms": 621.2,
+      "prompt_per_token_ms": 14.79,
+      "prompt_per_second": 67.6,
+      "predicted_n": 318,
+      "predicted_ms": 5482.3,
+      "predicted_per_token_ms": 17.24,
+      "predicted_per_second": 58.0,
+      "draft_n": 159,
+      "draft_n_accepted": 159,
+      "at": 1791426934
+    },
+    "vram": {
+      "elastic": false
+    },
+    "machine": {
+      "at": 1791426934,
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 2080 Ti",
+        "used_mib": 21568.0,
+        "total_mib": 22528.0,
+        "util_pct": 100,
+        "temp_c": 45,
+        "power_w": 185.156
+      },
+      "ram": {
+        "used_gib": 31.1,
+        "total_gib": 31.6
+      }
+    }
+  }
+}

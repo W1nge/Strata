@@ -1,0 +1,283 @@
+{
+  "source_commit": "4cda6e0",
+  "retained_config": "C:/strata-models/strata-dual-p100-experimental.json",
+  "raw_directory": "E:\\strata-setup\\part2-tuning",
+  "candidate_engine_sha256": "900da437616e8132a5e6d01f0834c1660c031b986c10dd61694410ee79787854",
+  "decision": "Retain the original resident helper engine and configuration. All new candidates were rejected or inconclusive.",
+  "validation_responses": 106,
+  "training_responses": 3,
+  "files": {
+    "E:\\strata-setup\\part2-tuning\\baseline-a-config.json": {
+      "bytes": 1638,
+      "sha256": "7dc58d3c4c2cb0f62a7f95b28675bee9ec0b938bc0386732c150fa89b39951d9"
+    },
+    "E:\\strata-setup\\part2-tuning\\baseline-a-engine.log": {
+      "bytes": 9297,
+      "sha256": "45bfafa63067c75c0584ee58e996c497a3f5ee08944f31ba0a5dcfb9c396cc47"
+    },
+    "E:\\strata-setup\\part2-tuning\\baseline-a-result.json": {
+      "bytes": 7221,
+      "sha256": "b3303d2b425af0ee4b84c4ccdef36129c98ad3711e5a1f6648fa79abaebe247a"
+    },
+    "E:\\strata-setup\\part2-tuning\\baseline-a-server.log": {
+      "bytes": 2076,
+      "sha256": "f841deaf6579d6e190e78ae707ce20c85dc2d4c8f747fded97281dc87ca7c957"
+    },
+    "E:\\strata-setup\\part2-tuning\\baseline-b-config.json": {
+      "bytes": 1638,
+      "sha256": "1ef47060f1bc834ff3a2f50d193f6cd81b18f7dd1aa48201b588d824248a36d9"
+    },
+    "E:\\strata-setup\\part2-tuning\\baseline-b-engine.log": {
+      "bytes": 18491,
+      "sha256": "ab77e87bd2ceb03eb1d1ac3b86150e4ff8011836917a6a14367db71179d2474d"
+    },
+    "E:\\strata-setup\\part2-tuning\\baseline-b-result.json": {
+      "bytes": 24870,
+      "sha256": "4a3bfbff76761018719654c533da6b4b09d7b4ecb93b0fc515390ee6e0ec9ae2"
+    },
+    "E:\\strata-setup\\part2-tuning\\baseline-b-server.log": {
+      "bytes": 5130,
+      "sha256": "b94343fc939aad9107571906580f50b83570cffcc0fda5a83365aa0a0362e0dc"
+    },
+    "E:\\strata-setup\\part2-tuning\\baseline-c-config.json": {
+      "bytes": 1638,
+      "sha256": "0e149b072e4de483530d1f8106c432cdd8af3718e32bf49f081a6f2b4be94dc8"
+    },
+    "E:\\strata-setup\\part2-tuning\\baseline-c-engine.log": {
+      "bytes": 20030,
+      "sha256": "fe6b3da97c1cab9f7f3ef669ad36370cc115c798f94ba61a4f41b2cdb344b40b"
+    },
+    "E:\\strata-setup\\part2-tuning\\baseline-c-result.json": {
+      "bytes": 27201,
+      "sha256": "4240f0b9b6a4bf092e139a0f7990dd2887c9854f355c3c1b65d213e96b4e19a2"
+    },
+    "E:\\strata-setup\\part2-tuning\\baseline-c-server.log": {
+      "bytes": 5416,
+      "sha256": "b085bd4128c23b1316145fe51d8bae0210c221c19c986f488a28f186f896daaf"
+    },
+    "E:\\strata-setup\\part2-tuning\\chunk2048-config.json": {
+      "bytes": 1637,
+      "sha256": "12a327397165257579af7c651821c74dbf93a197f0036bb5cd06d93d0bfcc02a"
+    },
+    "E:\\strata-setup\\part2-tuning\\chunk2048-engine.log": {
+      "bytes": 9233,
+      "sha256": "b14b35fa3bf7d6c2566a3ab38be69239f3bab741c630646bafc83a21e219e3c7"
+    },
+    "E:\\strata-setup\\part2-tuning\\chunk2048-result.json": {
+      "bytes": 7243,
+      "sha256": "af6a149c7b491b35470129ce23fb01336a27539f5642277d69a81720362c1241"
+    },
+    "E:\\strata-setup\\part2-tuning\\chunk2048-server.log": {
+      "bytes": 2085,
+      "sha256": "88fa5ca4f84215889541e8673f93f4bb9e4c63232b39750880f4c3db3978e275"
+    },
+    "E:\\strata-setup\\part2-tuning\\chunk512-config.json": {
+      "bytes": 1635,
+      "sha256": "a263868a5f36cc9008c6320700a6c7f7eb2eba00ca6d2772bafe47393f9688e4"
+    },
+    "E:\\strata-setup\\part2-tuning\\chunk512-engine.log": {
+      "bytes": 9238,
+      "sha256": "91d9bc163a25d58c606935682bdeae46365134d74d2d7f03d27b9dc1c51ebad3"
+    },
+    "E:\\strata-setup\\part2-tuning\\chunk512-result.json": {
+      "bytes": 7242,
+      "sha256": "6ca46e5cd31f8229b4f28323b05818c5861cfc95c21d6a271be628f98893db08"
+    },
+    "E:\\strata-setup\\part2-tuning\\chunk512-server.log": {
+      "bytes": 2202,
+      "sha256": "4530e4179f8bd1fe22f1ae7d4750ac040976a791f1f9940233573e19fc911314"
+    },
+    "E:\\strata-setup\\part2-tuning\\final-screen-plan.json": {
+      "bytes": 110,
+      "sha256": "181625c5d44f907f771dd97317b2a3ae8f7604ae384a7812171ed3f37f996c25"
+    },
+    "E:\\strata-setup\\part2-tuning\\helper6000-config.json": {
+      "bytes": 1638,
+      "sha256": "0b0c7e53b473c11488ef56bc5128d29319881b64c4863782af49d015c7f33e43"
+    },
+    "E:\\strata-setup\\part2-tuning\\helper6000-engine.log": {
+      "bytes": 9210,
+      "sha256": "f4baee23cf1746e3dc7518be09fbedd34e293319d11cd1d82b5a186eea577061"
+    },
+    "E:\\strata-setup\\part2-tuning\\helper6000-result.json": {
+      "bytes": 7259,
+      "sha256": "0271727022f07051a1555b4e3b6ccf2ec423bdd1e86eed70ca97e9beea3c3c2b"
+    },
+    "E:\\strata-setup\\part2-tuning\\helper6000-server.log": {
+      "bytes": 2145,
+      "sha256": "e2b91bc05ed761cac041341db7561017cb86bf53d77e7ba05827e5bc17894db2"
+    },
+    "E:\\strata-setup\\part2-tuning\\lend-auto-config.json": {
+      "bytes": 1629,
+      "sha256": "d045d43b54f49dd5dd8a7c3b0d388fff577be1c6a5e55f0eb13dd0d9ebc9cbf5"
+    },
+    "E:\\strata-setup\\part2-tuning\\lend-auto-engine.log": {
+      "bytes": 9389,
+      "sha256": "2f74978fb1c0193dac685bcfc7a4dc1e2f27d79b0af9abd90cfccba5ae3ca4f9"
+    },
+    "E:\\strata-setup\\part2-tuning\\lend-auto-result.json": {
+      "bytes": 7276,
+      "sha256": "feb563998f3be996c70bd7f68a9f532888da5b955e2892159a91ceead1b50ea1"
+    },
+    "E:\\strata-setup\\part2-tuning\\lend-auto-server.log": {
+      "bytes": 2136,
+      "sha256": "2f19e104792c45249cae6f713f12feb8f5c3aeb88d68a4292da8a413081b0ac6"
+    },
+    "E:\\strata-setup\\part2-tuning\\medium-plan.json": {
+      "bytes": 149,
+      "sha256": "06483a6de16d53f4093b6c86ea6c4fc6f70e363251ffbf9c955b2e9d93f9cff1"
+    },
+    "E:\\strata-setup\\part2-tuning\\next-plan.json": {
+      "bytes": 138,
+      "sha256": "d5eb0d8f7c01f3718306817c94abe7fa9fdf130da18135fc53eb76d2606168d2"
+    },
+    "E:\\strata-setup\\part2-tuning\\profile-config.json": {
+      "bytes": 1636,
+      "sha256": "c7f4987f4d77533e516131772749583d51709d05d163a01befc95c7693b9a2fb"
+    },
+    "E:\\strata-setup\\part2-tuning\\profile-engine.log": {
+      "bytes": 12364,
+      "sha256": "63230074e7c1841aa7f464afa2901ca3c1bbc45a006220e19c15f2ec07781aa6"
+    },
+    "E:\\strata-setup\\part2-tuning\\profile-result.json": {
+      "bytes": 13367,
+      "sha256": "268b9ec796a35a2c433793ca8c23dc07b6ae0b519a6eed5539d8e6e3dcc84c55"
+    },
+    "E:\\strata-setup\\part2-tuning\\profile-server.log": {
+      "bytes": 3153,
+      "sha256": "d6437bf17e4db5338e1896f83cabe37b969c89fd8599e8c855b3b59d391d6ce0"
+    },
+    "E:\\strata-setup\\part2-tuning\\rejected-lend.patch": {
+      "bytes": 3950,
+      "sha256": "a64850df88a2fc7e2482b196a24abc1243a45610f4c7af3e9b673ba30c616551"
+    },
+    "E:\\strata-setup\\part2-tuning\\screen-plan.json": {
+      "bytes": 230,
+      "sha256": "3560ed26db08516b17294d388dfe760f1e60d3dfc688eb09d2b81fe2280acc6e"
+    },
+    "E:\\strata-setup\\part2-tuning\\short1024-config.json": {
+      "bytes": 1638,
+      "sha256": "d9569631d7459218557dcc4357d97363541d0f2e56ac24f86c285aa058ce1aed"
+    },
+    "E:\\strata-setup\\part2-tuning\\short1024-engine.log": {
+      "bytes": 20042,
+      "sha256": "fbc057c0a5db090299cbb753eb483e6e39587f9f0e6db3f97e21af44ff608dfe"
+    },
+    "E:\\strata-setup\\part2-tuning\\short1024-result.json": {
+      "bytes": 27223,
+      "sha256": "2a0296ae0a60aaae5899672059e620483eff4f67488a931a637bc58caaac7e1e"
+    },
+    "E:\\strata-setup\\part2-tuning\\short1024-server.log": {
+      "bytes": 5607,
+      "sha256": "f473b0be6467c0871d49ab85546c83b0083859b512a192a5069c425506a5f61e"
+    },
+    "E:\\strata-setup\\part2-tuning\\source-test.log": {
+      "bytes": 3408,
+      "sha256": "12a7507abc63683482c5c9d2a4eaae1622ec9d6192b9d1eb8b8ca87422fc475b"
+    },
+    "E:\\strata-setup\\part2-tuning\\spec2-config.json": {
+      "bytes": 1633,
+      "sha256": "42ce83cf5fb26b3911209d321646da45c966b104d24e61c13ba8db99eeeacce0"
+    },
+    "E:\\strata-setup\\part2-tuning\\spec2-engine.log": {
+      "bytes": 9006,
+      "sha256": "1d2ae4fd7befc96134796bdc7219fc0334b40cb342e1ebab6157b8f399d7f727"
+    },
+    "E:\\strata-setup\\part2-tuning\\spec2-result.json": {
+      "bytes": 7230,
+      "sha256": "f7ea311fa952e87abdc9d866293af8903b43871df27351a559ec7ec7c1d64a85"
+    },
+    "E:\\strata-setup\\part2-tuning\\spec2-server.log": {
+      "bytes": 2261,
+      "sha256": "e9900d83cf6c4edb7a01fe99b12c4d99c8ec8d9ca27607140aec8cb4bf36a5c8"
+    },
+    "E:\\strata-setup\\part2-tuning\\spec6-config.json": {
+      "bytes": 1633,
+      "sha256": "9a68039cb090573d87d2382a356f8eedf5a3d56c9c342db89ade394f4ccf344f"
+    },
+    "E:\\strata-setup\\part2-tuning\\spec6-engine.log": {
+      "bytes": 17293,
+      "sha256": "b9a5ba35450d1e3ec2079e41cf70219474aaf925911cafb1905c7c32724b40d6"
+    },
+    "E:\\strata-setup\\part2-tuning\\spec6-result.json": {
+      "bytes": 24370,
+      "sha256": "eb324bdfbd5913f75d47302df6fd044799b7bbd77cd6e0f8815d7c44c72afba9"
+    },
+    "E:\\strata-setup\\part2-tuning\\spec6-server.log": {
+      "bytes": 4901,
+      "sha256": "e91beb7df043f0eb175c3e62d89d02d26b692b9d7d4ecafc311d2b9fd0408e36"
+    },
+    "E:\\strata-setup\\part2-tuning\\spec8-config.json": {
+      "bytes": 1633,
+      "sha256": "4330ad34519a23a702006d8ab16d14cf3b51225b96b4c2cba802c6e99a9d73f0"
+    },
+    "E:\\strata-setup\\part2-tuning\\spec8-engine.log": {
+      "bytes": 12923,
+      "sha256": "738dd9064b366fde84b08e779077283fbd1900fa52f10125138934113bf660ba"
+    },
+    "E:\\strata-setup\\part2-tuning\\spec8-result.json": {
+      "bytes": 13248,
+      "sha256": "cb5b5e3a07958522290368e96ff15564009537b1707c87bd13d638cfa27a6930"
+    },
+    "E:\\strata-setup\\part2-tuning\\spec8-server.log": {
+      "bytes": 2973,
+      "sha256": "a03bcd92326e2978b1df3f7267fcfb6abea1bd5e4aa2e7c9f41a403f4477422d"
+    },
+    "E:\\strata-setup\\part2-tuning\\summary.json": {
+      "bytes": 49844,
+      "sha256": "e988ee14dd3e6c50241d65f6064ae76a90bf4ce0e92335ee1251b63992aa16d7"
+    },
+    "E:\\strata-setup\\part2-tuning\\summary.txt": {
+      "bytes": 4742,
+      "sha256": "add9076ebd67eec76e7e17b7e2fc1142ff2724b3e7c4e8dc011f8192fe4274db"
+    },
+    "E:\\strata-setup\\part2-tuning\\test-build.log": {
+      "bytes": 33220,
+      "sha256": "50d567fc86303f8637064e149ec100f0fd46f919992a104d6215d69e6156b0eb"
+    },
+    "E:\\strata-setup\\part2-tuning\\train-config.json": {
+      "bytes": 1710,
+      "sha256": "5ac178f257c71dbcee88fb790e9b1f14d3512c7ba9c820e178374b924d62cde1"
+    },
+    "E:\\strata-setup\\part2-tuning\\train-engine.log": {
+      "bytes": 8611,
+      "sha256": "c6a82464be5c9571f3b1a8b378be252719764e10b3bcb4da649ec096f14ec0f2"
+    },
+    "E:\\strata-setup\\part2-tuning\\train-result.json": {
+      "bytes": 9220,
+      "sha256": "2a20c2a2b8f4f0a920ca438b584380822a7671e87207425d4f0c11875ac876a7"
+    },
+    "E:\\strata-setup\\part2-tuning\\train-server.log": {
+      "bytes": 2070,
+      "sha256": "b40ba847731161a95262f68d01b6ef416dffc98fed89d24c15301b74fd3c3d91"
+    },
+    "E:\\strata-setup\\part2-tuning\\train.routing": {
+      "bytes": 4346496,
+      "sha256": "2f8f36bce86a6231bfef471330cd1c12c1cc5d2ef78bc7b0ab3057a63af48106"
+    },
+    "E:\\strata-setup\\part2-tuning\\trained-profile.bin": {
+      "bytes": 196632,
+      "sha256": "33b764b9008fa81932bb0309828dfedf9c7424365140f8c1016b689726e2b168"
+    },
+    "C:\\strata-models\\strata-dual-p100-experimental.json": {
+      "bytes": 1638,
+      "sha256": "360ed3d01dea155e6280b99ef10b672ff9389b94bdda89fa0fee70960d7bfc21"
+    },
+    "E:\\strata-setup\\part2-helper-resident\\strata.exe": {
+      "bytes": 65414656,
+      "sha256": "7e5f2d45b92b888e910954b3a9b03ac758872cedd8645764af6cf1626ee141b9"
+    },
+    "E:\\strata-setup\\part2-dual\\build\\strata.exe": {
+      "bytes": 65414656,
+      "sha256": "7e5f2d45b92b888e910954b3a9b03ac758872cedd8645764af6cf1626ee141b9"
+    },
+    "C:\\strata-models\\decode10\\expert-profile.bin": {
+      "bytes": 196632,
+      "sha256": "379b95cceec9a460cbeb6fe100c90f7b92a4b4c8efd5df184cfb518c715feda4"
+    },
+    "C:\\Users\\Winge\\Documents\\Playground\\Strata-optimization-pr\\tools\\bench_part2_tuning.py": {
+      "bytes": 10679,
+      "sha256": "d98eda3c6d52616988d6c2442e2be50518f3e2eab8a676273821701139acf07b"
+    }
+  }
+}
