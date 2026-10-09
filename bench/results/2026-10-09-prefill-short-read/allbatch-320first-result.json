@@ -1,0 +1,45 @@
+{
+  "label": "allbatch-320first",
+  "ok": false,
+  "requests": [],
+  "started_epoch": 1791515172.3813646,
+  "command": [
+    "C:\\ProgramData\\anaconda3\\python.exe",
+    "-X",
+    "utf8",
+    "-m",
+    "serve.server",
+    "--engine",
+    "strata",
+    "--config",
+    "E:\\strata-setup\\part2-prefill-helper-source-20261009\\allbatch-320first-config.json",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "18997"
+  ],
+  "server_root": "C:\\Users\\Winge\\Documents\\Playground\\Strata-optimization-pr",
+  "server_commit": "80c75f3b176727c5e4f06ba5ba3c0bfb7db9f893",
+  "config_sha256": "7a810c2b7936add70f58903f3a8ddf26a5f0d8c582f0608b2685f5eb6320a69c",
+  "exe_sha256": "a5410029bfbf40f4f11612f86396a45511f4e622823568c3951b4dddba9fb4d1",
+  "fixture_sha256": "3474da4b6b6d1650175432f87acb4561366817a348a22f1236aad864fec02dcb",
+  "expected_requests": 2,
+  "gpu_before": "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W, 22528 MiB\n1, Tesla P100-PCIE-16GB, 537.13, 250.00 W, 16384 MiB",
+  "server_pid": 20756,
+  "health": {
+    "status": "ok",
+    "max_context": 8192,
+    "model": "qwen3.8-flash-next",
+    "images": false,
+    "api_key": false,
+    "loaded": true,
+    "service": "strata"
+  },
+  "current_request": "first-320",
+  "error": "RuntimeError({'type': 'server_error', 'message': 'the engine stopped unexpectedly (exit code 1); the next request restarts it'})",
+  "ended_epoch": 1791515215.5302804,
+  "unload": {
+    "status": "not loaded"
+  },
+  "gpu_after": "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W\n1, Tesla P100-PCIE-16GB, 537.13, 250.00 W"
+}

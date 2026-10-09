@@ -1,0 +1,24 @@
+[
+  {
+    "key": "t29",
+    "group": "cold",
+    "expected": [
+      3
+    ],
+    "request": {
+      "model": "qwen3.8-flash-next",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Record 0: code=K0000; stock=3.\nReturn only the last stock value as a JSON array."
+        }
+      ],
+      "temperature": 0,
+      "max_tokens": 16,
+      "stream": true,
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      }
+    }
+  }
+]

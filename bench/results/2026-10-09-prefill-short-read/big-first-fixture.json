@@ -1,0 +1,61 @@
+[
+  {
+    "key": "first-bigfirst",
+    "request": {
+      "model": "qwen3.8-flash-next",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Document task records-medium-r1. Return only the requested JSON."
+        },
+        {
+          "role": "user",
+          "content": "Record 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nRecord 9: code=K0009; stock=59.\nRecord 10: code=K0010; stock=76.\nRecord 11: code=K0011; stock=93.\nRecord 12: code=K0012; stock=13.\nRecord 13: code=K0013; stock=30.\nRecord 14: code=K0014; stock=47.\nRecord 15: code=K0015; stock=64.\nRecord 16: code=K0016; stock=81.\nRecord 17: code=K0017; stock=1.\nRecord 18: code=K0018; stock=18.\nRecord 19: code=K0019; stock=35.\nRecord 20: code=K0020; stock=52.\nRecord 21: code=K0021; stock=69.\nRecord 22: code=K0022; stock=86.\nRecord 23: code=K0023; stock=6.\nRecord 24: code=K0024; stock=23.\nRecord 25: code=K0025; stock=40.\nRecord 26: code=K0026; stock=57.\nRecord 27: code=K0027; stock=74.\nRecord 28: code=K0028; stock=91.\nRecord 29: code=K0029; stock=11.\nRecord 30: code=K0030; stock=28.\nRecord 31: code=K0031; stock=45.\nRecord 32: code=K0032; stock=62.\nRecord 33: code=K0033; stock=79.\nRecord 34: code=K0034; stock=96.\nRecord 35: code=K0035; stock=16.\nRecord 36: code=K0036; stock=33.\nRecord 37: code=K0037; stock=50.\nRecord 38: code=K0038; stock=67.\nRecord 39: code=K0039; stock=84.\nRecord 40: code=K0040; stock=4.\nRecord 41: code=K0041; stock=21.\nRecord 42: code=K0042; stock=38.\nRecord 43: code=K0043; stock=55.\nReturn only a JSON array of stock values for records 7, 23, 31, 38, 43, in that order."
+        }
+      ],
+      "temperature": 0,
+      "max_tokens": 96,
+      "stream": true,
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      }
+    },
+    "expected": [
+      25,
+      6,
+      45,
+      67,
+      55
+    ],
+    "pin": null,
+    "group": "cold"
+  },
+  {
+    "key": "after-bigfirst",
+    "group": "cold",
+    "request": {
+      "model": "qwen3.8-flash-next",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Document task source-2k-r1. You are a careful code reviewer. Use the supplied source and the latest tool result. Return only the requested JSON, with no markdown or explanation."
+        },
+        {
+          "role": "user",
+          "content": "Source file: tools/research_run.py\n```python\n\"\"\"A scripted research run against a running Strata server: one long document, then many different questions.\n\nReads the document once, then asks each question and reports, per question, the time to the first streamed token and\nthe whole request, and the run's total.  Greedy (temperature 0), so two runs of the same file give the same answers and\na change in how the server keeps the document (the shared prefix below) can be compared answer by answer.\n\n    python tools/research_run.py --url http://127.0.0.1:8080 --doc paper.txt --questions questions.txt\n    python tools/research_run.py --doc paper.txt --questions q.txt --prefix off --json base.json\n    python tools/research_run.py --doc paper.txt --questions q.txt --prefix on  --json fork.json\n    python tools/research_run.py --compare base.json fork.json\n\n--layout split  (the default): the document is the first message, the question the second.\n--layout joined: one message, \"document + question\" (a client that cannot split them).\n--prefix on: the request carries \"strata_prefix\" naming the document as the shared prefix (docs/DETAILS.md): the\nserver reads it once and every question starts from it.  off: the field is left out.\n--parallel N: N questions at a time (the server needs \"parallel\": N for them to run together).\n\"\"\"\nfrom __future__ import annotations\n\nimport argparse\nimport json\nimport statistics\nimport sys\nimport threading\nimport time\nimport urllib.request\nfrom pathlib import Path\n\n\ndef request_body(doc: str, question: str, layout: str, prefix: bool, max_tokens: int, model: str | None) -> dict:\n    if layout == \"joined\":\n        body = {\"messages\": [{\"role\": \"user\", \"content\": doc + \"\\n\\nQuestion: \" + question + \"\\nAnswer:\"}]}\n        if prefix:\n            body[\"strata_prefix\"] = {\"message\": 0, \"chars\": len(doc) + 2}\n    else:\n        body = {\"messages\": [{\"role\": \"user\", \"content\": doc}, {\"role\": \"user\", \"content\": question}]}\n        if prefix:\n            body[\"strata_prefix\"] = {\"messages\": 1}\n    body.update(temperature=0, max_tokens=max_tokens, stream=True)\n    if model:\n        body[\"model\"] = model\n    return body\n\n\ndef ask(url: str, body: dict, headers: dict, timeout: float) -> dict:\n    t0 = time.time()\n    req = urllib.request.Request(url + \"/v1/chat/completions\", data=json.dumps(body).encode(), headers=headers)\n    first, parts = None, []\n    with urllib.request.urlopen(req, timeout=timeout) as r:\n        for raw in r:\n            line = raw.decode(\"utf-8\", \"replace\").strip()\n            if not line.startswith(\"data:\") or line.endswith(\"[DONE]\"):\n                continue\n            event = json.loads(line[5:])\n            for choice in event.get(\"choices\", []):\n                delta = choice.get(\"delta\", {})\n                piece = (delta.get(\"reasoning_content\") or \"\") + (delta.get(\"content\") or \"\")\n                if piece and first is None:\n                    first = time.time() - t0\n                parts.append(piece)\n    return {\"ttft_s\": round(first or 0.0, 3), \"wall_s\": round(time.time() - t0, 2), \"text\": \"\".join(parts)}\n\n\ndef run(args) -> dict:\n    doc = Path(args.doc).read_text(encoding=\"utf-8\", errors=\"replace\")\n    if args.limit_chars:\n        doc = doc[:args.limit_chars]\n    questions = [x.strip() for x in Path(args.questions).read_text(encoding=\"utf-8\").splitlines() if x.strip()]\n    questions = questions[:args.n] if args.n else questions\n    headers = {\"Content-Type\": \"application/json\"}\n    if args.api_key:\n        headers[\"Authorization\"] = \"Bearer \" + args.api_key\n    rows: list[dict | None] = [None] * len(questions)\n    started = time.time()\n    for k in range(0, len(questions), max(1, args.parallel)):\n        group = list(range(k, min(k + max(1, args.parallel), len(questions))))\n\n        def one(i):\n            try:\n                rows[i] = {\"q\": i, **ask(args.url, request_body(doc, questions[i], args.layout, args.prefix == \"on\",\n                                                                  args.max_tokens, args.model), headers, args.timeout)}\n            except Exception as e:  # noqa: BLE001 - a failed question is reported, the run goes on\n                rows[i] = {\"q\": i, \"error\": repr(e)}\n        threads = [threading.Thread(target=one, args=(i,)) for i in group]\n        [t.start() for t in threads]\n        [t.join() for t in threads]\n        for i in group:\n            r = rows[i]\n            print(f\"q{i:02d}  first token {r.get('ttft_s', '-')} s  total {r.get('wall_s', '-')} s  \"\n                  f\"{r.get('error') or repr(r['text'][:60])}\", flush=True)\n    out = {\"url\": args.url, \"layout\": args.layout, \"prefix\": args.prefix, \"doc_chars\": len(doc), \"questions\": rows,\n           \"total_s\": round(time.time() - started, 1)}\n    later = [r[\"ttft_s\"] for r in rows[1:] if r and \"ttft_s\" in r]\n    if later:\n        out[\"first_token_median_after_first_s\"] = round(statistics.median(later), 3)\n    print(f\"total {out['total_s']} s\" + (f\", median first token after the first question {out['first_token_median_after_first_s']} s\"\n                                         if later else \"\"), flush=True)\n    return out\n\n\ndef compare(a_path: str, b_path: str) -> int:\n    a, b = (json.loads(Path(p).read_text(encoding=\"utf-8\")) for p in (a_path, b_path))\n    same = diff = 0\n    for x, y in zip(a[\"questions\"], b[\"questions\"]):\n        if \"text\" in x and \"text\" in y:\n            if x[\"text\"] == y[\"text\"]:\n                same += 1\n            else:\n                diff += 1\n                print(f\"q{x['q']:02d}: the answers differ\")\n    print(f\"{same} answers identical, {diff} differ; total {a['total_s']} s -> {b['total_s']} s; median first token \"\n          f\"{a.get('first_token_median_after_first_s')} s -> {b.get('first_token_median_after_first_s')} s\")\n    return 1 if diff else 0\n\n\ndef main(argv=None) -> int:\n    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)\n    ap.add_argument(\"--url\", default=\"http://127.0.0.1:8080\")\n    ap.add_argument(\"--api-key\", default=\"\")\n    ap.add_argument(\"--model\", default=None)\n    ap.add_argument(\"--doc\")\n    ap.add_argument(\"--questions\", help=\"a text file, one question per line\")\n    ap.add_argument(\"--n\", type=int, default=0, help=\"only the first N questions\")\n    ap.add_argument(\"--layout\", choices=(\"split\", \"joined\"), default=\"split\")\n    ap.add_argument(\"--prefix\", choices=(\"on\", \"off\"), default=\"on\")\n    ap.add_argument(\"--parallel\", type=int, default=1)\n    ap.add_argument(\"--max-tokens\", type=int, default=128)\n    ap.add_argument(\"--limit-chars\", type=int, default=0, help=\"use only the first N characters of the document\")\n    ap.add_argument(\"--timeout\", type=float, default=7200.0)\n    ap.add_argument(\"--json\", help=\"write the per-question results here\")\n    ap.add_argument(\"--compare\", nargs=2, metavar=(\"A.json\", \"B.json\"), help=\"compare two saved runs' answers and times\")\n    args = ap.parse_args(argv)\n    if args.compare:\n        return compare(*args.compare)\n    if not args.doc or not args.questions:\n        ap.error(\"--doc and --questions are needed\")\n    out = run(args)\n    if args.json:\n        Path(args.json).write_text(json.dumps(out, indent=1), encoding=\"utf-8\")\n    return 1 if any(\"error\" in r for r in out[\"questions\"]) else 0\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n\n```\n\nReturn only a JSON array naming the function that builds a request body, then the function that sends one HTTP request."
+        }
+      ],
+      "temperature": 0,
+      "max_tokens": 96,
+      "stream": true,
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      }
+    },
+    "expected": [
+      "request_body",
+      "ask"
+    ],
+    "pin": null
+  }
+]

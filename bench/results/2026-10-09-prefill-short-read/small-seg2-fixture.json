@@ -1,0 +1,68 @@
+[
+  {
+    "key": "k1",
+    "group": "cold",
+    "expected": [
+      3
+    ],
+    "request": {
+      "model": "qwen3.8-flash-next",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Records\nRecord 0: code=K0000; stock=3.\nReturn only the stock of the last record as a JSON array."
+        }
+      ],
+      "temperature": 0,
+      "max_tokens": 32,
+      "stream": true,
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      }
+    }
+  },
+  {
+    "key": "k3",
+    "group": "cold",
+    "expected": [
+      37
+    ],
+    "request": {
+      "model": "qwen3.8-flash-next",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Records\nRecord 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nReturn only the stock of the last record as a JSON array."
+        }
+      ],
+      "temperature": 0,
+      "max_tokens": 32,
+      "stream": true,
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      }
+    }
+  },
+  {
+    "key": "k5",
+    "group": "cold",
+    "expected": [
+      71
+    ],
+    "request": {
+      "model": "qwen3.8-flash-next",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Records\nRecord 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nReturn only the stock of the last record as a JSON array."
+        }
+      ],
+      "temperature": 0,
+      "max_tokens": 32,
+      "stream": true,
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      }
+    }
+  }
+]

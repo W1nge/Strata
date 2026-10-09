@@ -1,0 +1,1307 @@
+{
+  "label": "smallseg2-sr32",
+  "ok": true,
+  "requests": [
+    {
+      "key": "k1",
+      "group": "cold",
+      "request": {
+        "model": "qwen3.8-flash-next",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Records\nRecord 0: code=K0000; stock=3.\nReturn only the stock of the last record as a JSON array."
+          }
+        ],
+        "temperature": 0,
+        "max_tokens": 32,
+        "stream": true,
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      },
+      "expected": [
+        3
+      ],
+      "started_epoch": 1791515632.3822038,
+      "text": "[3]",
+      "ttft_s": 2.5369589000001724,
+      "wall_s": 2.608806899999763,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 44,
+        "completion_tokens": 4,
+        "total_tokens": 48,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 44,
+        "prompt_ms": 2506.9,
+        "prompt_per_token_ms": 56.975,
+        "prompt_per_second": 17.6,
+        "predicted_n": 4,
+        "predicted_ms": 99.5,
+        "predicted_per_token_ms": 24.875,
+        "predicted_per_second": 40.2,
+        "draft_n": 6,
+        "draft_n_accepted": 6
+      },
+      "chunks": [
+        {
+          "id": "chatcmpl-eea4daad5083420982fd1f68",
+          "object": "chat.completion.chunk",
+          "created": 1791515632,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "role": "assistant",
+                "content": ""
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-eea4daad5083420982fd1f68",
+          "object": "chat.completion.chunk",
+          "created": 1791515632,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "["
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-eea4daad5083420982fd1f68",
+          "object": "chat.completion.chunk",
+          "created": 1791515632,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "3"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-eea4daad5083420982fd1f68",
+          "object": "chat.completion.chunk",
+          "created": 1791515632,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "]"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-eea4daad5083420982fd1f68",
+          "object": "chat.completion.chunk",
+          "created": 1791515632,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {},
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 44,
+            "completion_tokens": 4,
+            "total_tokens": 48,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 44,
+            "prompt_ms": 2506.9,
+            "prompt_per_token_ms": 56.975,
+            "prompt_per_second": 17.6,
+            "predicted_n": 4,
+            "predicted_ms": 99.5,
+            "predicted_per_token_ms": 24.875,
+            "predicted_per_second": 40.2,
+            "draft_n": 6,
+            "draft_n_accepted": 6
+          }
+        }
+      ],
+      "valid": true,
+      "metrics": {
+        "engine": {
+          "model": "qwen3.8-flash-next",
+          "max_context": 8192,
+          "images": false,
+          "version": "0.1.41",
+          "context": 8192,
+          "kv": "int8",
+          "kv_resident": 0,
+          "expert_slots": 17940,
+          "expert_cache_mib": 29826,
+          "expert_slots_primary": 9158,
+          "expert_cache_primary_mib": 15195,
+          "spec": 8,
+          "mtp_max": 0,
+          "lookup": 0,
+          "vram_free_mib": 786,
+          "cvec": 0,
+          "arena_mib": 11097,
+          "pool_workers": 19,
+          "pcie_frac": "0.00",
+          "spec_min_p": "0.90",
+          "conversation_cache_mib": 1536,
+          "conversation_cache_slots": 2,
+          "conversation_cache_min_free_mib": 6144,
+          "tail_role_token": -1,
+          "vram_elastic": 0,
+          "engine": "0.1.41"
+        },
+        "live": {
+          "state": "idle",
+          "queued": 0,
+          "phase": null,
+          "prompt_tokens": null,
+          "prompt_read": null,
+          "prompt_total": null,
+          "generated": null,
+          "max_tokens": null,
+          "elapsed_s": null,
+          "tok_s": null,
+          "tok_s_mean": null,
+          "prefill_tok_s_mean": null,
+          "tok_s_window_s": null
+        },
+        "requests": [
+          {
+            "projection": null,
+            "time": 1791515632.3841424,
+            "duration_s": 2.6,
+            "finish": "stop",
+            "prompt_tokens": 44,
+            "reused": 0,
+            "output_tokens": 4,
+            "prompt_total": 44,
+            "prompt_read": 44,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 4,
+            "prompt_ms": 2506.9,
+            "decode_ms": 99.5,
+            "decode_tok_s": 40.2,
+            "hit_rate": 0.847,
+            "pcie_share": 0.284,
+            "ram_blobs": 347,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 6,
+            "drafts_accepted": 6
+          }
+        ],
+        "conversation_cache": {
+          "enabled": true,
+          "budget_mib": 1536,
+          "slots": 2,
+          "parked": 0,
+          "bytes": 0,
+          "evictions": 0,
+          "parks": 0,
+          "restores": 0,
+          "last_event": null,
+          "last_tokens": null,
+          "last_at": null,
+          "requests": 1,
+          "requests_reused": 0,
+          "reused_tokens": 0,
+          "prompt_tokens": 44,
+          "last_reused": 0,
+          "last_prompt": 44
+        },
+        "requests_kept": 1,
+        "totals": {
+          "since": 1791515631.98533,
+          "requests": 1,
+          "prompt_tokens": 44,
+          "reused": 0,
+          "output_tokens": 4,
+          "prompt_ms": 2506.9,
+          "decode_ms": 99.5,
+          "drafts_offered": 6,
+          "drafts_accepted": 6
+        },
+        "hardware": {
+          "gpu_util": 47,
+          "gpu_mem_used": 22506553344,
+          "gpu_mem_total": 23622320128,
+          "gpu_temp": 39,
+          "gpu_power": 110.026,
+          "gpu_power_limit": 310.0,
+          "gpu_pcie_gen": 3,
+          "gpu_pcie_gen_max": 3,
+          "gpu_pcie_width": 16,
+          "gpu_pcie_rx_mb": 2285.15625,
+          "gpu_pcie_tx_mb": 315.4296875,
+          "cpu": 19.7,
+          "ram_used": 22202474496,
+          "ram_total": 33887277056,
+          "disk_read_mb": 31.88855966613106,
+          "disk_write_mb": 0.38078120884399064,
+          "tok_s": 0.0,
+          "tok_s_mean": 0,
+          "prefill_tok_s_mean": null
+        },
+        "hardware_static": {
+          "gpu_name": "NVIDIA GeForce RTX 2080 Ti",
+          "gpu_count": 1,
+          "gpu_note": null,
+          "cpu_name": "Genuine Intel(R) 0000",
+          "cores": 20,
+          "threads": 28,
+          "psutil": true
+        },
+        "history": {
+          "gpu_util": [
+            39,
+            40,
+            47
+          ],
+          "gpu_mem_used": [
+            22502359040,
+            22504456192,
+            22506553344
+          ],
+          "gpu_temp": [
+            34,
+            36,
+            39
+          ],
+          "gpu_power": [
+            40.04,
+            78.62,
+            110.03
+          ],
+          "gpu_pcie_rx_mb": [
+            2.93,
+            3919.92,
+            2285.16
+          ],
+          "cpu": [
+            4.1,
+            9.9,
+            19.7
+          ],
+          "ram_used": [
+            22118129664,
+            22173700096,
+            22202474496
+          ],
+          "disk_read_mb": [
+            null,
+            20.85,
+            31.89
+          ],
+          "tok_s": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "prefill_tok_s_mean": [
+            0.0,
+            null,
+            null
+          ]
+        },
+        "time": 1791515634.9924798
+      }
+    },
+    {
+      "key": "k3",
+      "group": "cold",
+      "request": {
+        "model": "qwen3.8-flash-next",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Records\nRecord 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nReturn only the stock of the last record as a JSON array."
+          }
+        ],
+        "temperature": 0,
+        "max_tokens": 32,
+        "stream": true,
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      },
+      "expected": [
+        37
+      ],
+      "started_epoch": 1791515634.9935975,
+      "text": "[37]",
+      "ttft_s": 2.6207367999995768,
+      "wall_s": 2.696434199999203,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 80,
+        "completion_tokens": 5,
+        "total_tokens": 85,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 80,
+        "prompt_ms": 2600.3,
+        "prompt_per_token_ms": 32.504,
+        "prompt_per_second": 30.8,
+        "predicted_n": 5,
+        "predicted_ms": 93.7,
+        "predicted_per_token_ms": 18.74,
+        "predicted_per_second": 53.4,
+        "draft_n": 7,
+        "draft_n_accepted": 7
+      },
+      "chunks": [
+        {
+          "id": "chatcmpl-5ed4fef8493b4f7f9bf864ac",
+          "object": "chat.completion.chunk",
+          "created": 1791515634,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "role": "assistant",
+                "content": ""
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5ed4fef8493b4f7f9bf864ac",
+          "object": "chat.completion.chunk",
+          "created": 1791515634,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "["
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5ed4fef8493b4f7f9bf864ac",
+          "object": "chat.completion.chunk",
+          "created": 1791515634,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "3"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5ed4fef8493b4f7f9bf864ac",
+          "object": "chat.completion.chunk",
+          "created": 1791515634,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "7"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5ed4fef8493b4f7f9bf864ac",
+          "object": "chat.completion.chunk",
+          "created": 1791515634,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "]"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5ed4fef8493b4f7f9bf864ac",
+          "object": "chat.completion.chunk",
+          "created": 1791515634,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {},
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 80,
+            "completion_tokens": 5,
+            "total_tokens": 85,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 80,
+            "prompt_ms": 2600.3,
+            "prompt_per_token_ms": 32.504,
+            "prompt_per_second": 30.8,
+            "predicted_n": 5,
+            "predicted_ms": 93.7,
+            "predicted_per_token_ms": 18.74,
+            "predicted_per_second": 53.4,
+            "draft_n": 7,
+            "draft_n_accepted": 7
+          }
+        }
+      ],
+      "valid": true,
+      "metrics": {
+        "engine": {
+          "model": "qwen3.8-flash-next",
+          "max_context": 8192,
+          "images": false,
+          "version": "0.1.41",
+          "context": 8192,
+          "kv": "int8",
+          "kv_resident": 0,
+          "expert_slots": 17940,
+          "expert_cache_mib": 29826,
+          "expert_slots_primary": 9158,
+          "expert_cache_primary_mib": 15195,
+          "spec": 8,
+          "mtp_max": 0,
+          "lookup": 0,
+          "vram_free_mib": 786,
+          "cvec": 0,
+          "arena_mib": 11097,
+          "pool_workers": 19,
+          "pcie_frac": "0.00",
+          "spec_min_p": "0.90",
+          "conversation_cache_mib": 1536,
+          "conversation_cache_slots": 2,
+          "conversation_cache_min_free_mib": 6144,
+          "tail_role_token": -1,
+          "vram_elastic": 0,
+          "engine": "0.1.41"
+        },
+        "live": {
+          "state": "idle",
+          "queued": 0,
+          "phase": null,
+          "prompt_tokens": null,
+          "prompt_read": null,
+          "prompt_total": null,
+          "generated": null,
+          "max_tokens": null,
+          "elapsed_s": null,
+          "tok_s": null,
+          "tok_s_mean": null,
+          "prefill_tok_s_mean": null,
+          "tok_s_window_s": null
+        },
+        "requests": [
+          {
+            "projection": null,
+            "time": 1791515634.9951344,
+            "duration_s": 2.7,
+            "finish": "stop",
+            "prompt_tokens": 80,
+            "reused": 0,
+            "output_tokens": 5,
+            "prompt_total": 80,
+            "prompt_read": 80,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 5,
+            "prompt_ms": 2600.3,
+            "decode_ms": 93.7,
+            "decode_tok_s": 53.4,
+            "hit_rate": 0.827,
+            "pcie_share": 0.32,
+            "ram_blobs": 416,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 7,
+            "drafts_accepted": 7
+          },
+          {
+            "projection": null,
+            "time": 1791515632.3841424,
+            "duration_s": 2.6,
+            "finish": "stop",
+            "prompt_tokens": 44,
+            "reused": 0,
+            "output_tokens": 4,
+            "prompt_total": 44,
+            "prompt_read": 44,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 4,
+            "prompt_ms": 2506.9,
+            "decode_ms": 99.5,
+            "decode_tok_s": 40.2,
+            "hit_rate": 0.847,
+            "pcie_share": 0.284,
+            "ram_blobs": 347,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 6,
+            "drafts_accepted": 6
+          }
+        ],
+        "conversation_cache": {
+          "enabled": true,
+          "budget_mib": 1536,
+          "slots": 2,
+          "parked": 1,
+          "bytes": 236924936,
+          "evictions": 0,
+          "parks": 1,
+          "restores": 0,
+          "last_event": "parked",
+          "last_tokens": 51,
+          "last_at": 1791515637.6912878,
+          "requests": 2,
+          "requests_reused": 0,
+          "reused_tokens": 0,
+          "prompt_tokens": 124,
+          "last_reused": 0,
+          "last_prompt": 80
+        },
+        "requests_kept": 2,
+        "totals": {
+          "since": 1791515631.98533,
+          "requests": 2,
+          "prompt_tokens": 124,
+          "reused": 0,
+          "output_tokens": 9,
+          "prompt_ms": 5107.200000000001,
+          "decode_ms": 193.2,
+          "drafts_offered": 13,
+          "drafts_accepted": 13
+        },
+        "hardware": {
+          "gpu_util": 38,
+          "gpu_mem_used": 23030841344,
+          "gpu_mem_total": 23622320128,
+          "gpu_temp": 39,
+          "gpu_power": 110.18,
+          "gpu_power_limit": 310.0,
+          "gpu_pcie_gen": 3,
+          "gpu_pcie_gen_max": 3,
+          "gpu_pcie_width": 16,
+          "gpu_pcie_rx_mb": 6443.359375,
+          "gpu_pcie_tx_mb": 502.9296875,
+          "cpu": 30.1,
+          "ram_used": 22798737408,
+          "ram_total": 33887277056,
+          "disk_read_mb": 47.44623209154711,
+          "disk_write_mb": 0.13793593049322253,
+          "tok_s": 0.0,
+          "tok_s_mean": 0,
+          "prefill_tok_s_mean": null
+        },
+        "hardware_static": {
+          "gpu_name": "NVIDIA GeForce RTX 2080 Ti",
+          "gpu_count": 1,
+          "gpu_note": null,
+          "cpu_name": "Genuine Intel(R) 0000",
+          "cores": 20,
+          "threads": 28,
+          "psutil": true
+        },
+        "history": {
+          "gpu_util": [
+            39,
+            40,
+            47,
+            37,
+            40,
+            38
+          ],
+          "gpu_mem_used": [
+            22502359040,
+            22504456192,
+            22506553344,
+            23022452736,
+            23030841344,
+            23030841344
+          ],
+          "gpu_temp": [
+            34,
+            36,
+            39,
+            40,
+            39,
+            39
+          ],
+          "gpu_power": [
+            40.04,
+            78.62,
+            110.03,
+            147.87,
+            114.83,
+            110.18
+          ],
+          "gpu_pcie_rx_mb": [
+            2.93,
+            3919.92,
+            2285.16,
+            4759.77,
+            2352.54,
+            6443.36
+          ],
+          "cpu": [
+            4.1,
+            9.9,
+            19.7,
+            34.7,
+            39.7,
+            30.1
+          ],
+          "ram_used": [
+            22118129664,
+            22173700096,
+            22202474496,
+            22778966016,
+            22777049088,
+            22798737408
+          ],
+          "disk_read_mb": [
+            null,
+            20.85,
+            31.89,
+            275.6,
+            38.2,
+            47.45
+          ],
+          "tok_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "prefill_tok_s_mean": [
+            0.0,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "time": 1791515637.6910348
+      }
+    },
+    {
+      "key": "k5",
+      "group": "cold",
+      "request": {
+        "model": "qwen3.8-flash-next",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Records\nRecord 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nReturn only the stock of the last record as a JSON array."
+          }
+        ],
+        "temperature": 0,
+        "max_tokens": 32,
+        "stream": true,
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      },
+      "expected": [
+        71
+      ],
+      "started_epoch": 1791515637.6922243,
+      "text": "[71]",
+      "ttft_s": 2.879206899997371,
+      "wall_s": 2.944861199997831,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 116,
+        "completion_tokens": 5,
+        "total_tokens": 121,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 116,
+        "prompt_ms": 2859.7,
+        "prompt_per_token_ms": 24.653,
+        "prompt_per_second": 40.6,
+        "predicted_n": 5,
+        "predicted_ms": 83.1,
+        "predicted_per_token_ms": 16.62,
+        "predicted_per_second": 60.2,
+        "draft_n": 7,
+        "draft_n_accepted": 7
+      },
+      "chunks": [
+        {
+          "id": "chatcmpl-f2337cf244654115beb2a294",
+          "object": "chat.completion.chunk",
+          "created": 1791515637,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "role": "assistant",
+                "content": ""
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-f2337cf244654115beb2a294",
+          "object": "chat.completion.chunk",
+          "created": 1791515637,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "["
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-f2337cf244654115beb2a294",
+          "object": "chat.completion.chunk",
+          "created": 1791515637,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "7"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-f2337cf244654115beb2a294",
+          "object": "chat.completion.chunk",
+          "created": 1791515637,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "1"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-f2337cf244654115beb2a294",
+          "object": "chat.completion.chunk",
+          "created": 1791515637,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "]"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-f2337cf244654115beb2a294",
+          "object": "chat.completion.chunk",
+          "created": 1791515637,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {},
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 116,
+            "completion_tokens": 5,
+            "total_tokens": 121,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 116,
+            "prompt_ms": 2859.7,
+            "prompt_per_token_ms": 24.653,
+            "prompt_per_second": 40.6,
+            "predicted_n": 5,
+            "predicted_ms": 83.1,
+            "predicted_per_token_ms": 16.62,
+            "predicted_per_second": 60.2,
+            "draft_n": 7,
+            "draft_n_accepted": 7
+          }
+        }
+      ],
+      "valid": true,
+      "metrics": {
+        "engine": {
+          "model": "qwen3.8-flash-next",
+          "max_context": 8192,
+          "images": false,
+          "version": "0.1.41",
+          "context": 8192,
+          "kv": "int8",
+          "kv_resident": 0,
+          "expert_slots": 17940,
+          "expert_cache_mib": 29826,
+          "expert_slots_primary": 9158,
+          "expert_cache_primary_mib": 15195,
+          "spec": 8,
+          "mtp_max": 0,
+          "lookup": 0,
+          "vram_free_mib": 786,
+          "cvec": 0,
+          "arena_mib": 11097,
+          "pool_workers": 19,
+          "pcie_frac": "0.00",
+          "spec_min_p": "0.90",
+          "conversation_cache_mib": 1536,
+          "conversation_cache_slots": 2,
+          "conversation_cache_min_free_mib": 6144,
+          "tail_role_token": -1,
+          "vram_elastic": 0,
+          "engine": "0.1.41"
+        },
+        "live": {
+          "state": "idle",
+          "queued": 0,
+          "phase": null,
+          "prompt_tokens": null,
+          "prompt_read": null,
+          "prompt_total": null,
+          "generated": null,
+          "max_tokens": null,
+          "elapsed_s": null,
+          "tok_s": null,
+          "tok_s_mean": null,
+          "prefill_tok_s_mean": null,
+          "tok_s_window_s": null
+        },
+        "requests": [
+          {
+            "projection": null,
+            "time": 1791515637.6936297,
+            "duration_s": 2.9,
+            "finish": "stop",
+            "prompt_tokens": 116,
+            "reused": 0,
+            "output_tokens": 5,
+            "prompt_total": 116,
+            "prompt_read": 116,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 5,
+            "prompt_ms": 2859.7,
+            "decode_ms": 83.1,
+            "decode_tok_s": 60.2,
+            "hit_rate": 0.827,
+            "pcie_share": 0.314,
+            "ram_blobs": 423,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 7,
+            "drafts_accepted": 7
+          },
+          {
+            "projection": null,
+            "time": 1791515634.9951344,
+            "duration_s": 2.7,
+            "finish": "stop",
+            "prompt_tokens": 80,
+            "reused": 0,
+            "output_tokens": 5,
+            "prompt_total": 80,
+            "prompt_read": 80,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 5,
+            "prompt_ms": 2600.3,
+            "decode_ms": 93.7,
+            "decode_tok_s": 53.4,
+            "hit_rate": 0.827,
+            "pcie_share": 0.32,
+            "ram_blobs": 416,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 7,
+            "drafts_accepted": 7
+          },
+          {
+            "projection": null,
+            "time": 1791515632.3841424,
+            "duration_s": 2.6,
+            "finish": "stop",
+            "prompt_tokens": 44,
+            "reused": 0,
+            "output_tokens": 4,
+            "prompt_total": 44,
+            "prompt_read": 44,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 4,
+            "prompt_ms": 2506.9,
+            "decode_ms": 99.5,
+            "decode_tok_s": 40.2,
+            "hit_rate": 0.847,
+            "pcie_share": 0.284,
+            "ram_blobs": 347,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 6,
+            "drafts_accepted": 6
+          }
+        ],
+        "conversation_cache": {
+          "enabled": true,
+          "budget_mib": 1536,
+          "slots": 2,
+          "parked": 2,
+          "bytes": 474405812,
+          "evictions": 0,
+          "parks": 2,
+          "restores": 0,
+          "last_event": "parked",
+          "last_tokens": 88,
+          "last_at": 1791515640.6383407,
+          "requests": 3,
+          "requests_reused": 0,
+          "reused_tokens": 0,
+          "prompt_tokens": 240,
+          "last_reused": 0,
+          "last_prompt": 116
+        },
+        "requests_kept": 3,
+        "totals": {
+          "since": 1791515631.98533,
+          "requests": 3,
+          "prompt_tokens": 240,
+          "reused": 0,
+          "output_tokens": 14,
+          "prompt_ms": 7966.900000000001,
+          "decode_ms": 276.29999999999995,
+          "drafts_offered": 20,
+          "drafts_accepted": 20
+        },
+        "hardware": {
+          "gpu_util": 35,
+          "gpu_mem_used": 23196778496,
+          "gpu_mem_total": 23622320128,
+          "gpu_temp": 40,
+          "gpu_power": 112.852,
+          "gpu_power_limit": 310.0,
+          "gpu_pcie_gen": 3,
+          "gpu_pcie_gen_max": 3,
+          "gpu_pcie_width": 16,
+          "gpu_pcie_rx_mb": 4891.6015625,
+          "gpu_pcie_tx_mb": 375.0,
+          "cpu": 33.5,
+          "ram_used": 23061446656,
+          "ram_total": 33887277056,
+          "disk_read_mb": 36.05854568779521,
+          "disk_write_mb": 0.07463992069508427,
+          "tok_s": 0.0,
+          "tok_s_mean": 0,
+          "prefill_tok_s_mean": null
+        },
+        "hardware_static": {
+          "gpu_name": "NVIDIA GeForce RTX 2080 Ti",
+          "gpu_count": 1,
+          "gpu_note": null,
+          "cpu_name": "Genuine Intel(R) 0000",
+          "cores": 20,
+          "threads": 28,
+          "psutil": true
+        },
+        "history": {
+          "gpu_util": [
+            39,
+            40,
+            47,
+            37,
+            40,
+            38,
+            44,
+            42,
+            35
+          ],
+          "gpu_mem_used": [
+            22502359040,
+            22504456192,
+            22506553344,
+            23022452736,
+            23030841344,
+            23030841344,
+            23196778496,
+            23196778496,
+            23196778496
+          ],
+          "gpu_temp": [
+            34,
+            36,
+            39,
+            40,
+            39,
+            39,
+            40,
+            40,
+            40
+          ],
+          "gpu_power": [
+            40.04,
+            78.62,
+            110.03,
+            147.87,
+            114.83,
+            110.18,
+            117.19,
+            119.93,
+            112.85
+          ],
+          "gpu_pcie_rx_mb": [
+            2.93,
+            3919.92,
+            2285.16,
+            4759.77,
+            2352.54,
+            6443.36,
+            983.4,
+            0.0,
+            4891.6
+          ],
+          "cpu": [
+            4.1,
+            9.9,
+            19.7,
+            34.7,
+            39.7,
+            30.1,
+            39.1,
+            37.0,
+            33.5
+          ],
+          "ram_used": [
+            22118129664,
+            22173700096,
+            22202474496,
+            22778966016,
+            22777049088,
+            22798737408,
+            23050878976,
+            23050829824,
+            23061446656
+          ],
+          "disk_read_mb": [
+            null,
+            20.85,
+            31.89,
+            275.6,
+            38.2,
+            47.45,
+            36.51,
+            39.96,
+            36.06
+          ],
+          "tok_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "prefill_tok_s_mean": [
+            0.0,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "time": 1791515640.6381044
+      }
+    }
+  ],
+  "started_epoch": 1791515596.2360084,
+  "command": [
+    "C:\\ProgramData\\anaconda3\\python.exe",
+    "-X",
+    "utf8",
+    "-m",
+    "serve.server",
+    "--engine",
+    "strata",
+    "--config",
+    "E:\\strata-setup\\part2-prefill-helper-source-20261009\\smallseg2-sr32-config.json",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "18997"
+  ],
+  "server_root": "C:\\Users\\Winge\\Documents\\Playground\\Strata-optimization-pr",
+  "server_commit": "80c75f3b176727c5e4f06ba5ba3c0bfb7db9f893",
+  "config_sha256": "c7379c7b7a74bc31794d0abfbbf8c4bace0a3638b0d98dd56e07fec3cdbf9e05",
+  "exe_sha256": "a5410029bfbf40f4f11612f86396a45511f4e622823568c3951b4dddba9fb4d1",
+  "fixture_sha256": "3972e110e3fd268d38ec33bbe84844b50f92b8173609ceb5d15210a8b65c56ed",
+  "expected_requests": 3,
+  "gpu_before": "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W, 22528 MiB\n1, Tesla P100-PCIE-16GB, 537.13, 250.00 W, 16384 MiB",
+  "server_pid": 33384,
+  "health": {
+    "status": "ok",
+    "max_context": 8192,
+    "model": "qwen3.8-flash-next",
+    "images": false,
+    "api_key": false,
+    "loaded": true,
+    "service": "strata"
+  },
+  "current_request": "k5",
+  "status": {
+    "service": "strata",
+    "model": "qwen3.8-flash-next",
+    "loaded": true,
+    "auto_load": true,
+    "structured_output": {
+      "formats": [
+        "json_object",
+        "json_schema"
+      ],
+      "method": "prompt_and_validate",
+      "constrained_decoding": false,
+      "stream_buffered": true
+    },
+    "engine": "0.1.41",
+    "started": 1791515631,
+    "uptime_s": 8,
+    "cache_max_tokens": 8192,
+    "cache": {
+      "state": "disabled"
+    },
+    "context": {
+      "native": 8192,
+      "max_positions": 8192
+    },
+    "concurrency": {
+      "serving": 1,
+      "requested": 1
+    },
+    "dialects": [
+      "/v1/chat/completions",
+      "/v1/messages",
+      "/v1/responses"
+    ],
+    "vision": {
+      "enabled": false,
+      "available": false,
+      "error": null
+    },
+    "activity": {
+      "requests": 3,
+      "in_flight": 0,
+      "last_request_at": 1791515640
+    },
+    "last_timings": {
+      "cache_n": 0,
+      "prompt_n": 116,
+      "prompt_ms": 2859.7,
+      "prompt_per_token_ms": 24.653,
+      "prompt_per_second": 40.6,
+      "predicted_n": 5,
+      "predicted_ms": 83.1,
+      "predicted_per_token_ms": 16.62,
+      "predicted_per_second": 60.2,
+      "draft_n": 7,
+      "draft_n_accepted": 7,
+      "at": 1791515640
+    },
+    "vram": {
+      "elastic": false
+    },
+    "machine": {
+      "at": 1791515640,
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 2080 Ti",
+        "used_mib": 22122.0,
+        "total_mib": 22528.0,
+        "util_pct": 35,
+        "temp_c": 40,
+        "power_w": 112.852
+      },
+      "ram": {
+        "used_gib": 21.5,
+        "total_gib": 31.6
+      }
+    }
+  },
+  "ended_epoch": 1791515640.6400795,
+  "unload": {
+    "status": "unloaded"
+  },
+  "gpu_after": "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W\n1, Tesla P100-PCIE-16GB, 537.13, 250.00 W"
+}

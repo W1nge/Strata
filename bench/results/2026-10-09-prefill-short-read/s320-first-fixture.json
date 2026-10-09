@@ -1,0 +1,50 @@
+[
+  {
+    "key": "first-320",
+    "group": "cold",
+    "request": {
+      "model": "qwen3.8-flash-next",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Document task size-15. Return only the requested JSON.\n\nRecord 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nRecord 9: code=K0009; stock=59.\nRecord 10: code=K0010; stock=76.\nRecord 11: code=K0011; stock=93.\nRecord 12: code=K0012; stock=13.\nRecord 13: code=K0013; stock=30.\nRecord 14: code=K0014; stock=47.\nReturn only a JSON array of stock values for records 7, in that order."
+        }
+      ],
+      "temperature": 0,
+      "max_tokens": 64,
+      "stream": true,
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      }
+    },
+    "expected": [
+      25
+    ],
+    "pin": null,
+    "records": 15
+  },
+  {
+    "key": "again-320",
+    "group": "cold",
+    "request": {
+      "model": "qwen3.8-flash-next",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Document task size-15. Return only the requested JSON.\n\nRecord 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nRecord 9: code=K0009; stock=59.\nRecord 10: code=K0010; stock=76.\nRecord 11: code=K0011; stock=93.\nRecord 12: code=K0012; stock=13.\nRecord 13: code=K0013; stock=30.\nRecord 14: code=K0014; stock=47.\nReturn only a JSON array of stock values for records 7, in that order."
+        }
+      ],
+      "temperature": 0,
+      "max_tokens": 64,
+      "stream": true,
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      }
+    },
+    "expected": [
+      25
+    ],
+    "pin": null,
+    "records": 15
+  }
+]

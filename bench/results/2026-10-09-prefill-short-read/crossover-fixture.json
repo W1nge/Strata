@@ -1,0 +1,229 @@
+[
+ {
+  "key": "warm",
+  "group": "warm",
+  "request": {
+   "model": "qwen3.8-flash-next",
+   "messages": [
+    {
+     "role": "user",
+     "content": "Return only the JSON number for 2 plus 2."
+    }
+   ],
+   "temperature": 0,
+   "max_tokens": 64,
+   "stream": true,
+   "chat_template_kwargs": {
+    "enable_thinking": false
+   }
+  },
+  "expected": 4,
+  "pin": null
+ },
+ {
+  "key": "size-192",
+  "group": "cold",
+  "request": {
+   "model": "qwen3.8-flash-next",
+   "messages": [
+    {
+     "role": "user",
+     "content": "Document task size-9. Return only the requested JSON.\n\nRecord 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nReturn only a JSON array of stock values for records 7, in that order."
+    }
+   ],
+   "temperature": 0,
+   "max_tokens": 64,
+   "stream": true,
+   "chat_template_kwargs": {
+    "enable_thinking": false
+   }
+  },
+  "expected": [
+   25
+  ],
+  "pin": null,
+  "records": 9
+ },
+ {
+  "key": "size-320",
+  "group": "cold",
+  "request": {
+   "model": "qwen3.8-flash-next",
+   "messages": [
+    {
+     "role": "user",
+     "content": "Document task size-15. Return only the requested JSON.\n\nRecord 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nRecord 9: code=K0009; stock=59.\nRecord 10: code=K0010; stock=76.\nRecord 11: code=K0011; stock=93.\nRecord 12: code=K0012; stock=13.\nRecord 13: code=K0013; stock=30.\nRecord 14: code=K0014; stock=47.\nReturn only a JSON array of stock values for records 7, in that order."
+    }
+   ],
+   "temperature": 0,
+   "max_tokens": 64,
+   "stream": true,
+   "chat_template_kwargs": {
+    "enable_thinking": false
+   }
+  },
+  "expected": [
+   25
+  ],
+  "pin": null,
+  "records": 15
+ },
+ {
+  "key": "size-448",
+  "group": "cold",
+  "request": {
+   "model": "qwen3.8-flash-next",
+   "messages": [
+    {
+     "role": "user",
+     "content": "Document task size-21. Return only the requested JSON.\n\nRecord 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nRecord 9: code=K0009; stock=59.\nRecord 10: code=K0010; stock=76.\nRecord 11: code=K0011; stock=93.\nRecord 12: code=K0012; stock=13.\nRecord 13: code=K0013; stock=30.\nRecord 14: code=K0014; stock=47.\nRecord 15: code=K0015; stock=64.\nRecord 16: code=K0016; stock=81.\nRecord 17: code=K0017; stock=1.\nRecord 18: code=K0018; stock=18.\nRecord 19: code=K0019; stock=35.\nRecord 20: code=K0020; stock=52.\nReturn only a JSON array of stock values for records 7, in that order."
+    }
+   ],
+   "temperature": 0,
+   "max_tokens": 64,
+   "stream": true,
+   "chat_template_kwargs": {
+    "enable_thinking": false
+   }
+  },
+  "expected": [
+   25
+  ],
+  "pin": null,
+  "records": 21
+ },
+ {
+  "key": "size-576",
+  "group": "cold",
+  "request": {
+   "model": "qwen3.8-flash-next",
+   "messages": [
+    {
+     "role": "user",
+     "content": "Document task size-27. Return only the requested JSON.\n\nRecord 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nRecord 9: code=K0009; stock=59.\nRecord 10: code=K0010; stock=76.\nRecord 11: code=K0011; stock=93.\nRecord 12: code=K0012; stock=13.\nRecord 13: code=K0013; stock=30.\nRecord 14: code=K0014; stock=47.\nRecord 15: code=K0015; stock=64.\nRecord 16: code=K0016; stock=81.\nRecord 17: code=K0017; stock=1.\nRecord 18: code=K0018; stock=18.\nRecord 19: code=K0019; stock=35.\nRecord 20: code=K0020; stock=52.\nRecord 21: code=K0021; stock=69.\nRecord 22: code=K0022; stock=86.\nRecord 23: code=K0023; stock=6.\nRecord 24: code=K0024; stock=23.\nRecord 25: code=K0025; stock=40.\nRecord 26: code=K0026; stock=57.\nReturn only a JSON array of stock values for records 7, 23, in that order."
+    }
+   ],
+   "temperature": 0,
+   "max_tokens": 64,
+   "stream": true,
+   "chat_template_kwargs": {
+    "enable_thinking": false
+   }
+  },
+  "expected": [
+   25,
+   6
+  ],
+  "pin": null,
+  "records": 27
+ },
+ {
+  "key": "size-704",
+  "group": "cold",
+  "request": {
+   "model": "qwen3.8-flash-next",
+   "messages": [
+    {
+     "role": "user",
+     "content": "Document task size-34. Return only the requested JSON.\n\nRecord 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nRecord 9: code=K0009; stock=59.\nRecord 10: code=K0010; stock=76.\nRecord 11: code=K0011; stock=93.\nRecord 12: code=K0012; stock=13.\nRecord 13: code=K0013; stock=30.\nRecord 14: code=K0014; stock=47.\nRecord 15: code=K0015; stock=64.\nRecord 16: code=K0016; stock=81.\nRecord 17: code=K0017; stock=1.\nRecord 18: code=K0018; stock=18.\nRecord 19: code=K0019; stock=35.\nRecord 20: code=K0020; stock=52.\nRecord 21: code=K0021; stock=69.\nRecord 22: code=K0022; stock=86.\nRecord 23: code=K0023; stock=6.\nRecord 24: code=K0024; stock=23.\nRecord 25: code=K0025; stock=40.\nRecord 26: code=K0026; stock=57.\nRecord 27: code=K0027; stock=74.\nRecord 28: code=K0028; stock=91.\nRecord 29: code=K0029; stock=11.\nRecord 30: code=K0030; stock=28.\nRecord 31: code=K0031; stock=45.\nRecord 32: code=K0032; stock=62.\nRecord 33: code=K0033; stock=79.\nReturn only a JSON array of stock values for records 7, 23, 31, in that order."
+    }
+   ],
+   "temperature": 0,
+   "max_tokens": 64,
+   "stream": true,
+   "chat_template_kwargs": {
+    "enable_thinking": false
+   }
+  },
+  "expected": [
+   25,
+   6,
+   45
+  ],
+  "pin": null,
+  "records": 34
+ },
+ {
+  "key": "size-832",
+  "group": "cold",
+  "request": {
+   "model": "qwen3.8-flash-next",
+   "messages": [
+    {
+     "role": "user",
+     "content": "Document task size-40. Return only the requested JSON.\n\nRecord 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nRecord 9: code=K0009; stock=59.\nRecord 10: code=K0010; stock=76.\nRecord 11: code=K0011; stock=93.\nRecord 12: code=K0012; stock=13.\nRecord 13: code=K0013; stock=30.\nRecord 14: code=K0014; stock=47.\nRecord 15: code=K0015; stock=64.\nRecord 16: code=K0016; stock=81.\nRecord 17: code=K0017; stock=1.\nRecord 18: code=K0018; stock=18.\nRecord 19: code=K0019; stock=35.\nRecord 20: code=K0020; stock=52.\nRecord 21: code=K0021; stock=69.\nRecord 22: code=K0022; stock=86.\nRecord 23: code=K0023; stock=6.\nRecord 24: code=K0024; stock=23.\nRecord 25: code=K0025; stock=40.\nRecord 26: code=K0026; stock=57.\nRecord 27: code=K0027; stock=74.\nRecord 28: code=K0028; stock=91.\nRecord 29: code=K0029; stock=11.\nRecord 30: code=K0030; stock=28.\nRecord 31: code=K0031; stock=45.\nRecord 32: code=K0032; stock=62.\nRecord 33: code=K0033; stock=79.\nRecord 34: code=K0034; stock=96.\nRecord 35: code=K0035; stock=16.\nRecord 36: code=K0036; stock=33.\nRecord 37: code=K0037; stock=50.\nRecord 38: code=K0038; stock=67.\nRecord 39: code=K0039; stock=84.\nReturn only a JSON array of stock values for records 7, 23, 31, 38, in that order."
+    }
+   ],
+   "temperature": 0,
+   "max_tokens": 64,
+   "stream": true,
+   "chat_template_kwargs": {
+    "enable_thinking": false
+   }
+  },
+  "expected": [
+   25,
+   6,
+   45,
+   67
+  ],
+  "pin": null,
+  "records": 40
+ },
+ {
+  "key": "size-960",
+  "group": "cold",
+  "request": {
+   "model": "qwen3.8-flash-next",
+   "messages": [
+    {
+     "role": "user",
+     "content": "Document task size-46. Return only the requested JSON.\n\nRecord 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nRecord 9: code=K0009; stock=59.\nRecord 10: code=K0010; stock=76.\nRecord 11: code=K0011; stock=93.\nRecord 12: code=K0012; stock=13.\nRecord 13: code=K0013; stock=30.\nRecord 14: code=K0014; stock=47.\nRecord 15: code=K0015; stock=64.\nRecord 16: code=K0016; stock=81.\nRecord 17: code=K0017; stock=1.\nRecord 18: code=K0018; stock=18.\nRecord 19: code=K0019; stock=35.\nRecord 20: code=K0020; stock=52.\nRecord 21: code=K0021; stock=69.\nRecord 22: code=K0022; stock=86.\nRecord 23: code=K0023; stock=6.\nRecord 24: code=K0024; stock=23.\nRecord 25: code=K0025; stock=40.\nRecord 26: code=K0026; stock=57.\nRecord 27: code=K0027; stock=74.\nRecord 28: code=K0028; stock=91.\nRecord 29: code=K0029; stock=11.\nRecord 30: code=K0030; stock=28.\nRecord 31: code=K0031; stock=45.\nRecord 32: code=K0032; stock=62.\nRecord 33: code=K0033; stock=79.\nRecord 34: code=K0034; stock=96.\nRecord 35: code=K0035; stock=16.\nRecord 36: code=K0036; stock=33.\nRecord 37: code=K0037; stock=50.\nRecord 38: code=K0038; stock=67.\nRecord 39: code=K0039; stock=84.\nRecord 40: code=K0040; stock=4.\nRecord 41: code=K0041; stock=21.\nRecord 42: code=K0042; stock=38.\nRecord 43: code=K0043; stock=55.\nRecord 44: code=K0044; stock=72.\nRecord 45: code=K0045; stock=89.\nReturn only a JSON array of stock values for records 7, 23, 31, 38, 43, in that order."
+    }
+   ],
+   "temperature": 0,
+   "max_tokens": 64,
+   "stream": true,
+   "chat_template_kwargs": {
+    "enable_thinking": false
+   }
+  },
+  "expected": [
+   25,
+   6,
+   45,
+   67,
+   55
+  ],
+  "pin": null,
+  "records": 46
+ },
+ {
+  "key": "size-1200",
+  "group": "cold",
+  "request": {
+   "model": "qwen3.8-flash-next",
+   "messages": [
+    {
+     "role": "user",
+     "content": "Document task size-57. Return only the requested JSON.\n\nRecord 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nRecord 9: code=K0009; stock=59.\nRecord 10: code=K0010; stock=76.\nRecord 11: code=K0011; stock=93.\nRecord 12: code=K0012; stock=13.\nRecord 13: code=K0013; stock=30.\nRecord 14: code=K0014; stock=47.\nRecord 15: code=K0015; stock=64.\nRecord 16: code=K0016; stock=81.\nRecord 17: code=K0017; stock=1.\nRecord 18: code=K0018; stock=18.\nRecord 19: code=K0019; stock=35.\nRecord 20: code=K0020; stock=52.\nRecord 21: code=K0021; stock=69.\nRecord 22: code=K0022; stock=86.\nRecord 23: code=K0023; stock=6.\nRecord 24: code=K0024; stock=23.\nRecord 25: code=K0025; stock=40.\nRecord 26: code=K0026; stock=57.\nRecord 27: code=K0027; stock=74.\nRecord 28: code=K0028; stock=91.\nRecord 29: code=K0029; stock=11.\nRecord 30: code=K0030; stock=28.\nRecord 31: code=K0031; stock=45.\nRecord 32: code=K0032; stock=62.\nRecord 33: code=K0033; stock=79.\nRecord 34: code=K0034; stock=96.\nRecord 35: code=K0035; stock=16.\nRecord 36: code=K0036; stock=33.\nRecord 37: code=K0037; stock=50.\nRecord 38: code=K0038; stock=67.\nRecord 39: code=K0039; stock=84.\nRecord 40: code=K0040; stock=4.\nRecord 41: code=K0041; stock=21.\nRecord 42: code=K0042; stock=38.\nRecord 43: code=K0043; stock=55.\nRecord 44: code=K0044; stock=72.\nRecord 45: code=K0045; stock=89.\nRecord 46: code=K0046; stock=9.\nRecord 47: code=K0047; stock=26.\nRecord 48: code=K0048; stock=43.\nRecord 49: code=K0049; stock=60.\nRecord 50: code=K0050; stock=77.\nRecord 51: code=K0051; stock=94.\nRecord 52: code=K0052; stock=14.\nRecord 53: code=K0053; stock=31.\nRecord 54: code=K0054; stock=48.\nRecord 55: code=K0055; stock=65.\nRecord 56: code=K0056; stock=82.\nReturn only a JSON array of stock values for records 7, 23, 31, 38, 43, in that order."
+    }
+   ],
+   "temperature": 0,
+   "max_tokens": 64,
+   "stream": true,
+   "chat_template_kwargs": {
+    "enable_thinking": false
+   }
+  },
+  "expected": [
+   25,
+   6,
+   45,
+   67,
+   55
+  ],
+  "pin": null,
+  "records": 57
+ }
+]

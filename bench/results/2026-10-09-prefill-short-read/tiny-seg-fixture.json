@@ -1,0 +1,68 @@
+[
+  {
+    "key": "v1",
+    "group": "cold",
+    "expected": [
+      3
+    ],
+    "request": {
+      "model": "qwen3.8-flash-next",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Record 0: code=K0000; stock=3."
+        }
+      ],
+      "temperature": 0,
+      "max_tokens": 16,
+      "stream": true,
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      }
+    }
+  },
+  {
+    "key": "v2",
+    "group": "cold",
+    "expected": [
+      3
+    ],
+    "request": {
+      "model": "qwen3.8-flash-next",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Record 0: code=K0000; stock=3.\nReturn it as a JSON array."
+        }
+      ],
+      "temperature": 0,
+      "max_tokens": 16,
+      "stream": true,
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      }
+    }
+  },
+  {
+    "key": "v3",
+    "group": "cold",
+    "expected": [
+      3
+    ],
+    "request": {
+      "model": "qwen3.8-flash-next",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Records\nRecord 0: code=K0000; stock=3.\nReturn only the stock of the last record as a JSON array."
+        }
+      ],
+      "temperature": 0,
+      "max_tokens": 16,
+      "stream": true,
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      }
+    }
+  }
+]
