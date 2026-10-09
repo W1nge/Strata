@@ -1,0 +1,204 @@
+{
+  "date": "2026-10-09",
+  "kind": "same-day A/B, one 11-request serial fixture per arm, fresh engine process each",
+  "arms": {
+    "baseline": {
+      "exe": "9fcc7cd90f0e8dad13463846e464f5b54fbe262fc9eeff90e98797de403dbae2",
+      "config_sha256": "719ff322f700b20e7e44ccb8d0a4c3cfe52a14cbfac034720689271369d9e454",
+      "engine": "baseline-a-engine.log"
+    },
+    "candidate": {
+      "exe": "a5410029bfbf40f4f11612f86396a45511f4e622823568c3951b4dddba9fb4d1",
+      "config_sha256": "38374a2c86f6715a26b409dbb3753e5d06c142b998895cc0af5efca5d2ce570d",
+      "engine": "candidate-a-engine.log"
+    }
+  },
+  "fixture_sha256": "ee6b62023c2aef01fdc2d411202946d181129700aec8694bb9681321f1d5ab78",
+  "gpu_before": "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W, 22528 MiB\n1, Tesla P100-PCIE-16GB, 537.13, 250.00 W, 16384 MiB",
+  "server_commit": "c1c3d49f1c9ad67738f75f4b7e533aad0072e0b2",
+  "note": "candidate = baseline exe + STRATA_PREFILL_HELPER_SOURCE=1 (the helper VRAM cache as the prompt path source)",
+  "totals": {
+    "baseline_prompt_ms": 91531.3,
+    "candidate_prompt_ms": 65665.0
+  },
+  "disk_blob_reads": {
+    "baseline_blobs": 5422,
+    "candidate_blobs": 5422,
+    "baseline_mb": 142131.6,
+    "candidate_mb": 50077.8
+  },
+  "requests": [
+    {
+      "key": "warm",
+      "prompt_n": 24,
+      "baseline_prompt_ms": 439.0,
+      "candidate_prompt_ms": 383.5,
+      "delta_ms": -55.5,
+      "baseline_tok_s": 54.7,
+      "candidate_tok_s": 62.6,
+      "baseline_valid": true,
+      "candidate_valid": true
+    },
+    {
+      "key": "records-small-r1",
+      "prompt_n": 422,
+      "baseline_prompt_ms": 3893.4,
+      "candidate_prompt_ms": 3779.2,
+      "delta_ms": -114.2,
+      "baseline_tok_s": 108.4,
+      "candidate_tok_s": 111.7,
+      "baseline_valid": true,
+      "candidate_valid": true
+    },
+    {
+      "key": "records-medium-r1",
+      "prompt_n": 884,
+      "baseline_prompt_ms": 8413.9,
+      "candidate_prompt_ms": 8225.1,
+      "delta_ms": -188.8,
+      "baseline_tok_s": 105.1,
+      "candidate_tok_s": 107.5,
+      "baseline_valid": true,
+      "candidate_valid": true
+    },
+    {
+      "key": "source-2k-r1",
+      "prompt_n": 2067,
+      "baseline_prompt_ms": 12571.6,
+      "candidate_prompt_ms": 6300.7,
+      "delta_ms": -6270.9,
+      "baseline_tok_s": 164.4,
+      "candidate_tok_s": 328.1,
+      "baseline_valid": true,
+      "candidate_valid": true
+    },
+    {
+      "key": "source-3k5-r1",
+      "prompt_n": 3500,
+      "baseline_prompt_ms": 13291.0,
+      "candidate_prompt_ms": 6878.1,
+      "delta_ms": -6412.9,
+      "baseline_tok_s": 263.3,
+      "candidate_tok_s": 508.9,
+      "baseline_valid": true,
+      "candidate_valid": true
+    },
+    {
+      "key": "records-5k-r1",
+      "prompt_n": 5127,
+      "baseline_prompt_ms": 10871.3,
+      "candidate_prompt_ms": 7298.3,
+      "delta_ms": -3573.0,
+      "baseline_tok_s": 471.6,
+      "candidate_tok_s": 702.5,
+      "baseline_valid": true,
+      "candidate_valid": true
+    },
+    {
+      "key": "records-5k-r2",
+      "prompt_n": 5127,
+      "baseline_prompt_ms": 10672.3,
+      "candidate_prompt_ms": 8433.7,
+      "delta_ms": -2238.6,
+      "baseline_tok_s": 480.4,
+      "candidate_tok_s": 607.9,
+      "baseline_valid": true,
+      "candidate_valid": true
+    },
+    {
+      "key": "source-3k5-r2",
+      "prompt_n": 3500,
+      "baseline_prompt_ms": 9870.8,
+      "candidate_prompt_ms": 6283.2,
+      "delta_ms": -3587.6,
+      "baseline_tok_s": 354.6,
+      "candidate_tok_s": 557.0,
+      "baseline_valid": true,
+      "candidate_valid": true
+    },
+    {
+      "key": "source-2k-r2",
+      "prompt_n": 2067,
+      "baseline_prompt_ms": 9234.7,
+      "candidate_prompt_ms": 5879.9,
+      "delta_ms": -3354.8,
+      "baseline_tok_s": 223.8,
+      "candidate_tok_s": 351.5,
+      "baseline_valid": true,
+      "candidate_valid": true
+    },
+    {
+      "key": "records-medium-r2",
+      "prompt_n": 884,
+      "baseline_prompt_ms": 8489.6,
+      "candidate_prompt_ms": 8342.7,
+      "delta_ms": -146.9,
+      "baseline_tok_s": 104.1,
+      "candidate_tok_s": 106.0,
+      "baseline_valid": true,
+      "candidate_valid": true
+    },
+    {
+      "key": "records-small-r2",
+      "prompt_n": 422,
+      "baseline_prompt_ms": 3783.7,
+      "candidate_prompt_ms": 3860.6,
+      "delta_ms": 76.9,
+      "baseline_tok_s": 111.5,
+      "candidate_tok_s": 109.3,
+      "baseline_valid": true,
+      "candidate_valid": true
+    }
+  ],
+  "runner_dir": "E:/strata-setup/part2-prefill-helper-source-20261009",
+  "evidence_manifest": "manifest.json (sha256 of every raw file, stored and source)",
+  "changed_files": {
+    "include/strata/core/remote_experts.hpp": "48567c60002d88a50f259a7db7b1e37a4a102ead07bc3c314c736d8fc183ebe9",
+    "src/core/remote_experts.cpp": "1056c0ed8728c1473e6b44aa74bb775e41fb92694d95a1f274da12887bea8f2c",
+    "src/program/generate.cpp": "f66199cc7aec47c502b485f6c814662af6d387f3138fc052afe33941428bce73"
+  },
+  "prefill_timing": {
+    "source": "diag-timing-engine.log, STRATA_PREFILL_TIMING=1, candidate exe, helper source on",
+    "chunks": [
+      {
+        "tokens": 2060,
+        "gpu_timeline_ms": 5300,
+        "wall_ms": 5314,
+        "host_staging_ms": 4699,
+        "top": {
+          "dequant": 1959,
+          "gemm_gate_up": 557,
+          "combine": 485,
+          "hc_read": 476,
+          "gather": 442,
+          "wait_copy": 393,
+          "gemm_down": 300
+        }
+      },
+      {
+        "tokens": 5120,
+        "gpu_timeline_ms": 6178,
+        "wall_ms": 6209,
+        "host_staging_ms": 9160,
+        "top": {
+          "dequant": 1311,
+          "hc_read": 958,
+          "gemm_gate_up": 777,
+          "gather": 584,
+          "qsa_attn": 409,
+          "gemm_down": 385,
+          "wait_copy": 298,
+          "combine": 293
+        }
+      }
+    ],
+    "note": "the copies now overlap the GPU work: wait copy fell to 4-7% and the GPU timeline (dequant first) is the wall"
+  },
+  "follow_up_findings": {
+    "chunks_at_or_below_1024_tokens": "the short-chunk path never calls copy_blobs, so the option cannot change them (share on/off at 884 tokens: 8272 vs 8303 ms, noise)",
+    "streamed_set_above_1024_tokens": "exactly the 8782 blobs the helper holds, 14631.5 MiB, so the helper answers all of it",
+    "helper_link": "P100 is PCIe 3.0 x4 (nvidia-smi current/max width 4): 3.25-3.28 GB/s device-to-host",
+    "ram_alternative": "the helper set (14.29 GiB) plus the RAM complement (10.84 GiB) does not fit the 31.6 GB machine",
+    "rejected": "8 concurrent device-to-host streams: no gain, the x4 link is already saturated"
+  }
+}

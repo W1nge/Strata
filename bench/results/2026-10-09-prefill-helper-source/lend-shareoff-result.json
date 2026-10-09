@@ -1,0 +1,3198 @@
+{
+  "label": "lend-shareoff",
+  "ok": true,
+  "requests": [
+    {
+      "key": "warm",
+      "group": "warm",
+      "request": {
+        "model": "qwen3.8-flash-next",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Return only the JSON number for 2 plus 2."
+          }
+        ],
+        "temperature": 0,
+        "max_tokens": 96,
+        "stream": true,
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        },
+        "strata_checkpoint": false
+      },
+      "expected": 4,
+      "started_epoch": 1791512369.1582913,
+      "text": "4",
+      "ttft_s": 0.5052555999991455,
+      "wall_s": 0.5685729999986506,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 24,
+        "completion_tokens": 2,
+        "total_tokens": 26,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 24,
+        "prompt_ms": 473.9,
+        "prompt_per_token_ms": 19.746,
+        "prompt_per_second": 50.6,
+        "predicted_n": 2,
+        "predicted_ms": 92.3,
+        "predicted_per_token_ms": 46.15,
+        "predicted_per_second": 21.7,
+        "draft_n": 4,
+        "draft_n_accepted": 4
+      },
+      "chunks": [
+        {
+          "id": "chatcmpl-67f8937a493846d8ae7bba9e",
+          "object": "chat.completion.chunk",
+          "created": 1791512369,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "role": "assistant",
+                "content": ""
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-67f8937a493846d8ae7bba9e",
+          "object": "chat.completion.chunk",
+          "created": 1791512369,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "4"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-67f8937a493846d8ae7bba9e",
+          "object": "chat.completion.chunk",
+          "created": 1791512369,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {},
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 24,
+            "completion_tokens": 2,
+            "total_tokens": 26,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 24,
+            "prompt_ms": 473.9,
+            "prompt_per_token_ms": 19.746,
+            "prompt_per_second": 50.6,
+            "predicted_n": 2,
+            "predicted_ms": 92.3,
+            "predicted_per_token_ms": 46.15,
+            "predicted_per_second": 21.7,
+            "draft_n": 4,
+            "draft_n_accepted": 4
+          }
+        }
+      ],
+      "valid": true,
+      "metrics": {
+        "engine": {
+          "model": "qwen3.8-flash-next",
+          "max_context": 8192,
+          "images": false,
+          "version": "0.1.41",
+          "context": 8192,
+          "kv": "int8",
+          "kv_resident": 0,
+          "expert_slots": 17940,
+          "expert_cache_mib": 29826,
+          "expert_slots_primary": 9158,
+          "expert_cache_primary_mib": 15195,
+          "spec": 8,
+          "mtp_max": 0,
+          "lookup": 0,
+          "vram_free_mib": 790,
+          "cvec": 0,
+          "arena_mib": 11097,
+          "pool_workers": 19,
+          "pcie_frac": "0.00",
+          "spec_min_p": "0.90",
+          "conversation_cache_mib": 1536,
+          "conversation_cache_slots": 2,
+          "conversation_cache_min_free_mib": 6144,
+          "tail_role_token": -1,
+          "vram_elastic": 0,
+          "engine": "0.1.41"
+        },
+        "live": {
+          "state": "idle",
+          "queued": 0,
+          "phase": null,
+          "prompt_tokens": null,
+          "prompt_read": null,
+          "prompt_total": null,
+          "generated": null,
+          "max_tokens": null,
+          "elapsed_s": null,
+          "tok_s": null,
+          "tok_s_mean": null,
+          "prefill_tok_s_mean": null,
+          "tok_s_window_s": null
+        },
+        "requests": [
+          {
+            "projection": null,
+            "time": 1791512369.1599574,
+            "duration_s": 0.6,
+            "finish": "stop",
+            "prompt_tokens": 24,
+            "reused": 0,
+            "output_tokens": 2,
+            "prompt_total": 24,
+            "prompt_read": 24,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 2,
+            "prompt_ms": 473.9,
+            "decode_ms": 92.3,
+            "decode_tok_s": 21.7,
+            "hit_rate": 0.774,
+            "pcie_share": 0.273,
+            "ram_blobs": 396,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 4,
+            "drafts_accepted": 4
+          }
+        ],
+        "conversation_cache": {
+          "enabled": true,
+          "budget_mib": 1536,
+          "slots": 2,
+          "parked": 0,
+          "bytes": 0,
+          "evictions": 0,
+          "parks": 0,
+          "restores": 0,
+          "last_event": null,
+          "last_tokens": null,
+          "last_at": null,
+          "requests": 1,
+          "requests_reused": 0,
+          "reused_tokens": 0,
+          "prompt_tokens": 24,
+          "last_reused": 0,
+          "last_prompt": 24
+        },
+        "requests_kept": 1,
+        "totals": {
+          "since": 1791512368.7291334,
+          "requests": 1,
+          "prompt_tokens": 24,
+          "reused": 0,
+          "output_tokens": 2,
+          "prompt_ms": 473.9,
+          "decode_ms": 92.3,
+          "drafts_offered": 4,
+          "drafts_accepted": 4
+        },
+        "hardware": {
+          "gpu_util": 20,
+          "gpu_mem_used": 22558908416,
+          "gpu_mem_total": 23622320128,
+          "gpu_temp": 39,
+          "gpu_power": 38.854,
+          "gpu_power_limit": 310.0,
+          "gpu_pcie_gen": 3,
+          "gpu_pcie_gen_max": 3,
+          "gpu_pcie_width": 16,
+          "gpu_pcie_rx_mb": 0.0,
+          "gpu_pcie_tx_mb": 0.0,
+          "cpu": 4.0,
+          "ram_used": 21497397248,
+          "ram_total": 33887277056,
+          "disk_read_mb": null,
+          "disk_write_mb": null,
+          "tok_s": 0.0,
+          "tok_s_mean": 0,
+          "prefill_tok_s_mean": 0.0
+        },
+        "hardware_static": {
+          "gpu_name": "NVIDIA GeForce RTX 2080 Ti",
+          "gpu_count": 1,
+          "gpu_note": null,
+          "cpu_name": "Genuine Intel(R) 0000",
+          "cores": 20,
+          "threads": 28,
+          "psutil": true
+        },
+        "history": {
+          "gpu_util": [
+            20
+          ],
+          "gpu_mem_used": [
+            22558908416
+          ],
+          "gpu_temp": [
+            39
+          ],
+          "gpu_power": [
+            38.85
+          ],
+          "gpu_pcie_rx_mb": [
+            0.0
+          ],
+          "cpu": [
+            4.0
+          ],
+          "ram_used": [
+            21497397248
+          ],
+          "disk_read_mb": [
+            null
+          ],
+          "tok_s": [
+            0.0
+          ],
+          "prefill_tok_s_mean": [
+            0.0
+          ]
+        },
+        "time": 1791512369.7281423
+      }
+    },
+    {
+      "key": "records-small-r1",
+      "group": "cold",
+      "request": {
+        "model": "qwen3.8-flash-next",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Document task records-small-r1. Return only the requested JSON."
+          },
+          {
+            "role": "user",
+            "content": "Record 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nRecord 9: code=K0009; stock=59.\nRecord 10: code=K0010; stock=76.\nRecord 11: code=K0011; stock=93.\nRecord 12: code=K0012; stock=13.\nRecord 13: code=K0013; stock=30.\nRecord 14: code=K0014; stock=47.\nRecord 15: code=K0015; stock=64.\nRecord 16: code=K0016; stock=81.\nRecord 17: code=K0017; stock=1.\nRecord 18: code=K0018; stock=18.\nRecord 19: code=K0019; stock=35.\nReturn only a JSON array of stock values for records 7, 13, 19, in that order."
+          }
+        ],
+        "temperature": 0,
+        "max_tokens": 96,
+        "stream": true,
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      },
+      "expected": [
+        25,
+        30,
+        35
+      ],
+      "started_epoch": 1791512369.7292008,
+      "text": "[25, 30, 35]",
+      "ttft_s": 3.7512645999995584,
+      "wall_s": 3.966820199999347,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 422,
+        "completion_tokens": 13,
+        "total_tokens": 435,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 422,
+        "prompt_ms": 3731.1,
+        "prompt_per_token_ms": 8.841,
+        "prompt_per_second": 113.1,
+        "predicted_n": 13,
+        "predicted_ms": 233.2,
+        "predicted_per_token_ms": 17.938,
+        "predicted_per_second": 55.7,
+        "draft_n": 20,
+        "draft_n_accepted": 13
+      },
+      "chunks": [
+        {
+          "id": "chatcmpl-5fc12ab2772247118c6a803b",
+          "object": "chat.completion.chunk",
+          "created": 1791512369,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "role": "assistant",
+                "content": ""
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5fc12ab2772247118c6a803b",
+          "object": "chat.completion.chunk",
+          "created": 1791512369,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "["
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5fc12ab2772247118c6a803b",
+          "object": "chat.completion.chunk",
+          "created": 1791512369,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "2"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5fc12ab2772247118c6a803b",
+          "object": "chat.completion.chunk",
+          "created": 1791512369,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "5"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5fc12ab2772247118c6a803b",
+          "object": "chat.completion.chunk",
+          "created": 1791512369,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": ","
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5fc12ab2772247118c6a803b",
+          "object": "chat.completion.chunk",
+          "created": 1791512369,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": " "
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5fc12ab2772247118c6a803b",
+          "object": "chat.completion.chunk",
+          "created": 1791512369,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "3"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5fc12ab2772247118c6a803b",
+          "object": "chat.completion.chunk",
+          "created": 1791512369,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "0"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5fc12ab2772247118c6a803b",
+          "object": "chat.completion.chunk",
+          "created": 1791512369,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": ","
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5fc12ab2772247118c6a803b",
+          "object": "chat.completion.chunk",
+          "created": 1791512369,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": " "
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5fc12ab2772247118c6a803b",
+          "object": "chat.completion.chunk",
+          "created": 1791512369,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "3"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5fc12ab2772247118c6a803b",
+          "object": "chat.completion.chunk",
+          "created": 1791512369,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "5"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5fc12ab2772247118c6a803b",
+          "object": "chat.completion.chunk",
+          "created": 1791512369,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "]"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-5fc12ab2772247118c6a803b",
+          "object": "chat.completion.chunk",
+          "created": 1791512369,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {},
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 422,
+            "completion_tokens": 13,
+            "total_tokens": 435,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 422,
+            "prompt_ms": 3731.1,
+            "prompt_per_token_ms": 8.841,
+            "prompt_per_second": 113.1,
+            "predicted_n": 13,
+            "predicted_ms": 233.2,
+            "predicted_per_token_ms": 17.938,
+            "predicted_per_second": 55.7,
+            "draft_n": 20,
+            "draft_n_accepted": 13
+          }
+        }
+      ],
+      "valid": true,
+      "metrics": {
+        "engine": {
+          "model": "qwen3.8-flash-next",
+          "max_context": 8192,
+          "images": false,
+          "version": "0.1.41",
+          "context": 8192,
+          "kv": "int8",
+          "kv_resident": 0,
+          "expert_slots": 17940,
+          "expert_cache_mib": 29826,
+          "expert_slots_primary": 9158,
+          "expert_cache_primary_mib": 15195,
+          "spec": 8,
+          "mtp_max": 0,
+          "lookup": 0,
+          "vram_free_mib": 790,
+          "cvec": 0,
+          "arena_mib": 11097,
+          "pool_workers": 19,
+          "pcie_frac": "0.00",
+          "spec_min_p": "0.90",
+          "conversation_cache_mib": 1536,
+          "conversation_cache_slots": 2,
+          "conversation_cache_min_free_mib": 6144,
+          "tail_role_token": -1,
+          "vram_elastic": 0,
+          "engine": "0.1.41"
+        },
+        "live": {
+          "state": "idle",
+          "queued": 0,
+          "phase": null,
+          "prompt_tokens": null,
+          "prompt_read": null,
+          "prompt_total": null,
+          "generated": null,
+          "max_tokens": null,
+          "elapsed_s": null,
+          "tok_s": null,
+          "tok_s_mean": null,
+          "prefill_tok_s_mean": null,
+          "tok_s_window_s": null
+        },
+        "requests": [
+          {
+            "projection": null,
+            "time": 1791512369.73102,
+            "duration_s": 4.0,
+            "finish": "stop",
+            "prompt_tokens": 422,
+            "reused": 0,
+            "output_tokens": 13,
+            "prompt_total": 422,
+            "prompt_read": 422,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 13,
+            "prompt_ms": 3731.1,
+            "decode_ms": 233.2,
+            "decode_tok_s": 55.7,
+            "hit_rate": 0.649,
+            "pcie_share": 0.391,
+            "ram_blobs": 1641,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 20,
+            "drafts_accepted": 13
+          },
+          {
+            "projection": null,
+            "time": 1791512369.1599574,
+            "duration_s": 0.6,
+            "finish": "stop",
+            "prompt_tokens": 24,
+            "reused": 0,
+            "output_tokens": 2,
+            "prompt_total": 24,
+            "prompt_read": 24,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 2,
+            "prompt_ms": 473.9,
+            "decode_ms": 92.3,
+            "decode_tok_s": 21.7,
+            "hit_rate": 0.774,
+            "pcie_share": 0.273,
+            "ram_blobs": 396,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 4,
+            "drafts_accepted": 4
+          }
+        ],
+        "conversation_cache": {
+          "enabled": true,
+          "budget_mib": 1536,
+          "slots": 2,
+          "parked": 0,
+          "bytes": 0,
+          "evictions": 0,
+          "parks": 0,
+          "restores": 0,
+          "last_event": null,
+          "last_tokens": null,
+          "last_at": null,
+          "requests": 2,
+          "requests_reused": 0,
+          "reused_tokens": 0,
+          "prompt_tokens": 446,
+          "last_reused": 0,
+          "last_prompt": 422
+        },
+        "requests_kept": 2,
+        "totals": {
+          "since": 1791512368.7291334,
+          "requests": 2,
+          "prompt_tokens": 446,
+          "reused": 0,
+          "output_tokens": 15,
+          "prompt_ms": 4205.0,
+          "decode_ms": 325.5,
+          "drafts_offered": 24,
+          "drafts_accepted": 17
+        },
+        "hardware": {
+          "gpu_util": 100,
+          "gpu_mem_used": 23234191360,
+          "gpu_mem_total": 23622320128,
+          "gpu_temp": 50,
+          "gpu_power": 204.5,
+          "gpu_power_limit": 310.0,
+          "gpu_pcie_gen": 3,
+          "gpu_pcie_gen_max": 3,
+          "gpu_pcie_width": 16,
+          "gpu_pcie_rx_mb": 370.1171875,
+          "gpu_pcie_tx_mb": 123.046875,
+          "cpu": 72.1,
+          "ram_used": 21597716480,
+          "ram_total": 33887277056,
+          "disk_read_mb": 1.3955875443294212,
+          "disk_write_mb": 0.05224124497489812,
+          "tok_s": 0.0,
+          "tok_s_mean": 0,
+          "prefill_tok_s_mean": null
+        },
+        "hardware_static": {
+          "gpu_name": "NVIDIA GeForce RTX 2080 Ti",
+          "gpu_count": 1,
+          "gpu_note": null,
+          "cpu_name": "Genuine Intel(R) 0000",
+          "cores": 20,
+          "threads": 28,
+          "psutil": true
+        },
+        "history": {
+          "gpu_util": [
+            20,
+            28,
+            90,
+            100,
+            100
+          ],
+          "gpu_mem_used": [
+            22558908416,
+            23234191360,
+            23234191360,
+            23234191360,
+            23234191360
+          ],
+          "gpu_temp": [
+            39,
+            45,
+            49,
+            50,
+            50
+          ],
+          "gpu_power": [
+            38.85,
+            185.22,
+            219.11,
+            217.15,
+            204.5
+          ],
+          "gpu_pcie_rx_mb": [
+            0.0,
+            234.38,
+            365.23,
+            327.15,
+            370.12
+          ],
+          "cpu": [
+            4.0,
+            39.4,
+            72.1,
+            71.7,
+            72.1
+          ],
+          "ram_used": [
+            21497397248,
+            21589860352,
+            21591973888,
+            21597663232,
+            21597716480
+          ],
+          "disk_read_mb": [
+            null,
+            2.59,
+            3.87,
+            2.3,
+            1.4
+          ],
+          "tok_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "prefill_tok_s_mean": [
+            0.0,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "time": 1791512373.697082
+      }
+    },
+    {
+      "key": "records-medium-r1",
+      "group": "cold",
+      "request": {
+        "model": "qwen3.8-flash-next",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Document task records-medium-r1. Return only the requested JSON."
+          },
+          {
+            "role": "user",
+            "content": "Record 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nRecord 9: code=K0009; stock=59.\nRecord 10: code=K0010; stock=76.\nRecord 11: code=K0011; stock=93.\nRecord 12: code=K0012; stock=13.\nRecord 13: code=K0013; stock=30.\nRecord 14: code=K0014; stock=47.\nRecord 15: code=K0015; stock=64.\nRecord 16: code=K0016; stock=81.\nRecord 17: code=K0017; stock=1.\nRecord 18: code=K0018; stock=18.\nRecord 19: code=K0019; stock=35.\nRecord 20: code=K0020; stock=52.\nRecord 21: code=K0021; stock=69.\nRecord 22: code=K0022; stock=86.\nRecord 23: code=K0023; stock=6.\nRecord 24: code=K0024; stock=23.\nRecord 25: code=K0025; stock=40.\nRecord 26: code=K0026; stock=57.\nRecord 27: code=K0027; stock=74.\nRecord 28: code=K0028; stock=91.\nRecord 29: code=K0029; stock=11.\nRecord 30: code=K0030; stock=28.\nRecord 31: code=K0031; stock=45.\nRecord 32: code=K0032; stock=62.\nRecord 33: code=K0033; stock=79.\nRecord 34: code=K0034; stock=96.\nRecord 35: code=K0035; stock=16.\nRecord 36: code=K0036; stock=33.\nRecord 37: code=K0037; stock=50.\nRecord 38: code=K0038; stock=67.\nRecord 39: code=K0039; stock=84.\nRecord 40: code=K0040; stock=4.\nRecord 41: code=K0041; stock=21.\nRecord 42: code=K0042; stock=38.\nRecord 43: code=K0043; stock=55.\nReturn only a JSON array of stock values for records 7, 23, 31, 38, 43, in that order."
+          }
+        ],
+        "temperature": 0,
+        "max_tokens": 96,
+        "stream": true,
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      },
+      "expected": [
+        25,
+        6,
+        45,
+        67,
+        55
+      ],
+      "started_epoch": 1791512373.6982543,
+      "text": "[25, 6, 45, 67, 55]",
+      "ttft_s": 8.323187500000131,
+      "wall_s": 8.669618300000366,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 884,
+        "completion_tokens": 20,
+        "total_tokens": 904,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 884,
+        "prompt_ms": 8303.3,
+        "prompt_per_token_ms": 9.393,
+        "prompt_per_second": 106.5,
+        "predicted_n": 20,
+        "predicted_ms": 363.8,
+        "predicted_per_token_ms": 18.19,
+        "predicted_per_second": 55.0,
+        "draft_n": 30,
+        "draft_n_accepted": 18
+      },
+      "chunks": [
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "role": "assistant",
+                "content": ""
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "["
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "2"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "5"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": ","
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": " "
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "6"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": ","
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": " "
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "4"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "5"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": ","
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": " "
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "6"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "7"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": ","
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": " "
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "5"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "5"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "]"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-1b403203ef5648d0b936f5fc",
+          "object": "chat.completion.chunk",
+          "created": 1791512373,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {},
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 884,
+            "completion_tokens": 20,
+            "total_tokens": 904,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 884,
+            "prompt_ms": 8303.3,
+            "prompt_per_token_ms": 9.393,
+            "prompt_per_second": 106.5,
+            "predicted_n": 20,
+            "predicted_ms": 363.8,
+            "predicted_per_token_ms": 18.19,
+            "predicted_per_second": 55.0,
+            "draft_n": 30,
+            "draft_n_accepted": 18
+          }
+        }
+      ],
+      "valid": true,
+      "metrics": {
+        "engine": {
+          "model": "qwen3.8-flash-next",
+          "max_context": 8192,
+          "images": false,
+          "version": "0.1.41",
+          "context": 8192,
+          "kv": "int8",
+          "kv_resident": 0,
+          "expert_slots": 17940,
+          "expert_cache_mib": 29826,
+          "expert_slots_primary": 9158,
+          "expert_cache_primary_mib": 15195,
+          "spec": 8,
+          "mtp_max": 0,
+          "lookup": 0,
+          "vram_free_mib": 790,
+          "cvec": 0,
+          "arena_mib": 11097,
+          "pool_workers": 19,
+          "pcie_frac": "0.00",
+          "spec_min_p": "0.90",
+          "conversation_cache_mib": 1536,
+          "conversation_cache_slots": 2,
+          "conversation_cache_min_free_mib": 6144,
+          "tail_role_token": -1,
+          "vram_elastic": 0,
+          "engine": "0.1.41"
+        },
+        "live": {
+          "state": "idle",
+          "queued": 0,
+          "phase": null,
+          "prompt_tokens": null,
+          "prompt_read": null,
+          "prompt_total": null,
+          "generated": null,
+          "max_tokens": null,
+          "elapsed_s": null,
+          "tok_s": null,
+          "tok_s_mean": null,
+          "prefill_tok_s_mean": null,
+          "tok_s_window_s": null
+        },
+        "requests": [
+          {
+            "projection": null,
+            "time": 1791512373.699973,
+            "duration_s": 8.7,
+            "finish": "stop",
+            "prompt_tokens": 884,
+            "reused": 0,
+            "output_tokens": 20,
+            "prompt_total": 884,
+            "prompt_read": 884,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 20,
+            "prompt_ms": 8303.3,
+            "decode_ms": 363.8,
+            "decode_tok_s": 55.0,
+            "hit_rate": 0.61,
+            "pcie_share": 0.429,
+            "ram_blobs": 2393,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 30,
+            "drafts_accepted": 18
+          },
+          {
+            "projection": null,
+            "time": 1791512369.73102,
+            "duration_s": 4.0,
+            "finish": "stop",
+            "prompt_tokens": 422,
+            "reused": 0,
+            "output_tokens": 13,
+            "prompt_total": 422,
+            "prompt_read": 422,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 13,
+            "prompt_ms": 3731.1,
+            "decode_ms": 233.2,
+            "decode_tok_s": 55.7,
+            "hit_rate": 0.649,
+            "pcie_share": 0.391,
+            "ram_blobs": 1641,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 20,
+            "drafts_accepted": 13
+          },
+          {
+            "projection": null,
+            "time": 1791512369.1599574,
+            "duration_s": 0.6,
+            "finish": "stop",
+            "prompt_tokens": 24,
+            "reused": 0,
+            "output_tokens": 2,
+            "prompt_total": 24,
+            "prompt_read": 24,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 2,
+            "prompt_ms": 473.9,
+            "decode_ms": 92.3,
+            "decode_tok_s": 21.7,
+            "hit_rate": 0.774,
+            "pcie_share": 0.273,
+            "ram_blobs": 396,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 4,
+            "drafts_accepted": 4
+          }
+        ],
+        "conversation_cache": {
+          "enabled": true,
+          "budget_mib": 1536,
+          "slots": 2,
+          "parked": 1,
+          "bytes": 242850428,
+          "evictions": 0,
+          "parks": 1,
+          "restores": 0,
+          "last_event": "parked",
+          "last_tokens": 438,
+          "last_at": 1791512382.3691766,
+          "requests": 3,
+          "requests_reused": 0,
+          "reused_tokens": 0,
+          "prompt_tokens": 1330,
+          "last_reused": 0,
+          "last_prompt": 884
+        },
+        "requests_kept": 3,
+        "totals": {
+          "since": 1791512368.7291334,
+          "requests": 3,
+          "prompt_tokens": 1330,
+          "reused": 0,
+          "output_tokens": 35,
+          "prompt_ms": 12508.3,
+          "decode_ms": 689.3,
+          "drafts_offered": 54,
+          "drafts_accepted": 35
+        },
+        "hardware": {
+          "gpu_util": 100,
+          "gpu_mem_used": 23399800832,
+          "gpu_mem_total": 23622320128,
+          "gpu_temp": 52,
+          "gpu_power": 207.418,
+          "gpu_power_limit": 310.0,
+          "gpu_pcie_gen": 3,
+          "gpu_pcie_gen_max": 3,
+          "gpu_pcie_width": 16,
+          "gpu_pcie_rx_mb": 402.34375,
+          "gpu_pcie_tx_mb": 112.3046875,
+          "cpu": 72.5,
+          "ram_used": 21904031744,
+          "ram_total": 33887277056,
+          "disk_read_mb": 1.1537545909030609,
+          "disk_write_mb": 0.0707139910553489,
+          "tok_s": 0.0,
+          "tok_s_mean": 0,
+          "prefill_tok_s_mean": null
+        },
+        "hardware_static": {
+          "gpu_name": "NVIDIA GeForce RTX 2080 Ti",
+          "gpu_count": 1,
+          "gpu_note": null,
+          "cpu_name": "Genuine Intel(R) 0000",
+          "cores": 20,
+          "threads": 28,
+          "psutil": true
+        },
+        "history": {
+          "gpu_util": [
+            20,
+            28,
+            90,
+            100,
+            100,
+            100,
+            94,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "gpu_mem_used": [
+            22558908416,
+            23234191360,
+            23234191360,
+            23234191360,
+            23234191360,
+            23399866368,
+            23399604224,
+            23399604224,
+            23395082240,
+            23399538688,
+            23399800832,
+            23399800832,
+            23399800832
+          ],
+          "gpu_temp": [
+            39,
+            45,
+            49,
+            50,
+            50,
+            51,
+            51,
+            51,
+            51,
+            51,
+            52,
+            52,
+            52
+          ],
+          "gpu_power": [
+            38.85,
+            185.22,
+            219.11,
+            217.15,
+            204.5,
+            221.66,
+            220.49,
+            207.66,
+            202.04,
+            198.61,
+            207.44,
+            208.31,
+            207.42
+          ],
+          "gpu_pcie_rx_mb": [
+            0.0,
+            234.38,
+            365.23,
+            327.15,
+            370.12,
+            259.77,
+            352.54,
+            397.46,
+            361.33,
+            387.7,
+            353.52,
+            424.8,
+            402.34
+          ],
+          "cpu": [
+            4.0,
+            39.4,
+            72.1,
+            71.7,
+            72.1,
+            69.2,
+            72.1,
+            72.9,
+            72.2,
+            72.3,
+            72.2,
+            72.3,
+            72.5
+          ],
+          "ram_used": [
+            21497397248,
+            21589860352,
+            21591973888,
+            21597663232,
+            21597716480,
+            21862809600,
+            21868593152,
+            21909483520,
+            21904932864,
+            21906587648,
+            21905453056,
+            21904781312,
+            21904031744
+          ],
+          "disk_read_mb": [
+            null,
+            2.59,
+            3.87,
+            2.3,
+            1.4,
+            2.31,
+            0.04,
+            0.1,
+            0.12,
+            1.27,
+            1.3,
+            1.23,
+            1.15
+          ],
+          "tok_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "prefill_tok_s_mean": [
+            0.0,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "time": 1791512382.3689344
+      }
+    },
+    {
+      "key": "source-2k-r1",
+      "group": "cold",
+      "request": {
+        "model": "qwen3.8-flash-next",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Document task source-2k-r1. You are a careful code reviewer. Use the supplied source and the latest tool result. Return only the requested JSON, with no markdown or explanation."
+          },
+          {
+            "role": "user",
+            "content": "Source file: tools/research_run.py\n```python\n\"\"\"A scripted research run against a running Strata server: one long document, then many different questions.\n\nReads the document once, then asks each question and reports, per question, the time to the first streamed token and\nthe whole request, and the run's total.  Greedy (temperature 0), so two runs of the same file give the same answers and\na change in how the server keeps the document (the shared prefix below) can be compared answer by answer.\n\n    python tools/research_run.py --url http://127.0.0.1:8080 --doc paper.txt --questions questions.txt\n    python tools/research_run.py --doc paper.txt --questions q.txt --prefix off --json base.json\n    python tools/research_run.py --doc paper.txt --questions q.txt --prefix on  --json fork.json\n    python tools/research_run.py --compare base.json fork.json\n\n--layout split  (the default): the document is the first message, the question the second.\n--layout joined: one message, \"document + question\" (a client that cannot split them).\n--prefix on: the request carries \"strata_prefix\" naming the document as the shared prefix (docs/DETAILS.md): the\nserver reads it once and every question starts from it.  off: the field is left out.\n--parallel N: N questions at a time (the server needs \"parallel\": N for them to run together).\n\"\"\"\nfrom __future__ import annotations\n\nimport argparse\nimport json\nimport statistics\nimport sys\nimport threading\nimport time\nimport urllib.request\nfrom pathlib import Path\n\n\ndef request_body(doc: str, question: str, layout: str, prefix: bool, max_tokens: int, model: str | None) -> dict:\n    if layout == \"joined\":\n        body = {\"messages\": [{\"role\": \"user\", \"content\": doc + \"\\n\\nQuestion: \" + question + \"\\nAnswer:\"}]}\n        if prefix:\n            body[\"strata_prefix\"] = {\"message\": 0, \"chars\": len(doc) + 2}\n    else:\n        body = {\"messages\": [{\"role\": \"user\", \"content\": doc}, {\"role\": \"user\", \"content\": question}]}\n        if prefix:\n            body[\"strata_prefix\"] = {\"messages\": 1}\n    body.update(temperature=0, max_tokens=max_tokens, stream=True)\n    if model:\n        body[\"model\"] = model\n    return body\n\n\ndef ask(url: str, body: dict, headers: dict, timeout: float) -> dict:\n    t0 = time.time()\n    req = urllib.request.Request(url + \"/v1/chat/completions\", data=json.dumps(body).encode(), headers=headers)\n    first, parts = None, []\n    with urllib.request.urlopen(req, timeout=timeout) as r:\n        for raw in r:\n            line = raw.decode(\"utf-8\", \"replace\").strip()\n            if not line.startswith(\"data:\") or line.endswith(\"[DONE]\"):\n                continue\n            event = json.loads(line[5:])\n            for choice in event.get(\"choices\", []):\n                delta = choice.get(\"delta\", {})\n                piece = (delta.get(\"reasoning_content\") or \"\") + (delta.get(\"content\") or \"\")\n                if piece and first is None:\n                    first = time.time() - t0\n                parts.append(piece)\n    return {\"ttft_s\": round(first or 0.0, 3), \"wall_s\": round(time.time() - t0, 2), \"text\": \"\".join(parts)}\n\n\ndef run(args) -> dict:\n    doc = Path(args.doc).read_text(encoding=\"utf-8\", errors=\"replace\")\n    if args.limit_chars:\n        doc = doc[:args.limit_chars]\n    questions = [x.strip() for x in Path(args.questions).read_text(encoding=\"utf-8\").splitlines() if x.strip()]\n    questions = questions[:args.n] if args.n else questions\n    headers = {\"Content-Type\": \"application/json\"}\n    if args.api_key:\n        headers[\"Authorization\"] = \"Bearer \" + args.api_key\n    rows: list[dict | None] = [None] * len(questions)\n    started = time.time()\n    for k in range(0, len(questions), max(1, args.parallel)):\n        group = list(range(k, min(k + max(1, args.parallel), len(questions))))\n\n        def one(i):\n            try:\n                rows[i] = {\"q\": i, **ask(args.url, request_body(doc, questions[i], args.layout, args.prefix == \"on\",\n                                                                  args.max_tokens, args.model), headers, args.timeout)}\n            except Exception as e:  # noqa: BLE001 - a failed question is reported, the run goes on\n                rows[i] = {\"q\": i, \"error\": repr(e)}\n        threads = [threading.Thread(target=one, args=(i,)) for i in group]\n        [t.start() for t in threads]\n        [t.join() for t in threads]\n        for i in group:\n            r = rows[i]\n            print(f\"q{i:02d}  first token {r.get('ttft_s', '-')} s  total {r.get('wall_s', '-')} s  \"\n                  f\"{r.get('error') or repr(r['text'][:60])}\", flush=True)\n    out = {\"url\": args.url, \"layout\": args.layout, \"prefix\": args.prefix, \"doc_chars\": len(doc), \"questions\": rows,\n           \"total_s\": round(time.time() - started, 1)}\n    later = [r[\"ttft_s\"] for r in rows[1:] if r and \"ttft_s\" in r]\n    if later:\n        out[\"first_token_median_after_first_s\"] = round(statistics.median(later), 3)\n    print(f\"total {out['total_s']} s\" + (f\", median first token after the first question {out['first_token_median_after_first_s']} s\"\n                                         if later else \"\"), flush=True)\n    return out\n\n\ndef compare(a_path: str, b_path: str) -> int:\n    a, b = (json.loads(Path(p).read_text(encoding=\"utf-8\")) for p in (a_path, b_path))\n    same = diff = 0\n    for x, y in zip(a[\"questions\"], b[\"questions\"]):\n        if \"text\" in x and \"text\" in y:\n            if x[\"text\"] == y[\"text\"]:\n                same += 1\n            else:\n                diff += 1\n                print(f\"q{x['q']:02d}: the answers differ\")\n    print(f\"{same} answers identical, {diff} differ; total {a['total_s']} s -> {b['total_s']} s; median first token \"\n          f\"{a.get('first_token_median_after_first_s')} s -> {b.get('first_token_median_after_first_s')} s\")\n    return 1 if diff else 0\n\n\ndef main(argv=None) -> int:\n    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)\n    ap.add_argument(\"--url\", default=\"http://127.0.0.1:8080\")\n    ap.add_argument(\"--api-key\", default=\"\")\n    ap.add_argument(\"--model\", default=None)\n    ap.add_argument(\"--doc\")\n    ap.add_argument(\"--questions\", help=\"a text file, one question per line\")\n    ap.add_argument(\"--n\", type=int, default=0, help=\"only the first N questions\")\n    ap.add_argument(\"--layout\", choices=(\"split\", \"joined\"), default=\"split\")\n    ap.add_argument(\"--prefix\", choices=(\"on\", \"off\"), default=\"on\")\n    ap.add_argument(\"--parallel\", type=int, default=1)\n    ap.add_argument(\"--max-tokens\", type=int, default=128)\n    ap.add_argument(\"--limit-chars\", type=int, default=0, help=\"use only the first N characters of the document\")\n    ap.add_argument(\"--timeout\", type=float, default=7200.0)\n    ap.add_argument(\"--json\", help=\"write the per-question results here\")\n    ap.add_argument(\"--compare\", nargs=2, metavar=(\"A.json\", \"B.json\"), help=\"compare two saved runs' answers and times\")\n    args = ap.parse_args(argv)\n    if args.compare:\n        return compare(*args.compare)\n    if not args.doc or not args.questions:\n        ap.error(\"--doc and --questions are needed\")\n    out = run(args)\n    if args.json:\n        Path(args.json).write_text(json.dumps(out, indent=1), encoding=\"utf-8\")\n    return 1 if any(\"error\" in r for r in out[\"questions\"]) else 0\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n\n```\n\nReturn only a JSON array naming the function that builds a request body, then the function that sends one HTTP request."
+          }
+        ],
+        "temperature": 0,
+        "max_tokens": 96,
+        "stream": true,
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      },
+      "expected": [
+        "request_body",
+        "ask"
+      ],
+      "started_epoch": 1791512382.3703022,
+      "text": "[\"request_body\", \"ask\"]",
+      "ttft_s": 6.43163579999964,
+      "wall_s": 6.537473399999726,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 2067,
+        "completion_tokens": 8,
+        "total_tokens": 2075,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 2067,
+        "prompt_ms": 6406.3,
+        "prompt_per_token_ms": 3.099,
+        "prompt_per_second": 322.7,
+        "predicted_n": 8,
+        "predicted_ms": 124.6,
+        "predicted_per_token_ms": 15.575,
+        "predicted_per_second": 64.2,
+        "draft_n": 7,
+        "draft_n_accepted": 7
+      },
+      "chunks": [
+        {
+          "id": "chatcmpl-ddefe3fade454bc9b89b625f",
+          "object": "chat.completion.chunk",
+          "created": 1791512382,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "role": "assistant",
+                "content": ""
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-ddefe3fade454bc9b89b625f",
+          "object": "chat.completion.chunk",
+          "created": 1791512382,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "[\""
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-ddefe3fade454bc9b89b625f",
+          "object": "chat.completion.chunk",
+          "created": 1791512382,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "request"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-ddefe3fade454bc9b89b625f",
+          "object": "chat.completion.chunk",
+          "created": 1791512382,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "_body"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-ddefe3fade454bc9b89b625f",
+          "object": "chat.completion.chunk",
+          "created": 1791512382,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "\","
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-ddefe3fade454bc9b89b625f",
+          "object": "chat.completion.chunk",
+          "created": 1791512382,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": " \""
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-ddefe3fade454bc9b89b625f",
+          "object": "chat.completion.chunk",
+          "created": 1791512382,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "ask"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-ddefe3fade454bc9b89b625f",
+          "object": "chat.completion.chunk",
+          "created": 1791512382,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "\"]"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-ddefe3fade454bc9b89b625f",
+          "object": "chat.completion.chunk",
+          "created": 1791512382,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {},
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 2067,
+            "completion_tokens": 8,
+            "total_tokens": 2075,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 2067,
+            "prompt_ms": 6406.3,
+            "prompt_per_token_ms": 3.099,
+            "prompt_per_second": 322.7,
+            "predicted_n": 8,
+            "predicted_ms": 124.6,
+            "predicted_per_token_ms": 15.575,
+            "predicted_per_second": 64.2,
+            "draft_n": 7,
+            "draft_n_accepted": 7
+          }
+        }
+      ],
+      "valid": true,
+      "metrics": {
+        "engine": {
+          "model": "qwen3.8-flash-next",
+          "max_context": 8192,
+          "images": false,
+          "version": "0.1.41",
+          "context": 8192,
+          "kv": "int8",
+          "kv_resident": 0,
+          "expert_slots": 17940,
+          "expert_cache_mib": 29826,
+          "expert_slots_primary": 9158,
+          "expert_cache_primary_mib": 15195,
+          "spec": 8,
+          "mtp_max": 0,
+          "lookup": 0,
+          "vram_free_mib": 790,
+          "cvec": 0,
+          "arena_mib": 11097,
+          "pool_workers": 19,
+          "pcie_frac": "0.00",
+          "spec_min_p": "0.90",
+          "conversation_cache_mib": 1536,
+          "conversation_cache_slots": 2,
+          "conversation_cache_min_free_mib": 6144,
+          "tail_role_token": -1,
+          "vram_elastic": 0,
+          "engine": "0.1.41"
+        },
+        "live": {
+          "state": "idle",
+          "queued": 0,
+          "phase": null,
+          "prompt_tokens": null,
+          "prompt_read": null,
+          "prompt_total": null,
+          "generated": null,
+          "max_tokens": null,
+          "elapsed_s": null,
+          "tok_s": null,
+          "tok_s_mean": null,
+          "prefill_tok_s_mean": null,
+          "tok_s_window_s": null
+        },
+        "requests": [
+          {
+            "projection": null,
+            "time": 1791512382.3758926,
+            "duration_s": 6.5,
+            "finish": "stop",
+            "prompt_tokens": 2067,
+            "reused": 0,
+            "output_tokens": 8,
+            "prompt_total": 2067,
+            "prompt_read": 2067,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 8,
+            "prompt_ms": 6406.3,
+            "decode_ms": 124.6,
+            "decode_tok_s": 64.2,
+            "hit_rate": 0.863,
+            "pcie_share": 0.297,
+            "ram_blobs": 357,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 7,
+            "drafts_accepted": 7
+          },
+          {
+            "projection": null,
+            "time": 1791512373.699973,
+            "duration_s": 8.7,
+            "finish": "stop",
+            "prompt_tokens": 884,
+            "reused": 0,
+            "output_tokens": 20,
+            "prompt_total": 884,
+            "prompt_read": 884,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 20,
+            "prompt_ms": 8303.3,
+            "decode_ms": 363.8,
+            "decode_tok_s": 55.0,
+            "hit_rate": 0.61,
+            "pcie_share": 0.429,
+            "ram_blobs": 2393,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 30,
+            "drafts_accepted": 18
+          },
+          {
+            "projection": null,
+            "time": 1791512369.73102,
+            "duration_s": 4.0,
+            "finish": "stop",
+            "prompt_tokens": 422,
+            "reused": 0,
+            "output_tokens": 13,
+            "prompt_total": 422,
+            "prompt_read": 422,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 13,
+            "prompt_ms": 3731.1,
+            "decode_ms": 233.2,
+            "decode_tok_s": 55.7,
+            "hit_rate": 0.649,
+            "pcie_share": 0.391,
+            "ram_blobs": 1641,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 20,
+            "drafts_accepted": 13
+          },
+          {
+            "projection": null,
+            "time": 1791512369.1599574,
+            "duration_s": 0.6,
+            "finish": "stop",
+            "prompt_tokens": 24,
+            "reused": 0,
+            "output_tokens": 2,
+            "prompt_total": 24,
+            "prompt_read": 24,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 2,
+            "prompt_ms": 473.9,
+            "decode_ms": 92.3,
+            "decode_tok_s": 21.7,
+            "hit_rate": 0.774,
+            "pcie_share": 0.273,
+            "ram_blobs": 396,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 4,
+            "drafts_accepted": 4
+          }
+        ],
+        "conversation_cache": {
+          "enabled": true,
+          "budget_mib": 1536,
+          "slots": 2,
+          "parked": 2,
+          "bytes": 492848132,
+          "evictions": 0,
+          "parks": 2,
+          "restores": 0,
+          "last_event": "parked",
+          "last_tokens": 907,
+          "last_at": 1791512388.909181,
+          "requests": 4,
+          "requests_reused": 0,
+          "reused_tokens": 0,
+          "prompt_tokens": 3397,
+          "last_reused": 0,
+          "last_prompt": 2067
+        },
+        "requests_kept": 4,
+        "totals": {
+          "since": 1791512368.7291334,
+          "requests": 4,
+          "prompt_tokens": 3397,
+          "reused": 0,
+          "output_tokens": 43,
+          "prompt_ms": 18914.6,
+          "decode_ms": 813.9,
+          "drafts_offered": 61,
+          "drafts_accepted": 42
+        },
+        "hardware": {
+          "gpu_util": 38,
+          "gpu_mem_used": 23498891264,
+          "gpu_mem_total": 23622320128,
+          "gpu_temp": 48,
+          "gpu_power": 93.811,
+          "gpu_power_limit": 310.0,
+          "gpu_pcie_gen": 3,
+          "gpu_pcie_gen_max": 3,
+          "gpu_pcie_width": 16,
+          "gpu_pcie_rx_mb": 1330.078125,
+          "gpu_pcie_tx_mb": 153.3203125,
+          "cpu": 2.0,
+          "ram_used": 23011356672,
+          "ram_total": 33887277056,
+          "disk_read_mb": 996.737951114054,
+          "disk_write_mb": 1.007959904719936,
+          "tok_s": 0.0,
+          "tok_s_mean": 0,
+          "prefill_tok_s_mean": 387.8
+        },
+        "hardware_static": {
+          "gpu_name": "NVIDIA GeForce RTX 2080 Ti",
+          "gpu_count": 1,
+          "gpu_note": null,
+          "cpu_name": "Genuine Intel(R) 0000",
+          "cores": 20,
+          "threads": 28,
+          "psutil": true
+        },
+        "history": {
+          "gpu_util": [
+            20,
+            28,
+            90,
+            100,
+            100,
+            100,
+            94,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            97,
+            44,
+            70,
+            70,
+            69,
+            66,
+            38
+          ],
+          "gpu_mem_used": [
+            22558908416,
+            23234191360,
+            23234191360,
+            23234191360,
+            23234191360,
+            23399866368,
+            23399604224,
+            23399604224,
+            23395082240,
+            23399538688,
+            23399800832,
+            23399800832,
+            23399800832,
+            23496269824,
+            23498891264,
+            23498563584,
+            23498760192,
+            23498891264,
+            23498891264,
+            23498891264
+          ],
+          "gpu_temp": [
+            39,
+            45,
+            49,
+            50,
+            50,
+            51,
+            51,
+            51,
+            51,
+            51,
+            52,
+            52,
+            52,
+            52,
+            52,
+            52,
+            51,
+            52,
+            52,
+            48
+          ],
+          "gpu_power": [
+            38.85,
+            185.22,
+            219.11,
+            217.15,
+            204.5,
+            221.66,
+            220.49,
+            207.66,
+            202.04,
+            198.61,
+            207.44,
+            208.31,
+            207.42,
+            229.64,
+            171.96,
+            194.9,
+            197.15,
+            136.75,
+            134.13,
+            93.81
+          ],
+          "gpu_pcie_rx_mb": [
+            0.0,
+            234.38,
+            365.23,
+            327.15,
+            370.12,
+            259.77,
+            352.54,
+            397.46,
+            361.33,
+            387.7,
+            353.52,
+            424.8,
+            402.34,
+            14.65,
+            5969.73,
+            6349.61,
+            7041.02,
+            5146.48,
+            13858.4,
+            1330.08
+          ],
+          "cpu": [
+            4.0,
+            39.4,
+            72.1,
+            71.7,
+            72.1,
+            69.2,
+            72.1,
+            72.9,
+            72.2,
+            72.3,
+            72.2,
+            72.3,
+            72.5,
+            69.0,
+            88.2,
+            78.0,
+            74.3,
+            75.2,
+            72.6,
+            2.0
+          ],
+          "ram_used": [
+            21497397248,
+            21589860352,
+            21591973888,
+            21597663232,
+            21597716480,
+            21862809600,
+            21868593152,
+            21909483520,
+            21904932864,
+            21906587648,
+            21905453056,
+            21904781312,
+            21904031744,
+            22278406144,
+            22437961728,
+            22413361152,
+            22440599552,
+            22454427648,
+            22461587456,
+            23011356672
+          ],
+          "disk_read_mb": [
+            null,
+            2.59,
+            3.87,
+            2.3,
+            1.4,
+            2.31,
+            0.04,
+            0.1,
+            0.12,
+            1.27,
+            1.3,
+            1.23,
+            1.15,
+            1.36,
+            245.44,
+            224.82,
+            223.61,
+            207.79,
+            217.89,
+            996.74
+          ],
+          "tok_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "prefill_tok_s_mean": [
+            0.0,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            387.8
+          ]
+        },
+        "time": 1791512388.9089224
+      }
+    },
+    {
+      "key": "records-5k-r1",
+      "group": "cold",
+      "request": {
+        "model": "qwen3.8-flash-next",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Document task records-5k-r1. Return only the requested JSON."
+          },
+          {
+            "role": "user",
+            "content": "Record 0: code=K0000; stock=3.\nRecord 1: code=K0001; stock=20.\nRecord 2: code=K0002; stock=37.\nRecord 3: code=K0003; stock=54.\nRecord 4: code=K0004; stock=71.\nRecord 5: code=K0005; stock=88.\nRecord 6: code=K0006; stock=8.\nRecord 7: code=K0007; stock=25.\nRecord 8: code=K0008; stock=42.\nRecord 9: code=K0009; stock=59.\nRecord 10: code=K0010; stock=76.\nRecord 11: code=K0011; stock=93.\nRecord 12: code=K0012; stock=13.\nRecord 13: code=K0013; stock=30.\nRecord 14: code=K0014; stock=47.\nRecord 15: code=K0015; stock=64.\nRecord 16: code=K0016; stock=81.\nRecord 17: code=K0017; stock=1.\nRecord 18: code=K0018; stock=18.\nRecord 19: code=K0019; stock=35.\nRecord 20: code=K0020; stock=52.\nRecord 21: code=K0021; stock=69.\nRecord 22: code=K0022; stock=86.\nRecord 23: code=K0023; stock=6.\nRecord 24: code=K0024; stock=23.\nRecord 25: code=K0025; stock=40.\nRecord 26: code=K0026; stock=57.\nRecord 27: code=K0027; stock=74.\nRecord 28: code=K0028; stock=91.\nRecord 29: code=K0029; stock=11.\nRecord 30: code=K0030; stock=28.\nRecord 31: code=K0031; stock=45.\nRecord 32: code=K0032; stock=62.\nRecord 33: code=K0033; stock=79.\nRecord 34: code=K0034; stock=96.\nRecord 35: code=K0035; stock=16.\nRecord 36: code=K0036; stock=33.\nRecord 37: code=K0037; stock=50.\nRecord 38: code=K0038; stock=67.\nRecord 39: code=K0039; stock=84.\nRecord 40: code=K0040; stock=4.\nRecord 41: code=K0041; stock=21.\nRecord 42: code=K0042; stock=38.\nRecord 43: code=K0043; stock=55.\nRecord 44: code=K0044; stock=72.\nRecord 45: code=K0045; stock=89.\nRecord 46: code=K0046; stock=9.\nRecord 47: code=K0047; stock=26.\nRecord 48: code=K0048; stock=43.\nRecord 49: code=K0049; stock=60.\nRecord 50: code=K0050; stock=77.\nRecord 51: code=K0051; stock=94.\nRecord 52: code=K0052; stock=14.\nRecord 53: code=K0053; stock=31.\nRecord 54: code=K0054; stock=48.\nRecord 55: code=K0055; stock=65.\nRecord 56: code=K0056; stock=82.\nRecord 57: code=K0057; stock=2.\nRecord 58: code=K0058; stock=19.\nRecord 59: code=K0059; stock=36.\nRecord 60: code=K0060; stock=53.\nRecord 61: code=K0061; stock=70.\nRecord 62: code=K0062; stock=87.\nRecord 63: code=K0063; stock=7.\nRecord 64: code=K0064; stock=24.\nRecord 65: code=K0065; stock=41.\nRecord 66: code=K0066; stock=58.\nRecord 67: code=K0067; stock=75.\nRecord 68: code=K0068; stock=92.\nRecord 69: code=K0069; stock=12.\nRecord 70: code=K0070; stock=29.\nRecord 71: code=K0071; stock=46.\nRecord 72: code=K0072; stock=63.\nRecord 73: code=K0073; stock=80.\nRecord 74: code=K0074; stock=0.\nRecord 75: code=K0075; stock=17.\nRecord 76: code=K0076; stock=34.\nRecord 77: code=K0077; stock=51.\nRecord 78: code=K0078; stock=68.\nRecord 79: code=K0079; stock=85.\nRecord 80: code=K0080; stock=5.\nRecord 81: code=K0081; stock=22.\nRecord 82: code=K0082; stock=39.\nRecord 83: code=K0083; stock=56.\nRecord 84: code=K0084; stock=73.\nRecord 85: code=K0085; stock=90.\nRecord 86: code=K0086; stock=10.\nRecord 87: code=K0087; stock=27.\nRecord 88: code=K0088; stock=44.\nRecord 89: code=K0089; stock=61.\nRecord 90: code=K0090; stock=78.\nRecord 91: code=K0091; stock=95.\nRecord 92: code=K0092; stock=15.\nRecord 93: code=K0093; stock=32.\nRecord 94: code=K0094; stock=49.\nRecord 95: code=K0095; stock=66.\nRecord 96: code=K0096; stock=83.\nRecord 97: code=K0097; stock=3.\nRecord 98: code=K0098; stock=20.\nRecord 99: code=K0099; stock=37.\nRecord 100: code=K0100; stock=54.\nRecord 101: code=K0101; stock=71.\nRecord 102: code=K0102; stock=88.\nRecord 103: code=K0103; stock=8.\nRecord 104: code=K0104; stock=25.\nRecord 105: code=K0105; stock=42.\nRecord 106: code=K0106; stock=59.\nRecord 107: code=K0107; stock=76.\nRecord 108: code=K0108; stock=93.\nRecord 109: code=K0109; stock=13.\nRecord 110: code=K0110; stock=30.\nRecord 111: code=K0111; stock=47.\nRecord 112: code=K0112; stock=64.\nRecord 113: code=K0113; stock=81.\nRecord 114: code=K0114; stock=1.\nRecord 115: code=K0115; stock=18.\nRecord 116: code=K0116; stock=35.\nRecord 117: code=K0117; stock=52.\nRecord 118: code=K0118; stock=69.\nRecord 119: code=K0119; stock=86.\nRecord 120: code=K0120; stock=6.\nRecord 121: code=K0121; stock=23.\nRecord 122: code=K0122; stock=40.\nRecord 123: code=K0123; stock=57.\nRecord 124: code=K0124; stock=74.\nRecord 125: code=K0125; stock=91.\nRecord 126: code=K0126; stock=11.\nRecord 127: code=K0127; stock=28.\nRecord 128: code=K0128; stock=45.\nRecord 129: code=K0129; stock=62.\nRecord 130: code=K0130; stock=79.\nRecord 131: code=K0131; stock=96.\nRecord 132: code=K0132; stock=16.\nRecord 133: code=K0133; stock=33.\nRecord 134: code=K0134; stock=50.\nRecord 135: code=K0135; stock=67.\nRecord 136: code=K0136; stock=84.\nRecord 137: code=K0137; stock=4.\nRecord 138: code=K0138; stock=21.\nRecord 139: code=K0139; stock=38.\nRecord 140: code=K0140; stock=55.\nRecord 141: code=K0141; stock=72.\nRecord 142: code=K0142; stock=89.\nRecord 143: code=K0143; stock=9.\nRecord 144: code=K0144; stock=26.\nRecord 145: code=K0145; stock=43.\nRecord 146: code=K0146; stock=60.\nRecord 147: code=K0147; stock=77.\nRecord 148: code=K0148; stock=94.\nRecord 149: code=K0149; stock=14.\nRecord 150: code=K0150; stock=31.\nRecord 151: code=K0151; stock=48.\nRecord 152: code=K0152; stock=65.\nRecord 153: code=K0153; stock=82.\nRecord 154: code=K0154; stock=2.\nRecord 155: code=K0155; stock=19.\nRecord 156: code=K0156; stock=36.\nRecord 157: code=K0157; stock=53.\nRecord 158: code=K0158; stock=70.\nRecord 159: code=K0159; stock=87.\nRecord 160: code=K0160; stock=7.\nRecord 161: code=K0161; stock=24.\nRecord 162: code=K0162; stock=41.\nRecord 163: code=K0163; stock=58.\nRecord 164: code=K0164; stock=75.\nRecord 165: code=K0165; stock=92.\nRecord 166: code=K0166; stock=12.\nRecord 167: code=K0167; stock=29.\nRecord 168: code=K0168; stock=46.\nRecord 169: code=K0169; stock=63.\nRecord 170: code=K0170; stock=80.\nRecord 171: code=K0171; stock=0.\nRecord 172: code=K0172; stock=17.\nRecord 173: code=K0173; stock=34.\nRecord 174: code=K0174; stock=51.\nRecord 175: code=K0175; stock=68.\nRecord 176: code=K0176; stock=85.\nRecord 177: code=K0177; stock=5.\nRecord 178: code=K0178; stock=22.\nRecord 179: code=K0179; stock=39.\nRecord 180: code=K0180; stock=56.\nRecord 181: code=K0181; stock=73.\nRecord 182: code=K0182; stock=90.\nRecord 183: code=K0183; stock=10.\nRecord 184: code=K0184; stock=27.\nRecord 185: code=K0185; stock=44.\nRecord 186: code=K0186; stock=61.\nRecord 187: code=K0187; stock=78.\nRecord 188: code=K0188; stock=95.\nRecord 189: code=K0189; stock=15.\nRecord 190: code=K0190; stock=32.\nRecord 191: code=K0191; stock=49.\nRecord 192: code=K0192; stock=66.\nRecord 193: code=K0193; stock=83.\nRecord 194: code=K0194; stock=3.\nRecord 195: code=K0195; stock=20.\nRecord 196: code=K0196; stock=37.\nRecord 197: code=K0197; stock=54.\nRecord 198: code=K0198; stock=71.\nRecord 199: code=K0199; stock=88.\nRecord 200: code=K0200; stock=8.\nRecord 201: code=K0201; stock=25.\nRecord 202: code=K0202; stock=42.\nRecord 203: code=K0203; stock=59.\nRecord 204: code=K0204; stock=76.\nRecord 205: code=K0205; stock=93.\nRecord 206: code=K0206; stock=13.\nRecord 207: code=K0207; stock=30.\nRecord 208: code=K0208; stock=47.\nRecord 209: code=K0209; stock=64.\nRecord 210: code=K0210; stock=81.\nRecord 211: code=K0211; stock=1.\nRecord 212: code=K0212; stock=18.\nRecord 213: code=K0213; stock=35.\nRecord 214: code=K0214; stock=52.\nRecord 215: code=K0215; stock=69.\nRecord 216: code=K0216; stock=86.\nRecord 217: code=K0217; stock=6.\nRecord 218: code=K0218; stock=23.\nRecord 219: code=K0219; stock=40.\nRecord 220: code=K0220; stock=57.\nRecord 221: code=K0221; stock=74.\nRecord 222: code=K0222; stock=91.\nRecord 223: code=K0223; stock=11.\nRecord 224: code=K0224; stock=28.\nRecord 225: code=K0225; stock=45.\nRecord 226: code=K0226; stock=62.\nRecord 227: code=K0227; stock=79.\nRecord 228: code=K0228; stock=96.\nRecord 229: code=K0229; stock=16.\nRecord 230: code=K0230; stock=33.\nRecord 231: code=K0231; stock=50.\nRecord 232: code=K0232; stock=67.\nRecord 233: code=K0233; stock=84.\nRecord 234: code=K0234; stock=4.\nRecord 235: code=K0235; stock=21.\nRecord 236: code=K0236; stock=38.\nRecord 237: code=K0237; stock=55.\nRecord 238: code=K0238; stock=72.\nRecord 239: code=K0239; stock=89.\nRecord 240: code=K0240; stock=9.\nRecord 241: code=K0241; stock=26.\nRecord 242: code=K0242; stock=43.\nRecord 243: code=K0243; stock=60.\nRecord 244: code=K0244; stock=77.\nRecord 245: code=K0245; stock=94.\nRecord 246: code=K0246; stock=14.\nRecord 247: code=K0247; stock=31.\nRecord 248: code=K0248; stock=48.\nRecord 249: code=K0249; stock=65.\nRecord 250: code=K0250; stock=82.\nRecord 251: code=K0251; stock=2.\nRecord 252: code=K0252; stock=19.\nRecord 253: code=K0253; stock=36.\nRecord 254: code=K0254; stock=53.\nRecord 255: code=K0255; stock=70.\nRecord 256: code=K0256; stock=87.\nRecord 257: code=K0257; stock=7.\nRecord 258: code=K0258; stock=24.\nRecord 259: code=K0259; stock=41.\nReturn only a JSON array of stock values for records 7, 23, 51, 88, 99, in that order."
+          }
+        ],
+        "temperature": 0,
+        "max_tokens": 96,
+        "stream": true,
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      },
+      "expected": [
+        25,
+        6,
+        94,
+        44,
+        37
+      ],
+      "started_epoch": 1791512388.91048,
+      "text": "[25, 6, 94, 44, 37]",
+      "ttft_s": 7.411416199998712,
+      "wall_s": 7.694810499999221,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 5127,
+        "completion_tokens": 20,
+        "total_tokens": 5147,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 5127,
+        "prompt_ms": 7389.1,
+        "prompt_per_token_ms": 1.441,
+        "prompt_per_second": 693.9,
+        "predicted_n": 20,
+        "predicted_ms": 301.2,
+        "predicted_per_token_ms": 15.06,
+        "predicted_per_second": 66.4,
+        "draft_n": 17,
+        "draft_n_accepted": 17
+      },
+      "chunks": [
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "role": "assistant",
+                "content": ""
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "["
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "2"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "5"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": ","
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": " "
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "6"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": ","
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": " "
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "9"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "4"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": ","
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": " "
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "4"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "4"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": ","
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": " "
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "3"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "7"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {
+                "content": "]"
+              },
+              "finish_reason": null
+            }
+          ]
+        },
+        {
+          "id": "chatcmpl-af1250c7cd3e43e1bd81b17a",
+          "object": "chat.completion.chunk",
+          "created": 1791512388,
+          "model": "qwen3.8-flash-next",
+          "choices": [
+            {
+              "index": 0,
+              "delta": {},
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 5127,
+            "completion_tokens": 20,
+            "total_tokens": 5147,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 5127,
+            "prompt_ms": 7389.1,
+            "prompt_per_token_ms": 1.441,
+            "prompt_per_second": 693.9,
+            "predicted_n": 20,
+            "predicted_ms": 301.2,
+            "predicted_per_token_ms": 15.06,
+            "predicted_per_second": 66.4,
+            "draft_n": 17,
+            "draft_n_accepted": 17
+          }
+        }
+      ],
+      "valid": true,
+      "metrics": {
+        "engine": {
+          "model": "qwen3.8-flash-next",
+          "max_context": 8192,
+          "images": false,
+          "version": "0.1.41",
+          "context": 8192,
+          "kv": "int8",
+          "kv_resident": 0,
+          "expert_slots": 17940,
+          "expert_cache_mib": 29826,
+          "expert_slots_primary": 9158,
+          "expert_cache_primary_mib": 15195,
+          "spec": 8,
+          "mtp_max": 0,
+          "lookup": 0,
+          "vram_free_mib": 790,
+          "cvec": 0,
+          "arena_mib": 11097,
+          "pool_workers": 19,
+          "pcie_frac": "0.00",
+          "spec_min_p": "0.90",
+          "conversation_cache_mib": 1536,
+          "conversation_cache_slots": 2,
+          "conversation_cache_min_free_mib": 6144,
+          "tail_role_token": -1,
+          "vram_elastic": 0,
+          "engine": "0.1.41"
+        },
+        "live": {
+          "state": "idle",
+          "queued": 0,
+          "phase": null,
+          "prompt_tokens": null,
+          "prompt_read": null,
+          "prompt_total": null,
+          "generated": null,
+          "max_tokens": null,
+          "elapsed_s": null,
+          "tok_s": null,
+          "tok_s_mean": null,
+          "prefill_tok_s_mean": null,
+          "tok_s_window_s": null
+        },
+        "requests": [
+          {
+            "projection": null,
+            "time": 1791512388.9138584,
+            "duration_s": 7.7,
+            "finish": "stop",
+            "prompt_tokens": 5127,
+            "reused": 0,
+            "output_tokens": 20,
+            "prompt_total": 5127,
+            "prompt_read": 5127,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 20,
+            "prompt_ms": 7389.1,
+            "decode_ms": 301.2,
+            "decode_tok_s": 66.4,
+            "hit_rate": 0.663,
+            "pcie_share": 0.44,
+            "ram_blobs": 1524,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 17,
+            "drafts_accepted": 17
+          },
+          {
+            "projection": null,
+            "time": 1791512382.3758926,
+            "duration_s": 6.5,
+            "finish": "stop",
+            "prompt_tokens": 2067,
+            "reused": 0,
+            "output_tokens": 8,
+            "prompt_total": 2067,
+            "prompt_read": 2067,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 8,
+            "prompt_ms": 6406.3,
+            "decode_ms": 124.6,
+            "decode_tok_s": 64.2,
+            "hit_rate": 0.863,
+            "pcie_share": 0.297,
+            "ram_blobs": 357,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 7,
+            "drafts_accepted": 7
+          },
+          {
+            "projection": null,
+            "time": 1791512373.699973,
+            "duration_s": 8.7,
+            "finish": "stop",
+            "prompt_tokens": 884,
+            "reused": 0,
+            "output_tokens": 20,
+            "prompt_total": 884,
+            "prompt_read": 884,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 20,
+            "prompt_ms": 8303.3,
+            "decode_ms": 363.8,
+            "decode_tok_s": 55.0,
+            "hit_rate": 0.61,
+            "pcie_share": 0.429,
+            "ram_blobs": 2393,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 30,
+            "drafts_accepted": 18
+          },
+          {
+            "projection": null,
+            "time": 1791512369.73102,
+            "duration_s": 4.0,
+            "finish": "stop",
+            "prompt_tokens": 422,
+            "reused": 0,
+            "output_tokens": 13,
+            "prompt_total": 422,
+            "prompt_read": 422,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 13,
+            "prompt_ms": 3731.1,
+            "decode_ms": 233.2,
+            "decode_tok_s": 55.7,
+            "hit_rate": 0.649,
+            "pcie_share": 0.391,
+            "ram_blobs": 1641,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 20,
+            "drafts_accepted": 13
+          },
+          {
+            "projection": null,
+            "time": 1791512369.1599574,
+            "duration_s": 0.6,
+            "finish": "stop",
+            "prompt_tokens": 24,
+            "reused": 0,
+            "output_tokens": 2,
+            "prompt_total": 24,
+            "prompt_read": 24,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 2,
+            "prompt_ms": 473.9,
+            "decode_ms": 92.3,
+            "decode_tok_s": 21.7,
+            "hit_rate": 0.774,
+            "pcie_share": 0.273,
+            "ram_blobs": 396,
+            "file_blobs": 0,
+            "file_mb": 0,
+            "drafts_offered": 4,
+            "drafts_accepted": 4
+          }
+        ],
+        "conversation_cache": {
+          "enabled": true,
+          "budget_mib": 1536,
+          "slots": 2,
+          "parked": 2,
+          "bytes": 517839312,
+          "evictions": 1,
+          "parks": 3,
+          "restores": 0,
+          "last_event": "parked",
+          "last_tokens": 2076,
+          "last_at": 1791512396.607017,
+          "requests": 5,
+          "requests_reused": 0,
+          "reused_tokens": 0,
+          "prompt_tokens": 8524,
+          "last_reused": 0,
+          "last_prompt": 5127
+        },
+        "requests_kept": 5,
+        "totals": {
+          "since": 1791512368.7291334,
+          "requests": 5,
+          "prompt_tokens": 8524,
+          "reused": 0,
+          "output_tokens": 63,
+          "prompt_ms": 26303.699999999997,
+          "decode_ms": 1115.1,
+          "drafts_offered": 78,
+          "drafts_accepted": 59
+        },
+        "hardware": {
+          "gpu_util": 37,
+          "gpu_mem_used": 23503085568,
+          "gpu_mem_total": 23622320128,
+          "gpu_temp": 49,
+          "gpu_power": 93.503,
+          "gpu_power_limit": 310.0,
+          "gpu_pcie_gen": 3,
+          "gpu_pcie_gen_max": 3,
+          "gpu_pcie_width": 16,
+          "gpu_pcie_rx_mb": 1464.84375,
+          "gpu_pcie_tx_mb": 173.828125,
+          "cpu": 2.1,
+          "ram_used": 23340728320,
+          "ram_total": 33887277056,
+          "disk_read_mb": 1172.3891235286014,
+          "disk_write_mb": 0.059595708374235515,
+          "tok_s": 0.0,
+          "tok_s_mean": 0,
+          "prefill_tok_s_mean": 901.2
+        },
+        "hardware_static": {
+          "gpu_name": "NVIDIA GeForce RTX 2080 Ti",
+          "gpu_count": 1,
+          "gpu_note": null,
+          "cpu_name": "Genuine Intel(R) 0000",
+          "cores": 20,
+          "threads": 28,
+          "psutil": true
+        },
+        "history": {
+          "gpu_util": [
+            20,
+            28,
+            90,
+            100,
+            100,
+            100,
+            94,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            97,
+            44,
+            70,
+            70,
+            69,
+            66,
+            38,
+            33,
+            88,
+            98,
+            88,
+            85,
+            86,
+            37
+          ],
+          "gpu_mem_used": [
+            22558908416,
+            23234191360,
+            23234191360,
+            23234191360,
+            23234191360,
+            23399866368,
+            23399604224,
+            23399604224,
+            23395082240,
+            23399538688,
+            23399800832,
+            23399800832,
+            23399800832,
+            23496269824,
+            23498891264,
+            23498563584,
+            23498760192,
+            23498891264,
+            23498891264,
+            23498891264,
+            23503085568,
+            23503085568,
+            23503085568,
+            23503085568,
+            23503085568,
+            23503085568,
+            23503085568
+          ],
+          "gpu_temp": [
+            39,
+            45,
+            49,
+            50,
+            50,
+            51,
+            51,
+            51,
+            51,
+            51,
+            52,
+            52,
+            52,
+            52,
+            52,
+            52,
+            51,
+            52,
+            52,
+            48,
+            53,
+            56,
+            57,
+            53,
+            56,
+            51,
+            49
+          ],
+          "gpu_power": [
+            38.85,
+            185.22,
+            219.11,
+            217.15,
+            204.5,
+            221.66,
+            220.49,
+            207.66,
+            202.04,
+            198.61,
+            207.44,
+            208.31,
+            207.42,
+            229.64,
+            171.96,
+            194.9,
+            197.15,
+            136.75,
+            134.13,
+            93.81,
+            274.59,
+            276.74,
+            251.78,
+            132.55,
+            225.38,
+            94.61,
+            93.5
+          ],
+          "gpu_pcie_rx_mb": [
+            0.0,
+            234.38,
+            365.23,
+            327.15,
+            370.12,
+            259.77,
+            352.54,
+            397.46,
+            361.33,
+            387.7,
+            353.52,
+            424.8,
+            402.34,
+            14.65,
+            5969.73,
+            6349.61,
+            7041.02,
+            5146.48,
+            13858.4,
+            1330.08,
+            6080.08,
+            12105.47,
+            11250.0,
+            7596.68,
+            78.12,
+            1401.37,
+            1464.84
+          ],
+          "cpu": [
+            4.0,
+            39.4,
+            72.1,
+            71.7,
+            72.1,
+            69.2,
+            72.1,
+            72.9,
+            72.2,
+            72.3,
+            72.2,
+            72.3,
+            72.5,
+            69.0,
+            88.2,
+            78.0,
+            74.3,
+            75.2,
+            72.6,
+            2.0,
+            77.0,
+            91.9,
+            89.7,
+            86.7,
+            90.8,
+            47.7,
+            2.1
+          ],
+          "ram_used": [
+            21497397248,
+            21589860352,
+            21591973888,
+            21597663232,
+            21597716480,
+            21862809600,
+            21868593152,
+            21909483520,
+            21904932864,
+            21906587648,
+            21905453056,
+            21904781312,
+            21904031744,
+            22278406144,
+            22437961728,
+            22413361152,
+            22440599552,
+            22454427648,
+            22461587456,
+            23011356672,
+            23144316928,
+            23145357312,
+            23213232128,
+            23259398144,
+            23188631552,
+            23323996160,
+            23340728320
+          ],
+          "disk_read_mb": [
+            null,
+            2.59,
+            3.87,
+            2.3,
+            1.4,
+            2.31,
+            0.04,
+            0.1,
+            0.12,
+            1.27,
+            1.3,
+            1.23,
+            1.15,
+            1.36,
+            245.44,
+            224.82,
+            223.61,
+            207.79,
+            217.89,
+            996.74,
+            340.42,
+            335.17,
+            371.33,
+            342.67,
+            344.8,
+            639.24,
+            1172.39
+          ],
+          "tok_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "prefill_tok_s_mean": [
+            0.0,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            387.8,
+            null,
+            null,
+            null,
+            null,
+            null,
+            901.2,
+            901.2
+          ]
+        },
+        "time": 1791512396.6067243
+      }
+    }
+  ],
+  "started_epoch": 1791512331.497962,
+  "command": [
+    "C:\\ProgramData\\anaconda3\\python.exe",
+    "-X",
+    "utf8",
+    "-m",
+    "serve.server",
+    "--engine",
+    "strata",
+    "--config",
+    "E:\\strata-setup\\part2-prefill-helper-source-20261009\\lend-shareoff-config.json",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "18997"
+  ],
+  "server_root": "C:\\Users\\Winge\\Documents\\Playground\\Strata-optimization-pr",
+  "server_commit": "c1c3d49f1c9ad67738f75f4b7e533aad0072e0b2",
+  "config_sha256": "512a4a5aa20f530d8e86f87f0b3c7f1fc5f589a5a055e7188fcafc0d21ed38d8",
+  "exe_sha256": "a5410029bfbf40f4f11612f86396a45511f4e622823568c3951b4dddba9fb4d1",
+  "fixture_sha256": "8d5f2184032210cc5e465cd4a6cb10e8a1ca1401f373da3a881e02d4504c470b",
+  "expected_requests": 5,
+  "gpu_before": "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W, 22528 MiB\n1, Tesla P100-PCIE-16GB, 537.13, 250.00 W, 16384 MiB",
+  "server_pid": 30856,
+  "health": {
+    "status": "ok",
+    "max_context": 8192,
+    "model": "qwen3.8-flash-next",
+    "images": false,
+    "api_key": false,
+    "loaded": true,
+    "service": "strata"
+  },
+  "current_request": "records-5k-r1",
+  "status": {
+    "service": "strata",
+    "model": "qwen3.8-flash-next",
+    "loaded": true,
+    "auto_load": true,
+    "structured_output": {
+      "formats": [
+        "json_object",
+        "json_schema"
+      ],
+      "method": "prompt_and_validate",
+      "constrained_decoding": false,
+      "stream_buffered": true
+    },
+    "engine": "0.1.41",
+    "started": 1791512368,
+    "uptime_s": 27,
+    "cache_max_tokens": 8192,
+    "cache": {
+      "state": "disabled"
+    },
+    "context": {
+      "native": 8192,
+      "max_positions": 8192
+    },
+    "concurrency": {
+      "serving": 1,
+      "requested": 1
+    },
+    "dialects": [
+      "/v1/chat/completions",
+      "/v1/messages",
+      "/v1/responses"
+    ],
+    "vision": {
+      "enabled": false,
+      "available": false,
+      "error": null
+    },
+    "activity": {
+      "requests": 5,
+      "in_flight": 0,
+      "last_request_at": 1791512396
+    },
+    "last_timings": {
+      "cache_n": 0,
+      "prompt_n": 5127,
+      "prompt_ms": 7389.1,
+      "prompt_per_token_ms": 1.441,
+      "prompt_per_second": 693.9,
+      "predicted_n": 20,
+      "predicted_ms": 301.2,
+      "predicted_per_token_ms": 15.06,
+      "predicted_per_second": 66.4,
+      "draft_n": 17,
+      "draft_n_accepted": 17,
+      "at": 1791512396
+    },
+    "vram": {
+      "elastic": false
+    },
+    "machine": {
+      "at": 1791512396,
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 2080 Ti",
+        "used_mib": 22414.0,
+        "total_mib": 22528.0,
+        "util_pct": 37,
+        "temp_c": 49,
+        "power_w": 93.503
+      },
+      "ram": {
+        "used_gib": 21.7,
+        "total_gib": 31.6
+      }
+    }
+  },
+  "ended_epoch": 1791512396.6093814,
+  "unload": {
+    "status": "unloaded"
+  },
+  "gpu_after": "0, NVIDIA GeForce RTX 2080 Ti, 537.13, 310.00 W\n1, Tesla P100-PCIE-16GB, 537.13, 250.00 W"
+}
