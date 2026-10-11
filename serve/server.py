@@ -2728,7 +2728,7 @@ class Service:
                  fit_max_tokens: bool = False, prompt_reuse: bool = True):
         self.engine, self.tok, self.template, self.model, self.vision = engine, tokenizer, template, model_name, vision
         self.prompt_encoder = None
-        if prompt_reuse and os.environ.get("STRATA_PROMPT_REUSE", "1") != "0" and callable(getattr(tokenizer, "encode_marked", None)):
+        if prompt_reuse and os.environ.get("STRATA_PROMPT_REUSE") == "1" and callable(getattr(tokenizer, "encode_marked", None)):
             from strata_tokenizer import PromptEncoder
             self.prompt_encoder = PromptEncoder(tokenizer)
         self.literals = literal_tags(getattr(tokenizer, "control_tokens", ()))   # texts that stay text inside a message

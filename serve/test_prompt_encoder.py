@@ -1,5 +1,6 @@
 """Prompt reuse must match full BPE across edits, clients and image expansion."""
 import concurrent.futures
+import os
 import random
 import subprocess
 import sys
@@ -7,6 +8,7 @@ import tempfile
 import threading
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from tools.strata_tokenizer import BYTE_TO_UNICODE, PromptEncoder, Tokenizer
 from serve.frontend import ChatTemplate, openai_to_messages
@@ -26,8 +28,25 @@ def tokenizer():
 
 class PromptReuse(unittest.TestCase):
     def setUp(self):
+        env = patch.dict(os.environ, STRATA_PROMPT_REUSE='1')
+        env.start()
+        self.addCleanup(env.stop)
         self.tok = tokenizer()
         self.enc = PromptEncoder(self.tok)
+
+    def test_service_reuse_is_opt_in(self):
+        template = ChatTemplate(Path(__file__).with_name('chat_template.jinja'))
+        for value in [None, '0', '1']:
+            with patch.dict(os.environ):
+                if value is None:
+                    os.environ.pop('STRATA_PROMPT_REUSE', None)
+                else:
+                    os.environ['STRATA_PROMPT_REUSE'] = value
+                svc = Service(MockEngine(self.tok, 'abc'), self.tok, template)
+                self.assertEqual(svc.prompt_encoder is not None, value == '1')
+                messages = [{'role': 'user', 'content': '中文abc'}]
+                full = Service(MockEngine(self.tok, 'abc'), self.tok, template, prompt_reuse=False)
+                self.assertEqual(svc.encode_prompt(messages, None, {}), full.encode_prompt(messages, None, {}))
 
     def check(self, text):
         self.assertEqual(self.enc.encode(text), self.tok.encode(text, parse_special=True))
